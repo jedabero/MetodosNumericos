@@ -1,0 +1,526 @@
+/**
+ * 
+ */
+package funciones;
+
+import java.math.BigDecimal;
+
+import math.Big;
+
+import resources.CustomException;
+import resources.Constantes.TipoFuncion;
+import resources.M;
+import resources.Constantes.FuncionTrig;
+import stream.O;
+
+/**
+ * La clase {@code Termino} define lo que es un término en una función.
+ * Cada término tiene los siguientes componentes:
+ * <dl>
+ * <dt>Coeficiente de término {@code A}
+ * <dd>La constante que multiplica la función específica del término.
+ * <dt>Una función {@code F(x)}
+ * <dd>Dependerá del tipo de función; sea un {@code monomio} de grado {@code n},
+ * una función {@code trigonométrica}, {@code logarítmica}, {@code exponencial},
+ * etc.
+ * <dt>Coeficiente de variable {@code B}
+ * <dd>Una constante que multiplica la variable {@code x}.
+ * <dt>Representación general y específica del término
+ * <dd>General: {@code A*F(B*x)}<br>
+ * Específica: {@code 3*sen(2x)}
+ * </dl>
+ * <p>
+ * Es usada en la clase {@code Funcion} para definir cada un de los términos.
+ * <p>
+ * Creada como rediseño de la clase {@link FuncionBase} antes usada para definir
+ * funciones.
+ * 
+ * @author <a href="https://twitter.com/Jedabero" target="_blank">Jedabero</a>
+ *
+ */
+public class Termino {
+	
+	private BigDecimal A;
+	
+	private BigDecimal B;
+	
+	private TipoFuncion funcion;
+	
+	private FuncionTrig funTrig;
+	private static boolean xInRadians = true;
+	private static boolean xInDegrees = !xInRadians;
+	
+	private int grado;
+	
+	private String generic;
+	private String specific;
+	private String toString;
+
+	/**
+	 * Regresa el valor del coeficiente del término.
+	 * @return coeficiente A
+	 */
+	public BigDecimal getA() {
+		return A;
+	}
+
+	/**
+	 * Modifica el valor del coeficiente del término.
+	 * @param	a el nuevo valor del coeficiente.
+	 */
+	public void setA(BigDecimal a) {
+		A = a;
+	}
+
+	/**
+	 * Regresa el valor del coeficiente de la variable.
+	 * @return el valor del coeficiente
+	 */
+	public BigDecimal getB() {
+		return B;
+	}
+
+	/**
+	 * Modifica valor del coeficiente de la variable.
+	 * @param	b el nuevo valor del coeficiente
+	 */
+	public void setB(BigDecimal b) {
+		B = b;
+	}
+	
+	/**
+	 * Regresa el tipo de función de este término.
+	 * @return el tipo de función
+	 */
+	public TipoFuncion getFuncion() {
+		return funcion;
+	}
+
+	/**
+	 * Modifica el actual tipo de función.
+	 * @param	funcion el nuevo tipo de función.
+	 */
+	public void setFuncion(TipoFuncion funcion) {
+		this.funcion = funcion;
+	}
+	
+	/**
+	 * Regresa el tipo de función de este término.
+	 * @return el tipo de función
+	 */
+	public FuncionTrig getFunTrig() {
+		return funTrig;
+	}
+
+	/**
+	 * Modifica el actual tipo de función.
+	 * @param	ft el nuevo tipo de función.
+	 */
+	public void setFunTrig(FuncionTrig ft) {
+		this.funTrig = ft;
+	}
+	
+	/**
+	 * @return the xInRadians
+	 */
+	public static boolean isXinRadians() {
+		return xInRadians;
+	}
+
+	/**
+	 * @param xInRad the xInRadians to set
+	 */
+	public static void setXinRadians(boolean xInRad) {
+		xInRadians = xInRad;
+		xInDegrees = !xInRad;
+	}
+
+	/**
+	 * @return the xInDegrees
+	 */
+	public static boolean isXinDegrees() {
+		return xInDegrees;
+	}
+
+	/**
+	 * @param xInDeg the xInDegrees to set
+	 */
+	public void setXinDegrees(boolean xInDeg) {
+		xInDegrees = xInDeg;
+		xInRadians = !xInDeg;
+	}
+	
+	/**
+	 * Regresa el grado de  la función polinómica.
+	 * @return the grado
+	 */
+	public int getGrado() {
+		return grado;
+	}
+
+	/**
+	 * Modifica el grado de la función polinómica
+	 * @param	grado el nuevo grado 
+	 */
+	public void setGrado(int grado) {
+		this.grado = grado;
+	}
+
+	/**
+	 * Evalúa y regresa el valor del término.
+	 * @param	x el valor de la variable independiente
+	 * @return el valor evaluado.
+	 */
+	public BigDecimal valorImagen(BigDecimal x) {
+		switch(this.funcion){
+		case POLINOMICA:
+			return valorImagenPolinomica(x, getGrado());
+		case TRIGONOMETRICA:
+			return valorImagenTrigonometrica(x, getFunTrig(), isXinRadians(), isXinDegrees());
+		case EXPONENCIAL:
+			return getA().multiply(Big.exp(x.multiply(getB())));
+		case LOGARITMICA:
+			return getA().multiply(Big.log(x.multiply(getB())));
+		case RACIONAL:
+			break;
+		default: 
+			return null;
+		}
+		return null;
+	}
+	
+	/**
+	 * Evalúa y regresa el valor de un término tipo polinómico.
+	 * @param	x el valor de la variable independiente
+	 * @param	g el grado del monomio
+	 * @return el valor evaluado.
+	 */
+	private BigDecimal valorImagenPolinomica(BigDecimal x, int g) {
+		return getA().multiply(x.pow(g));
+	}
+	
+	/**
+	 * Evalúa y regresa el valor de un término tipo trigonométrico.
+	 * @param	x el valor de la variable independiente
+	 * @param	ft el tipo de función trigonométrica
+	 * @param	rad si {@code x} está en radianes
+	 * @param	deg si {@code x} está en grados
+	 * @return el valor evaluado.
+	 */
+	private BigDecimal valorImagenTrigonometrica(BigDecimal x, FuncionTrig ft,
+			boolean rad, boolean deg) {
+		return getA().multiply(M.calculaTrig(ft, x.multiply(getB()), rad, deg));
+	}
+
+	/**
+	 * Regresa la representación general del término.
+	 * @return la representación general
+	 */
+	public String getGeneric() {
+		return generic;
+	}
+
+	/**
+	 * Regresa la representación específica del término.
+	 * @return la representación específica
+	 */
+	public String getSpecific() {
+		return specific;
+	}
+
+	/** Inicializa la representación específica y general del término. */
+	public void initGenEsp(){
+		String gS = "";
+		switch(getFuncion()){
+		case POLINOMICA:
+			int g = getGrado();
+			switch(g){
+			case 0: gS += "A"; break;
+			case 1: gS += "Ax"; break;
+			default: gS += "Ax<sup>"+g+"</sup>"; break;
+			}
+			break;
+		case TRIGONOMETRICA:
+			FuncionTrig ft = getFunTrig();
+			switch(ft){
+			case SENO: gS += "Asin(Bx)"; break;
+			case COSENO: gS += "Acos(Bx)"; break;
+			case TANGENTE: gS += "Atan(Bx)"; break;
+			case SECANTE: gS += "Asec(Bx)"; break;
+			case COSECANTE: gS += "Acsc(Bx)"; break;
+			case COTANGENTE: gS += "Acot(Bx)"; break;
+			default: gS += ""; break;
+			}
+			break;
+		case EXPONENCIAL: gS += "Ae<sup>Bx</sup>"; break;
+		case LOGARITMICA: gS += "Aln(Bx)"; break;
+		case RACIONAL: /* TODO RACIONAL */ break;
+		default: break;
+		}
+		this.generic = gS;
+		
+		String sS = "";
+		BigDecimal a = getA();
+		int signA = a.signum();
+		boolean Aeq1 = a.abs().compareTo(BigDecimal.ONE)==0;
+		boolean Aeq0 = signA==0;
+		BigDecimal b = getB();
+		int signB = b.signum();
+		boolean Beq1 = b.abs().compareTo(BigDecimal.ONE)==0;
+		boolean Beq0 = signB==0;
+		boolean TermEq0 = Aeq0;
+		boolean TermEq1 = false;
+		boolean TermEqInf = false;
+		
+		if(!TermEq0||!TermEq1||!TermEqInf){
+			if(signA==-1) sS +="- ";
+			
+			switch(getFuncion()){
+			case POLINOMICA:
+				int g = getGrado();
+				toString = a+"*x^"+g;
+				switch(g){
+				case 0:
+					sS += a.abs();
+					break;
+				case 1:
+					if(!Aeq1) sS += a.abs();
+					sS += "x";
+					break;
+				default:
+					if(!Aeq1) sS += a.abs();
+					sS += "x<sup>"+g+"</sup>";
+					break;
+				}
+				break;
+				
+			case TRIGONOMETRICA:
+				FuncionTrig ft = getFunTrig();
+				toString = a+"*"+ft+"("+b+"*x)";
+				if(!Beq0){
+					if(!Aeq1) sS += a.abs();
+					
+					switch(ft){
+					case SENO:
+						sS += "sin(";
+						break;
+					case COSENO:
+						sS += "cos(";
+						break;
+					case TANGENTE:
+						sS += "tan(";
+						break;
+					case SECANTE:
+						sS += "sec(";
+						break;
+					case COSECANTE:
+						sS += "csc(";
+						break;
+					case COTANGENTE:
+						sS += "cot(";
+						break;
+					default:
+						sS += "";
+						break;
+					}
+					if(signB==-1) sS +="-";
+					if(!Beq1) sS += b.abs();
+					sS += "x)";
+					break;
+				}else{
+					switch(ft){
+					case SENO:
+					case TANGENTE:
+						break;
+					case COSENO:
+					case SECANTE:
+						break;
+					case COSECANTE:
+					case COTANGENTE:
+						break;
+					default:
+					}
+				}
+			case EXPONENCIAL:
+				toString = a+"*e^("+b+"*x)";
+				if(!Aeq1) sS += a.abs();
+				sS += "e<sup>";
+				if(signB==-1) sS +="-";
+				if(!Beq1) sS += b.abs();
+				sS += "x</sup>";
+				break;
+				
+			case LOGARITMICA:
+				toString = a+"*ln("+b+"*x)";
+				if(!Aeq1) sS += a.abs();
+				sS += "ln(";
+				if(signB==-1) sS +="-";
+				if(!Beq1) sS += b.abs();
+				sS += "x)";
+				break;
+				
+			case RACIONAL:
+				break;
+			default: break;
+			}
+		}else if(TermEq0){
+			sS += "0";
+		}else if(TermEq1){
+			sS += "1";
+		}else if(TermEqInf){
+			sS += "Inf";
+		}
+		
+		this.specific = sS;
+	}
+	
+	
+	
+	public String toString(){
+		return toString;
+	}
+	
+	/**
+	 * Crea un término con los parámetros mínimos.
+	 * Arroja un error si el tipo es {@link TipoFuncion#POLINOMICA} o 
+	 * {@link TipoFuncion#TRIGONOMETRICA}
+	 * El valor resultante del término va a depender de el tipo de función
+	 * {@code f} ya que es este quien define como calcularlo.
+	 * @param	a el coeficiente del término
+	 * @param	f el tipo de función
+	 * @param	b el coeficiente de la variable
+	 * @exception	Exception lanzado si el tipo de función es no esperado
+	 */
+	private Termino(BigDecimal a, BigDecimal b, TipoFuncion f)
+			throws CustomException {
+		if(f.equals(TipoFuncion.POLINOMICA)||f.equals(TipoFuncion.TRIGONOMETRICA)){
+			throw CustomException.tipoIncorrecto();
+		}else if(a.signum()==0){
+			throw CustomException.coefAeq0();
+		}else{
+			setFuncion(f);
+		}
+		setA(a);  setB(b);
+		initGenEsp();
+	}
+	
+	/**
+	 * Crea un término de tipo {@link TipoFuncion#POLINOMICA}.
+	 * 
+	 * @param	a el coeficiente del término
+	 * @param	g el grado del término
+	 */
+	private Termino(BigDecimal a, int g) throws CustomException {
+		if(g<0 || g>999999999){
+			throw CustomException.gradoMenorQue0();
+		}else if(a.signum()==0){
+			throw CustomException.coefAeq0();
+		}else{
+			setGrado(g);
+		}
+		setA(a);
+		setB(BigDecimal.ONE);
+		setFuncion(TipoFuncion.POLINOMICA);
+		initGenEsp();
+	}
+	
+	/**
+	 * Crea un término del tipo {@link TipoFuncion#TRIGONOMETRICA}.
+	 * @param	a el coeficiente del término
+	 * @param	b el coeficiente de la variable
+	 * @param	ft el tipo de función trigonométrica
+	 */
+	private Termino(BigDecimal a, BigDecimal b, FuncionTrig ft)
+			throws CustomException {
+		if(a.signum()==0){
+			throw CustomException.coefAeq0();
+		}
+		setA(a); setB(b);
+		setFuncion(TipoFuncion.TRIGONOMETRICA);
+		setFunTrig(ft); 
+		initGenEsp();
+	}
+	
+	/**
+	 * @param grado	el grado del monomio
+	 * @param coef	el coeficiente del término
+	 * @param pos	la posición en la función
+	 * @return un termino de tipo polinómico de grado {@code grado}
+	 */
+	public static Termino polinomio(int grado, BigDecimal coef){
+		Termino t = null;
+		try{
+			t = new Termino(coef, grado);
+		}catch(CustomException et){
+			String etm = et.getMessage();
+			O.pln("err: "+etm);
+			if(etm.equals(CustomException.gradoMenorQue0().getMessage())){
+				t = polinomio(1, coef);
+			}else if(etm.equals(CustomException.coefAeq0().getMessage())){
+				t = polinomio(grado, BigDecimal.ONE);
+			}
+		}
+		return t;
+	}
+	
+	/**
+	 * @param ft	el tipo de función trigonométrica
+	 * @param coefA	el coeficiente del término
+	 * @param coefB	el coeficiente que acompaña a x
+	 * @param pos	la posición en la función
+	 * @return un termino de tipo trigonométrico tipo {@code ft}
+	 */
+	public static Termino trigonometrico(FuncionTrig ft, BigDecimal coefA,
+			BigDecimal coefB){
+		Termino t = null;
+		try{
+			t =  new Termino(coefA, coefB, ft);
+			return t;
+		}catch(CustomException et){
+			String etm = et.getMessage();
+			O.pln("err: "+etm);
+			t = trigonometrico(ft, BigDecimal.ONE, coefB);
+		}
+		return t;
+	}
+	
+	/**
+	 * @param coefA el coeficiente del término
+	 * @param coefB el coeficiente que acompaña a x
+	 * @param i		la posición en la función
+	 * @return un termino de tipo exponencial
+	 */
+	public static Termino exponencial(BigDecimal coefA, BigDecimal coefB){
+		Termino t = null;
+		try{
+			t =  new Termino(coefA, coefB, TipoFuncion.EXPONENCIAL);
+			return t;
+		}catch(CustomException et){
+			String etm = et.getMessage();
+			O.pln("err: "+etm);
+			t = exponencial(BigDecimal.ONE, coefB);
+		}
+		return t;
+	}
+	
+	/**
+	 * Crea un término de tipo logarítmico con los parámetros dados.
+	 * @param coefA el coeficiente del término
+	 * @param coefB el coeficiente que acompaña a x
+	 * @param i		la posición en la función
+	 * @return un termino de tipo logarítmico
+	 */
+	public static Termino logaritmo(BigDecimal coefA, BigDecimal coefB){
+		Termino t = null;
+		try{
+			t =  new Termino(coefA, coefB, TipoFuncion.LOGARITMICA);
+			return t;
+		}catch(CustomException et){
+			String etm = et.getMessage();
+			O.pln("err: "+etm);
+			t = logaritmo(BigDecimal.ONE, coefB);
+		}
+		return t;
+	}
+	
+}
