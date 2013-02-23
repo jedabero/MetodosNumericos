@@ -9,7 +9,6 @@ import java.util.ListIterator;
 
 import resources.Constantes.TipoFuncion;
 import resources.CustomException;
-import stream.O;
 
 /**
  * La clase {@code Funcion} define una función explícita de la forma
@@ -97,12 +96,13 @@ public class Funcion{
 		String g = "";
 		String s = g;
 		toString = g;
+		
 		for (iterator = getTerminos().listIterator(); iterator.hasNext();) {
 			term = iterator.next();
 			
 			boolean positiveA = term.getA().signum()==1;
 			boolean indexIs0 = iterator.previousIndex()==0;
-			g += (indexIs0?"":(positiveA?" + ":" - ")) + term.getGeneric();
+			g += (indexIs0?"":(positiveA?" + ":" - "))+"- "+ term.getGeneric();
 			s += (indexIs0?"":(positiveA?" + ":" ")) + term.getSpecific();
 			toString += (indexIs0?"":" + ") + term;
 		}
@@ -150,27 +150,6 @@ public class Funcion{
 			alT.add(Termino.polinomio(i, coefs[i]));
 		}
 		return new Funcion(alT);
-	}
-	
-	/** @param args */
-	public static void main(String[] args) {
-		BigDecimal[] coefs = {BigDecimal.ONE.negate(),BigDecimal.ONE.negate(),BigDecimal.ONE};
-		javax.swing.JFrame jf = new javax.swing.JFrame();
-		javax.swing.JLabel jl = new javax.swing.JLabel();
-		Funcion f = null;
-		
-		try {
-			f = polinomio(2, coefs);
-		} catch (Exception e) {
-			O.pln("err: "+e.getMessage());
-		}
-		
-		jl.setText("<html>"+f.getSpecific()+"<p>"+f.getGeneric()+"<p>"+f+"</html>");
-		O.pln(f.valorImagen(BigDecimal.TEN));
-		jf.add(jl);
-		jf.setVisible(true);
-		jf.setSize(300,300);
-		jf.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
 	}
 	
 }

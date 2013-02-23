@@ -8,7 +8,8 @@ import java.math.BigDecimal;
  * &#8721;<i>a<sub>i</sub>x<sup>i</sup></i>
  * desde i = 0 hasta n, donde n es el grado de la función.
  * @author <a href="https://twitter.com/Jedabero" target="_blank">Jedabero</a>
- *
+ * @deprecated desde la versión 0.4, por Funcion
+ * @see Funcion
  */
 
 public class FuncionPolinomica extends FuncionBase{

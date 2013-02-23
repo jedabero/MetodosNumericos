@@ -8,9 +8,14 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.Shape;
+import java.awt.geom.Path2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.ListIterator;
 import java.util.StringTokenizer;
 
 import javax.imageio.ImageIO;
@@ -30,10 +35,22 @@ public class JGrafica extends JPanel {
 	/** */
 	private static final long serialVersionUID = -2267792839289943254L;
 	
-	private CoordenadasGraficasMIA cgMIA;
+	private CoordenadasGraficasMIA cgMIA;	//Custom MouseInputAdapter
 	
 	private Point gCoords; //Inside graphic starting coordinates.
 	private Dimension gDim;//Inside graphic dimensions.
+	
+	private Value X;
+	private Value Y;
+	
+	private class Value {
+		BigDecimal max;
+		BigDecimal min;
+		private Value(BigDecimal max, BigDecimal min){
+			this.max = max;
+			this.min = min;
+		}
+	}
 	
 	/**
 	 * @return the gCoords
@@ -77,19 +94,53 @@ public class JGrafica extends JPanel {
 	}
 	
 	/**
-	 * @param g
+	 * 
+	 * @param g el contexto gráfico del componente en el que se dibuja
 	 */
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
 		Graphics2D g2d = (Graphics2D)g;
-		updateCoordsDim();
 		
+		ArrayList<Point> aLpP = new ArrayList<Point>();
+		for(int i=0;i<51;i++){
+			aLpP.add((i%5==0)? null : new Point((2*i*i)/9,9*i));
+		}
+		O.pln(aLpP);
+		g2d.draw(polylineShape(aLpP));
+		updateCoordsDim();
 		dibujarDivisiones(g2d, true, true);
 		dibujarEjes(g2d);
 		dibujarEtiquetas(true);
 		
 	}
-
+	
+	private Shape polylineShape(ArrayList<Point> alP){
+		Path2D p2d = new Path2D.Double();
+		ListIterator<Point> iterator;
+		boolean isPointFirst = true;
+		
+		for (iterator = alP.listIterator(); iterator.hasNext();) {
+			Point currentPoint = iterator.next();
+			boolean isPointNull = (currentPoint==null);
+			
+			if(isPointNull){
+				O.pln(currentPoint+""+iterator.previousIndex());
+				isPointFirst = true;
+			}else{
+				O.pln(currentPoint.toString().substring(14)+""+iterator.previousIndex());
+				if(isPointFirst){
+					p2d.moveTo(currentPoint.x, currentPoint.y);
+					isPointFirst = false;
+				}else{
+					p2d.lineTo(currentPoint.x, currentPoint.y);
+				}
+			}
+			
+		}
+		
+		return p2d;
+	}
+	
 	private void dibujarDivisiones(Graphics2D g2D, boolean divP, boolean divSec) {
 		// TODO Divisiones
 		
@@ -107,7 +158,7 @@ public class JGrafica extends JPanel {
 	}
 	
 	/**
-	 * 
+	 * Actualiza las dimensiones de la gráfica
 	 */
 	public void updateCoordsDim(){
 		int w = this.getWidth(); int h = this.getHeight();
@@ -128,7 +179,7 @@ public class JGrafica extends JPanel {
 		jsJF.setVisible(true);
 		
 		try{
-			Thread.sleep(1500);
+			Thread.sleep(3000);
 			File f = new File("gráfica.png");
 			
 			JFileChooser jfc = new JFileChooser();
