@@ -7,7 +7,6 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.ListIterator;
 
-import resources.Constantes.FuncionTrig;
 import resources.Constantes.TipoFuncion;
 import resources.CustomException;
 import stream.O;
@@ -103,10 +102,9 @@ public class Funcion{
 			
 			boolean positiveA = term.getA().signum()==1;
 			boolean indexIs0 = iterator.previousIndex()==0;
-			String spS = indexIs0?"":(positiveA?" + ":" ");
-			g += spS + term.getGeneric();
-			s += spS + term.getSpecific();
-			toString += spS + term;
+			g += (indexIs0?"":(positiveA?" + ":" - ")) + term.getGeneric();
+			s += (indexIs0?"":(positiveA?" + ":" ")) + term.getSpecific();
+			toString += (indexIs0?"":" + ") + term;
 		}
 		
 		this.generic = g;
@@ -156,7 +154,7 @@ public class Funcion{
 	
 	/** @param args */
 	public static void main(String[] args) {
-		BigDecimal[] coefs = {BigDecimal.ONE,BigDecimal.ONE.negate(),BigDecimal.ONE};
+		BigDecimal[] coefs = {BigDecimal.ONE.negate(),BigDecimal.ONE.negate(),BigDecimal.ONE};
 		javax.swing.JFrame jf = new javax.swing.JFrame();
 		javax.swing.JLabel jl = new javax.swing.JLabel();
 		Funcion f = null;
@@ -167,8 +165,8 @@ public class Funcion{
 			O.pln("err: "+e.getMessage());
 		}
 		
-		jl.setText("<html>"+f.getSpecific()+"</html>");
-		O.pln(f.valorImagen(BigDecimal.ONE));
+		jl.setText("<html>"+f.getSpecific()+"<p>"+f.getGeneric()+"<p>"+f+"</html>");
+		O.pln(f.valorImagen(BigDecimal.TEN));
 		jf.add(jl);
 		jf.setVisible(true);
 		jf.setSize(300,300);
