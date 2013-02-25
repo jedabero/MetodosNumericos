@@ -25,8 +25,8 @@ public class CustomException extends Exception {
 	 * Crea una excepción para cuando el grado es menor que 0.
 	 * @return una excepción para cuando el grado es menor que 0
 	 */
-	public static CustomException gradoMenorQue0(){
-		return new CustomException("Grado no puede ser menor que 0");
+	public static CustomException gradoMenorQue1(){
+		return new CustomException("Grado no puede ser menor que 1");
 	}
 	
 	/**

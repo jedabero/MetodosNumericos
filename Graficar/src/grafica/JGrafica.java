@@ -27,6 +27,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import math.Big;
 
 import funciones.Funcion;
+import funciones.Termino;
 
 import resources.BigDecimalCoord;
 import resources.Constantes.FuncionTrig;
@@ -40,7 +41,7 @@ import stream.O;
  *
  */
 public class JGrafica extends JPanel {
-
+	
 	/** */
 	private static final long serialVersionUID = -2267792839289943254L;
 	
@@ -57,6 +58,12 @@ public class JGrafica extends JPanel {
 	private ArrayList<BigDecimalCoord[]> alfCoords =
 			new ArrayList<BigDecimalCoord[]>();
 	
+	private ArrayList<Funcion> arrLF;
+	
+	private boolean divPrin = true;
+	private boolean divSec = false;
+	private boolean etiquetas = true;
+	
 	/**
 	 * @return the gCoords
 	 */
@@ -69,6 +76,19 @@ public class JGrafica extends JPanel {
 	 */
 	public Dimension getgDim() {
 		return gDim;
+	}
+	
+	/**
+	 * @return el intervalo X
+	 */
+	public Interval getXinterval(){
+		return X;
+	}
+	/**
+	 * @return el intervalo Y
+	 */
+	public Interval getYinterval(){
+		return Y;
 	}
 
 	/**
@@ -84,24 +104,25 @@ public class JGrafica extends JPanel {
 	
 	/**
 	 * Crea una Gráfica
-	 * @param arrLF lista de funciones
+	 * @param alf lista de funciones
 	 * @param dim Dimensión de la gráfica
 	 * 
 	 */
-	public JGrafica(ArrayList<Funcion> arrLF, Dimension dim){
+	public JGrafica(ArrayList<Funcion> alf, Dimension dim){
 		setSize(dim);
+		this.arrLF = alf;
 		
 		step = BigDecimal.valueOf(0.01);//TODO arreglos respecto al paso
 		updateCoordsDim();
-		calculos(arrLF);
+		calculos();
 		
-		cgMIA = new CoordenadasGraficasMIA(this);
+		cgMIA = new CoordenadasGraficasMIA(this, getXinterval(), getYinterval());
 		addMouseListener(cgMIA);
 		addMouseMotionListener(cgMIA);
 		
 	}
 	
-	private void calculos(ArrayList<Funcion> arrLF){
+	private void calculos(){
 		X = new Interval(BigDecimal.ONE.negate(), BigDecimal.ONE);//init Xinterval
 		BigDecimal d;
 		d = X.getLength().divide(step, RoundingMode.HALF_UP);
@@ -121,14 +142,36 @@ public class JGrafica extends JPanel {
 				x = X.min().add(step.multiply(BigDecimal.valueOf(i)));//x value
 				if(x.compareTo(X.max())==1) x = X.max();
 				y[i] = f.valorImagen(x);// y value
-				fCoords[i] = new BigDecimalCoord(x, y[i]);//setting bdcoords
+				fCoords[i] = new BigDecimalCoord(x, y[i]);//setting bdcoords O.pln(fCoords[i])
 			}
 			alfCoords.add(fCoords);
 			
 			maxy[lif.previousIndex()] = Big.max(y);
 			miny[lif.previousIndex()] = Big.min(y);
 		}
-		Y = new Interval(Big.min(miny), Big.max(maxy));
+		BigDecimal maxY = Big.max(maxy);
+		BigDecimal minY = Big.min(miny);
+		
+		if(minY.compareTo(maxY)==0){
+			int l = minY.signum();
+			switch(l){
+			case 1:
+				maxY = maxY.multiply(BigDecimal.valueOf(2));
+				minY = maxY.negate();
+				break;
+			case -1:
+				minY = minY.multiply(BigDecimal.valueOf(2));
+				maxY = minY.negate();
+				break;
+			case 0:
+			default:
+				maxY = BigDecimal.ONE;
+				minY = BigDecimal.ONE.negate();
+				break;
+			}
+		}
+		
+		Y = new Interval(minY, maxY);
 		O.pln("x="+X);O.pln("y="+Y);
 	}
 	
@@ -138,6 +181,7 @@ public class JGrafica extends JPanel {
 	 */
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
+		O.pln("repainting!!!");
 		Graphics2D g2d = (Graphics2D)g;
 		
 		updateCoordsDim();
@@ -150,10 +194,9 @@ public class JGrafica extends JPanel {
 		}
 		g2d.draw(polylineShape(aLpP));
 		
-		dibujarDivisiones(g2d, true, true);
+		dibujarDivisiones(g2d, divPrin, divSec);
 		dibujarEjes(g2d);
-		dibujarEtiquetas(true);
-		
+		dibujarEtiquetas(etiquetas);
 	}
 	
 	private Shape polylineShape(ArrayList<Point> alP){
@@ -166,10 +209,10 @@ public class JGrafica extends JPanel {
 			boolean isPointNull = (currentPoint==null);
 			
 			if(isPointNull){
-				O.pln(iterator.previousIndex()+""+currentPoint);
+				//O.pln(iterator.previousIndex()+""+currentPoint);
 				isPointFirst = true;
 			}else{
-				O.pln(iterator.previousIndex()+currentPoint.toString().substring(14));
+				//O.pln(iterator.previousIndex()+currentPoint.toString().substring(14));
 				if(isPointFirst){
 					p2d.moveTo(currentPoint.x, currentPoint.y);
 					isPointFirst = false;
@@ -218,9 +261,10 @@ public class JGrafica extends JPanel {
 		jsJF.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
 		BigDecimal[] coefs = {BigDecimal.TEN, BigDecimal.TEN, BigDecimal.TEN};
 		ArrayList<Funcion> alf = new ArrayList<Funcion>();
+		alf.add(new Funcion(Termino.constante(BigDecimal.ZERO)));
+		alf.add(Funcion.trigonometrica(FuncionTrig.SIN, coefs[0], coefs[1]));
 		try {
 			alf.add(Funcion.polinomio(2, coefs));
-			alf.add(Funcion.trigonometrica(FuncionTrig.SIN, coefs[0], coefs[1]));
 		} catch (CustomException e) {
 			e.printStackTrace();
 		}

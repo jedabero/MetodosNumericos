@@ -147,7 +147,8 @@ public class Funcion{
 			throws CustomException{
 		if(coefs.length<=n) throw CustomException.arrayIncompleto();
 		ArrayList<Termino> alT = new ArrayList<Termino>();
-		for(int i=0;i<=n;i++){
+		alT.add(Termino.constante(coefs[0]));
+		for(int i=1;i<=n;i++){
 			alT.add(Termino.polinomio(i, coefs[i]));
 		}
 		return new Funcion(alT);

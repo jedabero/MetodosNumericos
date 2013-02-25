@@ -64,7 +64,7 @@ public class GraficadorUI{
 	
 	private JFrame mainWindow;
 	private ItemListener il;
-	private MouseInputAdapter mml;
+	private MouseInputAdapter mia;
 	private ActionListener añadirFuncionAL, editarFuncionAL, quitarFuncionAL,
 	graficaAL, guardarAL, salirAL, menuAyudaAL, cambiaColorAL;
 	
@@ -203,8 +203,8 @@ public class GraficadorUI{
 		mainWindow.setJMenuBar(barraMenu);
 		
 		mainWindow.add(panelGrid);
-		grafica.addMouseListener(mml);
-		grafica.addMouseMotionListener(mml);
+		grafica.addMouseListener(mia);
+		grafica.addMouseMotionListener(mia);
 		mainWindow.addComponentListener(ca);
 		
 		mainWindow.setVisible(true);
@@ -240,7 +240,7 @@ public class GraficadorUI{
 			}
 		};
 		
-		mml = new MouseInputAdapter() {
+		mia = new MouseInputAdapter() {
 			@Override
 			public void mouseDragged(MouseEvent me) {
 				// TODO This might be useful

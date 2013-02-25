@@ -173,6 +173,8 @@ public class Termino {
 	 */
 	public BigDecimal valorImagen(BigDecimal x) {
 		switch(this.funcion){
+		case CONSTANTE:
+			return getA();
 		case POLINOMICA:
 			return valorImagenPolinomica(x, getGrado());
 		case TRIGONOMETRICA:
@@ -395,7 +397,7 @@ public class Termino {
 			throws CustomException {
 		if(f.equals(TipoFuncion.POLINOMICA)||f.equals(TipoFuncion.TRIGONOMETRICA)){
 			throw CustomException.tipoIncorrecto();
-		}else if(a.signum()==0){
+		}else if((a.signum()==0)&&(f!=TipoFuncion.CONSTANTE)){
 			throw CustomException.coefAeq0();
 		}else{
 			setFuncion(f);
@@ -411,8 +413,8 @@ public class Termino {
 	 * @param	g el grado del término
 	 */
 	private Termino(BigDecimal a, int g) throws CustomException {
-		if(g<0 || g>999999999){
-			throw CustomException.gradoMenorQue0();
+		if(g<1 || g>999999999){
+			throw CustomException.gradoMenorQue1();
 		}else if(a.signum()==0){
 			throw CustomException.coefAeq0();
 		}else{
@@ -442,6 +444,21 @@ public class Termino {
 	}
 	
 	/**
+	 * 
+	 * @param coef
+	 * @return una función constante
+	 */
+	public static Termino constante(BigDecimal coef){
+		Termino t = null;
+		try{
+			t = new Termino(coef, BigDecimal.ZERO, TipoFuncion.CONSTANTE);
+		}catch(CustomException ce){
+			t = constante(BigDecimal.ONE);
+		}
+		return t;
+	}
+	
+	/**
 	 * @param grado	el grado del monomio
 	 * @param coef	el coeficiente del término
 	 * @param pos	la posición en la función
@@ -453,8 +470,8 @@ public class Termino {
 			t = new Termino(coef, grado);
 		}catch(CustomException et){
 			String etm = et.getMessage();
-			O.pln("err: "+etm);
-			if(etm.equals(CustomException.gradoMenorQue0().getMessage())){
+			O.pln("err:? "+etm);
+			if(etm.equals(CustomException.gradoMenorQue1().getMessage())){
 				t = polinomio(1, coef);
 			}else if(etm.equals(CustomException.coefAeq0().getMessage())){
 				t = polinomio(grado, BigDecimal.ONE);

@@ -18,6 +18,8 @@ public interface Constantes {
 	 *
 	 */
 	public enum TipoFuncion{
+		/** Constante para determinar la función como una constante. */
+		CONSTANTE,
 		/** Constante para determinar la función como Polinómica. */
 		POLINOMICA,
 		/** Constante para determinar la función como Trigonométrica. */
