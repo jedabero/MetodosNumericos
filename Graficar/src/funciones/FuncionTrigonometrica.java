@@ -94,12 +94,12 @@ public class FuncionTrigonometrica extends FuncionBase {
 			default: e += "+ A<sub>"+i+"</sub>"; break;
 			}
 			switch(getTipos()[i]){
-			case SENO: e += "sen("; break;
-			case COSENO: e += "cos("; break;
-			case TANGENTE: e += "tan("; break;
-			case SECANTE: e += "sec("; break;
-			case COSECANTE: e += "csc("; break;
-			case COTANGENTE: e += "cot("; break;
+			case SIN: e += "sen("; break;
+			case COS: e += "cos("; break;
+			case TAN: e += "tan("; break;
+			case SEC: e += "sec("; break;
+			case CSC: e += "csc("; break;
+			case COT: e += "cot("; break;
 			default: break;
 			}
 			
@@ -118,9 +118,9 @@ public class FuncionTrigonometrica extends FuncionBase {
 			boolean Aieq1 = Ai.abs().compareTo(BigDecimal.ONE)==0;
 			int signBi = Bi.signum();
 			boolean Bieq1 = Bi.abs().compareTo(BigDecimal.ONE)==0;
-			boolean isZero = (signBi==0)&&((tip==FuncionTrig.SENO)||(tip==FuncionTrig.TANGENTE));
-			boolean isOne  = (signBi==0)&&((tip==FuncionTrig.COSENO)||(tip==FuncionTrig.SECANTE));
-			boolean isInf  = (signBi==0)&&((tip==FuncionTrig.COSECANTE)||(tip==FuncionTrig.COTANGENTE));
+			boolean isZero = (signBi==0)&&((tip==FuncionTrig.SIN)||(tip==FuncionTrig.TAN));
+			boolean isOne  = (signBi==0)&&((tip==FuncionTrig.COS)||(tip==FuncionTrig.SEC));
+			boolean isInf  = (signBi==0)&&((tip==FuncionTrig.CSC)||(tip==FuncionTrig.COT));
 			
 			if(isInf){
 				getB()[i] = BigDecimal.ONE.multiply(BigDecimal.valueOf(Big.randomSign()));
@@ -146,12 +146,12 @@ public class FuncionTrigonometrica extends FuncionBase {
 			
 			if((signAi!=0)&&(signBi!=0)){
 				switch(tip){
-				case SENO: f += "sen("; break;
-				case COSENO: f += "cos("; break;
-				case TANGENTE: f += "tan("; break;
-				case SECANTE: f += "sec("; break;
-				case COSECANTE: f += "csc("; break;
-				case COTANGENTE: f += "cot("; break;
+				case SIN: f += "sen("; break;
+				case COS: f += "cos("; break;
+				case TAN: f += "tan("; break;
+				case SEC: f += "sec("; break;
+				case CSC: f += "csc("; break;
+				case COT: f += "cot("; break;
 				default: break;
 				}
 				if(!Bieq1) f += Bi;

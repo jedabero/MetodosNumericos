@@ -203,7 +203,7 @@ public class FuncionBase implements Constantes{
 				RoundingMode.HALF_UP).intValue();
 		x = new BigDecimal[l + 1];
 		for(int i=0;i<x.length;i++){
-			x[i] = getIntervalo()[0].add(paso.multiply(new BigDecimal(""+i)));
+			x[i] = getIntervalo()[0].add(paso.multiply(BigDecimal.valueOf(i)));
 		}
 		
 		y = new BigDecimal[l + 1];

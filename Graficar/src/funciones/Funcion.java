@@ -7,6 +7,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.ListIterator;
 
+import resources.Constantes.FuncionTrig;
 import resources.Constantes.TipoFuncion;
 import resources.CustomException;
 
@@ -92,14 +93,12 @@ public class Funcion{
 	/** Inicializa la representación específica y general del término. */
 	public void initGenEsp(){
 		ListIterator<Termino> iterator;
-		Termino term;
 		String g = "";
 		String s = g;
 		toString = g;
 		
 		for (iterator = getTerminos().listIterator(); iterator.hasNext();) {
-			term = iterator.next();
-			
+			Termino term = iterator.next();
 			boolean positiveA = term.getA().signum()==1;
 			boolean indexIs0 = iterator.previousIndex()==0;
 			g += (indexIs0?"":(positiveA?" + ":" - "))+"- "+ term.getGeneric();
@@ -136,19 +135,35 @@ public class Funcion{
 	}
 	
 	/**
-	 * @param grado
-	 * @param coefs
-	 * @return una función polinómica de grado {@code grado} con todos los
+	 * Crea un función polinómica de grado {@code grado} con todos los términos
+	 * 
+	 * @param n el {@code grado} de la función
+	 * @param coefs el array con los coeficientes
+	 * @return una función polinómica de grado {@code n} con todos los
 	 * términos
 	 * @throws CustomException 
 	 */
-	public static Funcion polinomio(int grado, BigDecimal[] coefs)
+	public static Funcion polinomio(int n, BigDecimal[] coefs)
 			throws CustomException{
-		if(coefs.length<=grado) throw CustomException.arrayIncompleto();
+		if(coefs.length<=n) throw CustomException.arrayIncompleto();
 		ArrayList<Termino> alT = new ArrayList<Termino>();
-		for(int i=0;i<=grado;i++){
+		for(int i=0;i<=n;i++){
 			alT.add(Termino.polinomio(i, coefs[i]));
 		}
+		return new Funcion(alT);
+	}
+	
+	/**
+	 * Crea un función trigonométrica de tipo {@code ft}
+	 * @param ft 
+	 * @param coefA 
+	 * @param coefB 
+	 * @return una función trigonométrica de tipo {@code ft}
+	 */
+	public static Funcion trigonometrica(FuncionTrig ft, BigDecimal coefA,
+			BigDecimal coefB){
+		ArrayList<Termino> alT = new ArrayList<Termino>();
+		alT.add(Termino.trigonometrico(ft, coefA, coefB));
 		return new Funcion(alT);
 	}
 	

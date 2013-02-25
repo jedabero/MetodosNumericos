@@ -465,7 +465,7 @@ public final class EditaFuncionDialog extends JDialog{
 					case TRIGONOMETRICA:
 						labelTerminos.setText(l.s("defTermL"));
 						FuncionTrig tp[] = new FuncionTrig[tempFuncion.getTerminos()];
-						for(int i=0; i<tp.length;i++) tp[i] = FuncionTrig.SENO;
+						for(int i=0; i<tp.length;i++) tp[i] = FuncionTrig.SIN;
 						tempFuncion = new FuncionTrigonometrica(
 								tempFuncion.getTerminos(), tp);
 						tempFuncion.update(FuncionBase.getPaso(),

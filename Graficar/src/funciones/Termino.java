@@ -243,12 +243,12 @@ public class Termino {
 		case TRIGONOMETRICA:
 			FuncionTrig ft = getFunTrig();
 			switch(ft){
-			case SENO: gS += "Asin(Bx)"; break;
-			case COSENO: gS += "Acos(Bx)"; break;
-			case TANGENTE: gS += "Atan(Bx)"; break;
-			case SECANTE: gS += "Asec(Bx)"; break;
-			case COSECANTE: gS += "Acsc(Bx)"; break;
-			case COTANGENTE: gS += "Acot(Bx)"; break;
+			case SIN: gS += "Asin(Bx)"; break;
+			case COS: gS += "Acos(Bx)"; break;
+			case TAN: gS += "Atan(Bx)"; break;
+			case SEC: gS += "Asec(Bx)"; break;
+			case CSC: gS += "Acsc(Bx)"; break;
+			case COT: gS += "Acot(Bx)"; break;
 			default: gS += ""; break;
 			}
 			break;
@@ -301,22 +301,22 @@ public class Termino {
 					if(!Aeq1) sS += a.abs();
 					
 					switch(ft){
-					case SENO:
+					case SIN:
 						sS += "sin(";
 						break;
-					case COSENO:
+					case COS:
 						sS += "cos(";
 						break;
-					case TANGENTE:
+					case TAN:
 						sS += "tan(";
 						break;
-					case SECANTE:
+					case SEC:
 						sS += "sec(";
 						break;
-					case COSECANTE:
+					case CSC:
 						sS += "csc(";
 						break;
-					case COTANGENTE:
+					case COT:
 						sS += "cot(";
 						break;
 					default:
@@ -329,14 +329,14 @@ public class Termino {
 					break;
 				}else{
 					switch(ft){
-					case SENO:
-					case TANGENTE:
+					case SIN:
+					case TAN:
 						break;
-					case COSENO:
-					case SECANTE:
+					case COS:
+					case SEC:
 						break;
-					case COSECANTE:
-					case COTANGENTE:
+					case CSC:
+					case COT:
 						break;
 					default:
 					}

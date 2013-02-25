@@ -37,17 +37,17 @@ public interface Constantes {
 	 */
 	public enum FuncionTrig{
 		/** Constante para determinar Seno. */
-		SENO,
+		SIN,
 		/** Constante para determinar Coseno. */
-		COSENO,
+		COS,
 		/** Constante para determinar Tangente. */
-		TANGENTE,
+		TAN,
 		/**  Constante para determinar Secante. */
-		SECANTE,
+		SEC,
 		/** Constante para determinar Cosecante. */
-		COSECANTE,
+		CSC,
 		/** Constante para determinar Cotangente. */
-		COTANGENTE ;
+		COT ;
 		
 	}
 	

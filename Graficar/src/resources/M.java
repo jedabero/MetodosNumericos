@@ -72,33 +72,33 @@ public final class M {
 		BigDecimal r = bd;
 		if(rad){
 			switch(ft){
-			case SENO:
+			case SIN:
 				r = Big.sin(bd); break;
-			case COSENO:
+			case COS:
 				r = Big.cos(bd); break;
-			case TANGENTE:
+			case TAN:
 				r = Big.tan(bd); break;
-			case SECANTE:
+			case SEC:
 				r = Big.sec(bd); break;
-			case COSECANTE:
+			case CSC:
 				r = Big.csc(bd); break;
-			case COTANGENTE:
+			case COT:
 				r = Big.cot(bd); break;
 			default: break;
 			}
 		}else if(deg){
 			switch(ft){
-			case SENO:
+			case SIN:
 				r = Big.sin(Big.toRadians(bd)); break;
-			case COSENO:
+			case COS:
 				r = Big.cos(Big.toRadians(bd)); break;
-			case TANGENTE:
+			case TAN:
 				r = Big.tan(Big.toRadians(bd)); break;
-			case SECANTE:
+			case SEC:
 				r = Big.sec(Big.toRadians(bd)); break;
-			case COSECANTE:
+			case CSC:
 				r = Big.csc(Big.toRadians(bd)); break;
-			case COTANGENTE:
+			case COT:
 				r = Big.cot(Big.toRadians(bd)); break;
 			default: break;
 			}

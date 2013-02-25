@@ -48,7 +48,7 @@ public class CustomException extends Exception {
 	}
 	
 	/**
-	 * @return una excepción cuando TODO
+	 * @return una excepción cuando haya una contradicción de longitud de array
 	 */
 	public static CustomException arrayIncompleto(){
 		return new CustomException("Al array le faltan datos para completar la" +
