@@ -234,6 +234,9 @@ public class Termino {
 	public void initGenEsp(){
 		String gS = "";
 		switch(getFuncion()){
+		case CONSTANTE:
+			gS += "A";
+			break;
 		case POLINOMICA:
 			int g = getGrado();
 			switch(g){
@@ -278,6 +281,9 @@ public class Termino {
 			if(signA==-1) sS +="- ";
 			
 			switch(getFuncion()){
+			case CONSTANTE:
+				sS += a;
+				break;
 			case POLINOMICA:
 				int g = getGrado();
 				toString = a+"*x^"+g;
@@ -389,8 +395,8 @@ public class Termino {
 	 * El valor resultante del término va a depender de el tipo de función
 	 * {@code f} ya que es este quien define como calcularlo.
 	 * @param	a el coeficiente del término
-	 * @param	f el tipo de función
 	 * @param	b el coeficiente de la variable
+	 * @param	f el tipo de función
 	 * @exception	Exception lanzado si el tipo de función es no esperado
 	 */
 	private Termino(BigDecimal a, BigDecimal b, TipoFuncion f)
@@ -449,7 +455,7 @@ public class Termino {
 	 * @return una función constante
 	 */
 	public static Termino constante(BigDecimal coef){
-		Termino t = null;
+		Termino t;
 		try{
 			t = new Termino(coef, BigDecimal.ZERO, TipoFuncion.CONSTANTE);
 		}catch(CustomException ce){

@@ -101,7 +101,7 @@ public class Funcion{
 			Termino term = iterator.next();
 			boolean positiveA = term.getA().signum()==1;
 			boolean indexIs0 = iterator.previousIndex()==0;
-			g += (indexIs0?"":(positiveA?" + ":" - "))+"- "+ term.getGeneric();
+			g += (indexIs0?"":(positiveA?" + ":" - "))+ term.getGeneric();
 			s += (indexIs0?"":(positiveA?" + ":" ")) + term.getSpecific();
 			toString += (indexIs0?"":" + ") + term;
 		}

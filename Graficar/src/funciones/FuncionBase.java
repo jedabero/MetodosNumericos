@@ -293,6 +293,15 @@ public class FuncionBase implements Constantes{
 	 */
 	protected void initFuncionStrings(){}
 	
+	protected FuncionTrig[] tipos;
+
+	/**
+	 * @return the tipo
+	 */
+	public FuncionTrig[] getTipos() {
+		return tipos;
+	}
+	
 	/**
 	 * Constructor para una función básica.
 	 * @param tipo el tipo de función

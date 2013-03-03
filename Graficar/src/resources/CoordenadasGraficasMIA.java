@@ -56,25 +56,24 @@ public class CoordenadasGraficasMIA extends MouseInputAdapter {
 		BigDecimal x1;
 		BigDecimal y1;
 		
-		BigDecimalCoord coords = new BigDecimalCoord(gCoords);
+		
 		boolean xInBounds = (x>=gCoords.x)&&(x<=(gCoords.x+graW));
-		boolean yinBounds = (y>=gCoords.y)&&(y<=(gCoords.y+graH));
-		if(xInBounds&&yinBounds){//TODO Coordinates
+		boolean yInBounds = (y>=gCoords.y)&&(y<=(gCoords.y+graH));
+		if(xInBounds&&yInBounds){//TODO Coordinates
 			x -= gCoords.x;
-			x1 = BigDecimal.valueOf(x).divide(gW, 3, RoundingMode.HALF_UP);
-			x1 = X.min().add(X.getLength().multiply(x1));
+			x1 = BigDecimal.valueOf(x).divide(gW, 10, RoundingMode.HALF_UP);
+			x1 = X.min().add(X.length().multiply(x1));
 			x1 = x1.setScale(3, RoundingMode.HALF_UP);
 			
 			y -= gCoords.y;
-			y1 = BigDecimal.valueOf(y).divide(gH, 3, RoundingMode.HALF_UP);
-			y1 = Y.max().subtract(Y.getLength().multiply(y1));
-			y1 = y1.setScale(2, RoundingMode.HALF_UP);
+			y1 = BigDecimal.valueOf(y).divide(gH, 10, RoundingMode.HALF_UP);
+			y1 = Y.max().subtract(Y.length().multiply(y1));
+			y1 = y1.setScale(3, RoundingMode.HALF_UP);
 			
 			
+			BigDecimalCoord coords = new BigDecimalCoord(x1, y1);
 			
-					
-			//O.pln(coords.x+","+coords.y);
-			jGra.setToolTipText(""+new BigDecimalCoord(x1, y1));
+			jGra.setToolTipText(""+coords);
 		}
 		
 	}

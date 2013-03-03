@@ -18,15 +18,6 @@ public class FuncionTrigonometrica extends FuncionBase {
 	
 	private boolean xInRadians = true;
 	private boolean xInDegrees = false;
-	
-	private FuncionTrig[] tipos;
-
-	/**
-	 * @return the tipo
-	 */
-	public FuncionTrig[] getTipos() {
-		return tipos;
-	}
 
 	/**
 	 * @param tipo the tipo to set
