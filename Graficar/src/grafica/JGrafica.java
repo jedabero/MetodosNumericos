@@ -6,6 +6,7 @@ package grafica;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
@@ -193,9 +194,7 @@ public class JGrafica extends JPanel {
 		
 		updateCoordsDim();
 		
-		dibujarDivisiones(g2d, divPrin, divSec);
-		dibujarEjes(g2d);
-		dibujarEtiquetas(g2d, etiquetas);
+		dibujarEjesDivisionesYEtiquetas(g2d, divPrin, divSec, etiquetas);
 		
 		//Draw the functions
 		g2d.setStroke(new BasicStroke(3));
@@ -250,10 +249,15 @@ public class JGrafica extends JPanel {
 		return p2d;
 	}
 	
-	private void dibujarDivisiones(Graphics2D g2D, boolean divP, boolean divSec) {
-		// TODO Divisiones
-		BigDecimal bdNumPuntos = BigDecimal.valueOf(numeroPuntos-1);
+	private void dibujarEjesDivisionesYEtiquetas(Graphics2D g2D, boolean divP,
+			boolean divSec, boolean et) {
+		FontMetrics fm = g2D.getFontMetrics();
+		BigDecimal bdxf = X.min().negate().divide(X.length(), 5, RoundingMode.HALF_EVEN);
+		int yAxis = (int)(gDim.width*(bdxf.doubleValue())) + gCoords.x;
+		BigDecimal bdyf = Y.min().negate().divide(Y.length(), 5, RoundingMode.HALF_EVEN);
+		int xAxis = (int)(gDim.height*(1-bdyf.doubleValue())) + gCoords.y;
 		
+		BigDecimal bdNumPuntos = BigDecimal.valueOf(numeroPuntos-1);
 		BigDecimal yStep = Y.length().divide(bdNumPuntos, 5, RoundingMode.HALF_UP);
 		for(int i=0;i<numeroPuntos;i++){
 			BigDecimal bdi = BigDecimal.valueOf(i);
@@ -264,32 +268,47 @@ public class JGrafica extends JPanel {
 			
 			BigDecimal y1 = bdi.multiply(yStep);
 			BigDecimal ydiv = y1.divide(Y.length(), 5, RoundingMode.HALF_UP);
-			int y = (int)(gDim.height*(ydiv.doubleValue()));
+			int y = (int)(gDim.height*(1-ydiv.doubleValue()));
 			
-
-			O.pln(xdiv+", "+ydiv);
-			O.pln(x+", "+y);
-			int a = 6;
-			if(i%a==0){
-				g2D.drawString(""+i/a, gCoords.x+x, gCoords.y);
-				g2D.drawString(""+i/a, gCoords.x, gCoords.y+y);
+			String xS = ""+X.min().add(x1).stripTrailingZeros();
+			String yS = ""+Y.min().add(y1).setScale(3, RoundingMode.DOWN).stripTrailingZeros().toPlainString();
+			
+			//TODO make this shat selectable
+			int s = 2;
+			int p = 10;
+			
+			if((i%s==0)&&!(i%p==0)&&divSec){
+				g2D.setColor(new Color(200, 200, 200));
 				g2D.drawLine(gCoords.x+x, gCoords.y, gCoords.x+x, gCoords.y+gDim.height);
 				g2D.drawLine(gCoords.x, gCoords.y+y, gCoords.x+gDim.width, gCoords.y+y);
+				if(et){
+					g2D.setColor(new Color(200, 0, 0));
+					int posxS = gCoords.x+x-(fm.stringWidth(xS)/2);
+					g2D.drawString(""+xS, posxS, xAxis);
+					int posyS = gCoords.y+y+(fm.stringWidth(yS)/4);
+					g2D.drawString(""+yS, yAxis, posyS);
+				}
+			}
+			
+			if((i%p==0)&&divP){
+				g2D.setColor(new Color(150, 150, 150));
+				g2D.drawLine(gCoords.x+x, gCoords.y, gCoords.x+x, gCoords.y+gDim.height);
+				g2D.drawLine(gCoords.x, gCoords.y+y, gCoords.x+gDim.width, gCoords.y+y);
+				if(et){
+					g2D.setColor(new Color(200, 0, 0));
+					int posxS = gCoords.x+x-(fm.stringWidth(xS)/2);
+					g2D.drawString(""+xS, posxS, xAxis);
+					int posyS = gCoords.y+y+(fm.stringWidth(yS)/4);
+					g2D.drawString(""+yS, yAxis, posyS);
+				}
 			}
 			
 		}
-	}
-	
-	private void dibujarEjes(Graphics2D g2D) {
+		
 		g2D.setColor(Color.BLACK);
 		g2D.drawRect(gCoords.x, gCoords.y, gDim.width, gDim.height);
-		
-		//TODO Ejes
-	}
-
-	private void dibujarEtiquetas(Graphics2D g2D, boolean et) {
-		// TODO Etiquetas
-		
+		g2D.drawLine(yAxis, gCoords.y, yAxis, gCoords.y+gDim.height);//Y axis
+		g2D.drawLine(gCoords.x, xAxis, gCoords.x+gDim.width, xAxis);
 	}
 	
 	/**
@@ -312,9 +331,9 @@ public class JGrafica extends JPanel {
 		jsJF.setSize(500, 500);
 		jsJF.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
 		//init Lista de Funciones
-		BigDecimal[] coefs = {BigDecimal.TEN, BigDecimal.TEN, BigDecimal.TEN};
+		BigDecimal[] coefs = {BigDecimal.TEN, BigDecimal.TEN, BigDecimal.ONE};
 		ArrayList<Funcion> alf = new ArrayList<Funcion>();
-		alf.add(new Funcion(Termino.constante(BigDecimal.ZERO)));
+		alf.add(new Funcion(Termino.constante(BigDecimal.ONE)));
 		alf.add(Funcion.trigonometrica(FuncionTrig.SIN, coefs[0], coefs[1]));
 		try {
 			alf.add(Funcion.polinomio(2, coefs));
