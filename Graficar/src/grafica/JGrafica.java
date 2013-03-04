@@ -38,34 +38,35 @@ import resources.Interval;
 import stream.O;
 
 /**
+ * Cualquier instancia de esta clase dibujará todas las funciones que le sean
+ * pasadas.
  * @author Jedabero
- *
+ * @since 0.4
  */
 public class JGrafica extends JPanel {
 	
-	/** */
+	/** Degenarated serialVersionUID for this child of JPanel */
 	private static final long serialVersionUID = -2267792839289943254L;
 	
 	private CoordenadasGraficasMIA cgMIA;	//Custom MouseInputAdapter
 	
-	private Point gCoords; //Inside graphic starting coordinates.
-	private Dimension gDim;//Inside graphic dimensions.
+	private Point gCoords;	//Inside graphic starting coordinates.
+	private Dimension gDim;	//Inside graphic dimensions.
 	
-	private BigDecimal step;
-	private int divs;
-	private Interval X;
-	private Interval Y;
+	private BigDecimal step;//Step to separate the values of x
+	private int numeroPuntos;		//number of divisions TODO
+	private Interval X;		//The x Interval
+	private Interval Y;		//The y Interval
+	//The ArrayList that contains the arrays of coordenates of the functions.
+	private ArrayList<BigDecimalCoord[]> alfCoords = new ArrayList<BigDecimalCoord[]>();
 	
-	private ArrayList<BigDecimalCoord[]> alfCoords =
-			new ArrayList<BigDecimalCoord[]>();
+	private ArrayList<Funcion> funcionList;	//The list of functions
 	
-	private ArrayList<Funcion> funcionList;
+	private ArrayList<Color> colorList;	//The list of colours
 	
-	private ArrayList<Color> colorList;
-	
-	private boolean divPrin = true;
-	private boolean divSec = false;
-	private boolean etiquetas = true;
+	private boolean divPrin = true;	//paint main divisions?
+	private boolean divSec = false;	//paint secondary divisions?
+	private boolean etiquetas = true;	//paint axis numbers?
 	
 	/**
 	 * @return the gCoords
@@ -133,7 +134,7 @@ public class JGrafica extends JPanel {
 		
 		BigDecimal d;
 		d = X.length().divide(step, RoundingMode.HALF_UP);
-		divs = d.intValue() + 1;//divisions
+		numeroPuntos = d.intValue() + 1;//divisions
 		
 		//Arrays to stores the max and min values of Y
 		BigDecimal[] maxy = new BigDecimal[funcionList.size()];
@@ -143,13 +144,13 @@ public class JGrafica extends JPanel {
 		for (lif = funcionList.listIterator(); lif.hasNext();) {
 			Funcion f = lif.next();//current function
 			BigDecimal x;//the x and y bdpoints to set
-			BigDecimal[] y = new BigDecimal[divs];
-			BigDecimalCoord[] fCoords = new BigDecimalCoord[divs];//the bdcoords to set
+			BigDecimal[] y = new BigDecimal[numeroPuntos];
+			BigDecimalCoord[] fCoords = new BigDecimalCoord[numeroPuntos];//the bdcoords to set
 			for(int i=0;i<fCoords.length;i++){
 				x = X.min().add(step.multiply(BigDecimal.valueOf(i)));//x value
 				if(x.compareTo(X.max())==1) x = X.max();
 				y[i] = f.valorImagen(x);// y value
-				fCoords[i] = new BigDecimalCoord(x, y[i]);//setting bdcoords O.pln(fCoords[i])
+				fCoords[i] = new BigDecimalCoord(x, y[i]);//setting bdcoords O.pln(fCoords[i]);
 			}
 			alfCoords.add(fCoords);
 			
@@ -196,26 +197,31 @@ public class JGrafica extends JPanel {
 		dibujarEjes(g2d);
 		dibujarEtiquetas(g2d, etiquetas);
 		
-		ListIterator<BigDecimalCoord[]> libdc;//ITERATOR
+		//Draw the functions
+		g2d.setStroke(new BasicStroke(3));
+		ListIterator<BigDecimalCoord[]> libdc;//Coordinates iterator
 		for (libdc = alfCoords.listIterator(); libdc.hasNext();) {
 			BigDecimalCoord[] bdcArr = libdc.next();//current bdCoord array
-			ArrayList<Point> aLpP = new ArrayList<Point>();
-			for(int i=0;i<bdcArr.length;i++){
-				BigDecimal xnum = bdcArr[i].x().subtract(X.min());
-				BigDecimal xdiv = xnum.divide(X.length(), 5, RoundingMode.HALF_UP);
-				int x = (int)(gDim.width*(xdiv.doubleValue()));
-				BigDecimal ynum = bdcArr[i].y().subtract(Y.min());
-				BigDecimal ydiv = ynum.divide(Y.length(), 5, RoundingMode.HALF_UP);
-				int y = (int)(gDim.height*(1-ydiv.doubleValue()));
-				Point p = new Point(x,y);
-				p.translate(gCoords.x, gCoords.y);
-				aLpP.add(p);
-			}
-			g2d.setStroke(new BasicStroke(2));
 			g2d.setColor(colorList.get(libdc.previousIndex()));
-			g2d.draw(polylineShape(aLpP));
+			g2d.draw(polylineShape(changeCoordToPoint(bdcArr)));
 		}
 		
+	}
+	
+	private ArrayList<Point> changeCoordToPoint(BigDecimalCoord[] bdcArr){
+		ArrayList<Point> aLpP = new ArrayList<Point>();
+		for(int i=0;i<bdcArr.length;i++){
+			BigDecimal xnum = bdcArr[i].x().subtract(X.min());
+			BigDecimal xdiv = xnum.divide(X.length(), 5, RoundingMode.HALF_UP);
+			int x = (int)(gDim.width*(xdiv.doubleValue()));
+			BigDecimal ynum = bdcArr[i].y().subtract(Y.min());
+			BigDecimal ydiv = ynum.divide(Y.length(), 5, RoundingMode.HALF_UP);
+			int y = (int)(gDim.height*(1-ydiv.doubleValue()));
+			Point p = new Point(x,y);
+			p.translate(gCoords.x, gCoords.y);
+			aLpP.add(p);
+		}
+		return aLpP;
 	}
 	
 	private Shape polylineShape(ArrayList<Point> alP){
@@ -225,9 +231,8 @@ public class JGrafica extends JPanel {
 		
 		for (iterator = alP.listIterator(); iterator.hasNext();) {
 			Point currentPoint = iterator.next();
-			boolean isPointNull = (currentPoint==null);
 			
-			if(isPointNull){
+			if(currentPoint==null){
 				//O.pln(iterator.previousIndex()+""+currentPoint);
 				isPointFirst = true;
 			}else{
@@ -247,12 +252,38 @@ public class JGrafica extends JPanel {
 	
 	private void dibujarDivisiones(Graphics2D g2D, boolean divP, boolean divSec) {
 		// TODO Divisiones
+		BigDecimal bdNumPuntos = BigDecimal.valueOf(numeroPuntos-1);
 		
+		BigDecimal yStep = Y.length().divide(bdNumPuntos, 5, RoundingMode.HALF_UP);
+		for(int i=0;i<numeroPuntos;i++){
+			BigDecimal bdi = BigDecimal.valueOf(i);
+			
+			BigDecimal x1 = bdi.multiply(step);
+			BigDecimal xdiv = x1.divide(X.length(), 5, RoundingMode.HALF_UP);
+			int x = (int)(gDim.width*(xdiv.doubleValue()));
+			
+			BigDecimal y1 = bdi.multiply(yStep);
+			BigDecimal ydiv = y1.divide(Y.length(), 5, RoundingMode.HALF_UP);
+			int y = (int)(gDim.height*(ydiv.doubleValue()));
+			
+
+			O.pln(xdiv+", "+ydiv);
+			O.pln(x+", "+y);
+			int a = 6;
+			if(i%a==0){
+				g2D.drawString(""+i/a, gCoords.x+x, gCoords.y);
+				g2D.drawString(""+i/a, gCoords.x, gCoords.y+y);
+				g2D.drawLine(gCoords.x+x, gCoords.y, gCoords.x+x, gCoords.y+gDim.height);
+				g2D.drawLine(gCoords.x, gCoords.y+y, gCoords.x+gDim.width, gCoords.y+y);
+			}
+			
+		}
 	}
 	
 	private void dibujarEjes(Graphics2D g2D) {
 		g2D.setColor(Color.BLACK);
 		g2D.drawRect(gCoords.x, gCoords.y, gDim.width, gDim.height);
+		
 		//TODO Ejes
 	}
 
@@ -315,8 +346,7 @@ public class JGrafica extends JPanel {
 			File deskDir = new File(System.getProperty("user.home"));
 			jfc.setCurrentDirectory(deskDir);
 			jfc.setMultiSelectionEnabled(false);
-			jfc.setFileFilter(new FileNameExtensionFilter("Imagenes",
-					"png"));
+			jfc.setFileFilter(new FileNameExtensionFilter("Imagenes", "png"));
 			jfc.showSaveDialog(jsJF);
 			StringTokenizer st = new StringTokenizer(
 					jfc.getSelectedFile().toString(),".");

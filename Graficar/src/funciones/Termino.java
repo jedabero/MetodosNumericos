@@ -27,7 +27,7 @@ import stream.O;
  * <dd>Una constante que multiplica la variable {@code x}.
  * <dt>Representación general y específica del término
  * <dd>General: {@code A*F(B*x)}<br>
- * Específica: {@code 3*sen(2x)}
+ * Específica: {@code 3*sin(2x)}
  * </dl>
  * <p>
  * Es usada en la clase {@code Funcion} para definir cada un de los términos.
@@ -36,7 +36,7 @@ import stream.O;
  * funciones.
  * 
  * @author <a href="https://twitter.com/Jedabero" target="_blank">Jedabero</a>
- *
+ * @since 0.4
  */
 public class Termino {
 	

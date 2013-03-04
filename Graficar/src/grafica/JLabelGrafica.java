@@ -22,7 +22,9 @@ import funciones.FuncionBase;
 /**
  * Esta clase crea un JLabel con la gráfica que se mostrará en panelGrafica.
  * @author Jedabero
- *
+ * @since 0.1
+ * @deprecated Desde la versión 0.4, por {@link JGrafica}
+ * @see JGrafica
  */
 public class JLabelGrafica extends JLabel{
 	
@@ -129,16 +131,13 @@ public class JLabelGrafica extends JLabel{
 		h = BigDecimal.valueOf(grafica.getHeight());
 		Graphics2D g2d = grafica.createGraphics();
 		
-		//Se crea un FontMetrics para los cálculos de la posición de las etiquetas
-		FontMetrics fm = g2d.getFontMetrics();
-		
 		//Se determina un grosor de línea, un color base, y se rellena la imagen.
 		g2d.setStroke(bs2);
 		g2d.setColor(new Color(238, 238, 238));
 		g2d.fillRect(0, 0, grafica.getWidth(), grafica.getHeight());
 		
 		//Se dibujan los ejes, divisiones y etiquetas.
-		dibujarEjeDivsEtiq(g2d, fm, divPrin, divSec, maxYInt, etiquetas, rangeSetted);
+		dibujarEjeDivsEtiq(g2d, divPrin, divSec, maxYInt, etiquetas, rangeSetted);
 		
 		//El grosor de las líneas de las funciones es el segundo.
 		g2d.setStroke(bs2);
@@ -177,8 +176,8 @@ public class JLabelGrafica extends JLabel{
 	 * @param closeInt	determina si los máximos son enteros o los de las funciones.
 	 * @param et		determina si se dibujan las etiquetas de eje.
 	 */
-	private void dibujarEjeDivsEtiq(Graphics2D g, FontMetrics fm, boolean pg,
-			boolean sg, boolean closeInt, boolean et, boolean rs){
+	private void dibujarEjeDivsEtiq(Graphics2D g, boolean pg, boolean sg,
+			boolean closeInt, boolean et, boolean rs){
 		//Se inicializan los arrays que guardaran los máximos y mínimos.
 		minYs = new BigDecimal[grupoFB.size()];
 		maxYs = new BigDecimal[grupoFB.size()];
@@ -309,6 +308,8 @@ public class JLabelGrafica extends JLabel{
 		g.drawLine(0, ejeY.intValue(), getWidth(), ejeY.intValue());
 		g.drawRect(0, 0, grafica.getWidth()-1, grafica.getHeight()-1);
 		
+		//Se crea un FontMetrics para los cálculos de la posición de las etiquetas
+		FontMetrics fm = g.getFontMetrics();
 		//Etiquetas de ejes.
 		if(et){
 			g.setColor(new Color(200, 0, 0));

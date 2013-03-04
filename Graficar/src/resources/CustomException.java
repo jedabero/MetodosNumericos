@@ -5,7 +5,7 @@ package resources;
 
 /**
  * @author Jedabero
- *
+ * @since 0.4
  */
 public class CustomException extends Exception {
 

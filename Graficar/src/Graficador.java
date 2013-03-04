@@ -8,7 +8,7 @@ import UI.GraficadorUI;
 
 /**
  * @author <a href="https://twitter.com/Jedabero" target="_blank">Jedabero</a>
- *
+ * @since 0.2
  */
 public class Graficador {
 	

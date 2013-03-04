@@ -53,7 +53,7 @@ import grafica.JLabelGrafica;
 /**
  * 
  * @author <a href="https://twitter.com/Jedabero" target="_blank">Jedabero</a>
- * 
+ * @since 0.1
  */
 
 public class GraficadorUI{

@@ -12,11 +12,9 @@ import java.math.RoundingMode;
 
 import javax.swing.event.MouseInputAdapter;
 
-import stream.O;
-
 /**
  * @author Jedabero
- *
+ * @since 0.4
  */
 public class CoordenadasGraficasMIA extends MouseInputAdapter {
 	
@@ -31,7 +29,6 @@ public class CoordenadasGraficasMIA extends MouseInputAdapter {
 	 * 
 	 */
 	public CoordenadasGraficasMIA(JGrafica jg, Interval x, Interval y) {
-		// TODO Auto-generated constructor stub
 		this.jGra = jg;
 		this.X = x;
 		this.Y = y;
