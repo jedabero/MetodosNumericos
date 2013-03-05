@@ -16,10 +16,12 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
+import resources.Interval;
+
 import components.Add;
 
-import funciones.FuncionBase;
-import grafica.JLabelGrafica;
+import funciones.Funcion;
+import grafica.JGrafica;
 
 /**
  * @author <a href="https://twitter.com/Jedabero" target="_blank">Jedabero</a>
@@ -32,8 +34,8 @@ public class EditaIntervaloDialog extends JDialog{
 	 */
 	private static final long serialVersionUID = 3935940317582610580L;
 	
-	private ArrayList<FuncionBase>  arrListFB;
-	private JLabelGrafica gf;
+	private ArrayList<Funcion>  arrListFB;
+	private JGrafica gf;
 	
 	private BigDecimal minimoOr;
 	private JLabel minimoLabel;
@@ -44,7 +46,7 @@ public class EditaIntervaloDialog extends JDialog{
 	private BigDecimal pasoOr;
 	private JLabel labelPaso;
 	private JTextField textPaso;
-	private BigDecimal[] intervalOr;
+	private Interval intervalOr;
 	private JButton actualiza;
 	private JButton listo;
 	private ActionListener listoAL;
@@ -54,30 +56,30 @@ public class EditaIntervaloDialog extends JDialog{
 	
 	/**
 	 * @param ventana
-	 * @param alFB
-	 * @param jlg
+	 * @param listaFunciones
+	 * @param grafica
 	 * @param XORY
 	 */
-	public EditaIntervaloDialog(JFrame ventana, ArrayList<FuncionBase> alFB,
-			JLabelGrafica jlg, char XORY){
+	public EditaIntervaloDialog(JFrame ventana, ArrayList<Funcion> listaFunciones,
+			JGrafica grafica, char XORY){
 		super(ventana, "Edita Intervalo", true);
-		pasoOr		= FuncionBase.getPaso();
-		arrListFB	= alFB;
-		gf			= jlg;
+		
+		arrListFB	= listaFunciones;
+		gf			= grafica;
 		XorY		= XORY;
 		switch(XorY){
-		case 'X': intervalOr = FuncionBase.getIntervalo();	break;
-		case 'Y': intervalOr = JLabelGrafica.getRange();	break;
+		case 'X': intervalOr = grafica.getXinterval();	break;
+		case 'Y': intervalOr = grafica.getYinterval();	break;
 		default: break;
 		}
-		minimoOr 	= intervalOr[0];
-		maximoOr	= intervalOr[1];
+		minimoOr 	= intervalOr.min();
+		maximoOr	= intervalOr.max();
 		
 		initListeners();
 		
 		if(XorY=='X'){
 			labelPaso = new JLabel("Paso: ");
-			textPaso = new JTextField(""+FuncionBase.getPaso());
+			textPaso = new JTextField("");//TODO PASO
 		}
 		
 		minimoLabel = new JLabel(XorY+" mínimo:");
@@ -134,7 +136,7 @@ public class EditaIntervaloDialog extends JDialog{
 	/**
 	 * @return regresa el intervalo
 	 */
-	public BigDecimal[] getIntervalo(){
+	public Interval getIntervalo(){
 		return intervalOr;
 	}
 	
@@ -149,8 +151,8 @@ public class EditaIntervaloDialog extends JDialog{
 				setCursor(null);
 				setEnabled(true);
 				if(e.getSource().equals(listo)){
-					pasoOr = FuncionBase.getPaso();
-					intervalOr = FuncionBase.getIntervalo();
+					pasoOr = Funcion.getPaso();
+					intervalOr = Funcion.getIntervalo();
 					dispose();
 				}
 				
@@ -162,9 +164,9 @@ public class EditaIntervaloDialog extends JDialog{
 				// TODO EditInterval CANCEL
 				switch(XorY){
 				case 'X':
-					ListIterator<FuncionBase> i;
+					ListIterator<Funcion> i;
 					for(i = arrListFB.listIterator();i.hasNext();){
-						FuncionBase fb = i.next();
+						Funcion fb = i.next();
 						fb.updatePasoIntervalo(pasoOr, intervalOr);
 					}
 					break;
@@ -174,7 +176,7 @@ public class EditaIntervaloDialog extends JDialog{
 				default: break;
 				}
 				dispose();
-				gf.pintaGrafica();
+				gf.repaint();
 			}
 		};
 		
@@ -182,26 +184,26 @@ public class EditaIntervaloDialog extends JDialog{
 	
 	private void metodo(){
 		
-		BigDecimal paso = FuncionBase.getPaso();
+		BigDecimal paso = Funcion.getPaso();
 		switch(XorY){
 		case 'X':
 			try{
 				paso = new BigDecimal(textPaso.getText());
 				if(paso.compareTo(BigDecimal.ZERO)==0){
 					paso = BigDecimal.valueOf(0.01);
-				}else if(paso.compareTo(FuncionBase.getPasoMax())==1){
-					paso = FuncionBase.getPasoMax();
-				}else if(paso.compareTo(FuncionBase.getPasoMin())==-1){
-					paso = FuncionBase.getPasoMin();
+				}else if(paso.compareTo(Funcion.getPasoMax())==1){
+					paso = Funcion.getPasoMax();
+				}else if(paso.compareTo(Funcion.getPasoMin())==-1){
+					paso = Funcion.getPasoMin();
 				}
 			}catch(Exception ex){
 				System.out.println(ex.toString()+" (EditaIntervaloDialog.java:142)");//REVISELINE
 				JOptionPane.showMessageDialog(getParent(),
 						"Paso: "+ex.getMessage(),
 						"Error de input", JOptionPane.ERROR_MESSAGE);
-				paso = FuncionBase.getPaso();
+				paso = Funcion.getPaso();
 			}
-			FuncionBase.initMinMaxPaso();
+			Funcion.initMinMaxPaso();
 			textPaso.setText(""+paso);
 		default: break;
 		}
@@ -214,7 +216,7 @@ public class EditaIntervaloDialog extends JDialog{
 			JOptionPane.showMessageDialog(getParent(),
 					"Valor de mínimo: "+ex.getMessage(),
 					"Error de input", JOptionPane.ERROR_MESSAGE);
-			min = FuncionBase.getIntervalo()[0];
+			min = Funcion.getIntervalo()[0];
 		}
 		
 		BigDecimal max;
@@ -225,7 +227,7 @@ public class EditaIntervaloDialog extends JDialog{
 			JOptionPane.showMessageDialog(getParent(),
 					"Valor de máximo: "+ex.getMessage(),
 					"Error de input", JOptionPane.ERROR_MESSAGE);
-			max = FuncionBase.getIntervalo()[1];
+			max = Funcion.getIntervalo()[1];
 		}
 		minimoText.setText(""+min);
 		maximoText.setText(""+max);
@@ -233,8 +235,8 @@ public class EditaIntervaloDialog extends JDialog{
 		BigDecimal[] nuevoIntervalo = {min, max};
 		switch(XorY){
 		case 'X':
-			for(ListIterator<FuncionBase> i = arrListFB.listIterator(); i.hasNext();){
-				FuncionBase fb = i.next();
+			for(ListIterator<Funcion> i = arrListFB.listIterator(); i.hasNext();){
+				Funcion fb = i.next();
 				fb.updatePasoIntervalo(paso, nuevoIntervalo);
 			}
 			break;
@@ -244,7 +246,7 @@ public class EditaIntervaloDialog extends JDialog{
 		default: break;
 		}
 		
-		gf.pintaGrafica();
+		gf.repaint();
 		
 	}
 	

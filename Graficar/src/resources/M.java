@@ -2,15 +2,15 @@ package resources;
 
 
 import java.math.BigDecimal;
+import java.util.Random;
 
 import math.Big;
 
 import resources.Constantes.TipoFuncion;
 import resources.Constantes.FuncionTrig;
 
-import funciones.FuncionBase;
-import funciones.FuncionPolinomica;
-import funciones.FuncionTrigonometrica;
+import funciones.Funcion;
+import funciones.Termino;
 
 /**
  * @author <a href="https://twitter.com/Jedabero" target="_blank">Jedabero</a>
@@ -22,9 +22,11 @@ public final class M {
 	 * Crea una función al azar con parámetros aleatorios
 	 * @return	la función aleatoria.
 	 */
-	public static FuncionBase funcionRandom(){
-		int randTerminos = (int)(4*Math.random())+2;
-		int randTipo = (int)(2*Math.random());
+	public static Funcion funcionRandom(){
+		Random rand = new Random();
+		int randTerminos = (int)(4*rand.nextDouble())+2;
+		int randTipo = (int)(5*rand.nextDouble());//TODO racional
+		TipoFuncion randTF = TipoFuncion.values()[randTipo];
 		System.out.println(randTipo);
 		
 		BigDecimal constA[] = new BigDecimal[randTerminos];
@@ -40,22 +42,30 @@ public final class M {
 			tp[i] = FuncionTrig.values()[(int)(6*Math.random())];
 		}
 		
-		switch(randTipo){
-		case 0:
-			FuncionPolinomica fp = new FuncionPolinomica(randTerminos-1);
-			fp.update(FuncionBase.getPaso(), FuncionBase.getIntervalo(), fp.getGrado(), constA);
-			return fp;
-		case 1:
-			FuncionTrigonometrica ft = new FuncionTrigonometrica(randTerminos, tp);
-			ft.update1(constA, constB, true);
-			return ft;
-		case 2:
-		case 3:
-		case 4:
+		Funcion p = null;
+		switch(randTF){
+		case CONSTANTE:
+			p = new Funcion(Termino.constante(constA[0]));
+			return p;
+		case POLINOMICA:
+			try {
+				p = Funcion.polinomio(randTerminos-1, constA);
+			} catch (CustomException e) {
+				e.printStackTrace();
+			}
+			return p;
+		case TRIGONOMETRICA:
+			p = Funcion.trigonometrica(tp[0], constA[0], constB[0]);
+			return p;
+		case EXPONENCIAL:
+			p = new Funcion(Termino.exponencial(constA[0], constB[0]));
+			return p;
+		case LOGARITMICA:
+			p = new Funcion(Termino.logaritmo(constA[0], constB[0]));
+			return p;
+		case RACIONAL:
 		default:
-			FuncionBase fb = new FuncionBase(TipoFuncion.values()[randTipo], randTerminos);
-			fb.updateConstantesTerminos(randTerminos, constA, constB);
-			return fb;
+			return p;
 		}
 	}
 	

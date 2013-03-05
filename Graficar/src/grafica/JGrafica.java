@@ -36,6 +36,7 @@ import resources.Constantes.FuncionTrig;
 import resources.CoordenadasGraficasMIA;
 import resources.CustomException;
 import resources.Interval;
+import resources.M;
 import stream.O;
 
 /**
@@ -55,11 +56,11 @@ public class JGrafica extends JPanel {
 	private Dimension gDim;	//Inside graphic dimensions.
 	
 	private BigDecimal step;//Step to separate the values of x
-	private int numeroPuntos;		//number of divisions TODO
+	private int numeroPuntos;		//TODO number of divisions
 	private Interval X;		//The x Interval
 	private Interval Y;		//The y Interval
 	//The ArrayList that contains the arrays of coordenates of the functions.
-	private ArrayList<BigDecimalCoord[]> alfCoords = new ArrayList<BigDecimalCoord[]>();
+	private ArrayList<BigDecimalCoord[]> alfCoords;
 	
 	private ArrayList<Funcion> funcionList;	//The list of functions
 	
@@ -68,6 +69,7 @@ public class JGrafica extends JPanel {
 	private boolean divPrin = true;	//paint main divisions?
 	private boolean divSec = false;	//paint secondary divisions?
 	private boolean etiquetas = true;	//paint axis numbers?
+	private boolean rangeY = true;
 	
 	/**
 	 * @return the gCoords
@@ -127,12 +129,13 @@ public class JGrafica extends JPanel {
 		
 		cgMIA = new CoordenadasGraficasMIA(this, getXinterval(), getYinterval());
 		addMouseListener(cgMIA);
+		addMouseWheelListener(cgMIA);
 		addMouseMotionListener(cgMIA);
 		
 	}
 	
 	private void calculos(){
-		
+		alfCoords = new ArrayList<BigDecimalCoord[]>();
 		BigDecimal d;
 		d = X.length().divide(step, RoundingMode.HALF_UP);
 		numeroPuntos = d.intValue() + 1;//divisions
@@ -144,6 +147,7 @@ public class JGrafica extends JPanel {
 		ListIterator<Funcion> lif;//ITERATOR
 		for (lif = funcionList.listIterator(); lif.hasNext();) {
 			Funcion f = lif.next();//current function
+			int index = lif.previousIndex();
 			BigDecimal x;//the x and y bdpoints to set
 			BigDecimal[] y = new BigDecimal[numeroPuntos];
 			BigDecimalCoord[] fCoords = new BigDecimalCoord[numeroPuntos];//the bdcoords to set
@@ -153,10 +157,11 @@ public class JGrafica extends JPanel {
 				y[i] = f.valorImagen(x);// y value
 				fCoords[i] = new BigDecimalCoord(x, y[i]);//setting bdcoords O.pln(fCoords[i]);
 			}
-			alfCoords.add(fCoords);
 			
-			maxy[lif.previousIndex()] = Big.max(y);
-			miny[lif.previousIndex()] = Big.min(y);
+			alfCoords.add(index, fCoords);
+			
+			maxy[index] = Big.max(y);
+			miny[index] = Big.min(y);
 		}
 		BigDecimal maxY = Big.max(maxy);
 		BigDecimal minY = Big.min(miny);
@@ -180,8 +185,12 @@ public class JGrafica extends JPanel {
 			}
 		}
 		
-		Y = new Interval(minY, maxY);
+		if(rangeY){//TODO range setting
+			minY = BigDecimal.TEN.negate();
+			maxY = BigDecimal.TEN;
+		}
 		
+		Y = new Interval(minY, maxY);
 	}
 	
 	/**
@@ -197,11 +206,12 @@ public class JGrafica extends JPanel {
 		dibujarEjesDivisionesYEtiquetas(g2d, divPrin, divSec, etiquetas);
 		
 		//Draw the functions
-		g2d.setStroke(new BasicStroke(3));
+		g2d.setStroke(new BasicStroke(2));
 		ListIterator<BigDecimalCoord[]> libdc;//Coordinates iterator
 		for (libdc = alfCoords.listIterator(); libdc.hasNext();) {
 			BigDecimalCoord[] bdcArr = libdc.next();//current bdCoord array
-			g2d.setColor(colorList.get(libdc.previousIndex()));
+			int index = libdc.previousIndex();
+			g2d.setColor(colorList.get(index));
 			g2d.draw(polylineShape(changeCoordToPoint(bdcArr)));
 		}
 		
@@ -210,14 +220,21 @@ public class JGrafica extends JPanel {
 	private ArrayList<Point> changeCoordToPoint(BigDecimalCoord[] bdcArr){
 		ArrayList<Point> aLpP = new ArrayList<Point>();
 		for(int i=0;i<bdcArr.length;i++){
-			BigDecimal xnum = bdcArr[i].x().subtract(X.min());
+			BigDecimalCoord cord = bdcArr[i];
+			BigDecimal xnum = cord.x().subtract(X.min());
 			BigDecimal xdiv = xnum.divide(X.length(), 5, RoundingMode.HALF_UP);
 			int x = (int)(gDim.width*(xdiv.doubleValue()));
-			BigDecimal ynum = bdcArr[i].y().subtract(Y.min());
+			BigDecimal ynum = cord.y().subtract(Y.min());
 			BigDecimal ydiv = ynum.divide(Y.length(), 5, RoundingMode.HALF_UP);
 			int y = (int)(gDim.height*(1-ydiv.doubleValue()));
+			
+			
 			Point p = new Point(x,y);
 			p.translate(gCoords.x, gCoords.y);
+			
+			boolean pOutOfScope = p.y<gCoords.y||p.y>gCoords.y+gDim.height;
+			if(pOutOfScope) p = null;
+			
 			aLpP.add(p);
 		}
 		return aLpP;
@@ -290,10 +307,12 @@ public class JGrafica extends JPanel {
 				}
 			}
 			
-			if((i%p==0)&&divP){
-				g2D.setColor(new Color(150, 150, 150));
-				g2D.drawLine(gCoords.x+x, gCoords.y, gCoords.x+x, gCoords.y+gDim.height);
-				g2D.drawLine(gCoords.x, gCoords.y+y, gCoords.x+gDim.width, gCoords.y+y);
+			if((i%p==0)){
+				if(divPrin){
+					g2D.setColor(new Color(150, 150, 150));
+					g2D.drawLine(gCoords.x+x, gCoords.y, gCoords.x+x, gCoords.y+gDim.height);
+					g2D.drawLine(gCoords.x, gCoords.y+y, gCoords.x+gDim.width, gCoords.y+y);
+				}
 				if(et){
 					g2D.setColor(new Color(200, 0, 0));
 					int posxS = gCoords.x+x-(fm.stringWidth(xS)/2);
@@ -322,19 +341,79 @@ public class JGrafica extends JPanel {
 	}
 	
 	/**
+	 * 
+	 */
+	public void updateGraficaUI(){
+		updateCoordsDim();
+		calculos();
+		cgMIA.updateIntervals(X, Y);
+		repaint();
+	}
+	
+	/**
+	 * @param x 
+	 * @param y 
+	 * 
+	 */
+	public void updateIntervals(Interval x, Interval y){
+		this.X = x;
+		this.Y = y;
+		updateGraficaUI();
+	}
+	
+	/**
+	 * Método que determina si las divisiones principales se dibujan o no.
+	 * @param pg
+	 */
+	public void dibujaDivPrin(boolean pg){
+		this.divPrin = pg;
+		repaint();
+	}
+	
+	/**
+	 * Método que determina si las divisiones secundarias se dibujan o no.
+	 * @param sg
+	 */
+	public void dibujaDivSec(boolean sg){
+		this.divSec = sg;
+		repaint();
+	}
+	
+	/**
+	 * Método que determina si las etiquetas de eje se dibujan o no.
+	 * @param et
+	 */
+	public void dibujaEtiquetas(boolean et){
+		this.etiquetas = et;
+		repaint();
+	}
+	
+	/**
+	 * Método que actualiza las funciones o los colores respectivos.
+	 * @param alf 
+	 * @param alc 
+	 */
+	public void actualizaLista(ArrayList<Funcion> alf, ArrayList<Color> alc){
+		this.funcionList = alf;
+		this.colorList = alc;
+	}
+	
+	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
 		//DEL this method
 		//init gui
+		O.pln(M.funcionRandom());
 		javax.swing.JFrame jsJF = new javax.swing.JFrame("graphic TEST!");
 		jsJF.setSize(500, 500);
 		jsJF.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
+		
 		//init Lista de Funciones
-		BigDecimal[] coefs = {BigDecimal.TEN, BigDecimal.TEN, BigDecimal.ONE};
+		BigDecimal[] coefs = {BigDecimal.ONE, BigDecimal.ONE, BigDecimal.ONE};
 		ArrayList<Funcion> alf = new ArrayList<Funcion>();
 		alf.add(new Funcion(Termino.constante(BigDecimal.ONE)));
-		alf.add(Funcion.trigonometrica(FuncionTrig.SIN, coefs[0], coefs[1]));
+		alf.add(Funcion.trigonometrica(FuncionTrig.CSC, coefs[0], coefs[1]));
 		try {
 			alf.add(Funcion.polinomio(2, coefs));
 		} catch (CustomException e) {
@@ -348,16 +427,16 @@ public class JGrafica extends JPanel {
 					((int)(25.6*Math.random()))*10,
 					((int)(25.6*Math.random()))*10));
 		}
+		
 		//init jGrafica
 		Interval in = new Interval(BigDecimal.ONE.negate(), BigDecimal.ONE);
 		JGrafica jG = new JGrafica(alf, colores, jsJF.getSize(), in);
-		
+		jG.dibujaDivPrin(false);
 		//other stuff
 		jsJF.getContentPane().add(jG);
 		jsJF.setVisible(true);
 		
 		try{
-			Thread.sleep(3000);
 			File f = new File("gráfica.png");
 			
 			JFileChooser jfc = new JFileChooser();

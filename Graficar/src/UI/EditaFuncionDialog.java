@@ -33,17 +33,15 @@ import resources.Constantes.TipoFuncion;
 import resources.Constantes.FuncionTrig;
 import stream.O;
 
-import funciones.FuncionBase;
-import funciones.FuncionPolinomica;
-import funciones.FuncionTrigonometrica;
-import grafica.JLabelGrafica;
+import funciones.Funcion;
+import grafica.JGrafica;
 
 /**
  * Esta clase crea una ventana de dialogo en la que se mostrarán los
  * parámetros de la función a crear o editar.
  * @author <a href="https://twitter.com/Jedabero" target="_blank">Jedabero</a>
  *
- */@SuppressWarnings("deprecation")
+ */
 public final class EditaFuncionDialog extends JDialog{
 	
 	/**
@@ -60,20 +58,16 @@ public final class EditaFuncionDialog extends JDialog{
 	public static final int EDITAR = 1;
 	
 	private JToolBar opciones;
-	private JLabelGrafica gf;
+	private JGrafica gf;
 	private int index;
 	private int accion;
-	private FuncionBase tempFuncion;
+	private Funcion tempFuncion;
 	private JCheckBox jrb;
-	private ArrayList<FuncionBase> arrListFB;
+	private ArrayList<Funcion> arrListFB;
 	private ArrayList<JCheckBox> arrListJRB;
 	private ArrayList<Color> arrListColor;
 	private ItemListener itemL;
 	private Color c;
-	
-	private TipoFuncion tipoFunOr;
-	private int numTermOr;
-	private BigDecimal constOr[];
 	
 	private JPanel ecuacion = new JPanel();
 	private JPanel propiedades = new JPanel();
@@ -108,10 +102,10 @@ public final class EditaFuncionDialog extends JDialog{
 	/**
 	 * @param ventana	Parent
 	 * @param jpJCB		toolbar
-	 * @param g			gráfica
+	 * @param grafica			gráfica
 	 * @param posicion	posición de la función
-	 * @param fb		Función actual
-	 * @param alFB		lista de funciones
+	 * @param tempF		Función actual
+	 * @param listaFunciones		lista de funciones
 	 * @param alJRB		lista de check boxes
 	 * @param alColor	lista de colores
 	 * @param iL		item listener
@@ -120,10 +114,10 @@ public final class EditaFuncionDialog extends JDialog{
 	 */
 	public EditaFuncionDialog(JFrame ventana,
 			JToolBar	jpJCB,
-			JLabelGrafica	 g,
+			JGrafica	 grafica,
 			int	posicion,
-			FuncionBase		fb, 
-			ArrayList<FuncionBase>	alFB,
+			Funcion		tempF, 
+			ArrayList<Funcion>	listaFunciones,
 			ArrayList<JCheckBox>	alJRB,
 			ArrayList<Color>	alColor,
 			ItemListener	iL,
@@ -132,19 +126,14 @@ public final class EditaFuncionDialog extends JDialog{
 		super(ventana, true);
 		l = new LangResource(rs);
 		opciones	= jpJCB;
-		this.gf		= g;
+		this.gf		= grafica;
 		index		= posicion;
-		arrListFB	= alFB;
+		arrListFB	= listaFunciones;
 		arrListJRB	= alJRB;
 		arrListColor= alColor;
 		itemL 		= iL;
 		accion		= ACCION;
-		tempFuncion = fb;
-		tipoFunOr	= fb.getTipoFuncion();
-		numTermOr	= fb.getTerminos();
-		constOr		= fb.getA();
-		O.p(tipoFunOr+" ("+constOr.length+", "+fb.getA().length+") ");
-		O.pln("(EditaFuncionDialog.java:134)");//ERR error output
+		tempFuncion = tempF;
 		
 		setTitle(l.s("editFTitle"));
 		actualiza.setText(l.s("updateBttn"));
@@ -168,7 +157,7 @@ public final class EditaFuncionDialog extends JDialog{
 		dropTipoFuncTrig = new JComboBox();
 		for(FuncionTrig ft : FuncionTrig.values()) dropTipoFuncTrig.addItem(ft);
 		
-		switch(tempFuncion.getTipoFuncion()){
+		switch(tempFuncion.getTipo()){
 		case POLINOMICA:
 			labelTerminos = new JLabel(l.s("polTermL"));
 			textTerminos = new JTextField(""+tempFuncion.getGrado());
@@ -180,7 +169,7 @@ public final class EditaFuncionDialog extends JDialog{
 		case LOGARITMICA:
 		default:
 			labelTerminos = new JLabel(l.s("defTermL"));
-			textTerminos = new JTextField(""+tempFuncion.getTerminos()); 
+			textTerminos = new JTextField(""+tempFuncion.getTerminos().size()); 
 			propiedades.add(labelTerminos);
 			propiedades.add(textTerminos);
 			break;
@@ -194,8 +183,8 @@ public final class EditaFuncionDialog extends JDialog{
 		propiedades.add(actualiza);
 		
 		setPanelEcuacion();
-		labelFuncion = new JLabel(tempFuncion.getFuncion());
-		labelEcuacion = new JLabel(tempFuncion.getEcuacion());
+		labelFuncion = new JLabel(tempFuncion.getSpecific());
+		labelEcuacion = new JLabel(tempFuncion.getGeneric());
 		listoBoton.addActionListener(listoAL);
 		cerrarBoton.addActionListener(cerrarAL);
 		
@@ -227,18 +216,18 @@ public final class EditaFuncionDialog extends JDialog{
 	
 	private void setPanelEcuacion() {
 		ecuacion.removeAll();
-		labelA = new JLabel[tempFuncion.getTerminos()];
-		labelB = new JLabel[tempFuncion.getTerminos()];
+		labelA = new JLabel[tempFuncion.getTerminos().size()];
+		labelB = new JLabel[tempFuncion.getTerminos().size()];
 		textA = new ArrayList<JTextField>();
 		textB = new ArrayList<JTextField>();
 		arrListDropFuncTrig = new ArrayList<JComboBox>();
 		int l = labelA.length;
 		int y = l%2==0 ? l/2 : l/2 + 1;
 		if(l==3) y=3;
-		switch(tempFuncion.getTipoFuncion()){
+		switch(tempFuncion.getTipo()){
 		case POLINOMICA:
 			if(l==3) y=3; ecuacion.setLayout(new GridLayout(y,4));
-			for(int n = 0;n<tempFuncion.getTerminos();n++){
+			for(int n = 0;n<tempFuncion.getTerminos().size();n++){
 				labelA[n] = new JLabel("<html>A<sub>"+n+"</sub> :\t");
 				labelA[n].setHorizontalAlignment(SwingConstants.RIGHT);
 				textA.add(n, new JTextField(""+tempFuncion.getA()[n]));
@@ -248,7 +237,7 @@ public final class EditaFuncionDialog extends JDialog{
 			break;
 		case TRIGONOMETRICA:
 			ecuacion.setLayout(new GridLayout(y*3,4));
-			for(int n = 0;n<tempFuncion.getTerminos();n++){
+			for(int n = 0;n<tempFuncion.getTerminos().size();n++){
 				labelA[n] = new JLabel("<html>A<sub>"+n+"</sub> :\t");
 				labelB[n] = new JLabel("<html>B<sub>"+n+"</sub> :\t");
 				labelA[n].setHorizontalAlignment(SwingConstants.RIGHT);
@@ -288,18 +277,16 @@ public final class EditaFuncionDialog extends JDialog{
 			JOptionPane.showMessageDialog(getParent(), 
 					l.s("errDialog1")+ex.getMessage(),
 					l.s("inputError"), JOptionPane.ERROR_MESSAGE);
-			terminos = tempFuncion.getTerminos();
+			terminos = tempFuncion.getTerminos().size();
 		}
 		
-		switch(tempFuncion.getTipoFuncion()){
+		switch(tempFuncion.getTipo()){
 		case POLINOMICA:
-			tempFuncion.setGrado(terminos);
 			break;
 		case TRIGONOMETRICA:
 		case EXPONENCIAL:
 		case LOGARITMICA:
 		default:
-			tempFuncion.setTerminos(terminos);
 			break;
 		case RACIONAL:
 			//TODO RACIONAL
@@ -308,7 +295,7 @@ public final class EditaFuncionDialog extends JDialog{
 		
 		textTerminos.setText(""+terminos);
 		
-		BigDecimal A[] = new BigDecimal[tempFuncion.getTerminos()];
+		BigDecimal A[] = new BigDecimal[tempFuncion.getTerminos().size()];
 		for(int n=0;n<A.length;n++){
 			try{
 				A[n] = new BigDecimal(textA.get(n).getText());
@@ -328,7 +315,7 @@ public final class EditaFuncionDialog extends JDialog{
 		}
 		tempFuncion.setA(A);
 		
-		BigDecimal B[] = new BigDecimal[tempFuncion.getTerminos()];
+		BigDecimal B[] = new BigDecimal[tempFuncion.getTerminos().size()];
 		for(int n=0;n<B.length;n++){
 			try{
 				B[n] = new BigDecimal(textB.get(n).getText());
@@ -348,22 +335,20 @@ public final class EditaFuncionDialog extends JDialog{
 		}
 		tempFuncion.setB(B);
 		
-		switch(tempFuncion.getTipoFuncion()){
+		switch(tempFuncion.getTipo()){
 		case POLINOMICA:
-			tempFuncion.updateConstantesTerminos(terminos+1, A, B);
 			break;
 		case TRIGONOMETRICA:
 		case EXPONENCIAL:
 		case LOGARITMICA:
 		default:
-			tempFuncion.updateConstantesTerminos(terminos, A, B);
 			break;
 		case RACIONAL:
 			break;
 		}
 		opciones.validate();
-		labelFuncion.setText(tempFuncion.getFuncion());
-		labelEcuacion.setText(tempFuncion.getEcuacion());
+		labelFuncion.setText(tempFuncion.getGeneric());
+		labelEcuacion.setText(tempFuncion.getSpecific());
 		setPanelEcuacion();
 	}
 	
@@ -387,10 +372,10 @@ public final class EditaFuncionDialog extends JDialog{
 				case AÑADIR:
 					arrListFB.add(index, tempFuncion);
 					arrListColor.add(index, c);
-					jrb = new JCheckBox(tempFuncion.getFuncion());
+					jrb = new JCheckBox(tempFuncion.getSpecific());
 					jrb.setForeground(c);
 					jrb.addItemListener(itemL);
-					jrb.setText(tempFuncion.getFuncion());
+					jrb.setText(tempFuncion.getSpecific());
 					opciones.remove(jrb);
 					opciones.add(jrb);
 					arrListJRB.add(index, jrb);
@@ -400,7 +385,7 @@ public final class EditaFuncionDialog extends JDialog{
 					jrb = arrListJRB.get(index);
 					jrb.setForeground(arrListColor.get(index));
 					jrb.addItemListener(itemL);
-					jrb.setText(tempFuncion.getFuncion());
+					jrb.setText(tempFuncion.getSpecific());
 					jrb.setSelected(false);
 					opciones.remove(jrb);
 					opciones.add(jrb);
@@ -410,9 +395,8 @@ public final class EditaFuncionDialog extends JDialog{
 					break;
 				}
 				
-				gf.actualizaLista(arrListFB);
-				gf.actualizaLista(arrListColor);
-				gf.pintaGrafica();
+				gf.actualizaLista(arrListFB, arrListColor);
+				gf.repaint();
 				
 				dispose();
 			}
@@ -425,12 +409,8 @@ public final class EditaFuncionDialog extends JDialog{
 					break;
 				case EDITAR:
 					O.pln(numTermOr+" (EditaFuncionDialog.java:344)");//REVISELINE
-					switch(tempFuncion.getTipoFuncion()){
+					switch(tempFuncion.getTipo()){
 					case POLINOMICA://TODO you still have no idea do you?
-						((FuncionPolinomica)tempFuncion).update(
-								FuncionBase.getPaso(),
-								FuncionBase.getIntervalo(),
-								numTermOr-1, constOr);
 						break;
 					case TRIGONOMETRICA:
 					case EXPONENCIAL:
@@ -446,7 +426,7 @@ public final class EditaFuncionDialog extends JDialog{
 					jrb = arrListJRB.get(index);
 					jrb.setForeground(arrListColor.get(index));
 					jrb.addItemListener(itemL);
-					jrb.setText(tempFuncion.getFuncion());
+					jrb.setText(tempFuncion.getSpecific());
 					jrb.setSelected(false);
 					opciones.remove(jrb);
 					opciones.add(jrb);
@@ -471,19 +451,19 @@ public final class EditaFuncionDialog extends JDialog{
 						case POLINOMICA:
 							labelTerminos.setText(l.s("polTermL"));
 							tempFuncion = new FuncionPolinomica(tempFuncion.getGrado());
-							tempFuncion.update(FuncionBase.getPaso(),
+							tempFuncion.update(Funcion.getPaso(),
 									tempFuncion.getTerminos(),
-									FuncionBase.getIntervalo(), a, b, tempF);
+									Funcion.getIntervalo(), a, b, tempF);
 							break;
 						case TRIGONOMETRICA:
 							labelTerminos.setText(l.s("defTermL"));
-							FuncionTrig tp[] = new FuncionTrig[tempFuncion.getTerminos()];
+							FuncionTrig tp[] = new FuncionTrig[tempFuncion.getTerminos().size()];
 							for(int i=0; i<tp.length;i++) tp[i] = FuncionTrig.SIN;
 							tempFuncion = new FuncionTrigonometrica(
 									tempFuncion.getTerminos(), tp);
-							tempFuncion.update(FuncionBase.getPaso(),
+							tempFuncion.update(Funcion.getPaso(),
 									tempFuncion.getTerminos(),
-									FuncionBase.getIntervalo(), a, b, tempF);
+									Funcion.getIntervalo(), a, b, tempF);
 							break;
 						case EXPONENCIAL:
 						case LOGARITMICA:

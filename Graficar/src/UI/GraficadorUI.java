@@ -6,6 +6,7 @@ package UI;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
@@ -43,12 +44,12 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import components.Add;
 import custom.LangResource;
+import funciones.Funcion;
+import grafica.JGrafica;
 
+import resources.Interval;
 import resources.M;
 import stream.O;
-
-import funciones.FuncionBase;
-import grafica.JLabelGrafica;
 
 /**
  * 
@@ -64,7 +65,6 @@ public class GraficadorUI{
 	
 	private JFrame mainWindow;
 	private ItemListener il;
-	private MouseInputAdapter mia;
 	private ActionListener añadirFuncionAL, editarFuncionAL, quitarFuncionAL,
 	graficaAL, guardarAL, salirAL, menuAyudaAL, cambiaColorAL;
 	
@@ -72,10 +72,9 @@ public class GraficadorUI{
 	
 	private JPanel panelGrid;
 	
-	private ArrayList<FuncionBase> listaFunciones;
-	private JLabelGrafica grafica;
-	private static BigDecimal pasoGlobal;
-	private static BigDecimal[] intervaloGlobal;
+	private ArrayList<Funcion> listaFunciones;
+	private JGrafica grafica;
+	private Interval xInterval;
 	private ArrayList<Color> colores;
 	
 	private ArrayList<JCheckBox> funcionJRB;
@@ -99,16 +98,12 @@ public class GraficadorUI{
 		
 		initListeners();
 		
-		listaFunciones = new ArrayList<FuncionBase>();
-		intervaloGlobal = new BigDecimal[2];
-		intervaloGlobal[0] = BigDecimal.valueOf(-1);
-		intervaloGlobal[1] = BigDecimal.valueOf(1);
-		FuncionBase.setIntervalo(intervaloGlobal);
-		pasoGlobal = BigDecimal.valueOf(0.01);
-		FuncionBase.setPaso(pasoGlobal);
+		listaFunciones = new ArrayList<Funcion>();
+		xInterval = new Interval(BigDecimal.valueOf(-1), BigDecimal.valueOf(1));
+		//TODO PASO GLOBAL INIT
 		
-		FuncionBase ft = M.funcionRandom();
-		listaFunciones.add(ft);
+		Funcion f = M.funcionRandom();
+		listaFunciones.add(f);
 		
 		colores = new ArrayList<Color>();
 		Color fg = new Color(((int)(25.6*Math.random()))*10,
@@ -117,13 +112,13 @@ public class GraficadorUI{
 		colores.add(fg);
 
 		funcionJRB = new ArrayList<JCheckBox>();
-		JCheckBox jrb = new JCheckBox(ft.getFuncion());
+		JCheckBox jrb = new JCheckBox(f.getSpecific());
 		jrb.setForeground(fg);
 		jrb.addItemListener(il);
 		funcionJRB.add(jrb);
 		
-		grafica = new JLabelGrafica(listaFunciones, colores, 500, 500,
-				true, false, false, true, false);
+		grafica = new JGrafica(listaFunciones, colores, new Dimension(500, 500),
+				xInterval);
 		
 		panelGrid = new JPanel(new GridBagLayout());
 		
@@ -203,8 +198,6 @@ public class GraficadorUI{
 		mainWindow.setJMenuBar(barraMenu);
 		
 		mainWindow.add(panelGrid);
-		grafica.addMouseListener(mia);
-		grafica.addMouseMotionListener(mia);
 		mainWindow.addComponentListener(ca);
 		
 		mainWindow.setVisible(true);
@@ -240,47 +233,13 @@ public class GraficadorUI{
 			}
 		};
 		
-		mia = new MouseInputAdapter() {
-			@Override
-			public void mouseDragged(MouseEvent me) {
-				// TODO This might be useful
-			}
-			
-			@Override
-			public void mouseMoved(MouseEvent me) {
-				//TODO coordinate the coordinates
-				BigDecimal w = BigDecimal.valueOf(grafica.getWidth());
-				BigDecimal h = BigDecimal.valueOf(grafica.getHeight());
-				
-				BigDecimal mX = BigDecimal.valueOf(me.getX());
-				BigDecimal mY = h.subtract(BigDecimal.valueOf(me.getY()));
-				
-				
-				BigDecimal maxX = grafica.getMaxX();
-				BigDecimal minX = grafica.getMinX();
-				
-				BigDecimal maxY = grafica.getMaxY();
-				BigDecimal minY = grafica.getMinY();
-				
-				BigDecimal intervaloX = maxX.subtract(minX);
-				
-				BigDecimal rangoY = maxY.subtract(minY);
-				
-				BigDecimal x = minX.add(mX.multiply(intervaloX.divide(w, 4, RoundingMode.HALF_UP)));
-				BigDecimal y = minY.add(mY.multiply(rangoY.divide(h, 4, RoundingMode.HALF_UP)));
-				
-				grafica.setToolTipText(x+", "+y);
-				
-			}
-		};
-		
 		añadirFuncionAL = new ActionListener(){
 			public void actionPerformed(ActionEvent ae) {
 				if(listaFunciones.size()<5){
-					FuncionBase tempFP = M.funcionRandom();
+					Funcion tempF = M.funcionRandom();
 					new EditaFuncionDialog(mainWindow,
 									toolBarOpciones, grafica,
-									listaFunciones.size(), tempFP,
+									listaFunciones.size(), tempF,
 									listaFunciones, funcionJRB, colores, il,
 									EditaFuncionDialog.AÑADIR, l);
 				}else{
@@ -298,12 +257,12 @@ public class GraficadorUI{
 				for(ListIterator<JCheckBox> i = funcionJRB.listIterator();
 						i.hasNext();){
 					JCheckBox tempjcb = i.next();
-					FuncionBase tempfb = listaFunciones.get(i.previousIndex());
+					Funcion tempf = listaFunciones.get(i.previousIndex());
 					if(tempjcb.isSelected()){
 						selected = true;
 						new EditaFuncionDialog(mainWindow,
 								toolBarOpciones, grafica, i.previousIndex(),
-								tempfb,
+								tempf,
 								listaFunciones, funcionJRB, colores, il,
 								EditaFuncionDialog.EDITAR, l);
 						
@@ -338,9 +297,8 @@ public class GraficadorUI{
 				
 				toolBarOpciones.repaint();
 				toolBarOpciones.validate();
-				grafica.actualizaLista(listaFunciones);
-				grafica.actualizaLista(colores);
-				grafica.pintaGrafica();
+				grafica.actualizaLista(listaFunciones, colores);
+				grafica.repaint();
 			}
 		};
 		
@@ -392,36 +350,34 @@ public class GraficadorUI{
 				AbstractButton ab = (AbstractButton) e.getSource();
 				String strObj = ab.getText();
 				
-				JLabelGrafica jlg = new JLabelGrafica(listaFunciones, colores,
+				JGrafica jg = new JGrafica(listaFunciones, colores,
 						grafica.getWidth(), grafica.getHeight(),
 						grafica.isDivPrin(), grafica.isDivSec(),
 						grafica.isMaxYInt(), grafica.isEtiquetas(),
 						grafica.isRangeSetted());
 				
 				if(strObj.equals(l.s("mArchSave2"))){
-					jlg.setSize(500, 500);
+					jg.setSize(500, 500);
 				}else if(strObj.equals(l.s("mArchSave3"))){
-					jlg.setSize(1000, 1000);
+					jg.setSize(1000, 1000);
 				}else if(strObj.equals(l.s("mArchSave4"))){
 					EditaDimensionesDialog edd = new EditaDimensionesDialog(
 							mainWindow, grafica);
-					jlg.setSize(edd.getDimension());
+					jg.setSize(edd.getDimension());
 				}else{}
 				
-				jlg.pintaGrafica();
+				jg.repaint();
 				
 				try{
 					File f = new File("gráfica.png");
 					
 					JFileChooser jfc = new JFileChooser();
 					jfc.setSelectedFile(f);
-					File deskDir = new File(System.getProperty("user.dir"));
+					File deskDir = new File(System.getProperty("user.home"));
 					jfc.setCurrentDirectory(deskDir);
-					//jfc.setMultiSelectionEnabled(false);
-					jfc.setFileFilter(new FileNameExtensionFilter("Imagenes",
-							"png"));
+					jfc.setMultiSelectionEnabled(false);
+					jfc.setFileFilter(new FileNameExtensionFilter("Imagenes", "png"));
 					jfc.showSaveDialog(mainWindow);
-					
 					StringTokenizer st = new StringTokenizer(
 							jfc.getSelectedFile().toString(),".");
 					st.nextToken();
@@ -430,17 +386,14 @@ public class GraficadorUI{
 					}else{
 						f = jfc.getSelectedFile();
 					}
-					jlg.pintaGrafica();
-					ImageIO.write(jlg.getGrafica(), "png", f);
+					ImageIO.write(jg.getGrafica(), "png", f);
 				}catch (IOException ioe){
 					O.pln("Error de escritura");
-					//ioe.printStackTrace();
 				}catch (NullPointerException npe){
 					O.pln("Archivo no seleccionado");
-					//npe.printStackTrace();
 				}catch (Exception e2){
 					O.pln("Error deseconocido");
-					//e2.printStackTrace();
+					e2.printStackTrace();
 				}
 			}
 		};
@@ -459,7 +412,7 @@ public class GraficadorUI{
 								tempjcb.getText(),
 								colores.get(p)));
 						tempjcb.setForeground(colores.get(p));
-						grafica.pintaGrafica();
+						grafica.repaint();
 						}
 				}
 				if(!selected){
@@ -497,8 +450,7 @@ public class GraficadorUI{
 		ca = new ComponentAdapter(){
 			@Override
 			public void componentResized(ComponentEvent ce) {
-				grafica.actualizaTamaño((int)(panelGrid.getWidth()*.9),
-						(int)(panelGrid.getHeight()*.9));
+				grafica.setSize(panelGrid.getSize());
 			}
 			@Override
 			public void componentMoved(ComponentEvent e) {}

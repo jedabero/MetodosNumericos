@@ -282,6 +282,7 @@ public class Termino {
 			
 			switch(getFuncion()){
 			case CONSTANTE:
+				toString = ""+a;
 				sS += a;
 				break;
 			case POLINOMICA:

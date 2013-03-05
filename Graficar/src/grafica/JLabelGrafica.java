@@ -347,6 +347,7 @@ public class JLabelGrafica extends JLabel{
 	 * Método que actualiza las funciones o los colores respectivos.
 	 * @param al	lista con las funciones.
 	 */
+	@SuppressWarnings("unchecked")
 	public void actualizaLista(ArrayList<?> al){
 		if(al.get(0) instanceof FuncionBase){
 			this.grupoFB = (ArrayList<FuncionBase>) al;

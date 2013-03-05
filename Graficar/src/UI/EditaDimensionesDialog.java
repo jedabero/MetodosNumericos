@@ -3,7 +3,7 @@
  */
 package UI;
 
-import grafica.JLabelGrafica;
+import grafica.JGrafica;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -37,16 +37,16 @@ public class EditaDimensionesDialog extends JDialog {
 	private JButton listo;
 	private ActionListener listoAL;
 	private JDesktopPane thejdp;
-	private JLabelGrafica jlg;
+	private JGrafica jlg;
 	private Dimension dim = new Dimension();
 	
 	/**
 	 * @param mainWindow
-	 * @param graf
+	 * @param grafica
 	 */
-	public EditaDimensionesDialog(JFrame mainWindow, JLabelGrafica graf){
+	public EditaDimensionesDialog(JFrame mainWindow, JGrafica grafica){
 		super(mainWindow, "Edita Dimensiones", true);
-		jlg = graf;
+		jlg = grafica;
 		anchoLabel = new JLabel("Ancho: ");
 		anchoText = new JTextField(""+jlg.getWidth());
 		altoLabel = new JLabel("Alto: ");
