@@ -97,6 +97,8 @@ public final class EditaFuncionDialog extends JDialog{
 	private JButton cerrarBoton = new JButton();
 	private ActionListener cerrarAL;
 	
+	private TipoFuncion tipoFunOr;
+	
 	private LangResource l;
 	
 	/**
@@ -134,7 +136,7 @@ public final class EditaFuncionDialog extends JDialog{
 		itemL 		= iL;
 		accion		= ACCION;
 		tempFuncion = tempF;
-		
+		tipoFunOr = tempF.getTipoFuncion();
 		setTitle(l.s("editFTitle"));
 		actualiza.setText(l.s("updateBttn"));
 		listoBoton.setText(l.s("doneBttn"));
@@ -148,19 +150,17 @@ public final class EditaFuncionDialog extends JDialog{
 		
 		labelTipoFuncion = new JLabel(l.s("fTypeL"));
 		dropTipoFuncion = new JComboBox();//TODO añadir tipos de función.
-		//for(Funcion f : Funcion.values()) dropTipoFuncion.addItem(f);
-		dropTipoFuncion.addItem(TipoFuncion.POLINOMICA);
-		dropTipoFuncion.addItem(TipoFuncion.TRIGONOMETRICA);
+		for(TipoFuncion f : TipoFuncion.values()) dropTipoFuncion.addItem(f);
 		dropTipoFuncion.setSelectedItem(tipoFunOr);
 		dropTipoFuncion.addItemListener(selecTipoIL);
 		
 		dropTipoFuncTrig = new JComboBox();
 		for(FuncionTrig ft : FuncionTrig.values()) dropTipoFuncTrig.addItem(ft);
 		
-		switch(tempFuncion.getTipo()){
+		switch(tempFuncion.getTipoFuncion()){
 		case POLINOMICA:
 			labelTerminos = new JLabel(l.s("polTermL"));
-			textTerminos = new JTextField(""+tempFuncion.getGrado());
+			textTerminos = new JTextField(""+tempF.getTerminos().get(tempF.getTerminos().size()-1).getGrado());
 			propiedades.add(labelTerminos);
 			propiedades.add(textTerminos);
 			break;
@@ -224,13 +224,13 @@ public final class EditaFuncionDialog extends JDialog{
 		int l = labelA.length;
 		int y = l%2==0 ? l/2 : l/2 + 1;
 		if(l==3) y=3;
-		switch(tempFuncion.getTipo()){
+		switch(tempFuncion.getTipoFuncion()){
 		case POLINOMICA:
 			if(l==3) y=3; ecuacion.setLayout(new GridLayout(y,4));
 			for(int n = 0;n<tempFuncion.getTerminos().size();n++){
 				labelA[n] = new JLabel("<html>A<sub>"+n+"</sub> :\t");
 				labelA[n].setHorizontalAlignment(SwingConstants.RIGHT);
-				textA.add(n, new JTextField(""+tempFuncion.getA()[n]));
+				textA.add(n, new JTextField(""));//TODO CONSTANTS
 				ecuacion.add(labelA[n]);
 				ecuacion.add(textA.get(n));
 			}
@@ -242,11 +242,11 @@ public final class EditaFuncionDialog extends JDialog{
 				labelB[n] = new JLabel("<html>B<sub>"+n+"</sub> :\t");
 				labelA[n].setHorizontalAlignment(SwingConstants.RIGHT);
 				labelB[n].setHorizontalAlignment(SwingConstants.RIGHT);
-				textA.add(n, new JTextField(""+tempFuncion.getA()[n]));
-				textB.add(n, new JTextField(""+tempFuncion.getB()[n]));
+				textA.add(n, new JTextField(""));//TODO CONSTANTS
+				textB.add(n, new JTextField(""));//TODO CONSTANTS
 				JComboBox jcb = dropTipoFuncTrig;
 				jcb.addItemListener(selecTipoIL);
-				jcb.setSelectedItem(tempFuncion.getTipos()[n]);
+				jcb.setSelectedItem(tempFuncion);//TODO TIPOS trig
 				arrListDropFuncTrig.add(n, jcb);
 				ecuacion.add(labelA[n]); ecuacion.add(textA.get(n));
 				ecuacion.add(labelB[n]); ecuacion.add(textB.get(n));
@@ -280,7 +280,7 @@ public final class EditaFuncionDialog extends JDialog{
 			terminos = tempFuncion.getTerminos().size();
 		}
 		
-		switch(tempFuncion.getTipo()){
+		switch(tempFuncion.getTipoFuncion()){
 		case POLINOMICA:
 			break;
 		case TRIGONOMETRICA:
@@ -313,7 +313,6 @@ public final class EditaFuncionDialog extends JDialog{
 				textA.add(new JTextField(""+A[n]));
 			}
 		}
-		tempFuncion.setA(A);
 		
 		BigDecimal B[] = new BigDecimal[tempFuncion.getTerminos().size()];
 		for(int n=0;n<B.length;n++){
@@ -333,9 +332,8 @@ public final class EditaFuncionDialog extends JDialog{
 				textB.add(new JTextField(""+B[n]));
 			}
 		}
-		tempFuncion.setB(B);
 		
-		switch(tempFuncion.getTipo()){
+		switch(tempFuncion.getTipoFuncion()){
 		case POLINOMICA:
 			break;
 		case TRIGONOMETRICA:
@@ -408,8 +406,7 @@ public final class EditaFuncionDialog extends JDialog{
 				case AÑADIR:
 					break;
 				case EDITAR:
-					O.pln(numTermOr+" (EditaFuncionDialog.java:344)");//REVISELINE
-					switch(tempFuncion.getTipo()){
+					switch(tempFuncion.getTipoFuncion()){
 					case POLINOMICA://TODO you still have no idea do you?
 						break;
 					case TRIGONOMETRICA:
@@ -445,25 +442,15 @@ public final class EditaFuncionDialog extends JDialog{
 					System.out.println("droporpdor");
 					TipoFuncion tempF = (TipoFuncion)e.getItem();
 					if(e.getStateChange() == ItemEvent.SELECTED){
-						BigDecimal[] a = tempFuncion.getA();
-						BigDecimal[] b = tempFuncion.getB();
+						
 						switch(tempF){
 						case POLINOMICA:
 							labelTerminos.setText(l.s("polTermL"));
-							tempFuncion = new FuncionPolinomica(tempFuncion.getGrado());
-							tempFuncion.update(Funcion.getPaso(),
-									tempFuncion.getTerminos(),
-									Funcion.getIntervalo(), a, b, tempF);
+							//TODO ItemListener Pol-Type
 							break;
 						case TRIGONOMETRICA:
 							labelTerminos.setText(l.s("defTermL"));
-							FuncionTrig tp[] = new FuncionTrig[tempFuncion.getTerminos().size()];
-							for(int i=0; i<tp.length;i++) tp[i] = FuncionTrig.SIN;
-							tempFuncion = new FuncionTrigonometrica(
-									tempFuncion.getTerminos(), tp);
-							tempFuncion.update(Funcion.getPaso(),
-									tempFuncion.getTerminos(),
-									Funcion.getIntervalo(), a, b, tempF);
+							//TODO ItemListener trig-Type
 							break;
 						case EXPONENCIAL:
 						case LOGARITMICA:

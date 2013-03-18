@@ -33,14 +33,14 @@ public class Funcion{
 	/**
 	 * @return el TipoFuncion
 	 */
-	public TipoFuncion getTipo() {
+	public TipoFuncion getTipoFuncion() {
 		return tipo;
 	}
 
 	/**
 	 * @param tipo TipoFuncion 
 	 */
-	public void setTipo(TipoFuncion tipo) {
+	public void setTipoFuncion(TipoFuncion tipo) {
 		this.tipo = tipo;
 	}
 
@@ -131,6 +131,7 @@ public class Funcion{
 		ArrayList<Termino> alT = new ArrayList<Termino>();
 		alT.add(t);
 		this.setTerminos(alT);
+		this.setTipoFuncion(t.getTipoFuncion());
 		initGenEsp();
 	}
 	

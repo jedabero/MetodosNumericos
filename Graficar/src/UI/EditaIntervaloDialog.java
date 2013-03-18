@@ -5,8 +5,6 @@ import java.awt.Cursor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.ListIterator;
 
 import javax.swing.JButton;
 import javax.swing.JDesktopPane;
@@ -20,7 +18,6 @@ import resources.Interval;
 
 import components.Add;
 
-import funciones.Funcion;
 import grafica.JGrafica;
 
 /**
@@ -34,7 +31,6 @@ public class EditaIntervaloDialog extends JDialog{
 	 */
 	private static final long serialVersionUID = 3935940317582610580L;
 	
-	private ArrayList<Funcion>  arrListFB;
 	private JGrafica gf;
 	
 	private BigDecimal minimoOr;
@@ -60,11 +56,9 @@ public class EditaIntervaloDialog extends JDialog{
 	 * @param grafica
 	 * @param XORY
 	 */
-	public EditaIntervaloDialog(JFrame ventana, ArrayList<Funcion> listaFunciones,
-			JGrafica grafica, char XORY){
+	public EditaIntervaloDialog(JFrame ventana, JGrafica grafica, char XORY){
 		super(ventana, "Edita Intervalo", true);
 		
-		arrListFB	= listaFunciones;
 		gf			= grafica;
 		XorY		= XORY;
 		switch(XorY){
@@ -79,7 +73,7 @@ public class EditaIntervaloDialog extends JDialog{
 		
 		if(XorY=='X'){
 			labelPaso = new JLabel("Paso: ");
-			textPaso = new JTextField("");//TODO PASO
+			textPaso = new JTextField(""+gf.getStep());
 		}
 		
 		minimoLabel = new JLabel(XorY+" mínimo:");
@@ -151,8 +145,6 @@ public class EditaIntervaloDialog extends JDialog{
 				setCursor(null);
 				setEnabled(true);
 				if(e.getSource().equals(listo)){
-					pasoOr = Funcion.getPaso();
-					intervalOr = Funcion.getIntervalo();
 					dispose();
 				}
 				
@@ -164,14 +156,10 @@ public class EditaIntervaloDialog extends JDialog{
 				// TODO EditInterval CANCEL
 				switch(XorY){
 				case 'X':
-					ListIterator<Funcion> i;
-					for(i = arrListFB.listIterator();i.hasNext();){
-						Funcion fb = i.next();
-						fb.updatePasoIntervalo(pasoOr, intervalOr);
-					}
+					gf.updateIntervals(intervalOr, gf.getYinterval());
 					break;
 				case 'Y':
-					gf.setRange(gf.isRangeSetted(), intervalOr);
+					gf.updateIntervals(gf.getXinterval(), intervalOr);
 					break;
 				default: break;
 				}
@@ -184,26 +172,20 @@ public class EditaIntervaloDialog extends JDialog{
 	
 	private void metodo(){
 		
-		BigDecimal paso = Funcion.getPaso();
+		BigDecimal paso = gf.getStep();
 		switch(XorY){
 		case 'X':
 			try{
 				paso = new BigDecimal(textPaso.getText());
 				if(paso.compareTo(BigDecimal.ZERO)==0){
 					paso = BigDecimal.valueOf(0.01);
-				}else if(paso.compareTo(Funcion.getPasoMax())==1){
-					paso = Funcion.getPasoMax();
-				}else if(paso.compareTo(Funcion.getPasoMin())==-1){
-					paso = Funcion.getPasoMin();
 				}
 			}catch(Exception ex){
 				System.out.println(ex.toString()+" (EditaIntervaloDialog.java:142)");//REVISELINE
 				JOptionPane.showMessageDialog(getParent(),
 						"Paso: "+ex.getMessage(),
 						"Error de input", JOptionPane.ERROR_MESSAGE);
-				paso = Funcion.getPaso();
 			}
-			Funcion.initMinMaxPaso();
 			textPaso.setText(""+paso);
 		default: break;
 		}
@@ -216,7 +198,7 @@ public class EditaIntervaloDialog extends JDialog{
 			JOptionPane.showMessageDialog(getParent(),
 					"Valor de mínimo: "+ex.getMessage(),
 					"Error de input", JOptionPane.ERROR_MESSAGE);
-			min = Funcion.getIntervalo()[0];
+			min = gf.getXinterval().min();
 		}
 		
 		BigDecimal max;
@@ -227,21 +209,18 @@ public class EditaIntervaloDialog extends JDialog{
 			JOptionPane.showMessageDialog(getParent(),
 					"Valor de máximo: "+ex.getMessage(),
 					"Error de input", JOptionPane.ERROR_MESSAGE);
-			max = Funcion.getIntervalo()[1];
+			max = gf.getXinterval().max();
 		}
 		minimoText.setText(""+min);
 		maximoText.setText(""+max);
 		
-		BigDecimal[] nuevoIntervalo = {min, max};
+		Interval nuevoIntervalo = new Interval(min, max);
 		switch(XorY){
 		case 'X':
-			for(ListIterator<Funcion> i = arrListFB.listIterator(); i.hasNext();){
-				Funcion fb = i.next();
-				fb.updatePasoIntervalo(paso, nuevoIntervalo);
-			}
+			gf.updateIntervals(nuevoIntervalo, gf.getYinterval());
 			break;
 		case 'Y':
-			gf.setRange(true, nuevoIntervalo);
+			gf.updateIntervals(gf.getXinterval(), nuevoIntervalo);
 			break;
 		default: break;
 		}

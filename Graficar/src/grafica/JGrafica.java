@@ -56,7 +56,7 @@ public class JGrafica extends JPanel {
 	private Dimension gDim;	//Inside graphic dimensions.
 	
 	private BigDecimal step;//Step to separate the values of x
-	private int numeroPuntos;		//TODO number of divisions
+	private int numeroPuntos;	//TODO number of divisions
 	private Interval X;		//The x Interval
 	private Interval Y;		//The y Interval
 	//The ArrayList that contains the arrays of coordenates of the functions.
@@ -69,7 +69,24 @@ public class JGrafica extends JPanel {
 	private boolean divPrin = true;	//paint main divisions?
 	private boolean divSec = false;	//paint secondary divisions?
 	private boolean etiquetas = true;	//paint axis numbers?
-	private boolean rangeY = true;
+	private boolean rangeY = true;	//TODO create an interval for this or smth
+	
+	/**
+	 * @return regresa si las divisiones principales están dibujadas
+	 */
+	public boolean isDivPrin(){return divPrin;}
+	/**
+	 * @return regresa si las divisiones secundarias están dibujadas
+	 */
+	public boolean isDivSec(){return divSec;}
+	/**
+	 * @return regresa si está dibujado en un rango especifico
+	 */
+	public boolean isYranged(){return rangeY;}
+	/**
+	 * @return regresa si las etiquetas de eje están dibujadas
+	 */
+	public boolean isEtiquetas(){return etiquetas;}
 	
 	/**
 	 * @return the gCoords
@@ -97,7 +114,14 @@ public class JGrafica extends JPanel {
 	public Interval getYinterval(){
 		return Y;
 	}
-
+	
+	/**
+	 * @return el paso
+	 */
+	public BigDecimal getStep(){
+		return step;
+	}
+	
 	/**
 	 * @return la imagen del panel
 	 */
@@ -107,31 +131,6 @@ public class JGrafica extends JPanel {
 		Graphics2D gbi = bi.createGraphics();
 		paintComponent(gbi);
 		return bi;
-	}
-	
-	/**
-	 * Crea una Gráfica
-	 * @param funcionList lista de funciones
-	 * @param dim Dimensión de la gráfica
-	 * @param colorList lista de colores
-	 * @param xInterval Intervalo de los valores de x
-	 * 
-	 */
-	public JGrafica(ArrayList<Funcion> funcionList, ArrayList<Color> colorList,
-			Dimension dim, Interval xInterval){
-		setSize(dim);
-		this.funcionList = funcionList;
-		this.colorList = colorList;
-		this.X = xInterval;
-		step = BigDecimal.valueOf(0.01);//TODO arreglos respecto al paso
-		updateCoordsDim();
-		calculos();
-		
-		cgMIA = new CoordenadasGraficasMIA(this, getXinterval(), getYinterval());
-		addMouseListener(cgMIA);
-		addMouseWheelListener(cgMIA);
-		addMouseMotionListener(cgMIA);
-		
 	}
 	
 	private void calculos(){
@@ -186,8 +185,9 @@ public class JGrafica extends JPanel {
 		}
 		
 		if(rangeY){//TODO range setting
-			minY = BigDecimal.TEN.negate();
-			maxY = BigDecimal.TEN;
+			
+			minY = Y.min();
+			maxY = Y.max();
 		}
 		
 		Y = new Interval(minY, maxY);
@@ -399,6 +399,33 @@ public class JGrafica extends JPanel {
 	}
 	
 	/**
+	 * Crea una Gráfica
+	 * @param funcionList lista de funciones
+	 * @param dim Dimensión de la gráfica
+	 * @param colorList lista de colores
+	 * @param xInterval Intervalo de los valores de x
+	 * @param yInterval Intervalo de los valores de y iniciales
+	 * 
+	 */
+	public JGrafica(ArrayList<Funcion> funcionList, ArrayList<Color> colorList,
+			Dimension dim, Interval xInterval, Interval yInterval){
+		setSize(dim);
+		this.funcionList = funcionList;
+		this.colorList = colorList;
+		this.X = xInterval;
+		this.Y = yInterval;
+		step = BigDecimal.valueOf(0.01);//TODO arreglos respecto al paso
+		updateCoordsDim();
+		calculos();
+		
+		cgMIA = new CoordenadasGraficasMIA(this, getXinterval(), getYinterval());
+		addMouseListener(cgMIA);
+		addMouseWheelListener(cgMIA);
+		addMouseMotionListener(cgMIA);
+		
+	}
+	
+	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
@@ -430,7 +457,7 @@ public class JGrafica extends JPanel {
 		
 		//init jGrafica
 		Interval in = new Interval(BigDecimal.ONE.negate(), BigDecimal.ONE);
-		JGrafica jG = new JGrafica(alf, colores, jsJF.getSize(), in);
+		JGrafica jG = new JGrafica(alf, colores, jsJF.getSize(), in, in);
 		jG.dibujaDivPrin(false);
 		//other stuff
 		jsJF.getContentPane().add(jG);

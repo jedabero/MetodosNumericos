@@ -15,11 +15,9 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.ListIterator;
 import java.util.ResourceBundle;
@@ -39,7 +37,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 //import javax.swing.JRadioButton;
 import javax.swing.JToolBar;
-import javax.swing.event.MouseInputAdapter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import components.Add;
@@ -61,7 +58,7 @@ public class GraficadorUI{
 	
 	private static final int HEIGHT=700;
 	private static final int WIDTH=1000;
-	private static final String ver= "InDev.3.69";//VER Versión
+	private static final String ver= "InDev.0.4";//VER Versión
 	
 	private JFrame mainWindow;
 	private ItemListener il;
@@ -75,6 +72,7 @@ public class GraficadorUI{
 	private ArrayList<Funcion> listaFunciones;
 	private JGrafica grafica;
 	private Interval xInterval;
+	private Interval yInterval;
 	private ArrayList<Color> colores;
 	
 	private ArrayList<JCheckBox> funcionJRB;
@@ -117,8 +115,10 @@ public class GraficadorUI{
 		jrb.addItemListener(il);
 		funcionJRB.add(jrb);
 		
+		
+		yInterval = new Interval(BigDecimal.ONE.negate(), BigDecimal.ONE);
 		grafica = new JGrafica(listaFunciones, colores, new Dimension(500, 500),
-				xInterval);
+				xInterval, yInterval);
 		
 		panelGrid = new JPanel(new GridBagLayout());
 		
@@ -127,7 +127,7 @@ public class GraficadorUI{
 		toolBarOpciones.add(jrb);
 		
 		Add.componente(panelGrid, grafica, 0, 0, 1, 1, 1.0, 1.0,
-				GridBagConstraints.CENTER, l.s("g"));
+				GridBagConstraints.BOTH, l.s("g"));
 		
 		barraMenu = new JMenuBar();
 		
@@ -169,7 +169,7 @@ public class GraficadorUI{
 		String[] intervaloSubItems =
 			{l.s("mGrafRange1"), l.s("mGrafRange2"), l.s("mGrafRange3")};
 		char[] interItemsTypes = {'R','R', 'R'};
-		boolean[] interItemsStates = {!grafica.isMaxYInt(), grafica.isMaxYInt(), grafica.isRangeSetted()};
+		boolean[] interItemsStates = {true, false, false};
 		Add.subMenu(menuGrafica, l.s("mGrafRange"), l.s("mGrafRangeTTT"),
 				graficaAL, 'I',
 				intervaloSubItems, interItemsStates, interItemsTypes);
@@ -307,16 +307,16 @@ public class GraficadorUI{
 			public void actionPerformed(ActionEvent e){
 				AbstractButton ab = (AbstractButton) e.getSource();
 				String strObj = ab.getText();
-				BigDecimal r[] = {grafica.getMinY(), grafica.getMaxY()};
+				Interval Yinterv = grafica.getYinterval();
+				Yinterv.hashCode();//TODO Yinterv
 				if(strObj.equals(l.s("mGrafRange1"))){
-					grafica.actualizaMaximos(false);
-					grafica.setRange(false, r);
+					//TODO RANGE THING
 				}else if(strObj.equals(l.s("mGrafRange2"))){
-					grafica.actualizaMaximos(true);
-					grafica.setRange(false, r);
-				}else if(strObj.equals(l.s("mGrafRange3"))){//TODO uh?
+					//TODO RANGE THING
+				}else if(strObj.equals(l.s("mGrafRange3"))){
+					//TODO RANGE CUSTOM THING
 					EditaIntervaloDialog eiyd = new EditaIntervaloDialog(
-							mainWindow, listaFunciones, grafica, 'Y');
+							mainWindow, grafica, 'Y');
 					eiyd.getIntervalo();//TODO uh?
 				}else if(strObj.equals(l.s("mGrafDiv1"))){
 					if(ab.isSelected()){
@@ -331,10 +331,10 @@ public class GraficadorUI{
 						grafica.dibujaDivSec(false);
 					}
 				}else if(strObj.equals(l.s("mGrafInt"))){
-					EditaIntervaloDialog eixd =new EditaIntervaloDialog(
-							mainWindow, listaFunciones, grafica, 'X');
-					intervaloGlobal = eixd.getIntervalo();
-					pasoGlobal = eixd.getPaso();
+					EditaIntervaloDialog eixd = new EditaIntervaloDialog(
+							mainWindow, grafica, 'X');
+					O.pln(eixd.getWarningString());
+					//TODO GRAFIC INTEGER LIMITS THING
 				}else if(strObj.equals(l.s("mGrafEje1"))){
 					grafica.dibujaEtiquetas(true);
 				}else if(strObj.equals(l.s("mGrafEje2"))){
@@ -351,10 +351,7 @@ public class GraficadorUI{
 				String strObj = ab.getText();
 				
 				JGrafica jg = new JGrafica(listaFunciones, colores,
-						grafica.getWidth(), grafica.getHeight(),
-						grafica.isDivPrin(), grafica.isDivSec(),
-						grafica.isMaxYInt(), grafica.isEtiquetas(),
-						grafica.isRangeSetted());
+						grafica.getgDim(), grafica.getXinterval(), grafica.getYinterval());
 				
 				if(strObj.equals(l.s("mArchSave2"))){
 					jg.setSize(500, 500);

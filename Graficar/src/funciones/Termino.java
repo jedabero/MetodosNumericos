@@ -92,7 +92,7 @@ public class Termino {
 	 * Regresa el tipo de función de este término.
 	 * @return el tipo de función
 	 */
-	public TipoFuncion getFuncion() {
+	public TipoFuncion getTipoFuncion() {
 		return funcion;
 	}
 
@@ -100,7 +100,7 @@ public class Termino {
 	 * Modifica el actual tipo de función.
 	 * @param	funcion el nuevo tipo de función.
 	 */
-	public void setFuncion(TipoFuncion funcion) {
+	public void setTipoFuncion(TipoFuncion funcion) {
 		this.funcion = funcion;
 	}
 	
@@ -233,7 +233,7 @@ public class Termino {
 	/** Inicializa la representación específica y general del término. */
 	public void initGenEsp(){
 		String gS = "";
-		switch(getFuncion()){
+		switch(getTipoFuncion()){
 		case CONSTANTE:
 			gS += "A";
 			break;
@@ -280,7 +280,7 @@ public class Termino {
 		if(!TermEq0||!TermEq1||!TermEqInf){
 			if(signA==-1) sS +="- ";
 			
-			switch(getFuncion()){
+			switch(getTipoFuncion()){
 			case CONSTANTE:
 				toString = ""+a;
 				sS += a;
@@ -407,7 +407,7 @@ public class Termino {
 		}else if((a.signum()==0)&&(f!=TipoFuncion.CONSTANTE)){
 			throw CustomException.coefAeq0();
 		}else{
-			setFuncion(f);
+			setTipoFuncion(f);
 		}
 		setA(a);  setB(b);
 		initGenEsp();
@@ -429,7 +429,7 @@ public class Termino {
 		}
 		setA(a);
 		setB(BigDecimal.ONE);
-		setFuncion(TipoFuncion.POLINOMICA);
+		setTipoFuncion(TipoFuncion.POLINOMICA);
 		initGenEsp();
 	}
 	
@@ -445,7 +445,7 @@ public class Termino {
 			throw CustomException.coefAeq0();
 		}
 		setA(a); setB(b);
-		setFuncion(TipoFuncion.TRIGONOMETRICA);
+		setTipoFuncion(TipoFuncion.TRIGONOMETRICA);
 		setFunTrig(ft); 
 		initGenEsp();
 	}
