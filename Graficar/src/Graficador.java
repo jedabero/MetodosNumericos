@@ -44,9 +44,6 @@ public class Graficador {
 		
 		@SuppressWarnings("unused")
 		GraficadorUI gui = new GraficadorUI(currRB);
-		
-		//gui.salir();
-		//voidmet();
 	}
 	
 	
