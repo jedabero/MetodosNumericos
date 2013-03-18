@@ -84,6 +84,7 @@ public class GraficadorUI{
 	LangResource l;
 	
 	/**
+	 * Interfaz del usuario
 	 * @param rs El resource bundle que proveerá de lenguaje al programa
 	 * 
 	 */
