@@ -180,9 +180,19 @@ public class Termino {
 		case TRIGONOMETRICA:
 			return valorImagenTrigonometrica(x, getFunTrig(), isXinRadians(), isXinDegrees());
 		case EXPONENCIAL:
-			return getA().multiply(Big.exp(x.multiply(getB())));
+			try {
+				return getA().multiply(Big.exp(x.multiply(getB())));
+			} catch (Exception e) {
+				// TODO Termino#valorImagen#Exp
+				e.printStackTrace();
+			}
 		case LOGARITMICA:
-			return getA().multiply(Big.log(x.multiply(getB())));
+			try {
+				return getA().multiply(Big.ln(x.multiply(getB())));
+			} catch (Exception e) {
+				// TODO Termino#valorImagen#Log
+				e.printStackTrace();
+			}
 		case RACIONAL:
 			break;
 		default: 
