@@ -26,12 +26,12 @@ import javax.swing.JTextField;
 import javax.swing.JToolBar;
 import javax.swing.SwingConstants;
 
-import components.Add;
-import custom.LangResource;
 
+import resources.Add;
+import resources.LangResource;
+import resources.O;
 import resources.Constantes.TipoFuncion;
 import resources.Constantes.FuncionTrig;
-import stream.O;
 
 import funciones.Funcion;
 import grafica.JGrafica;

@@ -26,18 +26,18 @@ import javax.swing.JFileChooser;
 import javax.swing.JPanel;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-import math.Big;
 
 import funciones.Funcion;
 import funciones.Termino;
 
 import resources.BigDecimalCoord;
 import resources.Constantes.FuncionTrig;
+import resources.Big;
 import resources.CoordenadasGraficasMIA;
 import resources.CustomException;
 import resources.Interval;
 import resources.M;
-import stream.O;
+import resources.O;
 
 /**
  * Cualquier instancia de esta clase dibujará todas las funciones que le sean

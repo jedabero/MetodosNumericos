@@ -17,7 +17,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
-import components.Add;
+import resources.Add;
+
 
 /**
  * @author <a href="https://twitter.com/Jedabero" target="_blank">Jedabero</a>

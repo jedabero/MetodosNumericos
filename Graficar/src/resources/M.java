@@ -4,7 +4,6 @@ package resources;
 import java.math.BigDecimal;
 import java.util.Random;
 
-import math.Big;
 
 import resources.Constantes.TipoFuncion;
 import resources.Constantes.FuncionTrig;

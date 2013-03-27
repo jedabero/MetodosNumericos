@@ -13,8 +13,8 @@ import java.util.ListIterator;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
-import stream.O;
-import math.Big;
+import resources.Big;
+import resources.O;
 
 
 import funciones.FuncionBase;

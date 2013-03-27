@@ -39,14 +39,14 @@ import javax.swing.JPanel;
 import javax.swing.JToolBar;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-import components.Add;
-import custom.LangResource;
 import funciones.Funcion;
 import grafica.JGrafica;
 
+import resources.Add;
 import resources.Interval;
+import resources.LangResource;
 import resources.M;
-import stream.O;
+import resources.O;
 
 /**
  * 

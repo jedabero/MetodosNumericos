@@ -5,13 +5,13 @@ package funciones;
 
 import java.math.BigDecimal;
 
-import math.Big;
 
+import resources.Big;
 import resources.CustomException;
+import resources.O;
 import resources.Constantes.TipoFuncion;
 import resources.M;
 import resources.Constantes.FuncionTrig;
-import stream.O;
 
 /**
  * La clase {@code Termino} define lo que es un término en una función.
