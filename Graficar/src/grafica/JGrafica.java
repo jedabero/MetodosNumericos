@@ -465,7 +465,7 @@ public class JGrafica extends JPanel {
 		jsJF.setVisible(true);
 		
 		try{
-			File f = new File("gráfica.png");
+			File f = new File("grafica.png");
 			
 			JFileChooser jfc = new JFileChooser();
 			jfc.setSelectedFile(f);
