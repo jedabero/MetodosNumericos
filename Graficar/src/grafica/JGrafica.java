@@ -56,7 +56,7 @@ public class JGrafica extends JPanel {
 	private Dimension gDim;	//Inside graphic dimensions.
 	
 	private BigDecimal step;//Step to separate the values of x
-	private int numeroPuntos;	//TODO number of divisions
+	private int numeroPuntos = 201;	//Number of max divisions
 	private Interval X;		//The x Interval
 	private Interval Y;		//The y Interval
 	//The ArrayList that contains the arrays of coordenates of the functions.
@@ -135,9 +135,10 @@ public class JGrafica extends JPanel {
 	
 	private void calculos(){
 		alfCoords = new ArrayList<BigDecimalCoord[]>();
-		BigDecimal d;
-		d = X.length().divide(step, RoundingMode.HALF_UP);
-		numeroPuntos = d.intValue() + 1;//divisions
+		
+		BigDecimal numP = new BigDecimal(Integer.toString(numeroPuntos-1));
+		step = X.length().divide(numP, 10, RoundingMode.HALF_EVEN).stripTrailingZeros();
+		O.pln("Paso: "+step);
 		
 		//Arrays to stores the max and min values of Y
 		BigDecimal[] maxy = new BigDecimal[funcionList.size()];
@@ -287,8 +288,8 @@ public class JGrafica extends JPanel {
 			BigDecimal ydiv = y1.divide(Y.length(), 5, RoundingMode.HALF_UP);
 			int y = (int)(gDim.height*(1-ydiv.doubleValue()));
 			
-			String xS = ""+X.min().add(x1).stripTrailingZeros();
-			String yS = ""+Y.min().add(y1).setScale(3, RoundingMode.DOWN).stripTrailingZeros().toPlainString();
+			String xS = X.min().add(x1).setScale(3, RoundingMode.HALF_EVEN).stripTrailingZeros().toPlainString();
+			String yS = Y.min().add(y1).setScale(3, RoundingMode.HALF_EVEN).stripTrailingZeros().toPlainString();
 			
 			//TODO make this shat selectable
 			int s = 2;
@@ -343,7 +344,7 @@ public class JGrafica extends JPanel {
 	/**
 	 * 
 	 */
-	public void updateGraficaUI(){
+	public void updateGrafica(){
 		updateCoordsDim();
 		calculos();
 		cgMIA.updateIntervals(X, Y);
@@ -358,7 +359,7 @@ public class JGrafica extends JPanel {
 	public void updateIntervals(Interval x, Interval y){
 		this.X = x;
 		this.Y = y;
-		updateGraficaUI();
+		updateGrafica();
 	}
 	
 	/**

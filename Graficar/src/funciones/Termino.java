@@ -176,15 +176,17 @@ public class Termino {
 		case CONSTANTE:
 			return getA();
 		case POLINOMICA:
-			return valorImagenPolinomica(x, getGrado());
+			return getA().multiply(x.pow(getGrado()));
 		case TRIGONOMETRICA:
-			return valorImagenTrigonometrica(x, getFunTrig(), isXinRadians(), isXinDegrees());
+			return getA().multiply(M.calculaTrig(getFunTrig(),
+					x.multiply(getB()), isXinRadians(), isXinDegrees()));
 		case EXPONENCIAL:
 			try {
 				return getA().multiply(Big.exp(x.multiply(getB())));
 			} catch (Exception e) {
 				// TODO Termino#valorImagen#Exp
 				e.printStackTrace();
+				return BigDecimal.ZERO;
 			}
 		case LOGARITMICA:
 			try {
@@ -192,6 +194,7 @@ public class Termino {
 			} catch (Exception e) {
 				// TODO Termino#valorImagen#Log
 				e.printStackTrace();
+				return BigDecimal.ZERO;
 			}
 		case RACIONAL:
 			break;
@@ -199,29 +202,6 @@ public class Termino {
 			return null;
 		}
 		return null;
-	}
-	
-	/**
-	 * Evalúa y regresa el valor de un término tipo polinómico.
-	 * @param	x el valor de la variable independiente
-	 * @param	g el grado del monomio
-	 * @return el valor evaluado.
-	 */
-	private BigDecimal valorImagenPolinomica(BigDecimal x, int g) {
-		return getA().multiply(x.pow(g));
-	}
-	
-	/**
-	 * Evalúa y regresa el valor de un término tipo trigonométrico.
-	 * @param	x el valor de la variable independiente
-	 * @param	ft el tipo de función trigonométrica
-	 * @param	rad si {@code x} está en radianes
-	 * @param	deg si {@code x} está en grados
-	 * @return el valor evaluado.
-	 */
-	private BigDecimal valorImagenTrigonometrica(BigDecimal x, FuncionTrig ft,
-			boolean rad, boolean deg) {
-		return getA().multiply(M.calculaTrig(ft, x.multiply(getB()), rad, deg));
 	}
 
 	/**

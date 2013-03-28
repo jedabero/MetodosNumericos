@@ -11,8 +11,8 @@ import java.math.BigDecimal;
  */
 public class Interval {
 	
-	BigDecimal max;
-	BigDecimal min;
+	private BigDecimal max;
+	private BigDecimal min;
 	
 	/**
 	 * Crea un intervalo cerrado de longitud finita

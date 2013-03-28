@@ -9,6 +9,7 @@ import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
 import java.math.BigDecimal;
+import java.math.MathContext;
 import java.math.RoundingMode;
 
 import javax.swing.event.MouseInputAdapter;
@@ -52,11 +53,18 @@ public class CoordenadasGraficasMIA extends MouseInputAdapter{
 	
 	public void mouseWheelMoved(MouseWheelEvent mwe) {
 		int whlrot = mwe.getWheelRotation();
-		BigDecimal bdwhlrot = BigDecimal.valueOf(whlrot).divide(BigDecimal.TEN);
-		X.max = X.max.add(bdwhlrot);
-		X.min = X.min.subtract(bdwhlrot);
-		Y.max = Y.max.add(bdwhlrot);
-		Y.min = Y.min.subtract(bdwhlrot);
+		BigDecimal bdwhlrot = new BigDecimal(Integer.toString(whlrot));
+		
+		BigDecimal dx = X.max().round(new MathContext(1, RoundingMode.DOWN));
+		O.pln(dx+", "+bdwhlrot);
+		dx = dx.multiply(bdwhlrot).divide(BigDecimal.TEN, 10, RoundingMode.HALF_EVEN);
+		
+		bdwhlrot = bdwhlrot.divide(BigDecimal.TEN, 10, RoundingMode.HALF_EVEN);
+		O.pln(dx+", "+bdwhlrot);
+		X.setMax(X.max().add(dx));
+		X.setMin(X.min().subtract(dx));
+		Y.setMax(Y.max().add(dx));
+		Y.setMin(Y.min().subtract(dx));
 		jGra.updateIntervals(X, Y);
 	}
 	
