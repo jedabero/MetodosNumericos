@@ -24,6 +24,13 @@ public class CoordenadasGraficasMIA extends MouseInputAdapter{
 	private Interval X;
 	private	Interval Y;
 	
+	private BigDecimal dx;
+	private BigDecimal dy;
+	private static BigDecimal uno = BigDecimal.ONE;
+	private static BigDecimal dos = new BigDecimal(2);
+	private static BigDecimal ten = BigDecimal.TEN;
+	private static BigDecimal five = ten.divide(dos);
+	
 	/**
 	 * @param jg 
 	 * @param x 
@@ -52,19 +59,63 @@ public class CoordenadasGraficasMIA extends MouseInputAdapter{
 	public void mouseReleased(MouseEvent me) { }
 	
 	public void mouseWheelMoved(MouseWheelEvent mwe) {
+		
+		int xScale = X.length().scale();
+		int xPresi = X.length().precision();
+		O.pln("xScale:"+xScale+"|xPresicion:"+xPresi);
+		if(xScale>0){
+			dx = uno.divide(ten.pow(xScale-1));
+		}else{
+			dx = uno;
+		}
+		O.pln("dx:"+dx);
+		
+		int yScale = Y.length().scale();
+		int yPresi = Y.length().precision();
+		O.pln("yScale:"+yScale+"|yPresicion:"+yPresi);
+		if(yScale>0){
+			dy = uno.divide(ten.pow(xScale-1));
+		}else{
+			dy = uno;
+		}
+		O.pln("dy:"+dx);
+		//TODO coordGmia xPresi
+		
 		int whlrot = mwe.getWheelRotation();
 		BigDecimal bdwhlrot = new BigDecimal(Integer.toString(whlrot));
+		int num = bdwhlrot.abs().intValue();
+		int numSign = bdwhlrot.signum();
+		switch (num) {
+		case 1:
+			dx = dx.multiply(uno.divide(ten));
+			dy = dy.multiply(uno.divide(ten));
+			break;
+		case 2:
+			dx = dx.multiply(dos.divide(ten));
+			dy = dy.multiply(uno.divide(ten));
+			break;
+		case 3:
+		default:
+			dx = dx.multiply(five.divide(ten));
+			dy = dy.multiply(uno.divide(ten));
+			break;
+		}
+		if (numSign<0) {
+			dx =  dx.negate();
+			dy =  dy.negate();
+		}
 		
-		BigDecimal dx = X.max().round(new MathContext(1, RoundingMode.DOWN));
+		O.pln(dx+", "+bdwhlrot);
+		/*dx = X.max().round(new MathContext(1, RoundingMode.DOWN));
 		O.pln(dx+", "+bdwhlrot);
 		dx = dx.multiply(bdwhlrot).divide(BigDecimal.TEN, 10, RoundingMode.HALF_EVEN);
 		
 		bdwhlrot = bdwhlrot.divide(BigDecimal.TEN, 10, RoundingMode.HALF_EVEN);
-		O.pln(dx+", "+bdwhlrot);
+		O.pln(dx+", "+bdwhlrot);*/
 		X.setMax(X.max().add(dx));
 		X.setMin(X.min().subtract(dx));
-		Y.setMax(Y.max().add(dx));
-		Y.setMin(Y.min().subtract(dx));
+		Y.setMax(Y.max().add(dy));
+		Y.setMin(Y.min().subtract(dy));
 		jGra.updateIntervals(X, Y);
 	}
 	

@@ -137,7 +137,7 @@ public class JGrafica extends JPanel {
 		alfCoords = new ArrayList<BigDecimalCoord[]>();
 		
 		BigDecimal numP = new BigDecimal(Integer.toString(numeroPuntos-1));
-		step = X.length().divide(numP, 10, RoundingMode.HALF_EVEN).stripTrailingZeros();
+		step = X.length().divide(numP, 10, RoundingMode.HALF_UP).stripTrailingZeros();
 		O.pln("Paso: "+step);
 		
 		//Arrays to stores the max and min values of Y

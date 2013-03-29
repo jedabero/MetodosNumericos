@@ -30,7 +30,7 @@ import resources.Constantes.FuncionTrig;
  * Específica: {@code 3*sin(2x)}
  * </dl>
  * <p>
- * Es usada en la clase {@code Funcion} para definir cada un de los términos.
+ * Es usada en la clase {@link Funcion} para definir cada un de los términos.
  * <p>
  * Creada como rediseño de la clase {@link FuncionBase} antes usada para definir
  * funciones.
