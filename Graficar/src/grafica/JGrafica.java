@@ -13,30 +13,20 @@ import java.awt.Point;
 import java.awt.Shape;
 import java.awt.geom.Path2D;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.ListIterator;
-import java.util.StringTokenizer;
 
-import javax.imageio.ImageIO;
-import javax.swing.JFileChooser;
 import javax.swing.JPanel;
-import javax.swing.filechooser.FileNameExtensionFilter;
 
 
 import funciones.Funcion;
-import funciones.Termino;
 
 import resources.BigDecimalCoord;
-import resources.Constantes.FuncionTrig;
 import resources.Big;
 import resources.CoordenadasGraficasMIA;
-import resources.CustomException;
 import resources.Interval;
-import resources.M;
 import resources.O;
 
 /**
@@ -426,71 +416,4 @@ public class JGrafica extends JPanel {
 		
 	}
 	
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		//DEL this method
-		//init gui
-		O.pln(M.funcionRandom());
-		javax.swing.JFrame jsJF = new javax.swing.JFrame("graphic TEST!");
-		jsJF.setSize(500, 500);
-		jsJF.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
-		
-		//init Lista de Funciones
-		BigDecimal[] coefs = {BigDecimal.ONE, BigDecimal.ONE, BigDecimal.ONE};
-		ArrayList<Funcion> alf = new ArrayList<Funcion>();
-		alf.add(new Funcion(Termino.constante(BigDecimal.ONE)));
-		alf.add(Funcion.trigonometrica(FuncionTrig.CSC, coefs[0], coefs[1]));
-		try {
-			alf.add(Funcion.polinomio(2, coefs));
-		} catch (CustomException e) {
-			e.printStackTrace();
-		}
-		//init Lista de Colores
-		ArrayList<Color> colores = new ArrayList<Color>();
-		for (Funcion funcion : alf) {
-			O.pln(funcion.getSpecific());
-			colores.add(new Color(((int)(25.6*Math.random()))*10,
-					((int)(25.6*Math.random()))*10,
-					((int)(25.6*Math.random()))*10));
-		}
-		
-		//init jGrafica
-		Interval in = new Interval(BigDecimal.ONE.negate(), BigDecimal.ONE);
-		JGrafica jG = new JGrafica(alf, colores, jsJF.getSize(), in, in);
-		jG.dibujaDivPrin(false);
-		//other stuff
-		jsJF.getContentPane().add(jG);
-		jsJF.setVisible(true);
-		
-		try{
-			File f = new File("grafica.png");
-			
-			JFileChooser jfc = new JFileChooser();
-			jfc.setSelectedFile(f);
-			File deskDir = new File(System.getProperty("user.home"));
-			jfc.setCurrentDirectory(deskDir);
-			jfc.setMultiSelectionEnabled(false);
-			jfc.setFileFilter(new FileNameExtensionFilter("Imagenes", "png"));
-			jfc.showSaveDialog(jsJF);
-			StringTokenizer st = new StringTokenizer(
-					jfc.getSelectedFile().toString(),".");
-			st.nextToken();
-			if(!st.hasMoreTokens()){
-				f = new File(jfc.getSelectedFile()+".png");
-			}else{
-				f = jfc.getSelectedFile();
-			}
-			ImageIO.write(jG.getGrafica(), "png", f);
-		}catch (IOException ioe){
-			O.pln("Error de escritura");
-		}catch (NullPointerException npe){
-			O.pln("Archivo no seleccionado");
-		}catch (Exception e2){
-			O.pln("Error deseconocido");
-			e2.printStackTrace();
-		}
-	}
-
 }

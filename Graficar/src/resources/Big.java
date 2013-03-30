@@ -314,9 +314,8 @@ public final class Big {
 	 * @param base la base
 	 * @param exp el exponente
 	 * @return base<sup>exp</sup>
-	 * @throws Exception
 	 */
-	public static BigDecimal pow(BigDecimal base, BigDecimal exp) throws Exception{
+	public static BigDecimal pow(BigDecimal base, BigDecimal exp){
 		double b = base.doubleValue();
 		double x = exp.doubleValue();
 		if(Double.isInfinite(Math.pow(b, x))){
@@ -335,9 +334,8 @@ public final class Big {
 	 * @param base la base
 	 * @param x el número
 	 * @return regresa log<sub>b</sub>x
-	 * @throws Exception si x es negativo
 	 */
-	public static BigDecimal logB(BigDecimal x, BigDecimal base) throws Exception{
+	public static BigDecimal logB(BigDecimal x, BigDecimal base){
 		BigDecimal num = ln(x);
 		BigDecimal den = ln(base);
 		BigDecimal res = num.divide(den, 10, RoundingMode.HALF_EVEN).stripTrailingZeros();
@@ -349,9 +347,8 @@ public final class Big {
 	 * @see Math#exp(double)
 	 * @param	x el exponente a elevar {@code e}.
 	 * @return e<sup>x</sup>, en el que e es la base de los logaritmos naturales
-	 * @throws Exception 
 	 */
-	public static BigDecimal exp(BigDecimal x) throws Exception{
+	public static BigDecimal exp(BigDecimal x){
 		if(Double.isInfinite(Math.exp(x.doubleValue()))){
 			BigDecimal n = ln(DOUBLE_MAX);
 			BigDecimal x2 = x.subtract(n);
@@ -369,11 +366,11 @@ public final class Big {
 	 * @see Math#log(double)
 	 * @param	x un valor
 	 * @return ln {@code x}, logaritmo natural de {@code x}
-	 * @throws Exception 
 	 */
-	public static BigDecimal ln(BigDecimal x) throws Exception{
+	public static BigDecimal ln(BigDecimal x){
 		if(x.signum()<=0){
-			throw new Exception("ln("+x+") = -Infinity");
+			O.pln("ln("+x+") = -Infinity");
+			return BigDecimal.ZERO;
 		}else if(Double.isInfinite(x.doubleValue())){
 			BigDecimal n = x.divide(DOUBLE_MAX);
 			return (ln(n).add(ln(DOUBLE_MAX)));

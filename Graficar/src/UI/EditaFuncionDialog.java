@@ -149,8 +149,10 @@ public final class EditaFuncionDialog extends JDialog{
 		initListeners();
 		
 		labelTipoFuncion = new JLabel(l.s("fTypeL"));
-		dropTipoFuncion = new JComboBox();//TODO añadir tipos de función.
-		for(TipoFuncion f : TipoFuncion.values()) dropTipoFuncion.addItem(f);
+		dropTipoFuncion = new JComboBox();
+		for(TipoFuncion f : TipoFuncion.values()){
+			dropTipoFuncion.addItem(f);
+		}
 		dropTipoFuncion.setSelectedItem(tipoFunOr);
 		dropTipoFuncion.addItemListener(selecTipoIL);
 		

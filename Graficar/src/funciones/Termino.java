@@ -181,21 +181,9 @@ public class Termino {
 			return getA().multiply(M.calculaTrig(getFunTrig(),
 					x.multiply(getB()), isXinRadians(), isXinDegrees()));
 		case EXPONENCIAL:
-			try {
-				return getA().multiply(Big.exp(x.multiply(getB())));
-			} catch (Exception e) {
-				// TODO Termino#valorImagen#Exp
-				e.printStackTrace();
-				return BigDecimal.ZERO;
-			}
+			return getA().multiply(Big.exp(x.multiply(getB())));
 		case LOGARITMICA:
-			try {
-				return getA().multiply(Big.ln(x.multiply(getB())));
-			} catch (Exception e) {
-				// TODO Termino#valorImagen#Log
-				e.printStackTrace();
-				return BigDecimal.ZERO;
-			}
+			return getA().multiply(Big.ln(x.multiply(getB())));
 		case RACIONAL:
 			break;
 		default: 

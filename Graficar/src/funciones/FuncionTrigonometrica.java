@@ -149,7 +149,7 @@ public class FuncionTrigonometrica extends FuncionBase {
 				if(!Bieq1) f += Bi;
 				f += "x) ";
 			}else if(isOne){
-				f += " ";//TODO trigonometric string construction
+				f += " ";
 			}
 		}
 		f +="</html>";

@@ -241,7 +241,7 @@ public class JLabelGrafica extends JLabel{
 		O.pln("Y: min= "+minY+", max= "+maxY);
 		
 		//A continuación se realizan cálculos para determinar como y donde se
-		//dibujan las divisiones principales, secundarias y los ejes. TODO descripción
+		//dibujan las divisiones principales, secundarias y los ejes. 
 		//El grosor de esas líneas es el más delgado
 		g.setStroke(bs1);
 		
