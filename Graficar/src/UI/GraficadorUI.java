@@ -241,7 +241,7 @@ public class GraficadorUI{
 									toolBarOpciones, grafica,
 									listaFunciones.size(), tempF,
 									listaFunciones, funcionJRB, colores, il,
-									EditaFuncionDialog.AÑADIR, l);
+									EditaFuncionDialog.ANADIR, l);
 				}else{
 					JOptionPane.showMessageDialog(toolBarOpciones,
 							l.s("addMDialog1")+"\n"+l.s("addMDialog2"),

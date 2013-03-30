@@ -51,7 +51,7 @@ public final class EditaFuncionDialog extends JDialog{
 	/**
 	 * 
 	 */
-	public static final int AÑADIR = 0;
+	public static final int ANADIR = 0;
 	/**
 	 * 
 	 */
@@ -369,7 +369,7 @@ public final class EditaFuncionDialog extends JDialog{
 			public void actionPerformed(ActionEvent e) {
 				actualizaAL.actionPerformed(e);
 				switch(accion){
-				case AÑADIR:
+				case ANADIR:
 					arrListFB.add(index, tempFuncion);
 					arrListColor.add(index, c);
 					jrb = new JCheckBox(tempFuncion.getSpecific());
@@ -405,7 +405,7 @@ public final class EditaFuncionDialog extends JDialog{
 		cerrarAL = new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				switch(accion){
-				case AÑADIR:
+				case ANADIR:
 					break;
 				case EDITAR:
 					switch(tempFuncion.getTipoFuncion()){
