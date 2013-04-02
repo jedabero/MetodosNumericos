@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package metodosnumericos;
 
 import java.util.Scanner;
@@ -12,48 +8,84 @@ import java.util.Scanner;
  */
 public class Matriz {
     
-    private double matriz[][];
+    private double matrizCoef[][];  //Matriz de coeficientes.
+    private double vectorB[];
     private double matrizAmpliada[][];
     
-    private int n;
-    private int m;
+    private int n;  //Número de ecuaciones.
+    private int m;  //Número de incognitas.
     
+    /**
+     * Constructor sin parámetros de matriz.
+     * Por obligación se le pedirá al usuario por consola que ingrese el número
+     * de ecuaciones y el número de incognitas.
+     * Luego se le pedirá que ingrese cada uno de los coeficientes.
+     */
     public Matriz(){
+        // Ingresar tamaño del sistema
         Scanner in = new Scanner(System.in);
-        System.out.println("Ecuaciones (Filas)");
+        System.out.println("Ecuaciones (Filas): ");
         this.n = in.nextInt();
-        System.out.println("Incognitas");
+        System.out.println("Incognitas: ");
         this.m = in.nextInt();
+        // Inicializar las matrices.
         matrizAmpliada = new double[n][m+1];
-        matriz = new double[n][m];
+        matrizCoef = new double[n][m];
+        vectorB = new double[n];
+        // Ingreso de datos y muestra del sistema resultante.
         ingresarMatriz();
         imprimirMatriz("Matriz Original");
     }
     
+    /**
+     * Constructor que crea una matriz de nxm.
+     * El usuario debe ingresar cada uno de los coeficientes.
+     * @param n El número de ecuaciones.
+     * @param m El número de incognitas.
+     */
     public Matriz(int n, int m){
         this.n=n;
         this.m=m;
+        // Inicializar las matrices.
         matrizAmpliada = new double[n][m+1];
-        matriz = new double[n][m];
+        matrizCoef = new double[n][m];
+        vectorB = new double[n];
+        // Ingreso de datos y muestra del sistema resultante.
         ingresarMatriz();
         imprimirMatriz("Matriz Original");
     }
     
+    /**
+     * Constructor que crea una matriz a partir de un arreglo bidimensional.
+     * @param matriz Arreglo bidimensional.
+     */
     public Matriz(double matriz[][]){
         this.matrizAmpliada = matriz;
         n = matriz.length;
         m = matriz[0].length-1;
-        this.matriz = new double[n][m];
+        // Inicializar las matrices.
+        this.matrizCoef = new double[n][m];
+        vectorB = new double[n];
         for (int i = 0; i < matriz.length; i++) {
-            System.arraycopy(matriz[i], 0, this.matriz[i], 0, matriz[0].length-1);
+            System.arraycopy(matriz[i], 0, matrizCoef[i], 0, matriz[0].length-1);
+            vectorB[i] = matriz[i][matriz[0].length-1];
         }
+        // Muestra del sistema resultante.
         imprimirMatriz("Matriz Original");
     }
     
+    /**
+     * Devuelve la copia de la matriz actual.
+     * @param m la matriz a copiar.
+     * @return una copia de la matriz m.
+     */
     public static Matriz copy(Matriz m){
         return new Matriz(m.getMatriz());
     }
     
+    /**
+     * Se llama cuando es necesario que el usario ingreselos datos de la matriz.
+     */
     private void ingresarMatriz(){
         Scanner in = new Scanner(System.in);
         double[][] tempM = new double[n][m+1];
@@ -61,11 +93,22 @@ public class Matriz {
             for (int j = 0; j < m+1; j++) {
                 System.out.print("Ingrese A("+(i+1)+","+(j+1)+") ");
                 tempM[i][j] = in.nextDouble();
+                if (j<m) {
+                    matrizCoef[i][j] = tempM[i][j];
+                    System.out.println("A["+(i+1)+","+(j+1)+"]="+matrizCoef[i][j]);
+                }else {
+                    vectorB[i] = tempM[i][j];
+                    System.out.println("b["+(i+1)+"]="+vectorB[i]);
+                }
             }
         }
         setMatriz(tempM);
     }
     
+    /**
+     * Muestra en consola la matriz actual, junto con el titulo deseado.
+     * @param titulo el titulo.
+     */
     public final void imprimirMatriz(String titulo){
         System.out.println("\n\t"+titulo);
         for (int i = 0; i < n; i++) {
@@ -77,6 +120,11 @@ public class Matriz {
         }
     }
     
+    /**
+     * Se usa en los métodos de Gauss y Jordan para simplificar la ecuación en
+     * la fila i entre el coeficiente A[i][i]
+     * @param i el indice de la ecuación.
+     */
     private void simpFila(int i){
         double divisor = this.getMatriz()[i][i];
         double[][] tempM = this.getMatriz();
@@ -86,6 +134,12 @@ public class Matriz {
         this.setMatriz(tempM);
     }
     
+    /**
+     * Se utiliza en los métodos de Gauss y Jordan para reducir a cero la
+     * variable A[k][i].
+     * @param k 
+     * @param i la fila
+     */
     private void cerosColumna(int k, int i){
         double pivote = -this.getMatriz()[k][i];
         double[][] tempM = this.getMatriz();
@@ -98,10 +152,10 @@ public class Matriz {
     public void metodoGauss(){
         for (int i = 0; i < n; i++) {
             simpFila(i);
-            imprimirMatriz("Gauss paso"+(i+1));
+            imprimirMatriz("Gauss paso."+(i+1));
             for (int k = i+1; k < n; k++) {
                 cerosColumna(k, i);
-                imprimirMatriz("Gauss pivote"+(k+1));
+                imprimirMatriz("Gauss pivote."+(k+1));
             }
         }
         
@@ -111,12 +165,12 @@ public class Matriz {
     public void metodoJordan(){
         for (int i = 0; i < n; i++) {
             simpFila(i);
-            imprimirMatriz("Jordan paso"+(i+1));
+            imprimirMatriz("Jordan paso."+(i+1));
             
             for (int k = 0; k < n; k++) {
                 if (k!=i) {
                     cerosColumna(k, i);
-                    imprimirMatriz("Jordan pivote"+(k+1));
+                    imprimirMatriz("Jordan pivote."+(k+1));
                 }
             }
         }

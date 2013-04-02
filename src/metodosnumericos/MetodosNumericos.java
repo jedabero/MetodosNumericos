@@ -27,5 +27,7 @@ public class MetodosNumericos {
         m.metodoGauss();
         Matriz B = new Matriz(mat);
         B.metodoJordan();
+        
+        new Matriz();
     }
 }
