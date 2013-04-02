@@ -138,7 +138,7 @@ public class Matriz {
      * Se utiliza en los métodos de Gauss y Jordan para reducir a cero la
      * variable A[k][i].
      * @param k 
-     * @param i la fila
+     * @param i 
      */
     private void cerosColumna(int k, int i){
         double pivote = -this.getMatriz()[k][i];
@@ -149,6 +149,10 @@ public class Matriz {
         this.setMatriz(tempM);
     }
     
+    /**
+     * Método de Gauss. Vuelve la matriz de coeficientes enuna matriz triangular
+     * superior.
+     */
     public void metodoGauss(){
         for (int i = 0; i < n; i++) {
             simpFila(i);
@@ -162,6 +166,9 @@ public class Matriz {
         imprimirMatriz("Matriz Gaussiana");
     }
     
+    /**
+     * Método de Jordan. Reduce la matriz de coeficientes a la matriz identidad.
+     */
     public void metodoJordan(){
         for (int i = 0; i < n; i++) {
             simpFila(i);
@@ -178,18 +185,36 @@ public class Matriz {
         imprimirMatriz("Matriz Jordan");
     }
     
+    /**
+     * 
+     * @param maxIt
+     * @param tol 
+     */
     public void metodoJacobi(int maxIt, double tol){
         
     }
     
+    /**
+     * 
+     * @param maxIt
+     * @param tol 
+     */
     public void metodoSeidel(int maxIt, double tol){
         
     }
-
+    
+    /**
+     * 
+     * @return 
+     */
     public double[][] getMatriz() {
         return matrizAmpliada;
     }
-
+    
+    /**
+     * 
+     * @param matriz 
+     */
     public void setMatriz(double[][] matriz) {
         this.matrizAmpliada = matriz;
     }
