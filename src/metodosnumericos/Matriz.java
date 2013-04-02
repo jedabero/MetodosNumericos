@@ -41,11 +41,12 @@ public class Matriz {
     
     public Matriz(double matriz[][]){
         this.matrizAmpliada = matriz;
+        n = matriz.length;
+        m = matriz[0].length-1;
+        this.matriz = new double[n][m];
         for (int i = 0; i < matriz.length; i++) {
             System.arraycopy(matriz[i], 0, this.matriz[i], 0, matriz[0].length-1);
         }
-        n = matriz.length;
-        m = matriz[0].length-1;
         imprimirMatriz("Matriz Original");
     }
     

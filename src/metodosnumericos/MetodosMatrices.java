@@ -277,23 +277,27 @@ public class MetodosMatrices extends javax.swing.JFrame {
 
     private void btnGaussActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGaussActionPerformed
         // TODO add your handling code here:
+        btnCreaMatrizActionPerformed(evt);
         matriz.metodoGauss();
         mostrarTabla();
     }//GEN-LAST:event_btnGaussActionPerformed
 
     private void btnJordanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnJordanActionPerformed
         // TODO add your handling code here:
+        btnCreaMatrizActionPerformed(evt);
         matriz.metodoJordan();
         mostrarTabla();
     }//GEN-LAST:event_btnJordanActionPerformed
 
     private void btnJacobiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnJacobiActionPerformed
         // TODO add your handling code here:
+        btnCreaMatrizActionPerformed(evt);
         JOptionPane.showMessageDialog(this, "Nope, Chuck Testa");
     }//GEN-LAST:event_btnJacobiActionPerformed
 
     private void btnSeidelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeidelActionPerformed
         // TODO add your handling code here:
+        btnCreaMatrizActionPerformed(evt);
         JOptionPane.showMessageDialog(this, "Nope, Chuck Testa");
     }//GEN-LAST:event_btnSeidelActionPerformed
 
