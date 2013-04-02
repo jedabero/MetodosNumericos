@@ -11,7 +11,9 @@ import java.util.Scanner;
  * @author Jedabero
  */
 public class Matriz {
+    
     private double matriz[][];
+    private double matrizAmpliada[][];
     
     private int n;
     private int m;
@@ -22,7 +24,8 @@ public class Matriz {
         this.n = in.nextInt();
         System.out.println("Incognitas");
         this.m = in.nextInt();
-        matriz = new double[n][m+1];
+        matrizAmpliada = new double[n][m+1];
+        matriz = new double[n][m];
         ingresarMatriz();
         imprimirMatriz("Matriz Original");
     }
@@ -30,13 +33,17 @@ public class Matriz {
     public Matriz(int n, int m){
         this.n=n;
         this.m=m;
-        matriz = new double[n][m+1];
+        matrizAmpliada = new double[n][m+1];
+        matriz = new double[n][m];
         ingresarMatriz();
         imprimirMatriz("Matriz Original");
     }
     
     public Matriz(double matriz[][]){
-        this.matriz = matriz;
+        this.matrizAmpliada = matriz;
+        for (int i = 0; i < matriz.length; i++) {
+            System.arraycopy(matriz[i], 0, this.matriz[i], 0, matriz[0].length-1);
+        }
         n = matriz.length;
         m = matriz[0].length-1;
         imprimirMatriz("Matriz Original");
@@ -125,11 +132,11 @@ public class Matriz {
     }
 
     public double[][] getMatriz() {
-        return matriz;
+        return matrizAmpliada;
     }
 
     public void setMatriz(double[][] matriz) {
-        this.matriz = matriz;
+        this.matrizAmpliada = matriz;
     }
     
 }

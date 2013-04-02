@@ -114,7 +114,7 @@ public class MetodosMatrices extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Matrices");
+        setTitle("Solucion de Sistemas de Ecuaciones Lineales");
 
         tablaMatriz.setModel(dtmMatriz);
         jScrollPane1.setViewportView(tablaMatriz);
@@ -231,13 +231,13 @@ public class MetodosMatrices extends javax.swing.JFrame {
                         .addComponent(lblNumEc)
                         .addComponent(spnrNumEc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(btnGauss)
                         .addComponent(btnJordan)
                         .addComponent(btnJacobi)
-                        .addComponent(btnSeidel)))
+                        .addComponent(btnSeidel))
+                    .addComponent(jLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(83, Short.MAX_VALUE))

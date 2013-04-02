@@ -21,11 +21,7 @@ public class MetodosNumericos {
             {0,0,-1,4,1}};
         double mat1[][] = new double[mat.length][mat[0].length];
         for (int i = 0; i < mat.length; i++) {
-            for (int j = 0; j < mat[0].length; j++) {
-                mat1[i][j] = mat[i][j];
-                
-            }
-            
+            System.arraycopy(mat[i], 0, mat1[i], 0, mat[0].length);
         }
         Matriz m = new Matriz(mat1);
         m.metodoGauss();
