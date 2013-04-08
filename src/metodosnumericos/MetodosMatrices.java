@@ -303,7 +303,7 @@ public class MetodosMatrices extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSeidelActionPerformed
 
     public void mostrarTabla(){
-        double[][] mt = matriz.getMatriz();
+        double[][] mt = matriz.getMatrizAmpliada().getMatriz();
         Object[][] obj = new Object[mt.length][mt[0].length];
         for (int i = 0; i < mt.length; i++) {
             for (int j = 0; j < mt[0].length; j++) {
@@ -345,6 +345,7 @@ public class MetodosMatrices extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 new MetodosMatrices().setVisible(true);
             }

@@ -1,6 +1,8 @@
 package metodosnumericos;
 
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -8,12 +10,12 @@ import java.util.Scanner;
  */
 public class SistemaEcuacionesLineales {
     
-    private double matrizCoef[][];  //Matriz de coeficientes.
-    private double vectorB[];
-    private double matrizAmpliada[][];
+    private Matriz matrizCoef;  //Matriz de coeficientes.
+    private Matriz vectorB;
+    private Matriz matrizAmpliada;
     
-    private int n;  //Número de ecuaciones.
-    private int m;  //Número de incognitas.
+    private int numEq;  //Número de ecuaciones.
+    private int numIn;  //Número de incognitas.
     
     /**
      * Constructor sin parámetros de matriz.
@@ -25,15 +27,18 @@ public class SistemaEcuacionesLineales {
         // Ingresar tamaño del sistema
         Scanner in = new Scanner(System.in);
         System.out.println("Ecuaciones (Filas): ");
-        this.n = in.nextInt();
+        this.numEq = in.nextInt();
         System.out.println("Incognitas: ");
-        this.m = in.nextInt();
+        this.numIn = in.nextInt();
         // Inicializar las matrices.
-        matrizAmpliada = new double[n][m+1];
-        matrizCoef = new double[n][m];
-        vectorB = new double[n];
-        // Ingreso de datos y muestra del sistema resultante.
-        ingresarMatriz();
+        matrizCoef = new Matriz(numEq,numIn, true);
+        vectorB = new Matriz(numEq,1, true);
+        try {
+            matrizAmpliada = Matriz.ampliada(matrizCoef, vectorB);
+        } catch (Exception ex) {
+            Logger.getLogger(SistemaEcuacionesLineales.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        // Muestra del sistema resultante.
         imprimirMatriz("Matriz Original");
     }
     
@@ -44,14 +49,17 @@ public class SistemaEcuacionesLineales {
      * @param m El número de incognitas.
      */
     public SistemaEcuacionesLineales(int n, int m){
-        this.n=n;
-        this.m=m;
+        this.numEq=n;
+        this.numIn=m;
         // Inicializar las matrices.
-        matrizAmpliada = new double[n][m+1];
-        matrizCoef = new double[n][m];
-        vectorB = new double[n];
-        // Ingreso de datos y muestra del sistema resultante.
-        ingresarMatriz();
+        matrizCoef = new Matriz(n,m, true);
+        vectorB = new Matriz(n,1, true);
+        try {
+            matrizAmpliada = Matriz.ampliada(matrizCoef, vectorB);
+        } catch (Exception ex) {
+            Logger.getLogger(SistemaEcuacionesLineales.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        // Muestra del sistema resultante.
         imprimirMatriz("Matriz Original");
     }
     
@@ -60,49 +68,18 @@ public class SistemaEcuacionesLineales {
      * @param matriz Arreglo bidimensional.
      */
     public SistemaEcuacionesLineales(double matriz[][]){
-        this.matrizAmpliada = matriz;
-        n = matriz.length;
-        m = matriz[0].length-1;
+        matrizAmpliada = new Matriz(matriz);
+        numEq = matriz.length;
+        numIn = matriz[0].length-1;
         // Inicializar las matrices.
-        this.matrizCoef = new double[n][m];
-        vectorB = new double[n];
-        for (int i = 0; i < matriz.length; i++) {
-            System.arraycopy(matriz[i], 0, matrizCoef[i], 0, matriz[0].length-1);
-            vectorB[i] = matriz[i][matriz[0].length-1];
+        matrizCoef = new Matriz(numEq,numIn);
+        vectorB = new Matriz(numEq,1);
+        for (int i = 0; i < numEq; i++) {
+            System.arraycopy(matriz[i], 0, matrizCoef.getMatriz()[i], 0, matriz[0].length-1);
+            vectorB.getMatriz()[i][0] = matriz[i][numIn];
         }
         // Muestra del sistema resultante.
         imprimirMatriz("Matriz Original");
-    }
-    
-    /**
-     * Devuelve la copia de la matriz actual.
-     * @param m la matriz a copiar.
-     * @return una copia de la matriz m.
-     */
-    public static SistemaEcuacionesLineales copy(SistemaEcuacionesLineales m){
-        return new SistemaEcuacionesLineales(m.getMatriz());
-    }
-    
-    /**
-     * Se llama cuando es necesario que el usario ingreselos datos de la matriz.
-     */
-    private void ingresarMatriz(){
-        Scanner in = new Scanner(System.in);
-        double[][] tempM = new double[n][m+1];
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < m+1; j++) {
-                System.out.print("Ingrese A("+(i+1)+","+(j+1)+") ");
-                tempM[i][j] = in.nextDouble();
-                if (j<m) {
-                    matrizCoef[i][j] = tempM[i][j];
-                    System.out.println("A["+(i+1)+","+(j+1)+"]="+matrizCoef[i][j]);
-                }else {
-                    vectorB[i] = tempM[i][j];
-                    System.out.println("b["+(i+1)+"]="+vectorB[i]);
-                }
-            }
-        }
-        setMatriz(tempM);
     }
     
     /**
@@ -111,11 +88,12 @@ public class SistemaEcuacionesLineales {
      */
     private void imprimirMatriz(String titulo){
         System.out.println("\n\t"+titulo);
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < m; j++) {
-                System.out.print("\t"+Float.parseFloat(""+getMatriz()[i][j]));
+        double temp[][] = getMatrizAmpliada().getMatriz();
+        for (int i = 0; i < numEq; i++) {
+            for (int j = 0; j < numIn; j++) {
+                System.out.print("\t"+Float.parseFloat(""+temp[i][j]));
             }
-            System.out.print("\t|\t"+Float.parseFloat(""+getMatriz()[i][m]));
+            System.out.print("\t|\t"+Float.parseFloat(""+temp[i][numIn]));
             System.out.println();
         }
     }
@@ -126,12 +104,12 @@ public class SistemaEcuacionesLineales {
      * @param i el indice de la ecuación.
      */
     private void simpFila(int i){
-        double divisor = this.getMatriz()[i][i];
-        double[][] tempM = this.getMatriz();
-        for (int j = 0; j < m+1; j++) {
-            tempM[i][j] /= divisor;
+        double temp[][] = getMatrizAmpliada().getMatriz();
+        double divisor = temp[i][i];
+        for (int j = 0; j < numIn+1; j++) {
+            temp[i][j] /= divisor;
         }
-        this.setMatriz(tempM);
+        this.setMatriz(new Matriz(temp));
     }
     
     /**
@@ -141,12 +119,12 @@ public class SistemaEcuacionesLineales {
      * @param i 
      */
     private void cerosColumna(int k, int i){
-        double pivote = -this.getMatriz()[k][i];
-        double[][] tempM = this.getMatriz();
-        for (int j = 0; j < m+1; j++) {
-            tempM[k][j] += pivote*this.getMatriz()[i][j];
+        double temp[][] = getMatrizAmpliada().getMatriz();
+        double pivote = -temp[k][i];
+        for (int j = 0; j < numIn+1; j++) {
+            temp[k][j] += pivote*temp[i][j];
         }
-        this.setMatriz(tempM);
+        this.setMatriz(new Matriz(temp));
     }
     
     /**
@@ -154,10 +132,10 @@ public class SistemaEcuacionesLineales {
      * superior.
      */
     public void metodoGauss(){
-        for (int i = 0; i < n; i++) {
+        for (int i = 0; i < numEq; i++) {
             simpFila(i);
             imprimirMatriz("Gauss paso."+(i+1));
-            for (int k = i+1; k < n; k++) {
+            for (int k = i+1; k < numEq; k++) {
                 cerosColumna(k, i);
                 imprimirMatriz("Gauss pivote."+(k+1));
             }
@@ -170,11 +148,11 @@ public class SistemaEcuacionesLineales {
      * Método de Jordan. Reduce la matriz de coeficientes a la matriz identidad.
      */
     public void metodoJordan(){
-        for (int i = 0; i < n; i++) {
+        for (int i = 0; i < numEq; i++) {
             simpFila(i);
             imprimirMatriz("Jordan paso."+(i+1));
             
-            for (int k = 0; k < n; k++) {
+            for (int k = 0; k < numEq; k++) {
                 if (k!=i) {
                     cerosColumna(k, i);
                     imprimirMatriz("Jordan pivote."+(k+1));
@@ -191,61 +169,7 @@ public class SistemaEcuacionesLineales {
      * @param tol 
      */
     public void metodoJacobi(int maxIt, double tol){
-        double x[] = new double[m];
-        boolean swi[] = new boolean[m];
-        double xn[] = new double[m];
-        double err[] = new double[m];
-        for (int i = 0; i < n; i++) {
-            x[i] = 0d;
-            swi[i] = false;
-            xn[i] = 0d;
-        }
-        boolean sw = false;
         
-        int k = 0;
-        while(!sw&&(k<=maxIt)){
-            for (int i = 0; i < n; i++) {
-                double sum = 0d;
-                for (int j = 0; j < m; j++) {
-                    sum += getMatriz()[i][j]*x[i];
-                }
-                sum = (getMatriz()[i][m] - sum)/getMatriz()[i][i];
-                xn[i] = sum;
-                err[i] = Math.abs(xn[i] - x[i]);
-                if (err[i]<=tol) {
-                    swi[i] = true;
-                } else {
-                    swi[i] = false;
-                }
-            }
-            int contp = 0;
-            for (int i = 0; i < n; i++) {
-                if(swi[i]){
-                    contp++;
-                }
-            }
-            System.out.println("En la iteración "+k);
-            
-            for (int i = 0; i < n; i++) {
-                System.out.print("x"+(i+1)+" = "+xn[i]);
-                System.out.print("\te"+(i+1)+" = "+err[i]);
-                System.out.println("\tsw"+(i+1)+" = "+swi[i]+" : contp="+contp);
-            }
-            
-            if (contp == n) {
-                sw = true;
-            } else {
-                System.arraycopy(xn, 0, x, 0, n);
-                k++;
-            }
-            
-        }
-        
-        System.out.println("En la iteración "+k);
-        for (int i = 0; i < n; i++) {
-            System.out.print("x"+(i+1)+" = "+xn[i]);
-            System.out.println("\te"+(i+1)+" = "+err[i]);
-        }
     }
     
     /**
@@ -261,7 +185,7 @@ public class SistemaEcuacionesLineales {
      * 
      * @return 
      */
-    public double[][] getMatriz() {
+    public Matriz getMatrizAmpliada() {
         return matrizAmpliada;
     }
     
@@ -269,20 +193,8 @@ public class SistemaEcuacionesLineales {
      * 
      * @param matriz 
      */
-    public void setMatriz(double[][] matriz) {
+    public void setMatriz(Matriz matriz) {
         this.matrizAmpliada = matriz;
     }
-    
-    
-    public double[][] matrizTranspuesta(){
-        double[][] tempM = new double[m][n];
-        for (int i = 0; i < matrizCoef.length; i++) {
-            for (int j = 0; j < matrizCoef[0].length; j++) {
-                tempM[j][i] = matrizCoef[i][j];
-            }
-        }
-        return tempM;
-    }
-    
     
 }
