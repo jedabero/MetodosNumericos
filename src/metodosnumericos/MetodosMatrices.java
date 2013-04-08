@@ -32,7 +32,7 @@ public class MetodosMatrices extends javax.swing.JFrame {
             }
         }
         
-        matriz = new Matriz(mt);
+        matriz = new SistemaEcuacionesLineales(mt);
         dtmMatriz = new javax.swing.table.DefaultTableModel(matrizTabla,tableHeaders);
         
         Object mt2[][] = new Object[2][3];
@@ -78,7 +78,7 @@ public class MetodosMatrices extends javax.swing.JFrame {
             }
         }
         
-        matriz = new Matriz(mt);
+        matriz = new SistemaEcuacionesLineales(mt);
         dtmMatriz = new javax.swing.table.DefaultTableModel(matrizTabla,tableHeaders);
         tablaMatriz.setModel(dtmMatriz);
         
@@ -272,7 +272,7 @@ public class MetodosMatrices extends javax.swing.JFrame {
                 mt[i][j] = Double.parseDouble(tablaMatriz.getValueAt(i, j).toString());
             }
         }
-        matriz = new Matriz(mt);
+        matriz = new SistemaEcuacionesLineales(mt);
     }//GEN-LAST:event_btnCreaMatrizActionPerformed
 
     private void btnGaussActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGaussActionPerformed
@@ -354,7 +354,7 @@ public class MetodosMatrices extends javax.swing.JFrame {
     private String[] tableHeaders = new String[numInc+1];
     private Double matrizTabla[][];
     
-    private Matriz matriz;
+    private SistemaEcuacionesLineales matriz;
     private javax.swing.table.DefaultTableModel dtmMatriz;
     private javax.swing.table.DefaultTableModel dtmMetodo;
     // Variables declaration - do not modify//GEN-BEGIN:variables

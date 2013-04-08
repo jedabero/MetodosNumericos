@@ -23,11 +23,11 @@ public class MetodosNumericos {
         for (int i = 0; i < mat.length; i++) {
             System.arraycopy(mat[i], 0, mat1[i], 0, mat[0].length);
         }
-        Matriz m = new Matriz(mat1);
+        SistemaEcuacionesLineales m = new SistemaEcuacionesLineales(mat1);
         m.metodoGauss();
-        Matriz B = new Matriz(mat);
+        SistemaEcuacionesLineales B = new SistemaEcuacionesLineales(mat);
         B.metodoJordan();
         
-        new Matriz();
+        new SistemaEcuacionesLineales();
     }
 }
