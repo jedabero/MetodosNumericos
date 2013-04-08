@@ -3,7 +3,7 @@ package metodosnumericos;
 import java.util.Scanner;
 
 /**
- *
+ * 
  * @author Jedabero
  */
 public class Matriz {
@@ -114,6 +114,10 @@ public class Matriz {
         }
     }
     
+    public boolean esCuadrada(){
+        return (n==m);
+    }
+    
     public static Matriz identidad(int n, int m){
         return new Matriz(n, m);
     }
@@ -148,6 +152,18 @@ public class Matriz {
     
     public Matriz adjunta() throws Exception{
         return cofactor().transpuesta();
+    }
+    
+    public double traza()throws Exception{
+        double tr = 0d;
+        if (!esCuadrada()) {
+            throw new Exception("Matriz no cuadrada.");
+        } else {
+            for (int i = 0; i < 10; i++) {
+                tr += getMatriz()[i][i];
+            }
+            return tr;
+        }
     }
     
     public Matriz suma(Matriz matrizASumar) throws Exception{
@@ -221,7 +237,7 @@ public class Matriz {
     public double det() throws Exception{
         double mTemp[][] = getMatriz();
         double det = 0d;
-        if(n==m){
+        if(esCuadrada()){
             if (n==2) {
                 det = (mTemp[0][0]*mTemp[1][1]) - (mTemp[0][1]*mTemp[1][0]);
             } else {
@@ -242,7 +258,7 @@ public class Matriz {
     public Matriz reducida(int i, int j) throws Exception{
         double mTemp[][] = getMatriz();
         double matFin[][] = new double[mTemp.length-1][mTemp[0].length-1];
-        if((i<mTemp.length)&&(j<mTemp[0].length)){
+        if((i<n)&&(j<m)){
             int g = 0;
             for (int k = 0; k < n; k++) {
             int h = 0;
@@ -260,16 +276,6 @@ public class Matriz {
         } else {
             throw new Exception("Indice(s) por fuera de la(s) dimension(es)");
         }
-    }
-    
-    public static void main(String[] args) throws Exception {
-        double mat1[][] = { {1,2,3}, {4,5,5}};
-        Matriz m1 = new Matriz(mat1);
-        double mat2[][] = { {1,-0.25,0,0}, {-0.25,1,-0.25,0}, {0,-0.25,1,-0.25},
-            {0,0,-0.25,1}};
-        Matriz m2 = new Matriz(mat2);
-        System.out.println("det="+m2.det());
-        
     }
     
 }
