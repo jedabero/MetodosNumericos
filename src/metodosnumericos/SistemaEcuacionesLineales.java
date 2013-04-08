@@ -209,7 +209,7 @@ public class SistemaEcuacionesLineales {
                 for (int j = 0; j < m; j++) {
                     sum += getMatriz()[i][j]*x[i];
                 }
-                sum += getMatriz()[i][m];
+                sum = (getMatriz()[i][m] - sum)/getMatriz()[i][i];
                 xn[i] = sum;
                 err[i] = Math.abs(xn[i] - x[i]);
                 if (err[i]<=tol) {

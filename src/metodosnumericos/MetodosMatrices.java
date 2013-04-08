@@ -292,6 +292,7 @@ public class MetodosMatrices extends javax.swing.JFrame {
     private void btnJacobiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnJacobiActionPerformed
         // TODO add your handling code here:
         btnCreaMatrizActionPerformed(evt);
+        matriz.metodoJacobi(15, 0.0001d);
         JOptionPane.showMessageDialog(this, "Nope, Chuck Testa");
     }//GEN-LAST:event_btnJacobiActionPerformed
 

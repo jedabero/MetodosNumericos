@@ -21,6 +21,14 @@ public class Matriz {
     private int n;  //Número de filas
     private int m;  //Número de columnas
     
+    public int getN() {
+        return n;
+    }
+
+    public int getM() {
+        return m;
+    }
+    
     public Matriz(){
         this(false);
     }
@@ -116,6 +124,32 @@ public class Matriz {
     
     public boolean esCuadrada(){
         return (n==m);
+    }
+    
+    public static Matriz ampliada(Matriz a, Matriz b)throws Exception{
+        Matriz AB;
+        int nT = 0;
+        int mT = 0;
+        if(a.getN()==b.getN()){
+            nT = a.getN();
+            mT = a.getM()+b.getM();
+            AB = new Matriz(nT, mT);
+        }else{
+            throw new Exception("Diferentes tamaños de filas");
+        }
+        double temp[][] = AB.getMatriz();
+        for (int i = 0; i < nT; i++) {
+            for (int j = 0; j < mT; j++) {
+                if (j<a.getM()) {
+                    temp[i][j] = a.getMatriz()[i][j];
+                } else {
+                    temp[i][j] = a.getMatriz()[i][j-a.getM()];
+                }
+            }
+        }
+        AB.setMatriz(temp);
+        AB.imprimirMatriz("Matriz "+nT+"x"+mT);
+        return AB;
     }
     
     public static Matriz identidad(int n, int m){
