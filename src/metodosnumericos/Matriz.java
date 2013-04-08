@@ -128,6 +128,28 @@ public class Matriz {
         return new Matriz(tempM);
     }
     
+    public Matriz inversa() throws Exception{
+        return adjunta().multipicar(1.0/det());
+    }
+    
+    public double cofactor(int i, int j) throws Exception{
+        return Math.pow(-1, (i+j))*reducida(i, j).det();
+    }
+    
+    public Matriz cofactor() throws Exception{
+        double temp[][] = new double[n][m];
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                temp[i][j] = cofactor(i,j);
+            }
+        }
+        return new Matriz(temp);
+    }
+    
+    public Matriz adjunta() throws Exception{
+        return cofactor().transpuesta();
+    }
+    
     public Matriz suma(Matriz matrizASumar) throws Exception{
         if((n==matrizASumar.n)&&(m==matrizASumar.m)){
             double[][] matTemp1 = new double[n][m];
@@ -192,19 +214,24 @@ public class Matriz {
     }
     
     /**
-     * TODO FIX!!!!
-     * @return
-     * @throws Exception 
+     * Regresa el valor del determinante de la matriz.
+     * @return determinante
+     * @throws Exception si no es cuadrada
      */
     public double det() throws Exception{
         double mTemp[][] = getMatriz();
         double det = 0d;
         if(n==m){
             if (n==2) {
-                System.out.println("dffs");
-                det += (mTemp[0][0]*mTemp[1][1]) - (mTemp[0][1]*mTemp[1][0]);
+                det = (mTemp[0][0]*mTemp[1][1]) - (mTemp[0][1]*mTemp[1][0]);
             } else {
-                return 1;
+                for (int i = 0; i < m; i++) {
+                    if (i%2==0) {
+                        det += mTemp[0][i]*reducida(0, i).det();
+                    } else {
+                        det -= mTemp[0][i]*reducida(0, i).det();
+                    }
+                }
             }
             return det;
         }else{
@@ -212,12 +239,36 @@ public class Matriz {
         }
     }
     
+    public Matriz reducida(int i, int j) throws Exception{
+        double mTemp[][] = getMatriz();
+        double matFin[][] = new double[mTemp.length-1][mTemp[0].length-1];
+        if((i<mTemp.length)&&(j<mTemp[0].length)){
+            int g = 0;
+            for (int k = 0; k < n; k++) {
+            int h = 0;
+                for (int l = 0; l < m; l++) {
+                    if((k!=i)&&(l!=j)){
+                        matFin[g][h] = mTemp[k][l];
+                        h++;
+                    }
+                }
+                if(k!=i){
+                    g++;
+                }
+            }
+            return new Matriz(matFin);
+        } else {
+            throw new Exception("Indice(s) por fuera de la(s) dimension(es)");
+        }
+    }
+    
     public static void main(String[] args) throws Exception {
-        double mat1[][] = { {1,2}, {4,5}};
+        double mat1[][] = { {1,2,3}, {4,5,5}};
         Matriz m1 = new Matriz(mat1);
-        double mat2[][] = { {9,8,7}, {6,5,4}, {3,2,1}};
+        double mat2[][] = { {1,-0.25,0,0}, {-0.25,1,-0.25,0}, {0,-0.25,1,-0.25},
+            {0,0,-0.25,1}};
         Matriz m2 = new Matriz(mat2);
-        System.out.println("det="+m1.det());
+        System.out.println("det="+m2.det());
         
     }
     
