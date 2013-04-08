@@ -114,4 +114,111 @@ public class Matriz {
         }
     }
     
+    public static Matriz identidad(int n, int m){
+        return new Matriz(n, m);
+    }
+    
+    public Matriz transpuesta(){
+        double[][] tempM = new double[m][n];
+        for (int i = 0; i < matriz.length; i++) {
+            for (int j = 0; j < matriz[0].length; j++) {
+                tempM[j][i] = matriz[i][j];
+            }
+        }
+        return new Matriz(tempM);
+    }
+    
+    public Matriz suma(Matriz matrizASumar) throws Exception{
+        if((n==matrizASumar.n)&&(m==matrizASumar.m)){
+            double[][] matTemp1 = new double[n][m];
+            for (int i = 0; i < n; i++) {
+                for (int j = 0; j < m; j++) {
+                    matTemp1[i][j] = getMatriz()[i][j] + matrizASumar.getMatriz()[i][j];
+                }
+            }
+            return new Matriz(matTemp1);
+        }else{
+            throw new Exception("Tamaño(s) diferente(s): n:"
+                    + n+"!="+matrizASumar.n+" & m:"+m+"!="+matrizASumar.m);
+        }
+    }
+    
+    public Matriz multipicar(int escalar){
+        double[][] matTemp1 = new double[n][m];
+            for (int i = 0; i < n; i++) {
+                for (int j = 0; j < m; j++) {
+                    matTemp1[i][j] = escalar*getMatriz()[i][j];
+                }
+            }
+            return new Matriz(matTemp1);
+    }
+    
+    public Matriz multipicar(float escalar){
+        double[][] matTemp1 = new double[n][m];
+            for (int i = 0; i < n; i++) {
+                for (int j = 0; j < m; j++) {
+                    matTemp1[i][j] = escalar*getMatriz()[i][j];
+                }
+            }
+            return new Matriz(matTemp1);
+    }
+    
+    public Matriz multipicar(double escalar){
+        double[][] matTemp1 = new double[n][m];
+            for (int i = 0; i < n; i++) {
+                for (int j = 0; j < m; j++) {
+                    matTemp1[i][j] = escalar*getMatriz()[i][j];
+                }
+            }
+            return new Matriz(matTemp1);
+    }
+    
+    public Matriz multipicar(Matriz b) throws Exception{
+        if((m==b.n)){
+            double[][] matTemp1 = new double[n][b.m];
+            for (int i = 0; i < n; i++) {
+                for (int j = 0; j < b.m; j++) {
+                    matTemp1[i][j] = 0d;
+                    for (int r = 0; r < m; r++) {
+                        matTemp1[i][j] += getMatriz()[i][r]*b.getMatriz()[r][j];
+                    }
+                }
+            }
+            return new Matriz(matTemp1);
+        }else{
+            throw new Exception("Columnas diferente de filas: Columnas:"
+                    + m +" & Filas:"+b.n);
+        }
+    }
+    
+    /**
+     * TODO FIX!!!!
+     * @return
+     * @throws Exception 
+     */
+    public double det() throws Exception{
+        double mTemp[][] = getMatriz();
+        double det = 0d;
+        if(n==m){
+            if (n==2) {
+                System.out.println("dffs");
+                det += (mTemp[0][0]*mTemp[1][1]) - (mTemp[0][1]*mTemp[1][0]);
+            } else {
+                return 1;
+            }
+            return det;
+        }else{
+            throw new Exception("Matriz no cuadrada.");
+        }
+    }
+    
+    public static void main(String[] args) throws Exception {
+        double mat1[][] = { {1,2}, {4,5}};
+        Matriz m1 = new Matriz(mat1);
+        double mat2[][] = { {9,8,7}, {6,5,4}, {3,2,1}};
+        Matriz m2 = new Matriz(mat2);
+        System.out.println("det="+m1.det());
+        
+    }
+    
 }

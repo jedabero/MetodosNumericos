@@ -196,11 +196,12 @@ public class SistemaEcuacionesLineales {
         double xn[] = new double[m];
         double err[] = new double[m];
         for (int i = 0; i < n; i++) {
-            x[i] = 1d;
+            x[i] = 0d;
             swi[i] = false;
-            xn[i] = 1d;
+            xn[i] = 0d;
         }
         boolean sw = false;
+        
         int k = 0;
         while(!sw&&(k<=maxIt)){
             for (int i = 0; i < n; i++) {
@@ -217,19 +218,18 @@ public class SistemaEcuacionesLineales {
                     swi[i] = false;
                 }
             }
-            
             int contp = 0;
-            System.out.println("En la iteración "+k);
-            
-            for (int i = 0; i < n; i++) {
-                System.out.println("x"+i+" = "+xn[i]);
-                System.out.println("e"+i+" = "+err[i]);
-                System.out.println("sw"+i+" = "+swi[i]+": contp="+contp);
-            }
             for (int i = 0; i < n; i++) {
                 if(swi[i]){
                     contp++;
                 }
+            }
+            System.out.println("En la iteración "+k);
+            
+            for (int i = 0; i < n; i++) {
+                System.out.print("x"+(i+1)+" = "+xn[i]);
+                System.out.print("\te"+(i+1)+" = "+err[i]);
+                System.out.println("\tsw"+(i+1)+" = "+swi[i]+" : contp="+contp);
             }
             
             if (contp == n) {
@@ -243,8 +243,8 @@ public class SistemaEcuacionesLineales {
         
         System.out.println("En la iteración "+k);
         for (int i = 0; i < n; i++) {
-            System.out.println("x"+i+" = "+xn[i]);
-            System.out.println("e"+i+" = "+err[i]);
+            System.out.print("x"+(i+1)+" = "+xn[i]);
+            System.out.println("\te"+(i+1)+" = "+err[i]);
         }
     }
     

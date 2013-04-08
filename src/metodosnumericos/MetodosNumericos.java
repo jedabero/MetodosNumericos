@@ -28,7 +28,12 @@ public class MetodosNumericos {
         SistemaEcuacionesLineales B = new SistemaEcuacionesLineales(mat);
         B.metodoJordan();
         
-        SistemaEcuacionesLineales sel = new SistemaEcuacionesLineales();
+        double mat3[][] = {
+            {1,-0.25,0,0,0.25},
+            {-0.25,1,-0.25,0,0.25},
+            {0,-0.25,1,-0.25,0.25},
+            {0,0,-0.25,1,0.25}};
+        SistemaEcuacionesLineales sel = new SistemaEcuacionesLineales(mat3);
         sel.metodoJacobi(15, 0.001d);
     }
 }
