@@ -186,12 +186,66 @@ public class SistemaEcuacionesLineales {
     }
     
     /**
-     * 
+     * TODO desciption and fix it because it doesn't work!
      * @param maxIt
      * @param tol 
      */
     public void metodoJacobi(int maxIt, double tol){
+        double x[] = new double[m];
+        boolean swi[] = new boolean[m];
+        double xn[] = new double[m];
+        double err[] = new double[m];
+        for (int i = 0; i < n; i++) {
+            x[i] = 1d;
+            swi[i] = false;
+            xn[i] = 1d;
+        }
+        boolean sw = false;
+        int k = 0;
+        while(!sw&&(k<=maxIt)){
+            for (int i = 0; i < n; i++) {
+                double sum = 0d;
+                for (int j = 0; j < m; j++) {
+                    sum += getMatriz()[i][j]*x[i];
+                }
+                sum += getMatriz()[i][m];
+                xn[i] = sum;
+                err[i] = Math.abs(xn[i] - x[i]);
+                if (err[i]<=tol) {
+                    swi[i] = true;
+                } else {
+                    swi[i] = false;
+                }
+            }
+            
+            int contp = 0;
+            System.out.println("En la iteración "+k);
+            
+            for (int i = 0; i < n; i++) {
+                System.out.println("x"+i+" = "+xn[i]);
+                System.out.println("e"+i+" = "+err[i]);
+                System.out.println("sw"+i+" = "+swi[i]+": contp="+contp);
+            }
+            for (int i = 0; i < n; i++) {
+                if(swi[i]){
+                    contp++;
+                }
+            }
+            
+            if (contp == n) {
+                sw = true;
+            } else {
+                System.arraycopy(xn, 0, x, 0, n);
+                k++;
+            }
+            
+        }
         
+        System.out.println("En la iteración "+k);
+        for (int i = 0; i < n; i++) {
+            System.out.println("x"+i+" = "+xn[i]);
+            System.out.println("e"+i+" = "+err[i]);
+        }
     }
     
     /**

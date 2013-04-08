@@ -28,6 +28,7 @@ public class MetodosNumericos {
         SistemaEcuacionesLineales B = new SistemaEcuacionesLineales(mat);
         B.metodoJordan();
         
-        new SistemaEcuacionesLineales();
+        SistemaEcuacionesLineales sel = new SistemaEcuacionesLineales();
+        sel.metodoJacobi(15, 0.001d);
     }
 }
