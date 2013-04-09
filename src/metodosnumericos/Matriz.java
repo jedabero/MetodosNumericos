@@ -42,13 +42,11 @@ public class Matriz {
             this.m = in.nextInt();
             matriz = new double[n][m];
             ingresarMatriz();
-            imprimirMatriz("Matriz "+n+"x"+m);
         } else {
             n = 3;
             m = 3;
             matriz = new double[n][m];
             escMatrizIdentidad();
-            imprimirMatriz("Matriz Identidad "+n+"x"+m);
         }
     }
     
@@ -63,10 +61,8 @@ public class Matriz {
         
         if(ingresar){
             ingresarMatriz();
-            imprimirMatriz("Matriz "+n+"x"+m);
         } else {
             escMatrizIdentidad();
-            imprimirMatriz("Matriz Identidad "+n+"x"+m);
         }
         
     }
@@ -75,7 +71,6 @@ public class Matriz {
         this.matriz = matriz;
         this.n = matriz.length;
         this.m = matriz[0].length;
-        imprimirMatriz("Matriz "+n+"x"+m);
     }
     
     /**
@@ -112,7 +107,7 @@ public class Matriz {
      * Muestra en consola la matriz actual, junto con el titulo deseado.
      * @param titulo el titulo.
      */
-    private void imprimirMatriz(String titulo){
+    public void imprimirMatriz(String titulo){
         System.out.println("\n\t"+titulo);
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < m; j++) {

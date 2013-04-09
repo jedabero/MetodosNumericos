@@ -13,7 +13,7 @@ public class MetodosNumericos {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         double mat[][] = {
             {4,-1,0,0,1},
             {-1,4,-1,0,1},
@@ -35,5 +35,12 @@ public class MetodosNumericos {
             {0,0,-0.25,1,0.25}};
         SistemaEcuacionesLineales sel = new SistemaEcuacionesLineales(mat3);
         sel.metodoJacobi(15, 0.001d);
+        
+        sel.getMatrizAmpliada().imprimirMatriz("Matriz");
+        sel.getMatrizCoef().imprimirMatriz("Matriz de Coeficientes");
+        sel.getMatrizCoef().inversa().imprimirMatriz("Matriz inversa de Coeficientes");
+        sel.getVectorB().imprimirMatriz("Vector de constantes");
+        sel.getMatrizCoef().inversa().multipicar(sel.getVectorB()).imprimirMatriz("Hope this works");
+        
     }
 }
