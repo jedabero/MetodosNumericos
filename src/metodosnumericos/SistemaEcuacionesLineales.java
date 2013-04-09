@@ -98,18 +98,24 @@ public class SistemaEcuacionesLineales {
         }
     }
     
+    private double[][] copiarMatriz(double[][] src){
+        double dest[][] = new double[src.length][src[0].length];
+        for (int i = 0; i < src.length; i++) {
+            System.arraycopy(src[i], 0, dest[i], 0, src[0].length);
+        }
+        return dest;
+    }
+    
     /**
      * Se usa en los métodos de Gauss y Jordan para simplificar la ecuación en
      * la fila i entre el coeficiente A[i][i]
      * @param i el indice de la ecuación.
      */
-    private void simpFila(int i){
-        double temp[][] = getMatrizAmpliada().getMatriz();
-        double divisor = temp[i][i];
+    private void simpFila(int i, double[][] mt){
+        double divisor = mt[i][i];
         for (int j = 0; j < numIn+1; j++) {
-            temp[i][j] /= divisor;
+            mt[i][j] /= divisor;
         }
-        this.setMatriz(new Matriz(temp));
     }
     
     /**
@@ -118,49 +124,53 @@ public class SistemaEcuacionesLineales {
      * @param k 
      * @param i 
      */
-    private void cerosColumna(int k, int i){
-        double temp[][] = getMatrizAmpliada().getMatriz();
-        double pivote = -temp[k][i];
+    private void cerosColumna(int k, int i, double[][] mt){
+        double pivote = -mt[k][i];
         for (int j = 0; j < numIn+1; j++) {
-            temp[k][j] += pivote*temp[i][j];
+            mt[k][j] += pivote*mt[i][j];
         }
-        this.setMatriz(new Matriz(temp));
     }
     
     /**
      * Método de Gauss. Vuelve la matriz de coeficientes enuna matriz triangular
      * superior.
      */
-    public void metodoGauss(){
+    public Matriz metodoGauss(){
+        double mTemp[][] = getMatrizAmpliada().getMatriz();
+        double matFin[][] = copiarMatriz(mTemp);
+        
         for (int i = 0; i < numEq; i++) {
-            simpFila(i);
+            simpFila(i, matFin);
             imprimirMatriz("Gauss paso."+(i+1));
             for (int k = i+1; k < numEq; k++) {
-                cerosColumna(k, i);
+                cerosColumna(k, i, matFin);
                 imprimirMatriz("Gauss pivote."+(k+1));
             }
         }
-        
         imprimirMatriz("Matriz Gaussiana");
+        return new Matriz(matFin);
     }
     
     /**
      * Método de Jordan. Reduce la matriz de coeficientes a la matriz identidad.
      */
-    public void metodoJordan(){
+    public Matriz metodoJordan(){
+        double mTemp[][] = getMatrizAmpliada().getMatriz();
+        double matFin[][] = copiarMatriz(mTemp);
         for (int i = 0; i < numEq; i++) {
-            simpFila(i);
+            simpFila(i, matFin);
             imprimirMatriz("Jordan paso."+(i+1));
             
             for (int k = 0; k < numEq; k++) {
                 if (k!=i) {
-                    cerosColumna(k, i);
+                    cerosColumna(k, i, matFin);
                     imprimirMatriz("Jordan pivote."+(k+1));
                 }
             }
         }
         
         imprimirMatriz("Matriz Jordan");
+        return new Matriz(matFin);
     }
     
     /**
@@ -169,7 +179,65 @@ public class SistemaEcuacionesLineales {
      * @param tol 
      */
     public void metodoJacobi(int maxIt, double tol){
+        double x[] = new double[numIn];
+        boolean swi[] = new boolean[numIn];
+        double xn[] = new double[numIn];
+        double err[] = new double[numIn];
         
+        for (int i = 0; i < numIn; i++) {
+            x[i] = 0d;
+            swi[i] = false;
+            xn[i] = 0d;
+        }
+        
+        boolean sw = false;
+        int k = 0;
+        
+        while(!sw&&(k<=maxIt)){
+            for (int i = 0; i < numEq; i++) {
+                double sum = 0d;
+                for (int j = 0; j < numIn; j++) {
+                    if (j!=i) {
+                        sum += getMatrizAmpliada().getMatriz()[i][j]*x[j];
+                    }
+                }
+                sum = (getMatrizAmpliada().getMatriz()[i][numIn] - sum)/getMatrizAmpliada().getMatriz()[i][i];
+                xn[i] = sum;
+                err[i] = Math.abs(xn[i] - x[i]);
+                if (err[i]<=tol) {
+                    swi[i] = true;
+                } else {
+                    swi[i] = false;
+                }
+            }
+            int contp = 0;
+            for (int i = 0; i < numEq; i++) {
+                if(swi[i]){
+                    contp++;
+                }
+            }
+            System.out.println("En la iteración "+k);
+            
+            for (int i = 0; i < numEq; i++) {
+                System.out.print("x"+(i+1)+" = "+xn[i]);
+                System.out.print("\te"+(i+1)+" = "+err[i]);
+                System.out.println("\tsw"+(i+1)+" = "+swi[i]+" : contp="+contp);
+            }
+            
+            if (contp == numEq) {
+                sw = true;
+            } else {
+                System.arraycopy(xn, 0, x, 0, numEq);
+                k++;
+            }
+            
+        }
+        
+        System.out.println("En la iteración "+k);
+        for (int i = 0; i < numEq; i++) {
+            System.out.print("x"+(i+1)+" = "+xn[i]);
+            System.out.println("\te"+(i+1)+" = "+err[i]);
+        }
     }
     
     /**

@@ -278,21 +278,19 @@ public class MetodosMatrices extends javax.swing.JFrame {
     private void btnGaussActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGaussActionPerformed
         // TODO add your handling code here:
         btnCreaMatrizActionPerformed(evt);
-        matriz.metodoGauss();
-        mostrarTabla();
+        mostrarTabla(matriz.metodoGauss().getMatriz());
     }//GEN-LAST:event_btnGaussActionPerformed
 
     private void btnJordanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnJordanActionPerformed
         // TODO add your handling code here:
         btnCreaMatrizActionPerformed(evt);
-        matriz.metodoJordan();
-        mostrarTabla();
+        mostrarTabla(matriz.metodoJordan().getMatriz());
     }//GEN-LAST:event_btnJordanActionPerformed
 
     private void btnJacobiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnJacobiActionPerformed
         // TODO add your handling code here:
         btnCreaMatrizActionPerformed(evt);
-        matriz.metodoJacobi(15, 0.0001d);
+        matriz.metodoJacobi(15, 0.000001d);
         JOptionPane.showMessageDialog(this, "Nope, Chuck Testa");
     }//GEN-LAST:event_btnJacobiActionPerformed
 
@@ -302,8 +300,7 @@ public class MetodosMatrices extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(this, "Nope, Chuck Testa");
     }//GEN-LAST:event_btnSeidelActionPerformed
 
-    public void mostrarTabla(){
-        double[][] mt = matriz.getMatrizAmpliada().getMatriz();
+    public void mostrarTabla(double[][] mt){
         Object[][] obj = new Object[mt.length][mt[0].length];
         for (int i = 0; i < mt.length; i++) {
             for (int j = 0; j < mt[0].length; j++) {

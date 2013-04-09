@@ -291,14 +291,14 @@ public class Matriz {
     
     public Matriz reducida(int i, int j) throws Exception{
         double mTemp[][] = getMatriz();
-        double matFin[][] = new double[mTemp.length-1][mTemp[0].length-1];
+        double matRed[][] = new double[mTemp.length-1][mTemp[0].length-1];
         if((i<n)&&(j<m)){
             int g = 0;
             for (int k = 0; k < n; k++) {
             int h = 0;
                 for (int l = 0; l < m; l++) {
                     if((k!=i)&&(l!=j)){
-                        matFin[g][h] = mTemp[k][l];
+                        matRed[g][h] = mTemp[k][l];
                         h++;
                     }
                 }
@@ -306,7 +306,7 @@ public class Matriz {
                     g++;
                 }
             }
-            return new Matriz(matFin);
+            return new Matriz(matRed);
         } else {
             throw new Exception("Indice(s) por fuera de la(s) dimension(es)");
         }
