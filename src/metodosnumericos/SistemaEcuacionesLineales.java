@@ -17,6 +17,22 @@ public class SistemaEcuacionesLineales {
     private int numEq;  //Número de ecuaciones.
     private int numIn;  //Número de incognitas.
     
+    public Matriz getMatrizCoef() {
+        return matrizCoef;
+    }
+
+    public Matriz getVectorB() {
+        return vectorB;
+    }
+
+    public int getNumEq() {
+        return numEq;
+    }
+
+    public int getNumIn() {
+        return numIn;
+    }
+    
     /**
      * Constructor sin parámetros de matriz.
      * Por obligación se le pedirá al usuario por consola que ingrese el número
@@ -131,6 +147,10 @@ public class SistemaEcuacionesLineales {
         }
     }
     
+    public Matriz metodoCramer() throws Exception{
+        return getMatrizAmpliada().inversa().multipicar(getVectorB());
+    }
+    
     /**
      * Método de Gauss. Vuelve la matriz de coeficientes enuna matriz triangular
      * superior.
@@ -141,10 +161,8 @@ public class SistemaEcuacionesLineales {
         
         for (int i = 0; i < numEq; i++) {
             simpFila(i, matFin);
-            imprimirMatriz("Gauss paso."+(i+1));
             for (int k = i+1; k < numEq; k++) {
                 cerosColumna(k, i, matFin);
-                imprimirMatriz("Gauss pivote."+(k+1));
             }
         }
         imprimirMatriz("Matriz Gaussiana");
@@ -159,17 +177,14 @@ public class SistemaEcuacionesLineales {
         double matFin[][] = copiarMatriz(mTemp);
         for (int i = 0; i < numEq; i++) {
             simpFila(i, matFin);
-            imprimirMatriz("Jordan paso."+(i+1));
             
             for (int k = 0; k < numEq; k++) {
                 if (k!=i) {
                     cerosColumna(k, i, matFin);
-                    imprimirMatriz("Jordan pivote."+(k+1));
                 }
             }
         }
         
-        imprimirMatriz("Matriz Jordan");
         return new Matriz(matFin);
     }
     
