@@ -41,6 +41,8 @@ public class MetodosMatrices extends javax.swing.JFrame {
         dtmRes = new javax.swing.table.DefaultTableModel(mt3,resTableHeaders);
         
         initComponents();
+        
+        this.setLocationRelativeTo(this.getRootPane());
     }
     
     private void resetTable(int cols, int rows){
@@ -117,6 +119,10 @@ public class MetodosMatrices extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         tablaResIt = new javax.swing.JTable();
+        jLabel4 = new javax.swing.JLabel();
+        spnIter = new javax.swing.JSpinner();
+        jLabel5 = new javax.swing.JLabel();
+        txtTol = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Solucion de Sistemas de Ecuaciones Lineales");
@@ -189,6 +195,15 @@ public class MetodosMatrices extends javax.swing.JFrame {
         tablaResIt.setModel(dtmRes);
         jScrollPane3.setViewportView(tablaResIt);
 
+        jLabel4.setText("Iteraciones");
+
+        spnIter.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(15), Integer.valueOf(5), null, Integer.valueOf(1)));
+
+        jLabel5.setText("Tolerancia");
+
+        txtTol.setColumns(8);
+        txtTol.setText("0.001");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -208,22 +223,30 @@ public class MetodosMatrices extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnCreaMatriz))
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jScrollPane3)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel2)
-                                .addGap(18, 18, 18)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(btnGauss)
-                                .addGap(18, 18, 18)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(btnJordan))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel3)
-                                .addGap(26, 26, 26)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(btnJacobi)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnSeidel))
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnSeidel)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabel4)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(spnIter, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabel5)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtTol, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -254,10 +277,14 @@ public class MetodosMatrices extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnJacobi)
                     .addComponent(btnSeidel)
-                    .addComponent(jLabel3))
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel4)
+                    .addComponent(spnIter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5)
+                    .addComponent(txtTol, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 152, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
@@ -310,8 +337,9 @@ public class MetodosMatrices extends javax.swing.JFrame {
         // TODO add your handling code here:
         btnCreaMatrizActionPerformed(evt);
         try {
-            sel.metodoJacobi(10, 0.0001).imprimirMatriz(null);
-            mostrarTabla(sel.metodoJacobi(15, 0.000001d).getMatriz(), dtmRes,
+            int it = Integer.parseInt(spnIter.getValue().toString());
+            double tol = Double.parseDouble(txtTol.getText());
+            mostrarTabla(sel.metodoJacobi(it, tol).getMatriz(), dtmRes,
                     resTableHeaders, tablaResIt);
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage());
@@ -323,7 +351,9 @@ public class MetodosMatrices extends javax.swing.JFrame {
         // TODO add your handling code here:
         btnCreaMatrizActionPerformed(evt);
         try {
-            mostrarTabla(sel.metodoSeidel(15, 0.000001d).getMatriz(), dtmRes,
+            int it = Integer.parseInt(spnIter.getValue().toString());
+            double tol = Double.parseDouble(txtTol.getText());
+            mostrarTabla(sel.metodoSeidel(it, tol).getMatriz(), dtmRes,
                     resTableHeaders, tablaResIt);
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage());
@@ -399,15 +429,19 @@ public class MetodosMatrices extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JLabel lblNumEc;
     private javax.swing.JLabel lblNumIncog;
+    private javax.swing.JSpinner spnIter;
     private javax.swing.JSpinner spnrNumEc;
     private javax.swing.JSpinner spnrNumIn;
     private javax.swing.JTable tablaMatriz;
     private javax.swing.JTable tablaResAn;
     private javax.swing.JTable tablaResIt;
+    private javax.swing.JTextField txtTol;
     // End of variables declaration//GEN-END:variables
 }
