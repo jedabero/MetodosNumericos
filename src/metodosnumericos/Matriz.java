@@ -217,16 +217,6 @@ public class Matriz {
         return new Matriz(temp);
     }
     
-    public static Matriz num(int n, int m, double num){
-        double temp[][] = new double[n][m];
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < m; j++) {
-                temp[i][j] = num;
-            }
-        }
-        return new Matriz(temp);
-    }
-    
     public Matriz transpuesta(){
         double[][] tempM = new double[m][n];
         for (int i = 0; i < matriz.length; i++) {
@@ -301,8 +291,8 @@ public class Matriz {
             }
             return new Matriz(matTemp1);
         }else{
-            throw new Exception("Tamaño(s) diferente(s): n:"+n
-                    +"!="+sumando.n+" & m:"+m+"!="+sumando.m);
+            throw new Exception("Tamaño(s) diferente(s): n:"+n+"!="+sumando.n
+                    +" & m:"+m+"!="+sumando.m);
         }
     }
     
@@ -368,7 +358,9 @@ public class Matriz {
         double mTemp[][] = getMatriz();
         double det = 0d;
         if(esCuadrada()){
-            if (n==2) {
+            if (mTemp.length<2) {
+                det = mTemp[0][0];
+            } else if (mTemp.length==2) {
                 det = (mTemp[0][0]*mTemp[1][1]) - (mTemp[0][1]*mTemp[1][0]);
             } else {
                 for (int i = 0; i < m; i++) {

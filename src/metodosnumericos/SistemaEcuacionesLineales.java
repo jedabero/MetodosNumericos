@@ -196,8 +196,10 @@ public class SistemaEcuacionesLineales {
     public Matriz metodoJacobi(int maxIt, double tol) throws Exception {
         Matriz X = Matriz.cero(numIn,1);
         Matriz e = Matriz.cero(numIn,1);
-        Matriz diagInv = matrizCoef.diagonal().inversa();
-        Matriz r = matrizCoef.trianguloInferiorEstricto().sumar(matrizCoef.trianguloSuperiorEstricto());
+        Matriz diag = matrizCoef.diagonal();
+        Matriz diagInv = diag.inversa();
+        Matriz tie = matrizCoef.trianguloInferiorEstricto();
+        Matriz r = tie.sumar(matrizCoef.trianguloSuperiorEstricto());
         
         boolean doLoop = true;
         boolean swi[] = new boolean[numIn];
@@ -215,16 +217,12 @@ public class SistemaEcuacionesLineales {
                     swi[i] = true;
                 }
             }
-            
-            X1.imprimirMatriz("Jacobi Iteración: "+(k+1));
-            e.imprimirMatriz("error");
             int cont = 0;
             for (int i = 0; i < numIn; i++) {
                 if(swi[i]){
                     cont++;
                 }
             }
-            System.out.println("cont:"+cont);
             
             if (cont==numIn) {
                 doLoop = false;
@@ -233,8 +231,6 @@ public class SistemaEcuacionesLineales {
                 k++;
             }
         }
-        X.imprimirMatriz("Listo Jacobi!");
-        e.imprimirMatriz("error");
         
         return Matriz.ampliada(X, e);
     }
@@ -267,15 +263,12 @@ public class SistemaEcuacionesLineales {
                 }
             }
             
-            X1.imprimirMatriz("Seidel Iteración: "+(k+1));
-            e.imprimirMatriz("error");
             int cont = 0;
             for (int i = 0; i < numIn; i++) {
                 if(swi[i]){
                     cont++;
                 }
             }
-            System.out.println("cont:"+cont);
             
             if (cont==numIn) {
                 doLoop = false;
@@ -284,8 +277,6 @@ public class SistemaEcuacionesLineales {
                 k++;
             }
         }
-        X.imprimirMatriz("Listo Sedeil!");
-        e.imprimirMatriz("error");
         
         return Matriz.ampliada(X, e);
     }
