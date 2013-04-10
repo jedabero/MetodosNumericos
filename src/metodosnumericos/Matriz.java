@@ -1,5 +1,6 @@
 package metodosnumericos;
 
+import java.math.BigDecimal;
 import java.util.Scanner;
 
 /**
@@ -121,6 +122,62 @@ public class Matriz {
         return (n==m);
     }
     
+    public Matriz diagonal() throws Exception{
+        if (esCuadrada()) {
+            double temp[][] = new double[n][m];
+            for (int i = 0; i < n; i++) {
+                temp[i][i] = matriz[i][i];
+            }
+            return new Matriz(temp);
+        } else {
+            throw new Exception("No es cuadrada.");
+        }
+    }
+    
+    public Matriz trianguloSuperior() throws Exception{
+        if (esCuadrada()) {
+            double temp[][] = new double[n][m];
+            for (int i = 0; i < n; i++) {
+                for (int j = 0; j < m; j++) {
+                    if (i<=j) {
+                        temp[i][j] = matriz[i][j];
+                    } else {
+                        temp[i][j] = 0d;
+                    }
+                }
+            }
+            return new Matriz(temp);
+        } else {
+            throw new Exception("No es cuadrada.");
+        }
+    }
+    
+    public Matriz trianguloSuperiorEstricto() throws Exception{
+        return trianguloSuperior().restar(diagonal());
+    }
+    
+    public Matriz trianguloInferior() throws Exception{
+        if (esCuadrada()) {
+            double temp[][] = new double[n][m];
+            for (int i = 0; i < n; i++) {
+                for (int j = 0; j < m; j++) {
+                    if (i>=j) {
+                        temp[i][j] = matriz[i][j];
+                    } else {
+                        temp[i][j] = 0d;
+                    }
+                }
+            }
+            return new Matriz(temp);
+        } else {
+            throw new Exception("No es cuadrada.");
+        }
+    }
+    
+    public Matriz trianguloInferiorEstricto() throws Exception{
+        return trianguloInferior().restar(diagonal());
+    }
+    
     public static Matriz ampliada(Matriz a, Matriz b)throws Exception{
         Matriz AB;
         int nT = 0;
@@ -195,19 +252,23 @@ public class Matriz {
         }
     }
     
-    public Matriz suma(Matriz matrizASumar) throws Exception{
-        if((n==matrizASumar.n)&&(m==matrizASumar.m)){
+    public Matriz sumar(Matriz sumando) throws Exception{
+        if((n==sumando.n)&&(m==sumando.m)){
             double[][] matTemp1 = new double[n][m];
             for (int i = 0; i < n; i++) {
                 for (int j = 0; j < m; j++) {
-                    matTemp1[i][j] = getMatriz()[i][j] + matrizASumar.getMatriz()[i][j];
+                    matTemp1[i][j] = getMatriz()[i][j] + sumando.getMatriz()[i][j];
                 }
             }
             return new Matriz(matTemp1);
         }else{
             throw new Exception("Tamaño(s) diferente(s): n:"
-                    + n+"!="+matrizASumar.n+" & m:"+m+"!="+matrizASumar.m);
+                    + n+"!="+sumando.n+" & m:"+m+"!="+sumando.m);
         }
+    }
+    
+    public Matriz restar(Matriz sustraendo) throws Exception{
+        return sumar(sustraendo.multipicar(-1));
     }
     
     public Matriz multipicar(int escalar){
@@ -240,21 +301,22 @@ public class Matriz {
             return new Matriz(matTemp1);
     }
     
-    public Matriz multipicar(Matriz b) throws Exception{
-        if((m==b.n)){
-            double[][] matTemp1 = new double[n][b.m];
+    public Matriz multipicar(Matriz multiplicando) throws Exception{
+        if((m==multiplicando.n)){
+            double[][] matTemp1 = new double[n][multiplicando.m];
             for (int i = 0; i < n; i++) {
-                for (int j = 0; j < b.m; j++) {
+                for (int j = 0; j < multiplicando.m; j++) {
                     matTemp1[i][j] = 0d;
                     for (int r = 0; r < m; r++) {
-                        matTemp1[i][j] += getMatriz()[i][r]*b.getMatriz()[r][j];
+                        double mult = multiplicando.getMatriz()[r][j];
+                        matTemp1[i][j] += getMatriz()[i][r]*mult;
                     }
                 }
             }
             return new Matriz(matTemp1);
         }else{
             throw new Exception("Columnas diferente de filas: Columnas:"
-                    + m +" & Filas:"+b.n);
+                    + m +" & Filas:"+multiplicando.n);
         }
     }
     

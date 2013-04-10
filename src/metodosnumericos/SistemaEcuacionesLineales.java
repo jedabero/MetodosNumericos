@@ -165,7 +165,7 @@ public class SistemaEcuacionesLineales {
                 cerosColumna(k, i, matFin);
             }
         }
-        imprimirMatriz("Matriz Gaussiana");
+        
         return new Matriz(matFin);
     }
     
