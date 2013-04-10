@@ -193,66 +193,50 @@ public class SistemaEcuacionesLineales {
      * @param maxIt
      * @param tol 
      */
-    public void metodoJacobi(int maxIt, double tol){
-        double x[] = new double[numIn];
+    public Matriz metodoJacobi(int maxIt, double tol) throws Exception {
+        Matriz X = Matriz.cero(numIn,1);
+        Matriz e = Matriz.cero(numIn,1);
+        Matriz diagInv = matrizCoef.diagonal().inversa();
+        Matriz r = matrizCoef.trianguloInferiorEstricto().sumar(matrizCoef.trianguloSuperiorEstricto());
+        
+        boolean doLoop = true;
         boolean swi[] = new boolean[numIn];
-        double xn[] = new double[numIn];
-        double err[] = new double[numIn];
-        
-        for (int i = 0; i < numIn; i++) {
-            x[i] = 0d;
+        for (int i = 0; i < swi.length; i++) {
             swi[i] = false;
-            xn[i] = 0d;
         }
-        
-        boolean sw = false;
         int k = 0;
-        
-        while(!sw&&(k<=maxIt)){
-            for (int i = 0; i < numEq; i++) {
-                double sum = 0d;
-                for (int j = 0; j < numIn; j++) {
-                    if (j!=i) {
-                        sum += getMatrizAmpliada().getMatriz()[i][j]*x[j];
-                    }
-                }
-                sum = (getMatrizAmpliada().getMatriz()[i][numIn] - sum)/getMatrizAmpliada().getMatriz()[i][i];
-                xn[i] = sum;
-                err[i] = Math.abs(xn[i] - x[i]);
-                if (err[i]<=tol) {
+        while (doLoop&&(k<=maxIt)) {            
+            Matriz rX = r.multipicar(X);
+            Matriz b_rX = vectorB.restar(rX);
+            Matriz X1 = diagInv.multipicar(b_rX);
+            e = Matriz.abs(X1.restar(X));
+            for (int i = 0; i < numIn; i++) {
+                if(e.getMatriz()[i][0]<=tol){
                     swi[i] = true;
-                } else {
-                    swi[i] = false;
                 }
             }
-            int contp = 0;
-            for (int i = 0; i < numEq; i++) {
+            
+            X1.imprimirMatriz("Jacobi Iteración: "+(k+1));
+            e.imprimirMatriz("error");
+            int cont = 0;
+            for (int i = 0; i < numIn; i++) {
                 if(swi[i]){
-                    contp++;
+                    cont++;
                 }
             }
-            System.out.println("En la iteración "+k);
+            System.out.println("cont:"+cont);
             
-            for (int i = 0; i < numEq; i++) {
-                System.out.print("x"+(i+1)+" = "+xn[i]);
-                System.out.print("\te"+(i+1)+" = "+err[i]);
-                System.out.println("\tsw"+(i+1)+" = "+swi[i]+" : contp="+contp);
-            }
-            
-            if (contp == numEq) {
-                sw = true;
+            if (cont==numIn) {
+                doLoop = false;
             } else {
-                System.arraycopy(xn, 0, x, 0, numEq);
+                X = X1;
                 k++;
             }
-            
         }
+        X.imprimirMatriz("Listo Jacobi!");
+        e.imprimirMatriz("error");
         
-        System.out.println("En la iteración "+k);
-        for (int i = 0; i < numEq; i++) {
-            System.out.print("x"+(i+1)+" = "+xn[i]);
-            System.out.println("\te"+(i+1)+" = "+err[i]);
-        }
+        return Matriz.ampliada(X, e);
     }
     
     /**
@@ -260,8 +244,50 @@ public class SistemaEcuacionesLineales {
      * @param maxIt
      * @param tol 
      */
-    public void metodoSeidel(int maxIt, double tol){
+    public Matriz metodoSeidel(int maxIt, double tol) throws Exception{
+        Matriz X = Matriz.cero(numIn,1);
+        Matriz e = Matriz.cero(numIn,1);
+        Matriz lInv = matrizCoef.trianguloInferior().inversa();
+        Matriz us = matrizCoef.trianguloSuperiorEstricto();
         
+        boolean doLoop = true;
+        boolean swi[] = new boolean[numIn];
+        for (int i = 0; i < swi.length; i++) {
+            swi[i] = false;
+        }
+        int k = 0;
+        while (doLoop&&(k<=maxIt)) {            
+            Matriz usX = us.multipicar(X);
+            Matriz b_usX = vectorB.restar(usX);
+            Matriz X1 = lInv.multipicar(b_usX);
+            e = Matriz.abs(X1.restar(X));
+            for (int i = 0; i < numIn; i++) {
+                if(e.getMatriz()[i][0]<=tol){
+                    swi[i] = true;
+                }
+            }
+            
+            X1.imprimirMatriz("Seidel Iteración: "+(k+1));
+            e.imprimirMatriz("error");
+            int cont = 0;
+            for (int i = 0; i < numIn; i++) {
+                if(swi[i]){
+                    cont++;
+                }
+            }
+            System.out.println("cont:"+cont);
+            
+            if (cont==numIn) {
+                doLoop = false;
+            } else {
+                X = X1;
+                k++;
+            }
+        }
+        X.imprimirMatriz("Listo Sedeil!");
+        e.imprimirMatriz("error");
+        
+        return Matriz.ampliada(X, e);
     }
     
     /**

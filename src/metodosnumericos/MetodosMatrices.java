@@ -1,7 +1,4 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package metodosnumericos;
 
 import javax.swing.JOptionPane;
@@ -290,7 +287,11 @@ public class MetodosMatrices extends javax.swing.JFrame {
     private void btnJacobiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnJacobiActionPerformed
         // TODO add your handling code here:
         btnCreaMatrizActionPerformed(evt);
-        matriz.metodoJacobi(15, 0.000001d);
+        try {
+            matriz.metodoJacobi(15, 0.000001d);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage());
+        }
         JOptionPane.showMessageDialog(this, "Nope, Chuck Testa");
     }//GEN-LAST:event_btnJacobiActionPerformed
 

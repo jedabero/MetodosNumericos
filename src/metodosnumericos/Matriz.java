@@ -1,6 +1,5 @@
 package metodosnumericos;
 
-import java.math.BigDecimal;
 import java.util.Scanner;
 
 /**
@@ -195,7 +194,7 @@ public class Matriz {
                 if (j<a.getM()) {
                     temp[i][j] = a.getMatriz()[i][j];
                 } else {
-                    temp[i][j] = a.getMatriz()[i][j-a.getM()];
+                    temp[i][j] = b.getMatriz()[i][j-a.getM()];
                 }
             }
         }
@@ -206,6 +205,26 @@ public class Matriz {
     
     public static Matriz identidad(int n, int m){
         return new Matriz(n, m);
+    }
+    
+    public static Matriz cero(int n, int m){
+        double temp[][] = new double[n][m];
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                temp[i][j] = 0d;
+            }
+        }
+        return new Matriz(temp);
+    }
+    
+    public static Matriz num(int n, int m, double num){
+        double temp[][] = new double[n][m];
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                temp[i][j] = num;
+            }
+        }
+        return new Matriz(temp);
     }
     
     public Matriz transpuesta(){
@@ -252,6 +271,26 @@ public class Matriz {
         }
     }
     
+    public Matriz abs(){
+        double temp[][] = new double[n][m];
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                temp[i][j] = Math.abs(getMatriz()[i][j]);
+            }
+        }
+        return new Matriz(temp);
+    }
+    
+    public static Matriz abs(Matriz a){
+        double temp[][] = new double[a.getN()][a.getM()];
+        for (int i = 0; i < temp.length; i++) {
+            for (int j = 0; j < temp[0].length; j++) {
+                temp[i][j] = Math.abs(a.getMatriz()[i][j]);
+            }
+        }
+        return new Matriz(temp);
+    }
+    
     public Matriz sumar(Matriz sumando) throws Exception{
         if((n==sumando.n)&&(m==sumando.m)){
             double[][] matTemp1 = new double[n][m];
@@ -262,8 +301,8 @@ public class Matriz {
             }
             return new Matriz(matTemp1);
         }else{
-            throw new Exception("Tamaño(s) diferente(s): n:"
-                    + n+"!="+sumando.n+" & m:"+m+"!="+sumando.m);
+            throw new Exception("Tamaño(s) diferente(s): n:"+n
+                    +"!="+sumando.n+" & m:"+m+"!="+sumando.m);
         }
     }
     
