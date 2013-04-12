@@ -74,7 +74,7 @@ public final class EditaFuncionDialog extends JDialog{
 	private JPanel panelGrid = new JPanel(new GridBagLayout());
 	
 	private JLabel labelTipoFuncion;
-	private JComboBox dropTipoFuncion;
+	private JComboBox<TipoFuncion> dropTipoFuncion;
 	private ItemListener selecTipoIL;
 	
 	private JLabel labelTerminos;
@@ -86,8 +86,8 @@ public final class EditaFuncionDialog extends JDialog{
 	private ArrayList<JTextField> textA;
 	private JLabel labelB[];
 	private ArrayList<JTextField> textB;
-	private JComboBox dropTipoFuncTrig;
-	private ArrayList<JComboBox> arrListDropFuncTrig;
+	private JComboBox<FuncionTrig> dropTipoFuncTrig;
+	private ArrayList<JComboBox<FuncionTrig>> arrListDropFuncTrig;
 	
 	private JLabel labelFuncion;
 	private JLabel labelEcuacion;
@@ -149,14 +149,14 @@ public final class EditaFuncionDialog extends JDialog{
 		initListeners();
 		
 		labelTipoFuncion = new JLabel(l.s("fTypeL"));
-		dropTipoFuncion = new JComboBox();
+		dropTipoFuncion = new JComboBox<TipoFuncion>();
 		for(TipoFuncion f : TipoFuncion.values()){
 			dropTipoFuncion.addItem(f);
 		}
 		dropTipoFuncion.setSelectedItem(tipoFunOr);
 		dropTipoFuncion.addItemListener(selecTipoIL);
 		
-		dropTipoFuncTrig = new JComboBox();
+		dropTipoFuncTrig = new JComboBox<FuncionTrig>();
 		for(FuncionTrig ft : FuncionTrig.values()) dropTipoFuncTrig.addItem(ft);
 		
 		switch(tempFuncion.getTipoFuncion()){
@@ -222,7 +222,7 @@ public final class EditaFuncionDialog extends JDialog{
 		labelB = new JLabel[tempFuncion.getTerminos().size()];
 		textA = new ArrayList<JTextField>();
 		textB = new ArrayList<JTextField>();
-		arrListDropFuncTrig = new ArrayList<JComboBox>();
+		arrListDropFuncTrig = new ArrayList<JComboBox<FuncionTrig>>();
 		int l = labelA.length;
 		int y = l%2==0 ? l/2 : l/2 + 1;
 		if(l==3) y=3;
@@ -246,7 +246,7 @@ public final class EditaFuncionDialog extends JDialog{
 				labelB[n].setHorizontalAlignment(SwingConstants.RIGHT);
 				textA.add(n, new JTextField(""));//TODO CONSTANTS
 				textB.add(n, new JTextField(""));//TODO CONSTANTS
-				JComboBox jcb = dropTipoFuncTrig;
+				JComboBox<FuncionTrig> jcb = dropTipoFuncTrig;
 				jcb.addItemListener(selecTipoIL);
 				jcb.setSelectedItem(tempFuncion);//TODO TIPOS trig
 				arrListDropFuncTrig.add(n, jcb);

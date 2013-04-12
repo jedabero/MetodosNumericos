@@ -7,7 +7,7 @@ package resources;
  * @author @author <a href="https://twitter.com/Jedabero" target="_blank">Jedabero</a>
  *
  */
-public class O {
+public final class O {
 	
 
 	/**
