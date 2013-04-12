@@ -7,6 +7,6 @@ package ui.main;
  * @author Jedabero
  *
  */
-public class RaicezUI {
+public class RaicesUI {
 	
 }

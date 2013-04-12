@@ -37,6 +37,7 @@ public class Metodos {
 		case 1:
 			//TODO Raíces Polinómicas
 			O.pln(code);
+			
 			break;
 		case 2:
 			//TODO Solución de Sistemas de Ecuaciones Lineales (SSEL).
