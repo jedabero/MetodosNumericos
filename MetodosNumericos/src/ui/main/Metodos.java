@@ -17,12 +17,17 @@ public class Metodos {
 	 * @param args
 	 */
 	public static void main(String[] args) {
+		if (args==null) {
+		}else if(args.length>0){
+			O.pln(args[0]);//TODO something with args, I'll figure it out later.
+		}
 		
 		String options[] = {
 				"1. Raíces de un polinomio",
 				"2. Solución de Sistemas de Ecuaciones Lineales",
 				"3. Ajustes de polinomios",
-				"4. Integración Numérica"};
+				"4. Integración Numérica",
+				"5. Salir"};
 		
 		Object code = JOptionPane.showInputDialog(null, "Elija que desea hacer",
 				"Que desea hacer?", JOptionPane.PLAIN_MESSAGE, null,
@@ -37,11 +42,12 @@ public class Metodos {
 		case 1:
 			//TODO Raíces Polinómicas
 			O.pln(code);
-			
+			new RaicesUI();
 			break;
 		case 2:
 			//TODO Solución de Sistemas de Ecuaciones Lineales (SSEL).
 			O.pln(code);
+			new SSELUI();
 			break;
 		case 3:
 			//TODO Ajustes de polinomios
