@@ -199,7 +199,8 @@ public class GraficadorUI{
 		
 		mainWindow.add(panelGrid);
 		mainWindow.addComponentListener(ca);
-		
+
+		mainWindow.setLocationRelativeTo(mainWindow.getRootPane());
 		mainWindow.setVisible(true);
 	}
 	
