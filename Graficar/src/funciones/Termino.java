@@ -4,6 +4,7 @@
 package funciones;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 
 
 import resources.Big;
@@ -382,6 +383,8 @@ public class Termino {
 			throws CustomException {
 		if(f.equals(TipoFuncion.POLINOMICA)||f.equals(TipoFuncion.TRIGONOMETRICA)){
 			throw CustomException.tipoIncorrecto();
+		}else if(f.equals(TipoFuncion.CONSTANTE)){
+			setTipoFuncion(f);
 		}else if((a.signum()==0)&&(f!=TipoFuncion.CONSTANTE)){
 			throw CustomException.coefAeq0();
 		}else{
@@ -523,6 +526,78 @@ public class Termino {
 			t = logaritmo(BigDecimal.ONE, coefB);
 		}
 		return t;
+	}
+	
+	/**
+	 * @return la derivada de este termino
+	 */
+	public Termino derivada(){
+		switch (this.getTipoFuncion()) {
+		case CONSTANTE:
+			return Termino.constante(BigDecimal.ZERO);
+		case POLINOMICA:
+			BigDecimal a = getA().multiply(BigDecimal.valueOf(getGrado()));
+			int g = getGrado() - 1;
+			switch (g) {
+			case 0:
+				return Termino.constante(a);
+			default:
+				try {
+					return polinomio(g, a);
+				} catch (Exception e) {
+					O.pln(e);
+					return null;
+				}
+			}
+			
+		case TRIGONOMETRICA:
+			return null;
+		case EXPONENCIAL:
+			return null;
+		case LOGARITMICA:
+			return null;
+		case RACIONAL:
+			break;
+		default: 
+			return null;
+		}
+		return null;
+	}
+	
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		BigDecimal coef[] = {BigDecimal.TEN, BigDecimal.TEN, BigDecimal.ONE};
+		Termino t = Termino.polinomio(4, BigDecimal.ONE);	//t^4
+		Termino dt = t.derivada();							//4t^3
+		Termino ddt = dt.derivada();						//12t^2
+		Termino dddt = ddt.derivada();						//24t
+		Termino ddddt = dddt.derivada();					//24
+		Termino dddddt = ddddt.derivada();					//0
+		
+		ArrayList<Termino> alT = new ArrayList<Termino>();
+		alT.add(t);
+		alT.add(dt);
+		alT.add(ddt);
+		alT.add(dddt);
+		alT.add(ddddt);
+		alT.add(dddddt);
+		
+		Funcion g = new Funcion(alT);
+		O.pln(g);
+		O.pln(g.derivada());
+		
+		Funcion f = null;
+		try {
+			f = Funcion.polinomio(2, coef);
+		} catch (CustomException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		O.pln(f);
+		O.pln(f.derivada());
+		
 	}
 	
 }

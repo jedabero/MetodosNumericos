@@ -169,4 +169,16 @@ public class Funcion{
 		return new Funcion(alT);
 	}
 	
+	/**
+	 * @return la derivada de esta función
+	 */
+	public Funcion derivada(){
+		ArrayList<Termino> alT = new ArrayList<Termino>();
+		for (ListIterator<Termino> iterator = getTerminos().listIterator();
+				iterator.hasNext();) {
+			alT.add(iterator.next().derivada()); 
+		}
+		return new Funcion(alT);
+	}
+	
 }

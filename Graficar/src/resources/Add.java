@@ -37,7 +37,9 @@ public final class Add {
 	public static void componente(Container gbl, JComponent jc,
 			int x, int y, int w, int h, double wx, double wy, int f,
 			String toolTip){
-		jc.setToolTipText(toolTip);
+		if (!toolTip.isEmpty()) {
+			jc.setToolTipText(toolTip);
+		}
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.gridx = x; gbc.gridy = y;
 		gbc.gridwidth = w; gbc.gridheight = h;
