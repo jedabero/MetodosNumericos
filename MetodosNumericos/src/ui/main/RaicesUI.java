@@ -30,6 +30,7 @@ public class RaicesUI {
 		
 		theWindow.addWindowListener(wa);
 		theWindow.add(thePanel);
+		theWindow.setLocationRelativeTo(theWindow.getRootPane());
 		theWindow.setVisible(true);
 		theWindow.setName("RaicesUI");
 	}
