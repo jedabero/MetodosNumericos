@@ -5,6 +5,7 @@ package ui.main;
 
 import javax.swing.JOptionPane;
 
+import resources.CustomException;
 import resources.O;
 
 /**
@@ -15,8 +16,9 @@ public class Metodos {
 
 	/**
 	 * @param args
+	 * @throws CustomException 
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args) throws CustomException {
 		if (args==null) {
 		}else if(args.length>0){
 			O.pln(args[0]);//TODO something with args, I'll figure it out later.
