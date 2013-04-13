@@ -3,6 +3,7 @@
  */
 package ui.main;
 
+import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 
@@ -16,22 +17,18 @@ import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 
-import other.FuncionPanel;
-
 import resources.Add;
-import resources.CustomException;
 
 /**
  * @author Jedabero
  *
  */
 public class RaicesUI {
-	
+
 	/**
-	 * @throws CustomException 
 	 * 
 	 */
-	public RaicesUI() throws CustomException{
+	public RaicesUI(){
 		CustomWindowAdapter wa = new CustomWindowAdapter();
 		JFrame theWindow = new JFrame("Raices de un Polinomio");
 		theWindow.setSize(500, 500);
@@ -39,87 +36,66 @@ public class RaicesUI {
 		
 		JPanel thePanel = new JPanel(new GridBagLayout());
 		
-		//Polinomio
-		int grad = 2;
+		//Tamaño polinomio
 		JLabel lblGradoPol = new JLabel("Grado de polinomio", JLabel.CENTER);
-		SpinnerNumberModel snmGradoPol = new SpinnerNumberModel(grad, 1, 25, 1);
+		SpinnerNumberModel snmGradoPol = new SpinnerNumberModel(1, 1, 25, 1);
 		JSpinner spnrGradoPol = new JSpinner(snmGradoPol);
-		//Ingresar Polinomio
-		FuncionPanel fp = new FuncionPanel(grad);
-		JButton btnCreaPol = new JButton("Crear Polinomio");
-		
+		JButton btnCreaPol = new JButton("Crea Polinomio");
 		JSeparator sprtr1 = new JSeparator(JSeparator.HORIZONTAL);
+		Add.componente(thePanel, lblGradoPol, 	0, 0, 2, 2, 1.0, 1.0,
+				GridBagConstraints.NONE, "");
+		Add.componente(thePanel, spnrGradoPol, 	2, 0, 1, 2, 1.0, 1.0,
+				GridBagConstraints.NONE, "Grado del Polinomio");
+		Add.componente(thePanel, btnCreaPol, 	3, 0, 2, 2, 1.0, 1.0,
+				GridBagConstraints.NONE, "");
+		Add.componente(thePanel, sprtr1, 		0, 2, 5, 1, 1.0, 1.0,
+				GridBagConstraints.HORIZONTAL, "");
 		
 		//Mostrar Polinomio
 		JLabel lbl1 = new JLabel("lbl1", JLabel.CENTER);
 		lbl1.setBorder(BorderFactory.createEtchedBorder());
-		JButton btnEditar = new JButton("Editar polinomio");
 		JButton btnVerGrafica = new JButton("Ver gráfica");
-		
 		JSeparator sprtr2 = new JSeparator(JSeparator.HORIZONTAL);
+		Add.componente(thePanel, lbl1, 			0, 3, 4, 2, 1.0, 1.0,
+				GridBagConstraints.BOTH, "");
+		Add.componente(thePanel, btnVerGrafica, 4, 3, 1, 2, 1.0, 1.0,
+				GridBagConstraints.BOTH, "");
+		Add.componente(thePanel, sprtr2, 		0, 5, 5, 1, 1.0, 1.0,
+				GridBagConstraints.HORIZONTAL, "");
 		
-		//Tolerancia y maxIt
+		//Metodos ui
 		JLabel lblTol = new JLabel("Tolerancia", JLabel.CENTER);
 		JTextField txtTol = new JTextField("0.001", 8);
 		JLabel lblIt = new JLabel("Iteraciones", JLabel.CENTER);
-		SpinnerNumberModel snmIt = new SpinnerNumberModel(15, 1, 25, 1);
+		SpinnerNumberModel snmIt = new SpinnerNumberModel(1, 1, 25, 1);
 		JSpinner spnrIt = new JSpinner(snmIt);
-		//Métodos
+		Add.componente(thePanel, lblTol, 		0, 6, 1, 1, 1.0, 1.0,
+				GridBagConstraints.NONE, "");
+		Add.componente(thePanel, txtTol, 		1, 6, 2, 1, 1.0, 1.0,
+				GridBagConstraints.NONE, "");
+		Add.componente(thePanel, lblIt, 		3, 6, 1, 1, 1.0, 1.0,
+				GridBagConstraints.NONE, "");
+		Add.componente(thePanel, spnrIt, 		4, 6, 1, 1, 1.0, 1.0,
+				GridBagConstraints.NONE, "");
+		
 		JButton btnPuntoFijo = new JButton("<html>Punto<p>Fijo");
 		JButton btnBiseccion = new JButton("Bisección");
 		JButton btnNewtRaphs = new JButton("<html>Newton<p>Raphson");
 		JButton btnMeSecante = new JButton("Secante");
 		JButton btnReguFalsi = new JButton("<html>Regula<p>Falsi");
-		//Resultado
+		Add.componente(thePanel, btnPuntoFijo, 		0, 7, 1, 1, 1.0, 1.0,
+				GridBagConstraints.BOTH, "");
+		Add.componente(thePanel, btnBiseccion, 		1, 7, 1, 1, 1.0, 1.0,
+				GridBagConstraints.BOTH, "");
+		Add.componente(thePanel, btnNewtRaphs, 		2, 7, 1, 1, 1.0, 1.0,
+				GridBagConstraints.BOTH, "");
+		Add.componente(thePanel, btnMeSecante, 		3, 7, 1, 1, 1.0, 1.0,
+				GridBagConstraints.BOTH, "");
+		Add.componente(thePanel, btnReguFalsi, 		4, 7, 1, 1, 1.0, 1.0,
+				GridBagConstraints.BOTH, "");
+		
 		JLabel lblX = new JLabel("X =", JLabel.CENTER);
-		
-		//0 - Tamaño Polinomio
-		Add.componente(thePanel, lblGradoPol, 			0, 0, 2, 1, 1.0, 1.0,
-				GridBagConstraints.NONE, "");
-		Add.componente(thePanel, spnrGradoPol, 			2, 0, 1, 1, 1.0, 1.0,
-				GridBagConstraints.HORIZONTAL, "Grado del Polinomio");
-		Add.componente(thePanel, btnCreaPol, 			4, 0, 1, 3, 1.0, 1.0,
-				GridBagConstraints.BOTH, "");
-		Add.componente(thePanel, fp, 					0, 1, 4, 2, 1.0, 1.0,
-				GridBagConstraints.BOTH, "");
-		//4 - Separator
-		Add.componente(thePanel, sprtr1, 				0, 4, 5, 1, 1.0, 1.0,
-				GridBagConstraints.HORIZONTAL, "");
-		
-		//5 - Mostrar Polinomio
-		Add.componente(thePanel, lbl1, 					0, 5, 4, 2, 1.0, 1.0,
-				GridBagConstraints.BOTH, "");
-		Add.componente(thePanel, btnEditar, 			4, 5, 1, 1, 1.0, 1.0,
-				GridBagConstraints.BOTH, "");
-		Add.componente(thePanel, btnVerGrafica, 		4, 6, 1, 1, 1.0, 1.0,
-				GridBagConstraints.BOTH, "");
-		//7 - Separator
-		Add.componente(thePanel, sprtr2, 				0, 7, 5, 1, 1.0, 1.0,
-				GridBagConstraints.HORIZONTAL, "");
-		
-		//8 - Tolerancia y maxIt
-		Add.componente(thePanel, lblTol, 				0, 8, 1, 1, 1.0, 1.0,
-				GridBagConstraints.NONE, "");
-		Add.componente(thePanel, txtTol, 				1, 8, 2, 1, 1.0, 1.0,
-				GridBagConstraints.HORIZONTAL, "");
-		Add.componente(thePanel, lblIt, 				3, 8, 1, 1, 1.0, 1.0,
-				GridBagConstraints.NONE, "");
-		Add.componente(thePanel, spnrIt, 				4, 8, 1, 1, 1.0, 1.0,
-				GridBagConstraints.HORIZONTAL, "");
-		
-		//9 - Métodos
-		Add.componente(thePanel, btnPuntoFijo, 			0, 9, 1, 1, 1.0, 1.0,
-				GridBagConstraints.BOTH, "");
-		Add.componente(thePanel, btnBiseccion, 			1, 9, 1, 1, 1.0, 1.0,
-				GridBagConstraints.BOTH, "");
-		Add.componente(thePanel, btnNewtRaphs,		 	2, 9, 1, 1, 1.0, 1.0,
-				GridBagConstraints.BOTH, "");
-		Add.componente(thePanel, btnMeSecante, 			3, 9, 1, 1, 1.0, 1.0,
-				GridBagConstraints.BOTH, "");
-		Add.componente(thePanel, btnReguFalsi, 			4, 9, 1, 1, 1.0, 1.0,
-				GridBagConstraints.BOTH, "");
-		//10 - Resultado
-		Add.componente(thePanel, lblX,		 			2, 10, 1, 1, 1.0, 1.0,
+		Add.componente(thePanel, lblX,		 		2, 8, 1, 1, 1.0, 1.0,
 				GridBagConstraints.BOTH, "");
 		
 		theWindow.addWindowListener(wa);

@@ -6,8 +6,6 @@ package ui.main;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-import resources.CustomException;
-
 /**
  * @author Jedabero
  *
@@ -21,12 +19,7 @@ public class CustomWindowAdapter extends WindowAdapter {
 		a.dispose();
 		String args[] = {a.getName()};
 		
-		try {
-			Metodos.main(args);
-		} catch (CustomException e1) {
-			// TODO try/catch
-			e1.printStackTrace();
-		}
+		Metodos.main(args);
 		
 	}
 	
