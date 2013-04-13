@@ -3,6 +3,7 @@
  */
 package ui.main;
 
+import other.CustomWindowAdapter;
 import metodosnumericos.MetodosMatrices;
 
 /**

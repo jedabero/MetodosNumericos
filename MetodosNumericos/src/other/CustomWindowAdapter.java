@@ -1,12 +1,13 @@
 /**
  * 
  */
-package ui.main;
+package other;
 
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 import resources.CustomException;
+import ui.Metodos;
 
 /**
  * @author Jedabero

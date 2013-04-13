@@ -1,19 +1,25 @@
 /**
  * 
  */
-package ui.main;
+package ui;
 
+import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+
+import other.CustomWindowAdapter;
 
 import resources.CustomException;
 import resources.O;
+import ui.main.RaicesUI;
+import ui.main.SSELUI;
 
 /**
  * @author Jedabero
  *
  */
 public class Metodos {
-
+	
 	/**
 	 * @param args
 	 * @throws CustomException 
@@ -42,28 +48,43 @@ public class Metodos {
 		
 		switch (choice) {
 		case 1:
-			//TODO Raíces Polinómicas
 			O.pln(code);
 			new RaicesUI();
 			break;
 		case 2:
-			//TODO Solución de Sistemas de Ecuaciones Lineales (SSEL).
 			O.pln(code);
 			new SSELUI();
 			break;
 		case 3:
 			//TODO Ajustes de polinomios
 			O.pln(code);
+			small();
 			break;
 		case 4:
 			//TODO Integración Numérica
 			O.pln(code);
+			small();
 			break;
 		default:
 			O.pln("But you didn't used me at all :(");
 			break;
 		}
 		
+	}
+	
+	/**
+	 * @return an info frame
+	 */
+	public static JFrame small(){
+		JFrame t = new JFrame("Información");
+		t.setName("small");
+		t.setSize(400, 200);
+		t.add(new JLabel("Esta caracteristica no está implementada todavía.", 0));
+		t.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		t.addWindowListener(new CustomWindowAdapter());
+		t.setLocationRelativeTo(t.getRootPane());
+		t.setVisible(true);
+		return t;
 	}
 
 }
