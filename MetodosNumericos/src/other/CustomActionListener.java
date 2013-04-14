@@ -29,7 +29,7 @@ public class CustomActionListener implements ActionListener {
 	
 	private RaicesUI rui;
 	private Funcion funcion;
-	private JFrame jf;
+	private JFrame frmGrafica;
 	
 	/**
 	 * @param rui
@@ -45,7 +45,7 @@ public class CustomActionListener implements ActionListener {
 		switch (btn.getText()) {
 		case "Crear Polinomio":
 			funcion = rui.getFpnlFuncion().getFnc();
-			rui.getLbl1().setText(funcion.getSpecific());
+			rui.getLblEq().setText(funcion.getSpecific());
 			JOptionPane.showMessageDialog(null, "Función creada");
 			break;
 		case "Ver gráfica":
@@ -54,8 +54,8 @@ public class CustomActionListener implements ActionListener {
 				alc.add(Color.BLUE);
 				ArrayList<Funcion> alf = new ArrayList<Funcion>(1);
 				alf.add(funcion);
-				if(jf!=null){
-					jf.dispose();
+				if(frmGrafica!=null){
+					frmGrafica.dispose();
 				}
 				grafic(alf, alc);
 			}else{
@@ -84,15 +84,15 @@ public class CustomActionListener implements ActionListener {
 	}
 	
 	private void grafic(ArrayList<Funcion> alf, ArrayList<Color> alc){
-		jf = new JFrame(""+funcion);
-		jf.setSize(800, 400);
-		JGrafica jg = new JGrafica(alf, alc, jf.getSize(),
+		frmGrafica = new JFrame(""+funcion);
+		frmGrafica.setSize(800, 400);
+		JGrafica jg = new JGrafica(alf, alc, frmGrafica.getSize(),
 				new Interval(BigDecimal.ONE.negate(), BigDecimal.ONE),
 				new Interval(BigDecimal.ONE.negate(), BigDecimal.ONE));
 		
-		jf.add(jg);
-		jf.setVisible(true);
-		jf.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		frmGrafica.add(jg);
+		frmGrafica.setVisible(true);
+		frmGrafica.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	}
 	
 }
