@@ -35,6 +35,7 @@ public class RaicesUI {
 	private FuncionPanel fpnlFuncion;
 	private JPanel thePanel;
 	private JLabel lbl1;
+	private JLabel lblX;
 	private Funcion funcion;
 	private int grad;
 	/**
@@ -83,7 +84,7 @@ public class RaicesUI {
 		JButton btnMeSecante = new JButton("Secante");
 		JButton btnReguFalsi = new JButton("<html>Regula<p>Falsi");
 		//Resultado
-		JLabel lblX = new JLabel("X =", JLabel.CENTER);
+		lblX = new JLabel("X =", JLabel.CENTER);
 		
 		//0 - Tamaño Polinomio
 		Add.componente(thePanel, lblGradoPol, 			0, 0, 2, 1, 1.0, 1.0,
@@ -181,10 +182,12 @@ public class RaicesUI {
 	}
 
 	/**
-	 * @param lbl1 the lbl1 to set
+	 * @return the lblX
 	 */
-	public void setLbl1(JLabel lbl1) {
-		this.lbl1 = lbl1;
+	public JLabel getLblX() {
+		return lblX;
 	}
+	
+	
 	
 }

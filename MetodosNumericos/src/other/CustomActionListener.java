@@ -4,7 +4,6 @@
 package other;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.math.BigDecimal;
@@ -64,7 +63,7 @@ public class CustomActionListener implements ActionListener {
 			}
 			break;
 		case "<html>Punto<p>Fijo":
-			O.pln();
+			rui.getLblX().setText("X = ");
 			break;
 		case "Bisección":
 			O.pln();
@@ -85,13 +84,12 @@ public class CustomActionListener implements ActionListener {
 	}
 	
 	private void grafic(ArrayList<Funcion> alf, ArrayList<Color> alc){
-		
-		JGrafica jg = new JGrafica(alf, alc, new Dimension(500, 500),
+		jf = new JFrame(""+funcion);
+		jf.setSize(800, 400);
+		JGrafica jg = new JGrafica(alf, alc, jf.getSize(),
 				new Interval(BigDecimal.ONE.negate(), BigDecimal.ONE),
 				new Interval(BigDecimal.ONE.negate(), BigDecimal.ONE));
 		
-		jf = new JFrame(""+funcion);
-		jf.setSize(500, 500);
 		jf.add(jg);
 		jf.setVisible(true);
 		jf.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
