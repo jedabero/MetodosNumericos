@@ -4,12 +4,15 @@
 package funciones;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.ListIterator;
 
 import resources.Constantes.FuncionTrig;
 import resources.Constantes.TipoFuncion;
 import resources.CustomException;
+import resources.Interval;
+import resources.O;
 
 /**
  * La clase {@code Funcion} define una función explícita de la forma
@@ -93,9 +96,9 @@ public class Funcion{
 	/** Inicializa la representación específica y general del término. */
 	public void initGenEsp(){
 		ListIterator<Termino> iterator;
-		String g = "";
+		String g = "<html>";
 		String s = g;
-		toString = g;
+		toString = "";
 		
 		for (iterator = getTerminos().listIterator(); iterator.hasNext();) {
 			Termino term = iterator.next();
@@ -106,8 +109,8 @@ public class Funcion{
 			toString += (indexIs0?"":" + ") + term;
 		}
 		
-		this.generic = g;
-		this.specific = s;
+		this.generic = g+"</html>";
+		this.specific = s+"</html>";
 	}
 	
 	public String toString(){
@@ -179,6 +182,151 @@ public class Funcion{
 			alT.add(iterator.next().derivada()); 
 		}
 		return new Funcion(alT);
+	}
+	
+	private int firstNonZeroCoef(){
+		for (int i = 0; i < getTerminos().size(); i++) {
+			if (getTerminos().get(i).getA().signum()!=0) {
+				return i;
+			}
+		}
+		return -1;
+	}
+	
+	private Funcion gx(int fnzc){
+		ArrayList<Termino> alT = new ArrayList<Termino>(getTerminos().size()-1);
+		switch (fnzc) {
+		case 0:		//Si A0 es != 0, ent g(x) = -A0/h(x), h(x)=:
+			for (int i = 1; i < getTerminos().size(); i++) {
+				Termino t = getTerminos().get(i);
+				if (t.getGrado()<=1) {
+					alT.add(Termino.constante(t.getA()));
+				} else {
+					alT.add(Termino.polinomio(t.getGrado()-1, t.getA()));
+				}
+			}
+			return new Funcion(alT);
+			
+		case -1:	//Esto indica que todos los coeficientes son 0, lo cual nunca debe suceder
+			O.pln(-1+" <- wat?");
+			return null;
+		default:	//Si Ai != 0, ent g(x) =:
+			Termino x1 = getTerminos().get(1);
+			for (int i = 0; i < getTerminos().size(); i++) {
+				if(i!=1){
+					Termino t = getTerminos().get(i);
+					t.setA(t.getA().divide(x1.getA(), RoundingMode.HALF_UP).negate());
+					alT.add(t);
+				}
+			}
+			return new Funcion(alT);
+			
+		}
+	}
+	
+	/**
+	 * @param tol tolerancia del error
+	 * @param maxIt máximo número de iteraciones
+	 * @param x0 punto inicial
+	 * @return la raíz más cercana a x0
+	 * @throws Exception 
+	 */
+	public BigDecimal metodoPuntoFijo(BigDecimal tol, int maxIt, BigDecimal x0)
+			throws Exception{
+		//Obtener g(x)
+		int fnzc = firstNonZeroCoef();	//Se localiza el la posición del primer coeficiente diferente de 0
+		Funcion g = gx(fnzc);
+		
+		boolean fin = false;	//Switch
+		int k = 0;				//Índice de la iteración
+		BigDecimal xr = BigDecimal.ZERO;
+		while((!fin)&&(k<=maxIt)){
+			BigDecimal e = xr.subtract(x0).abs();	//Error inicial
+			switch (fnzc) {		//xr = g(x0)
+			case 0:
+				Termino t = getTerminos().get(0);
+				xr = t.getA().negate().divide(g.valorImagen(x0),
+						10, RoundingMode.HALF_UP);
+				break;
+			case -1:
+				O.pln(-1+" <- again wat?");
+				break;
+			default:
+				xr = g.valorImagen(x0);
+				break;
+			}
+			
+			if (e.compareTo(tol)<1) {	//Error igual o por debajo de la tolerancia?
+				fin = true;
+			}
+			k++;	//Siguiente iteración
+			//Asignación de variables para siguiente iteración
+			BigDecimal temp = x0;
+			x0 = xr;
+			xr = temp;
+		}
+		
+		if (fin) {
+			O.pln("x = "+x0);
+			return x0;
+		} else {
+			O.pln("No converge dentro del valor máximo de iteración");
+			throw new Exception("No converge dentro del valor máximo de iteración");
+		}
+		
+	}
+	
+	/**
+	 * @param tol tolerancia del error
+	 * @param maxIt máximo número de iteraciones
+	 * @param ab intervalo a evaluar
+	 * @return la raíz dentro del intervalo [a,b]
+	 * @throws Exception
+	 */
+	public BigDecimal metodoBiseccion(BigDecimal tol, int maxIt, Interval ab)
+			throws Exception {
+		
+		return null;
+	}
+	
+	/**
+	 * @param tol tolerancia del error
+	 * @param maxIt máximo número de iteraciones
+	 * @param x0 punto inicial
+	 * @return la raíz más cercana a x0
+	 * @throws Exception
+	 */
+	public BigDecimal metodoNewtonRaphson(BigDecimal tol, int maxIt,
+			BigDecimal x0) throws Exception {
+		
+		return null;
+	}
+	
+	/**
+	 * @param tol tolerancia del error
+	 * @param maxIt máximo número de iteraciones
+	 * @param x0 punto inicial
+	 * @param x1 punto secundario
+	 * @return la raíz más cercana a x0 y x1
+	 * @throws Exception
+	 */
+	public BigDecimal metodoSecante(BigDecimal tol, int maxIt, BigDecimal x0,
+			BigDecimal x1) throws Exception {
+		
+		return null;
+	}
+	
+	/**
+	 * @param tol tolerancia del error
+	 * @param maxIt máximo número de iteraciones
+	 * @param ab intervalo a evaluar
+	 * @return la raíz dentro del intervalo [a,b]
+	 * @throws Exception
+	 */
+	public BigDecimal metodoRegulaFalsi(BigDecimal tol, int maxIt, Interval ab)
+			throws Exception {
+		
+		return null;
 	}
 	
 }

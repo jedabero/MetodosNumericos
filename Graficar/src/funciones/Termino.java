@@ -4,7 +4,6 @@
 package funciones;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 
 
 import resources.Big;
@@ -71,6 +70,9 @@ public class Termino {
 	 */
 	public void setA(BigDecimal a) {
 		A = a;
+		if(!(""+this).equals(""+null)){
+			initGenEsp();
+		}
 	}
 
 	/**
@@ -87,6 +89,9 @@ public class Termino {
 	 */
 	public void setB(BigDecimal b) {
 		B = b;
+		if(!(""+this).equals(""+null)){
+			initGenEsp();
+		}
 	}
 	
 	/**
@@ -103,6 +108,9 @@ public class Termino {
 	 */
 	public void setTipoFuncion(TipoFuncion funcion) {
 		this.funcion = funcion;
+		if(!(""+this).equals(""+null)){
+			initGenEsp();
+		}
 	}
 	
 	/**
@@ -119,6 +127,9 @@ public class Termino {
 	 */
 	public void setFunTrig(FuncionTrig ft) {
 		this.funTrig = ft;
+		if(!(""+this).equals(""+null)){
+			initGenEsp();
+		}
 	}
 	
 	/**
@@ -165,6 +176,9 @@ public class Termino {
 	 */
 	public void setGrado(int grado) {
 		this.grado = grado;
+		if(!(""+this).equals(""+null)){
+			initGenEsp();
+		}
 	}
 
 	/**
@@ -566,37 +580,25 @@ public class Termino {
 	
 	/**
 	 * @param args
+	 * @throws Exception 
 	 */
-	public static void main(String[] args) {
-		BigDecimal coef[] = {BigDecimal.TEN, BigDecimal.TEN, BigDecimal.ONE};
-		Termino t = Termino.polinomio(4, BigDecimal.ONE);	//t^4
-		Termino dt = t.derivada();							//4t^3
-		Termino ddt = dt.derivada();						//12t^2
-		Termino dddt = ddt.derivada();						//24t
-		Termino ddddt = dddt.derivada();					//24
-		Termino dddddt = ddddt.derivada();					//0
-		
-		ArrayList<Termino> alT = new ArrayList<Termino>();
-		alT.add(t);
-		alT.add(dt);
-		alT.add(ddt);
-		alT.add(dddt);
-		alT.add(ddddt);
-		alT.add(dddddt);
-		
-		Funcion g = new Funcion(alT);
-		O.pln(g);
-		O.pln(g.derivada());
+	public static void main(String[] args) throws Exception {
+		BigDecimal bd_20 = BigDecimal.valueOf(20).negate();
+		BigDecimal bd10 = BigDecimal.TEN;
+		BigDecimal bd2 = BigDecimal.valueOf(2);
+		BigDecimal bd1 = BigDecimal.ONE;
+		BigDecimal coef[] = {bd_20, bd10, bd2, bd1};
 		
 		Funcion f = null;
 		try {
-			f = Funcion.polinomio(2, coef);
+			f = Funcion.polinomio(3, coef);
 		} catch (CustomException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		O.pln(f);
-		O.pln(f.derivada());
+		O.pln("f(x)="+f);
+		O.pln("f(x)="+f.getSpecific());
+		O.pln("xr = "+f.metodoPuntoFijo(BigDecimal.valueOf(0.001), 10, bd2));
 		
 	}
 	
