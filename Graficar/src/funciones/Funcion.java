@@ -410,8 +410,37 @@ public class Funcion{
 	 */
 	public BigDecimal metodoRegulaFalsi(BigDecimal tol, int maxIt, Interval ab)
 			throws Exception {
+		boolean fin = false;	//Switch
+		int k = 0;				//Índice de la iteración
+		BigDecimal xa = BigDecimal.ZERO;
+		while((!fin)&&(k<=maxIt)){
+			BigDecimal fa = valorImagen(ab.min());
+			BigDecimal fb = valorImagen(ab.max());
+			BigDecimal fb_fa = fb.subtract(fa);
+			BigDecimal fr = ab.length().multiply(fb).divide(fb_fa, 20, RoundingMode.HALF_UP);
+			BigDecimal xr = ab.max().subtract(fr);
+			BigDecimal e = xa.subtract(xr).abs();	//Error inicial
+			if (e.compareTo(tol)<1) {	//Error igual o por debajo de la tolerancia?
+				fin = true;
+			}else{
+				BigDecimal fxr = valorImagen(xr);
+				if (fxr.signum()>1) {
+					ab.setMax(xr);
+				} else {
+					ab.setMin(xr);
+				}
+				xa = xr;
+				k++;
+			}
+			
+		}
 		
-		return null;
+		if (fin) {
+			O.pln("x = "+xa);
+			return xa;
+		} else {
+			throw new Exception("No converge dentro del valor máximo de iteración");
+		}
 	}
 	
 }

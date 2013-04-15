@@ -605,6 +605,7 @@ public class Termino {
 			O.pln("xaB = "+f.metodoBiseccion(BigDecimal.valueOf(0.001), 10, ab));
 			O.pln("xrNR = "+f.metodoNewtonRaphson(BigDecimal.valueOf(0.001), 10, bd2));
 			O.pln("xrS = "+f.metodoSecante(BigDecimal.valueOf(0.00000000000000001), 30, bd1, bd2));
+			O.pln("xaRF = "+f.metodoRegulaFalsi(BigDecimal.valueOf(0.001), 10, ab));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
