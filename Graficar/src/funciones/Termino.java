@@ -8,6 +8,7 @@ import java.math.BigDecimal;
 
 import resources.Big;
 import resources.CustomException;
+import resources.Interval;
 import resources.O;
 import resources.Constantes.TipoFuncion;
 import resources.M;
@@ -276,7 +277,7 @@ public class Termino {
 			switch(getTipoFuncion()){
 			case CONSTANTE:
 				toString = ""+a;
-				sS += a;
+				sS += a.abs();
 				break;
 			case POLINOMICA:
 				int g = getGrado();
@@ -582,12 +583,13 @@ public class Termino {
 	 * @param args
 	 * @throws Exception 
 	 */
-	public static void main(String[] args) throws Exception {
+	public static void main(String[] args) {
 		BigDecimal bd_20 = BigDecimal.valueOf(20).negate();
 		BigDecimal bd10 = BigDecimal.TEN;
 		BigDecimal bd2 = BigDecimal.valueOf(2);
 		BigDecimal bd1 = BigDecimal.ONE;
 		BigDecimal coef[] = {bd_20, bd10, bd2, bd1};
+		Interval ab = new Interval(bd1, bd2);
 		
 		Funcion f = null;
 		try {
@@ -598,7 +600,12 @@ public class Termino {
 		}
 		O.pln("f(x)="+f);
 		O.pln("f(x)="+f.getSpecific());
-		O.pln("xr = "+f.metodoPuntoFijo(BigDecimal.valueOf(0.001), 10, bd2));
+		try {
+			O.pln("xrPF = "+f.metodoPuntoFijo(BigDecimal.valueOf(0.00001), 10, bd2));
+			O.pln("xaB = "+f.metodoBiseccion(BigDecimal.valueOf(0.00001), 10, ab));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 	}
 	

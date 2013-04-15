@@ -246,7 +246,7 @@ public class Funcion{
 			case 0:
 				Termino t = getTerminos().get(0);
 				xr = t.getA().negate().divide(g.valorImagen(x0),
-						10, RoundingMode.HALF_UP);
+						20, RoundingMode.HALF_UP);
 				break;
 			case -1:
 				O.pln(-1+" <- again wat?");
@@ -270,10 +270,21 @@ public class Funcion{
 			O.pln("x = "+x0);
 			return x0;
 		} else {
-			O.pln("No converge dentro del valor máximo de iteración");
 			throw new Exception("No converge dentro del valor máximo de iteración");
 		}
 		
+	}
+	
+	private boolean rootExistentialityCriterion(Interval ab){
+		BigDecimal fa = valorImagen(ab.min());
+		BigDecimal fb = valorImagen(ab.max());
+		BigDecimal ce = fa.multiply(fb);
+		switch (ce.signum()) {
+		case -1:
+			return true;
+		default:
+			return false;
+		}
 	}
 	
 	/**
@@ -285,8 +296,40 @@ public class Funcion{
 	 */
 	public BigDecimal metodoBiseccion(BigDecimal tol, int maxIt, Interval ab)
 			throws Exception {
-		
-		return null;
+		if (rootExistentialityCriterion(ab)) {
+			boolean fin = false;	//Switch
+			int k = 0;				//Índice de la iteración
+			BigDecimal xa = BigDecimal.ZERO;
+			while((!fin)&&(k<=maxIt)){
+				BigDecimal xm = ab.centre();	//valor medio
+				O.pln("xm"+k+":"+xm);
+				BigDecimal e = xa.subtract(xm).abs();	//Error inicial
+				
+				if (e.compareTo(tol)<1) {	//Error igual o por debajo de la tolerancia?
+					fin = true;
+				}else{
+					BigDecimal fxm = valorImagen(xm);
+					
+					if (fxm.signum()>0) {
+						ab.setMax(xm);
+					} else {
+						ab.setMin(xm);
+					}
+				}
+				xa = xm;
+				k++;
+			}
+			
+			if (fin) {
+				O.pln("x = "+xa);
+				return xa;
+			} else {
+				throw new Exception("No converge dentro del valor máximo de iteración");
+			}
+			
+		} else {
+			throw new Exception("No existe la raíz dentro del intervalo.");
+		}
 	}
 	
 	/**

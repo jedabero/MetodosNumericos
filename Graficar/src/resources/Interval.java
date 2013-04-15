@@ -4,6 +4,7 @@
 package resources;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 /**
  * @author Jedabero
@@ -30,6 +31,13 @@ public class Interval {
 	 */
 	public BigDecimal length(){
 		return max.subtract(min);
+	}
+	
+	/**
+	 * @return el valor del centro de este intervalo
+	 */
+	public BigDecimal centre(){
+		return max.add(min).divide(BigDecimal.valueOf(2), 20, RoundingMode.HALF_UP);
 	}
 	
 	/**
