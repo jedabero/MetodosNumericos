@@ -601,8 +601,9 @@ public class Termino {
 		O.pln("f(x)="+f);
 		O.pln("f(x)="+f.getSpecific());
 		try {
-			O.pln("xrPF = "+f.metodoPuntoFijo(BigDecimal.valueOf(0.00001), 10, bd2));
-			O.pln("xaB = "+f.metodoBiseccion(BigDecimal.valueOf(0.00001), 10, ab));
+			O.pln("xrPF = "+f.metodoPuntoFijo(BigDecimal.valueOf(0.001), 10, bd2));
+			O.pln("xaB = "+f.metodoBiseccion(BigDecimal.valueOf(0.001), 10, ab));
+			O.pln("xrNR = "+f.metodoNewtonRaphson(BigDecimal.valueOf(0.001), 10, bd2));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

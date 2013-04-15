@@ -302,14 +302,11 @@ public class Funcion{
 			BigDecimal xa = BigDecimal.ZERO;
 			while((!fin)&&(k<=maxIt)){
 				BigDecimal xm = ab.centre();	//valor medio
-				O.pln("xm"+k+":"+xm);
 				BigDecimal e = xa.subtract(xm).abs();	//Error inicial
-				
 				if (e.compareTo(tol)<1) {	//Error igual o por debajo de la tolerancia?
 					fin = true;
 				}else{
 					BigDecimal fxm = valorImagen(xm);
-					
 					if (fxm.signum()>0) {
 						ab.setMax(xm);
 					} else {
@@ -341,8 +338,29 @@ public class Funcion{
 	 */
 	public BigDecimal metodoNewtonRaphson(BigDecimal tol, int maxIt,
 			BigDecimal x0) throws Exception {
+		boolean fin = false;	//Switch
+		int k = 0;				//Índice de la iteración
+		while((!fin)&&(k<=maxIt)){
+			BigDecimal fx = valorImagen(x0);
+			BigDecimal fpx = derivada().valorImagen(x0);
+			BigDecimal fx_fpx = fx.divide(fpx, 20, RoundingMode.HALF_UP);
+			BigDecimal xr = x0.subtract(fx_fpx);
+			BigDecimal e = x0.subtract(xr).abs();	//Error inicial
+			if (e.compareTo(tol)<1) {	//Error igual o por debajo de la tolerancia?
+				fin = true;
+			}
+			BigDecimal temp = x0;
+			x0 = xr;
+			xr = temp;
+			k++;
+		}
 		
-		return null;
+		if (fin) {
+			O.pln("x = "+x0);
+			return x0;
+		} else {
+			throw new Exception("No converge dentro del valor máximo de iteración");
+		}
 	}
 	
 	/**
