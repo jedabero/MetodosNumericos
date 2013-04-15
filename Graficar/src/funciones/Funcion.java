@@ -373,8 +373,32 @@ public class Funcion{
 	 */
 	public BigDecimal metodoSecante(BigDecimal tol, int maxIt, BigDecimal x0,
 			BigDecimal x1) throws Exception {
+		boolean fin = false;	//Switch
+		int k = 0;				//Índice de la iteración
+		while((!fin)&&(k<=maxIt)){
+			BigDecimal fx0 = valorImagen(x0);
+			BigDecimal fx1 = valorImagen(x1);
+			BigDecimal x1_x0 = x1.subtract(x0);
+			BigDecimal fx1_fx0 = fx1.subtract(fx0);
+			BigDecimal fr = x1_x0.multiply(fx1).divide(fx1_fx0, 20, RoundingMode.HALF_UP);
+			BigDecimal xr = x1.subtract(fr);
+			BigDecimal e = x0.subtract(xr).abs();	//Error inicial
+			if (e.compareTo(tol)<1) {	//Error igual o por debajo de la tolerancia?
+				fin = true;
+			}else{
+				x0 = x1;
+				x1 = xr;
+				k++;
+			}
+			
+		}
 		
-		return null;
+		if (fin) {
+			O.pln("x = "+x0);
+			return x0;
+		} else {
+			throw new Exception("No converge dentro del valor máximo de iteración");
+		}
 	}
 	
 	/**
