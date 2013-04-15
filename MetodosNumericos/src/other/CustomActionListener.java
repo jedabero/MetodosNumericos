@@ -41,6 +41,17 @@ public class CustomActionListener implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		
+		String sTol = rui.getTxtTol().getText();
+		BigDecimal tol = new BigDecimal(sTol);
+		int maxIt = rui.getMaxIt();
+		String sX0A = rui.getTxtX0A().getText();
+		String sX1B = rui.getTxtX1B().getText();
+		BigDecimal x0A = new BigDecimal(sX0A);
+		BigDecimal x1B = new BigDecimal(sX1B);
+		Interval ab = new Interval(x0A, x1B);
+		
+		String xResult = "X = ";
+		
 		JButton btn = (JButton) e.getSource();
 		switch (btn.getText()) {
 		case "Crear Polinomio":
@@ -63,19 +74,44 @@ public class CustomActionListener implements ActionListener {
 			}
 			break;
 		case "<html>Punto<p>Fijo":
-			rui.getLblX().setText("X = ");
+			try {
+				xResult += funcion.metodoPuntoFijo(tol, maxIt, x0A).stripTrailingZeros();
+				rui.getLblX().setText(xResult);
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
 			break;
 		case "Bisección":
-			O.pln();
+			try {
+				xResult += funcion.metodoBiseccion(tol, maxIt, ab).stripTrailingZeros();
+				rui.getLblX().setText(xResult);
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
 			break;
 		case "<html>Newton<p>Raphson":
-			O.pln();
+			try {
+				xResult += funcion.metodoNewtonRaphson(tol, maxIt, x0A).stripTrailingZeros();
+				rui.getLblX().setText(xResult);
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
 			break;
 		case "Secante":
-			O.pln();
+			try {
+				xResult += funcion.metodoSecante(tol, maxIt, x0A, x1B).stripTrailingZeros();
+				rui.getLblX().setText(xResult);
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
 			break;
 		case "<html>Regula<p>Falsi":
-			O.pln();
+			try {
+				xResult += funcion.metodoRegulaFalsi(tol, maxIt, ab).stripTrailingZeros();
+				rui.getLblX().setText(xResult);
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
 			break;
 		default:
 			O.pln(btn.getName());

@@ -36,6 +36,8 @@ public class RaicesUI {
 	private JPanel thePanel;
 	private JLabel lblEq;
 	private JLabel lblX;
+	private JTextField txtTol;
+	private JSpinner spnrIt;
 	private JTextField txtX0A;
 	private JTextField txtX1B;
 	private Funcion funcion;
@@ -80,10 +82,10 @@ public class RaicesUI {
 		txtX1B = new JTextField("1");
 		//Tolerancia y maxIt
 		JLabel lblTol = new JLabel("Tolerancia", JLabel.CENTER);
-		JTextField txtTol = new JTextField("0.001");
+		txtTol = new JTextField("0.001");
 		JLabel lblIt = new JLabel("Iteraciones", JLabel.CENTER);
 		SpinnerNumberModel snmIt = new SpinnerNumberModel(15, 1, 25, 1);
-		JSpinner spnrIt = new JSpinner(snmIt);
+		spnrIt = new JSpinner(snmIt);
 		spnrIt.setName("iter");
 		//Métodos
 		JButton btnPuntoFijo = new JButton("<html>Punto<p>Fijo");
@@ -219,7 +221,19 @@ public class RaicesUI {
 	public JTextField getTxtX1B() {
 		return txtX1B;
 	}
+
+	/**
+	 * @return the txtTol
+	 */
+	public JTextField getTxtTol() {
+		return txtTol;
+	}
 	
-	
+	/**
+	 * @return
+	 */
+	public int getMaxIt(){
+		return (int)spnrIt.getValue();
+	}
 	
 }
