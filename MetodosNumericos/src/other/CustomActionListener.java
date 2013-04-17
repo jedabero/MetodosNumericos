@@ -57,7 +57,7 @@ public class CustomActionListener implements ActionListener {
 		case "Crear Polinomio":
 			funcion = rui.getFpnlFuncion().getFnc();
 			rui.getLblEq().setText(funcion.getSpecific());
-			JOptionPane.showMessageDialog(null, "Función creada");
+			JOptionPane.showMessageDialog(null, "Función creada");//TODO
 			break;
 		case "Ver gráfica":
 			if(funcion!=null){
@@ -79,6 +79,7 @@ public class CustomActionListener implements ActionListener {
 				rui.getLblX().setText(xResult);
 			} catch (Exception e1) {
 				e1.printStackTrace();
+				JOptionPane.showMessageDialog(null, e1.getMessage());
 			}
 			break;
 		case "Bisección":
@@ -87,6 +88,7 @@ public class CustomActionListener implements ActionListener {
 				rui.getLblX().setText(xResult);
 			} catch (Exception e1) {
 				e1.printStackTrace();
+				JOptionPane.showMessageDialog(null, e1.getMessage());
 			}
 			break;
 		case "<html>Newton<p>Raphson":
@@ -95,6 +97,7 @@ public class CustomActionListener implements ActionListener {
 				rui.getLblX().setText(xResult);
 			} catch (Exception e1) {
 				e1.printStackTrace();
+				JOptionPane.showMessageDialog(null, e1.getMessage());
 			}
 			break;
 		case "Secante":
@@ -103,6 +106,7 @@ public class CustomActionListener implements ActionListener {
 				rui.getLblX().setText(xResult);
 			} catch (Exception e1) {
 				e1.printStackTrace();
+				JOptionPane.showMessageDialog(null, e1.getMessage());
 			}
 			break;
 		case "<html>Regula<p>Falsi":
@@ -111,6 +115,7 @@ public class CustomActionListener implements ActionListener {
 				rui.getLblX().setText(xResult);
 			} catch (Exception e1) {
 				e1.printStackTrace();
+				JOptionPane.showMessageDialog(null, e1.getMessage());
 			}
 			break;
 		default:

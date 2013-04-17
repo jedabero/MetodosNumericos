@@ -230,7 +230,7 @@ public class RaicesUI {
 	}
 	
 	/**
-	 * @return
+	 * @return the value in the spnrIt for maxIt
 	 */
 	public int getMaxIt(){
 		return (int)spnrIt.getValue();
