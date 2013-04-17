@@ -5,14 +5,12 @@ package funciones;
 
 import java.math.BigDecimal;
 
-
 import resources.Big;
-import resources.CustomException;
-import resources.Interval;
-import resources.O;
-import resources.Constantes.TipoFuncion;
-import resources.M;
 import resources.Constantes.FuncionTrig;
+import resources.Constantes.TipoFuncion;
+import resources.CustomException;
+import resources.M;
+import resources.O;
 
 /**
  * La clase {@code Termino} define lo que es un término en una función.
@@ -71,9 +69,6 @@ public class Termino {
 	 */
 	public void setA(BigDecimal a) {
 		A = a;
-		if(!(""+this).equals(""+null)){
-			initGenEsp();
-		}
 	}
 
 	/**
@@ -90,9 +85,6 @@ public class Termino {
 	 */
 	public void setB(BigDecimal b) {
 		B = b;
-		if(!(""+this).equals(""+null)){
-			initGenEsp();
-		}
 	}
 	
 	/**
@@ -109,9 +101,6 @@ public class Termino {
 	 */
 	public void setTipoFuncion(TipoFuncion funcion) {
 		this.funcion = funcion;
-		if(!(""+this).equals(""+null)){
-			initGenEsp();
-		}
 	}
 	
 	/**
@@ -128,9 +117,6 @@ public class Termino {
 	 */
 	public void setFunTrig(FuncionTrig ft) {
 		this.funTrig = ft;
-		if(!(""+this).equals(""+null)){
-			initGenEsp();
-		}
 	}
 	
 	/**
@@ -177,9 +163,6 @@ public class Termino {
 	 */
 	public void setGrado(int grado) {
 		this.grado = grado;
-		if(!(""+this).equals(""+null)){
-			initGenEsp();
-		}
 	}
 
 	/**
@@ -377,8 +360,6 @@ public class Termino {
 		this.specific = sS;
 	}
 	
-	
-	
 	public String toString(){
 		return toString;
 	}
@@ -398,14 +379,11 @@ public class Termino {
 			throws CustomException {
 		if(f.equals(TipoFuncion.POLINOMICA)||f.equals(TipoFuncion.TRIGONOMETRICA)){
 			throw CustomException.tipoIncorrecto();
-		}else if(f.equals(TipoFuncion.CONSTANTE)){
-			setTipoFuncion(f);
-		}else if((a.signum()==0)&&(f!=TipoFuncion.CONSTANTE)){
-			throw CustomException.coefAeq0();
 		}else{
-			setTipoFuncion(f);
+			funcion = f;
 		}
-		setA(a);  setB(b);
+		A = a;
+		B = b;
 		initGenEsp();
 	}
 	
@@ -421,11 +399,11 @@ public class Termino {
 		}else if(a.signum()==0){
 			throw CustomException.coefAeq0();
 		}else{
-			setGrado(g);
+			grado  = g;
 		}
-		setA(a);
-		setB(BigDecimal.ONE);
-		setTipoFuncion(TipoFuncion.POLINOMICA);
+		A = a;
+		B = BigDecimal.ONE;
+		funcion = TipoFuncion.POLINOMICA;
 		initGenEsp();
 	}
 	
@@ -440,9 +418,10 @@ public class Termino {
 		if(a.signum()==0){
 			throw CustomException.coefAeq0();
 		}
-		setA(a); setB(b);
-		setTipoFuncion(TipoFuncion.TRIGONOMETRICA);
-		setFunTrig(ft); 
+		A = a;
+		B = b;
+		funcion = TipoFuncion.TRIGONOMETRICA;
+		funTrig = ft; 
 		initGenEsp();
 	}
 	
@@ -473,7 +452,7 @@ public class Termino {
 			t = new Termino(coef, grado);
 		}catch(CustomException et){
 			String etm = et.getMessage();
-			O.pln("err:? "+etm);
+			O.pln("Error al crear polinomio: "+etm);
 			if(etm.equals(CustomException.gradoMenorQue1().getMessage())){
 				t = polinomio(1, coef);
 			}else if(etm.equals(CustomException.coefAeq0().getMessage())){
@@ -495,10 +474,9 @@ public class Termino {
 		Termino t = null;
 		try{
 			t =  new Termino(coefA, coefB, ft);
-			return t;
 		}catch(CustomException et){
 			String etm = et.getMessage();
-			O.pln("err: "+etm);
+			O.pln("Error al crear función trigonométrica: "+etm);
 			t = trigonometrico(ft, BigDecimal.ONE, coefB);
 		}
 		return t;
@@ -514,10 +492,9 @@ public class Termino {
 		Termino t = null;
 		try{
 			t =  new Termino(coefA, coefB, TipoFuncion.EXPONENCIAL);
-			return t;
 		}catch(CustomException et){
 			String etm = et.getMessage();
-			O.pln("err: "+etm);
+			O.pln("Error al crear función exponencial: "+etm);
 			t = exponencial(BigDecimal.ONE, coefB);
 		}
 		return t;
@@ -534,16 +511,16 @@ public class Termino {
 		Termino t = null;
 		try{
 			t =  new Termino(coefA, coefB, TipoFuncion.LOGARITMICA);
-			return t;
 		}catch(CustomException et){
 			String etm = et.getMessage();
-			O.pln("err: "+etm);
+			O.pln("Error al crear función logarítmica: "+etm);
 			t = logaritmo(BigDecimal.ONE, coefB);
 		}
 		return t;
 	}
 	
 	/**
+	 * TODO derivada del resto de funciones
 	 * @return la derivada de este termino
 	 */
 	public Termino derivada(){
@@ -577,39 +554,6 @@ public class Termino {
 			return null;
 		}
 		return null;
-	}
-	
-	/**
-	 * @param args
-	 * @throws Exception 
-	 */
-	public static void main(String[] args) {
-		BigDecimal bd_20 = BigDecimal.valueOf(20).negate();
-		BigDecimal bd10 = BigDecimal.TEN;
-		BigDecimal bd2 = BigDecimal.valueOf(2);
-		BigDecimal bd1 = BigDecimal.ONE;
-		BigDecimal coef[] = {bd_20, bd10, bd2, bd1};
-		Interval ab = new Interval(bd1, bd2);
-		
-		Funcion f = null;
-		try {
-			f = Funcion.polinomio(3, coef);
-		} catch (CustomException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		O.pln("f(x)="+f);
-		O.pln("f(x)="+f.getSpecific());
-		try {
-			O.pln("xrPF = "+f.metodoPuntoFijo(BigDecimal.valueOf(0.001), 10, bd2));
-			O.pln("xaB = "+f.metodoBiseccion(BigDecimal.valueOf(0.001), 10, ab));
-			O.pln("xrNR = "+f.metodoNewtonRaphson(BigDecimal.valueOf(0.001), 10, bd2));
-			O.pln("xrS = "+f.metodoSecante(BigDecimal.valueOf(0.00000000000000001), 30, bd1, bd2));
-			O.pln("xaRF = "+f.metodoRegulaFalsi(BigDecimal.valueOf(0.001), 10, ab));
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
 	}
 	
 }
