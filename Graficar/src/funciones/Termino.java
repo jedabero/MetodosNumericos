@@ -520,6 +520,69 @@ public class Termino {
 	}
 	
 	/**
+	 * Actualiza todos los parámetros de la función.
+	 * @param a Constante A
+	 * @param b Constante B
+	 * @param tf Tipo de la función
+	 * @param g grado del polinomio, si es del tipo
+	 * @param ft tipos de la función trigonométrica, si es del tipo
+	 */
+	private void actualiza(BigDecimal a, BigDecimal b, TipoFuncion tf, int g,
+			FuncionTrig ft){
+		setA(a);
+		setTipoFuncion(tf);
+		switch (tf) {
+		case POLINOMICA:
+			setGrado(g);
+			break;
+		case TRIGONOMETRICA:
+			setFunTrig(ft);
+		default:
+			setB(b);
+			break;
+		}
+		
+		initGenEsp();
+		
+	}
+	
+	/**
+	 * Actualiza el parámetro de un término constante.
+	 * @param a Coeficiente A
+	 */
+	public void actualiza(BigDecimal a){
+		actualiza(a, getB(), getTipoFuncion(), getGrado(), getFunTrig());
+	}
+	
+	/**
+	 * Actualiza los parámetros del término polinómico
+	 * @param a Coeficiente A
+	 * @param g Grado de la función
+	 */
+	public void actualizaPol(BigDecimal a, int g){
+		actualiza(a, getB(), getTipoFuncion(), g, getFunTrig());
+	}
+	
+	/**
+	 * Actualiza los parámetros del término trigonométrico
+	 * @param a coeficiente A
+	 * @param b constante B
+	 * @param ft tipo de la función trigonométrica
+	 */
+	public void actualizaTrig(BigDecimal a, BigDecimal b, FuncionTrig ft){
+		actualiza(a, b, getTipoFuncion(), getGrado(), ft);
+	}
+	
+	/**
+	 * Actualiza las constantes A y B.
+	 * @param a Coeficiente A
+	 * @param b Constante B
+	 */
+	public void actualiza(BigDecimal a, BigDecimal b){
+		actualiza(a, b, getTipoFuncion(), getGrado(), getFunTrig());
+	}
+	
+	/**
 	 * TODO derivada del resto de funciones
 	 * @return la derivada de este termino
 	 */
