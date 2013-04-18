@@ -102,7 +102,7 @@ public class SistemaEcuacionesLineales {
      * Muestra en consola la matriz actual, junto con el titulo deseado.
      * @param titulo el titulo.
      */
-    private void imprimirMatriz(String titulo){
+    public void imprimirMatriz(String titulo){
         System.out.println("\n\t"+titulo);
         double temp[][] = getMatrizAmpliada().getMatriz();
         for (int i = 0; i < numEq; i++) {
@@ -148,7 +148,7 @@ public class SistemaEcuacionesLineales {
     }
     
     public Matriz metodoCramer() throws Exception{
-        return getMatrizAmpliada().inversa().multipicar(getVectorB());
+        return getMatrizCoef().inversa().multipicar(getVectorB());
     }
     
     /**
