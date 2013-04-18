@@ -1,5 +1,7 @@
 
-package metodosnumericos;
+package main;
+
+import metodosnumericos.SistemaEcuacionesLineales;
 
 /**
  *

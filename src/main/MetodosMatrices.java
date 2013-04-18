@@ -1,9 +1,10 @@
 
-package metodosnumericos;
+package main;
 
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import metodosnumericos.SistemaEcuacionesLineales;
 
 
 /**
