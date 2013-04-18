@@ -7,7 +7,7 @@ import metodosnumericos.SistemaEcuacionesLineales;
  *
  * @author jberdugo10
  */
-public class MetodosNumericos {
+public class Pruebas {
     
     /**
      * @param args the command line arguments
