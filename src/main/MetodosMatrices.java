@@ -299,21 +299,18 @@ public class MetodosMatrices extends javax.swing.JFrame {
     }//GEN-LAST:event_spnrNumInStateChanged
 
     private void btnGaussActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGaussActionPerformed
-        // TODO add your handling code here:
         creaMatriz();
         mostrarTabla(sel.metodoGauss().getMatriz(), dtmMetodo, tableHeaders,
                 tablaResAn);
     }//GEN-LAST:event_btnGaussActionPerformed
 
     private void btnJordanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnJordanActionPerformed
-        // TODO add your handling code here:
         creaMatriz();
         mostrarTabla(sel.metodoJordan().getMatriz(), dtmRes, tableHeaders,
                 tablaResAn);
     }//GEN-LAST:event_btnJordanActionPerformed
 
     private void btnJacobiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnJacobiActionPerformed
-        // TODO add your handling code here:
         creaMatriz();
         try {
             int it = Integer.parseInt(spnIter.getValue().toString());
@@ -327,7 +324,6 @@ public class MetodosMatrices extends javax.swing.JFrame {
     }//GEN-LAST:event_btnJacobiActionPerformed
 
     private void btnSeidelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeidelActionPerformed
-        // TODO add your handling code here:
         creaMatriz();
         try {
             int it = Integer.parseInt(spnIter.getValue().toString());
