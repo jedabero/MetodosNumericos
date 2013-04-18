@@ -175,6 +175,7 @@ public class SistemaEcuacionesLineales {
     public Matriz metodoJordan(){
         double mTemp[][] = getMatrizAmpliada().getMatriz();
         double matFin[][] = copiarMatriz(mTemp);
+        
         for (int i = 0; i < numEq; i++) {
             simpFila(i, matFin);
             
@@ -296,5 +297,66 @@ public class SistemaEcuacionesLineales {
     public void setMatriz(Matriz matriz) {
         this.matrizAmpliada = matriz;
     }
+    
+    /*
+     * para que los metodos anteriores funcionen correctamente es necesario
+     * que la diagonal no tenga ningún cero, los métodos acontinuación son para
+     * resolver tal caso. BUT THEY FAIL :(
+    public double[][] changeRows(double[][] mt, int pos1, int pos2){
+        double row[] = new double[mt[0].length];
+        for (int j = 0; j < mt[0].length; j++) {
+            row[j] = mt[pos1][j];
+            mt[pos1][j] = mt[pos2][j];
+            mt[pos2][j] = row[j];
+        }
+        imprimirMatriz("Fila "+pos1+" cambiada por fila "+pos2);
+        return mt;
+        
+    }
+    
+    private boolean isElemZero(double[][] mTemp, int i, int j){
+        if (mTemp[i][j]==0) {
+            return true;
+        }else{
+            return false;
+        }
+    }
+    
+    private int diagElemZeroPos(double[][] mTemp){
+        for (int i = 0; i < mTemp.length; i++) {
+            if(isElemZero(mTemp, i, i)){
+                return  i;
+            }
+        }
+        return -1;
+    }
+    
+    private double[][] checkForCorrectDiagonal(double[][] mTemp) {
+        int zeroPos = diagElemZeroPos(mTemp);
+        
+        System.out.println("fila"+zeroPos+" con zero");
+        if (zeroPos>=0) {
+            int colPos = -1;
+            for (int i = zeroPos; i < mTemp.length; i++) {
+                if (mTemp[i][zeroPos]!=0) {
+                    colPos = i;
+                    break;
+                }
+            }
+            if(colPos>=0){
+                mTemp = changeRows(mTemp, zeroPos, colPos);
+            }
+            imprimirMatriz("Matriz lista: ("+zeroPos+"<->"+colPos+")");
+            for (int i = 0; i < mTemp.length; i++) {
+                if (mTemp[i][i]==0) {
+                    mTemp = checkForCorrectDiagonal(mTemp);
+                    break;
+                }
+            }
+        }
+        
+        return mTemp;
+    }
+    */
     
 }

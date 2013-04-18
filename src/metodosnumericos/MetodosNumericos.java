@@ -12,19 +12,20 @@ public class MetodosNumericos {
      */
     public static void main(String[] args) throws Exception {
         double mat[][] = {
-            {4,-1,0,0,1},
-            {-1,4,-1,0,1},
             {0,-1,4,-1,1},
-            {0,0,-1,4,1}};
+            {0,0,-1,4,1},
+            {4,-1,0,0,1},
+            {-1,4,-1,0,1}};
         double mat1[][] = new double[mat.length][mat[0].length];
         for (int i = 0; i < mat.length; i++) {
             System.arraycopy(mat[i], 0, mat1[i], 0, mat[0].length);
         }
         SistemaEcuacionesLineales m = new SistemaEcuacionesLineales(mat1);
-        m.metodoGauss();
+        m.metodoGauss().imprimirMatriz("primera gauss");
         SistemaEcuacionesLineales B = new SistemaEcuacionesLineales(mat);
-        B.metodoJordan();
+        B.metodoJordan().imprimirMatriz("La misma jordan");
         
+        /*
         double mat3[][] = {
             {1,-0.25,0,0,0.25},
             {-0.25,1,-0.25,0,0.25},
@@ -77,6 +78,6 @@ public class MetodosNumericos {
             X1.imprimirMatriz("Seidel Iteración "+i);
             X = X1;
         }
-        
+        */
     }
 }

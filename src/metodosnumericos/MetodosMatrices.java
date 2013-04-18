@@ -63,7 +63,7 @@ public class MetodosMatrices extends javax.swing.JFrame {
         matrizTabla = new Double[rows][cols];
         for (int i = 0; i < mt.length; i++) {
             for (int j = 0; j < mt[0].length; j++) {
-                matrizTabla[i][j] = mt[i][j];
+                matrizTabla[i][j] = new Double(mt[i][j]);
             }
         }
         
@@ -107,7 +107,6 @@ public class MetodosMatrices extends javax.swing.JFrame {
         spnrNumEc = new javax.swing.JSpinner();
         lblNumIncog = new javax.swing.JLabel();
         spnrNumIn = new javax.swing.JSpinner();
-        btnCreaMatriz = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         tablaResAn = new javax.swing.JTable();
         btnGauss = new javax.swing.JButton();
@@ -145,13 +144,6 @@ public class MetodosMatrices extends javax.swing.JFrame {
         spnrNumIn.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 spnrNumInStateChanged(evt);
-            }
-        });
-
-        btnCreaMatriz.setText("Crear matriz");
-        btnCreaMatriz.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCreaMatrizActionPerformed(evt);
             }
         });
 
@@ -212,20 +204,18 @@ public class MetodosMatrices extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblNumEc)
-                        .addGap(18, 18, 18)
-                        .addComponent(spnrNumEc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(lblNumIncog)
-                        .addGap(18, 18, 18)
-                        .addComponent(spnrNumIn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnCreaMatriz))
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addComponent(jScrollPane3)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lblNumEc)
+                                .addGap(18, 18, 18)
+                                .addComponent(spnrNumEc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(lblNumIncog)
+                                .addGap(18, 18, 18)
+                                .addComponent(spnrNumIn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jLabel1)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel2)
@@ -261,8 +251,7 @@ public class MetodosMatrices extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(lblNumIncog)
-                        .addComponent(spnrNumIn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnCreaMatriz))
+                        .addComponent(spnrNumIn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(lblNumEc)
                         .addComponent(spnrNumEc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -283,7 +272,7 @@ public class MetodosMatrices extends javax.swing.JFrame {
                     .addComponent(jLabel5)
                     .addComponent(txtTol, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 152, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 155, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -308,34 +297,23 @@ public class MetodosMatrices extends javax.swing.JFrame {
         resetTable(numInc+1, numEc);
     }//GEN-LAST:event_spnrNumInStateChanged
 
-    private void btnCreaMatrizActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreaMatrizActionPerformed
-        // TODO add your handling code here:
-        double[][] mt = new double[matrizTabla.length][matrizTabla[0].length];
-        for (int i = 0; i < matrizTabla.length; i++) {
-            for (int j = 0; j < matrizTabla[0].length; j++) {
-                mt[i][j] = Double.parseDouble(tablaMatriz.getValueAt(i, j).toString());
-            }
-        }
-        sel = new SistemaEcuacionesLineales(mt);
-    }//GEN-LAST:event_btnCreaMatrizActionPerformed
-
     private void btnGaussActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGaussActionPerformed
         // TODO add your handling code here:
-        btnCreaMatrizActionPerformed(evt);
+        creaMatriz();
         mostrarTabla(sel.metodoGauss().getMatriz(), dtmMetodo, tableHeaders,
                 tablaResAn);
     }//GEN-LAST:event_btnGaussActionPerformed
 
     private void btnJordanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnJordanActionPerformed
         // TODO add your handling code here:
-        btnCreaMatrizActionPerformed(evt);
+        creaMatriz();
         mostrarTabla(sel.metodoJordan().getMatriz(), dtmRes, tableHeaders,
                 tablaResAn);
     }//GEN-LAST:event_btnJordanActionPerformed
 
     private void btnJacobiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnJacobiActionPerformed
         // TODO add your handling code here:
-        btnCreaMatrizActionPerformed(evt);
+        creaMatriz();
         try {
             int it = Integer.parseInt(spnIter.getValue().toString());
             double tol = Double.parseDouble(txtTol.getText());
@@ -349,7 +327,7 @@ public class MetodosMatrices extends javax.swing.JFrame {
 
     private void btnSeidelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeidelActionPerformed
         // TODO add your handling code here:
-        btnCreaMatrizActionPerformed(evt);
+        creaMatriz();
         try {
             int it = Integer.parseInt(spnIter.getValue().toString());
             double tol = Double.parseDouble(txtTol.getText());
@@ -360,6 +338,20 @@ public class MetodosMatrices extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnSeidelActionPerformed
 
+    public void creaMatriz(){
+        double[][] mt = new double[matrizTabla.length][matrizTabla[0].length];
+        for (int i = 0; i < matrizTabla.length; i++) {
+            for (int j = 0; j < matrizTabla[0].length; j++) {
+                String v = tablaMatriz.getValueAt(i, j).toString();
+                if(v.isEmpty()){
+                    v = "1";
+                }
+                mt[i][j] = Double.parseDouble(v);
+
+            }
+        }
+        sel = new SistemaEcuacionesLineales(mt);
+    }
     public void mostrarTabla(double[][] mt, DefaultTableModel dtm,
             String[] th, JTable t){
         Object[][] obj = new Object[mt.length][mt[0].length];
@@ -421,7 +413,6 @@ public class MetodosMatrices extends javax.swing.JFrame {
     private javax.swing.table.DefaultTableModel dtmMetodo;
     private javax.swing.table.DefaultTableModel dtmRes;
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnCreaMatriz;
     private javax.swing.JButton btnGauss;
     private javax.swing.JButton btnJacobi;
     private javax.swing.JButton btnJordan;
