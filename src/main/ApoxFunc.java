@@ -40,16 +40,19 @@ public class ApoxFunc {
         }
         
         SistemaEcuacionesLineales sel = new SistemaEcuacionesLineales(mat);
+        Matriz coef;
         try {
-            Matriz coef = sel.metodoCramer();
+            coef = sel.metodoCramer();
             coef.imprimirMatriz("Res");
         } catch (Exception ex) {
             Logger.getLogger(ApoxFunc.class.getName()).log(Level.SEVERE, null, ex);
+            coef = new Matriz(mat);
         }
         
-        for (int i = 0; i < 10; i++) {
-            
-        }
+        String pol = "";
+        pol += coef.getMatriz()[0][0] +" + "+coef.getMatriz()[1][0]+"x" + " + "+coef.getMatriz()[2][0]+"x^2";
+        
+        System.out.println(pol);
         
     }
     
