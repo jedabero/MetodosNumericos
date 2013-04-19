@@ -26,7 +26,9 @@ public class ApoxFunc {
         double fx[] = new double[n];
         System.out.println("Ingrese T.T");
         for (int i = 0; i < n; i++) {
+            System.out.println("x"+i);
             x[i] = in.nextDouble();
+            System.out.println("F(x"+i+")");
             fx[i] = in.nextDouble();
         }
         
@@ -50,8 +52,9 @@ public class ApoxFunc {
         }
         
         String pol = "";
-        pol += coef.getMatriz()[0][0] +" + "+coef.getMatriz()[1][0]+"x" + " + "+coef.getMatriz()[2][0]+"x^2";
-        
+        for (int i = 0; i < n; i++) {
+            pol += " + "+coef.getMatriz()[i][0]+"x^"+i;    
+        }
         System.out.println(pol);
         
     }
