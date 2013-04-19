@@ -14,6 +14,7 @@ import javax.swing.JTextField;
 
 import resources.Add;
 import resources.CustomException;
+import resources.O;
 
 import funciones.Funcion;
 
@@ -64,12 +65,16 @@ public class FuncionPanel extends JPanel {
 	public void addComponents(){
 		
 		for (int i = 0; i < nTerms; i++) {
-			Add.componente(this, lblListCoefs.get(i), 0, i, 1, 1, 1.0, 1.0,
+			int xL = (2*i)%4 + ((i%2==0)? 0 : 2);
+			int xT = (2*i +1)%4 + ((i%2==0)? 0 : 2);
+			int y = (i/2);
+			O.pln(xL+","+y);
+			O.pln(xT+","+y);
+			Add.componente(this, lblListCoefs.get(i),
+					xL, y, 1, 1, 0.25, 1.0,
 					GridBagConstraints.BOTH, "");
-		}
-		
-		for (int i = 0; i < nTerms; i++) {
-			Add.componente(this, txtListCoefs.get(i), 1, i, 1, 1, 1.0, 1.0,
+			Add.componente(this, txtListCoefs.get(i),
+					xT, y, 3, 1, 1.0, 1.0,
 					GridBagConstraints.BOTH, "");
 		}
 		

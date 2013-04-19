@@ -11,6 +11,7 @@ import other.CustomWindowAdapter;
 
 import resources.CustomException;
 import resources.O;
+import ui.main.APUI;
 import ui.main.RaicesUI;
 import ui.main.SSELUI;
 
@@ -33,7 +34,7 @@ public class Metodos {
 		String options[] = {
 				"1. Raíces de un polinomio",
 				"2. Solución de Sistemas de Ecuaciones Lineales",
-				"3. Ajustes de polinomios",
+				"3. Ajuste de puntos a polinomios",
 				"4. Integración Numérica",
 				"5. Salir"};
 		
@@ -56,9 +57,9 @@ public class Metodos {
 			new SSELUI();
 			break;
 		case 3:
-			//TODO Ajustes de polinomios
+			//TODO Ajuste de puntos a polinomio
 			O.pln(code);
-			small();
+			new APUI();
 			break;
 		case 4:
 			//TODO Integración Numérica
