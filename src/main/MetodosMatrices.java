@@ -134,7 +134,7 @@ public class MetodosMatrices extends javax.swing.JFrame {
 
         lblNumEc.setText("Numero de ecuaciones:");
 
-        spnrNumEc.setModel(new javax.swing.SpinnerNumberModel(2, 2, 25, 1));
+        spnrNumEc.setModel(new javax.swing.SpinnerNumberModel(3, 2, 25, 1));
         spnrNumEc.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 spnrNumEcStateChanged(evt);
@@ -143,7 +143,7 @@ public class MetodosMatrices extends javax.swing.JFrame {
 
         lblNumIncog.setText("Número de incognitas:");
 
-        spnrNumIn.setModel(new javax.swing.SpinnerNumberModel(2, 2, 25, 1));
+        spnrNumIn.setModel(new javax.swing.SpinnerNumberModel(3, 2, 25, 1));
         spnrNumIn.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 spnrNumInStateChanged(evt);
