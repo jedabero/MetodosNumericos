@@ -1,6 +1,8 @@
 
 package main;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -23,22 +25,22 @@ public class MetodosMatrices extends javax.swing.JFrame {
         }
         tableHeaders[tableHeaders.length-1] = "<html>b</html>";
         
-        matrizTabla = new Double[2][3];
-        double mt[][] = new double[2][3];
+        matrizTabla = new BigDecimal[numEc][numInc+1];
+        BigDecimal mt[][] = new BigDecimal[numEc][numInc+1];
         for (int i = 0; i < matrizTabla.length; i++) {
             for (int j = 0; j < matrizTabla[0].length; j++) {
-                matrizTabla[i][j] = Double.parseDouble(""+1);
-                mt[i][j] = matrizTabla[i][j].doubleValue();
+                matrizTabla[i][j] = BigDecimal.ONE;
+                mt[i][j] = matrizTabla[i][j];
             }
         }
         
         sel = new SistemaEcuacionesLineales(mt);
         dtmMatriz = new javax.swing.table.DefaultTableModel(matrizTabla,tableHeaders);
         
-        Object mt2[][] = new Object[2][3];
+        Object mt2[][] = new Object[numEc][numInc+1];
         dtmMetodo = new javax.swing.table.DefaultTableModel(mt2,tableHeaders);
         
-        Object mt3[][] = new Object[2][2];
+        Object mt3[][] = new Object[numInc][2];
         dtmRes = new javax.swing.table.DefaultTableModel(mt3,resTableHeaders);
         
         initComponents();
@@ -53,33 +55,33 @@ public class MetodosMatrices extends javax.swing.JFrame {
         }
         tableHeaders[tableHeaders.length-1] = "<html>b</html>";
         
-        double mt[][] = new double[rows-1][cols-1];
+        BigDecimal mt[][] = new BigDecimal[rows-1][cols-1];
         for (int i = 0; i < mt.length; i++) {
             for (int j = 0; j < mt[0].length; j++) {
-                System.out.println(tablaMatriz.getValueAt(i, j).toString());
-                mt[i][j] = Double.parseDouble(tablaMatriz.getValueAt(i, j).toString());
+                String db = tablaMatriz.getValueAt(i, j).toString();
+                mt[i][j] = new BigDecimal(Double.parseDouble(db));
             }
         }
         
-        matrizTabla = new Double[rows][cols];
+        matrizTabla = new BigDecimal[rows][cols];
         for (int i = 0; i < mt.length; i++) {
             for (int j = 0; j < mt[0].length; j++) {
-                matrizTabla[i][j] = new Double(mt[i][j]);
+                matrizTabla[i][j] = mt[i][j];
             }
         }
         
         for (int i = 0; i < matrizTabla.length; i++) {
-            matrizTabla[i][matrizTabla[0].length-1] = Double.parseDouble(""+1);
+            matrizTabla[i][matrizTabla[0].length-1] = BigDecimal.ONE;
         }
         for (int j = 0; j < matrizTabla[0].length; j++) {
-            matrizTabla[matrizTabla.length-1][j] = Double.parseDouble(""+1);
+            matrizTabla[matrizTabla.length-1][j] = BigDecimal.ONE;
         }
         
-        mt = new double[rows][cols];
+        mt = new BigDecimal[rows][cols];
         for (int i = 0; i < matrizTabla.length; i++) {
             for (int j = 0; j < matrizTabla[0].length; j++) {
                 System.out.println("("+i+","+j+")"+matrizTabla[i][j]);
-                mt[i][j] = matrizTabla[i][j].doubleValue();
+                mt[i][j] = matrizTabla[i][j];
             }
         }
         
@@ -314,10 +316,11 @@ public class MetodosMatrices extends javax.swing.JFrame {
         creaMatriz();
         try {
             int it = Integer.parseInt(spnIter.getValue().toString());
-            double tol = Double.parseDouble(txtTol.getText());
+            tol = new BigDecimal(txtTol.getText());
             mostrarTabla(sel.metodoJacobi(it, tol).getMatriz(), dtmRes,
                     resTableHeaders, tablaResIt);
         } catch (Exception ex) {
+            ex.printStackTrace();
             JOptionPane.showMessageDialog(this, ex.getMessage());
         }
         
@@ -327,34 +330,36 @@ public class MetodosMatrices extends javax.swing.JFrame {
         creaMatriz();
         try {
             int it = Integer.parseInt(spnIter.getValue().toString());
-            double tol = Double.parseDouble(txtTol.getText());
+            tol = new BigDecimal(txtTol.getText());
             mostrarTabla(sel.metodoSeidel(it, tol).getMatriz(), dtmRes,
                     resTableHeaders, tablaResIt);
         } catch (Exception ex) {
+            ex.printStackTrace();
             JOptionPane.showMessageDialog(this, ex.getMessage());
         }
     }//GEN-LAST:event_btnSeidelActionPerformed
 
     public void creaMatriz(){
-        double[][] mt = new double[matrizTabla.length][matrizTabla[0].length];
+        BigDecimal[][] mt = new BigDecimal[matrizTabla.length][matrizTabla[0].length];
         for (int i = 0; i < matrizTabla.length; i++) {
             for (int j = 0; j < matrizTabla[0].length; j++) {
                 String v = tablaMatriz.getValueAt(i, j).toString();
                 if(v.isEmpty()){
                     v = "1";
                 }
-                mt[i][j] = Double.parseDouble(v);
+                mt[i][j] = new BigDecimal(v);
 
             }
         }
         sel = new SistemaEcuacionesLineales(mt);
     }
-    public void mostrarTabla(double[][] mt, DefaultTableModel dtm,
+    public void mostrarTabla(BigDecimal[][] mt, DefaultTableModel dtm,
             String[] th, JTable t){
+        tol = new BigDecimal(txtTol.getText());
         Object[][] obj = new Object[mt.length][mt[0].length];
         for (int i = 0; i < mt.length; i++) {
             for (int j = 0; j < mt[0].length; j++) {
-                obj[i][j] = mt[i][j];
+                obj[i][j] = mt[i][j].setScale(tol.scale()*2, RoundingMode.HALF_UP).stripTrailingZeros();
             }
         }
         
@@ -398,13 +403,13 @@ public class MetodosMatrices extends javax.swing.JFrame {
             }
         });
     }
-    private int numEc = 2;
-    private int numInc = 2;
+    private int numEc = 3;
+    private int numInc = 3;
     private String[] tableHeaders = new String[numInc+1];
     private String resTableHeaders[]
             = {"<html>x<sub>i</sub></html>", "<html>e<sub>i</sub></html>"};
-    private Double matrizTabla[][];
-    
+    private BigDecimal matrizTabla[][];
+    private BigDecimal tol;
     private SistemaEcuacionesLineales sel;
     private javax.swing.table.DefaultTableModel dtmMatriz;
     private javax.swing.table.DefaultTableModel dtmMetodo;

@@ -1,6 +1,7 @@
 
 package main;
 
+import java.math.BigDecimal;
 import metodosnumericos.SistemaEcuacionesLineales;
 
 /**
@@ -13,12 +14,15 @@ public class Pruebas {
      * @param args the command line arguments
      */
     public static void main(String[] args) throws Exception {
-        double mat[][] = {
-            {0,-1,4,-1,1},
-            {0,0,-1,4,1},
-            {4,-1,0,0,1},
-            {-1,4,-1,0,1}};
-        double mat1[][] = new double[mat.length][mat[0].length];
+        BigDecimal zero = BigDecimal.ZERO;
+        BigDecimal uno = BigDecimal.ONE;
+        BigDecimal cuatro = new BigDecimal(4);
+        BigDecimal mat[][] = {
+            {cuatro,uno.negate(),zero,zero,uno},
+            {uno.negate(),cuatro,uno.negate(),zero,uno},
+            {zero,uno.negate(),cuatro,uno.negate(),uno},
+            {zero,zero,uno.negate(),cuatro,uno}};
+        BigDecimal mat1[][] = new BigDecimal[mat.length][mat[0].length];
         for (int i = 0; i < mat.length; i++) {
             System.arraycopy(mat[i], 0, mat1[i], 0, mat[0].length);
         }

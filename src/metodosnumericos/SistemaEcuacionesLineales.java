@@ -1,5 +1,7 @@
 package metodosnumericos;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -83,7 +85,7 @@ public class SistemaEcuacionesLineales {
      * Constructor que crea una matriz a partir de un arreglo bidimensional.
      * @param matriz Arreglo bidimensional.
      */
-    public SistemaEcuacionesLineales(double matriz[][]){
+    public SistemaEcuacionesLineales(BigDecimal matriz[][]){
         matrizAmpliada = new Matriz(matriz);
         numEq = matriz.length;
         numIn = matriz[0].length-1;
@@ -104,7 +106,7 @@ public class SistemaEcuacionesLineales {
      */
     public void imprimirMatriz(String titulo){
         System.out.println("\n\t"+titulo);
-        double temp[][] = getMatrizAmpliada().getMatriz();
+        BigDecimal temp[][] = getMatrizAmpliada().getMatriz();
         for (int i = 0; i < numEq; i++) {
             for (int j = 0; j < numIn; j++) {
                 System.out.print("\t"+Float.parseFloat(""+temp[i][j]));
@@ -114,8 +116,8 @@ public class SistemaEcuacionesLineales {
         }
     }
     
-    private double[][] copiarMatriz(double[][] src){
-        double dest[][] = new double[src.length][src[0].length];
+    private BigDecimal[][] copiarMatriz(BigDecimal[][] src){
+        BigDecimal dest[][] = new BigDecimal[src.length][src[0].length];
         for (int i = 0; i < src.length; i++) {
             System.arraycopy(src[i], 0, dest[i], 0, src[0].length);
         }
@@ -127,10 +129,10 @@ public class SistemaEcuacionesLineales {
      * la fila i entre el coeficiente A[i][i]
      * @param i el indice de la ecuación.
      */
-    private void simpFila(int i, double[][] mt){
-        double divisor = mt[i][i];
+    private void simpFila(int i, BigDecimal[][] mt){
+        BigDecimal divisor = mt[i][i];
         for (int j = 0; j < numIn+1; j++) {
-            mt[i][j] /= divisor;
+            mt[i][j] = mt[i][j].divide(divisor, 10, RoundingMode.HALF_UP);
         }
     }
     
@@ -140,10 +142,10 @@ public class SistemaEcuacionesLineales {
      * @param k 
      * @param i 
      */
-    private void cerosColumna(int k, int i, double[][] mt){
-        double pivote = -mt[k][i];
+    private void cerosColumna(int k, int i, BigDecimal[][] mt){
+        BigDecimal pivote = mt[k][i].negate();
         for (int j = 0; j < numIn+1; j++) {
-            mt[k][j] += pivote*mt[i][j];
+            mt[k][j] = mt[k][j].add(pivote.multiply(mt[i][j]));
         }
     }
     
@@ -156,8 +158,8 @@ public class SistemaEcuacionesLineales {
      * superior.
      */
     public Matriz metodoGauss(){
-        double mTemp[][] = getMatrizAmpliada().getMatriz();
-        double matFin[][] = copiarMatriz(mTemp);
+        BigDecimal mTemp[][] = getMatrizAmpliada().getMatriz();
+        BigDecimal matFin[][] = copiarMatriz(mTemp);
         
         for (int i = 0; i < numEq; i++) {
             simpFila(i, matFin);
@@ -173,8 +175,8 @@ public class SistemaEcuacionesLineales {
      * Método de Jordan. Reduce la matriz de coeficientes a la matriz identidad.
      */
     public Matriz metodoJordan(){
-        double mTemp[][] = getMatrizAmpliada().getMatriz();
-        double matFin[][] = copiarMatriz(mTemp);
+        BigDecimal mTemp[][] = getMatrizAmpliada().getMatriz();
+        BigDecimal matFin[][] = copiarMatriz(mTemp);
         
         for (int i = 0; i < numEq; i++) {
             simpFila(i, matFin);
@@ -194,7 +196,7 @@ public class SistemaEcuacionesLineales {
      * @param maxIt
      * @param tol 
      */
-    public Matriz metodoJacobi(int maxIt, double tol) throws Exception {
+    public Matriz metodoJacobi(int maxIt, BigDecimal tol) throws Exception {
         Matriz X = Matriz.cero(numIn,1);
         Matriz e = Matriz.cero(numIn,1);
         Matriz diag = matrizCoef.diagonal();
@@ -214,7 +216,7 @@ public class SistemaEcuacionesLineales {
             Matriz X1 = diagInv.multipicar(b_rX);
             e = Matriz.abs(X1.restar(X));
             for (int i = 0; i < numIn; i++) {
-                if(e.getMatriz()[i][0]<=tol){
+                if(e.getMatriz()[i][0].compareTo(tol)<=0){
                     swi[i] = true;
                 }
             }
@@ -241,7 +243,7 @@ public class SistemaEcuacionesLineales {
      * @param maxIt
      * @param tol 
      */
-    public Matriz metodoSeidel(int maxIt, double tol) throws Exception{
+    public Matriz metodoSeidel(int maxIt, BigDecimal tol) throws Exception{
         Matriz X = Matriz.cero(numIn,1);
         Matriz e = Matriz.cero(numIn,1);
         Matriz lInv = matrizCoef.trianguloInferior().inversa();
@@ -259,7 +261,7 @@ public class SistemaEcuacionesLineales {
             Matriz X1 = lInv.multipicar(b_usX);
             e = Matriz.abs(X1.restar(X));
             for (int i = 0; i < numIn; i++) {
-                if(e.getMatriz()[i][0]<=tol){
+                if(e.getMatriz()[i][0].compareTo(tol)<=0){
                     swi[i] = true;
                 }
             }

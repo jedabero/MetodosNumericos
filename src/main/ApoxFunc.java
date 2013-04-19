@@ -4,6 +4,7 @@
  */
 package main;
 
+import java.math.BigDecimal;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -22,21 +23,21 @@ public class ApoxFunc {
         System.out.println("Ingrese numero de puntos");
         n = in.nextInt();
         
-        double x[] = new double[n];
-        double fx[] = new double[n];
+        BigDecimal x[] = new BigDecimal[n];
+        BigDecimal fx[] = new BigDecimal[n];
         System.out.println("Ingrese T.T");
         for (int i = 0; i < n; i++) {
             System.out.println("x"+i);
-            x[i] = in.nextDouble();
+            x[i] = in.nextBigDecimal();
             System.out.println("F(x"+i+")");
-            fx[i] = in.nextDouble();
+            fx[i] = in.nextBigDecimal();
         }
         
-        double mat[][] = new double[n][n+1];
+        BigDecimal mat[][] = new BigDecimal[n][n+1];
         
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
-                mat[i][j] = Math.pow(x[i],j);
+                mat[i][j] = x[i].pow(j);
             }
             mat[i][n] = fx[i];
         }
