@@ -4,7 +4,7 @@
 package ui.main;
 
 import other.CustomWindowAdapter;
-import metodosnumericos.MetodosMatrices;
+import main.MetodosMatrices;
 
 /**
  * @author Jedabero
