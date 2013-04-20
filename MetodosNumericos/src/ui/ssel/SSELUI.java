@@ -1,7 +1,7 @@
 /**
  * 
  */
-package ui.main;
+package ui.ssel;
 
 import other.CustomWindowAdapter;
 import main.MetodosMatrices;

@@ -18,7 +18,7 @@ import grafica.JGrafica;
 
 import resources.Interval;
 import resources.O;
-import ui.main.RaicesUI;
+import ui.raices.RaicesUI;
 
 
 /**

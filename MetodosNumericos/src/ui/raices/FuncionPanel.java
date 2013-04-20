@@ -1,7 +1,7 @@
 /**
  * 
  */
-package other;
+package ui.raices;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;

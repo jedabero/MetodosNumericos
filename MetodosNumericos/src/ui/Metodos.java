@@ -11,9 +11,9 @@ import other.CustomWindowAdapter;
 
 import resources.CustomException;
 import resources.O;
-import ui.main.APUI;
-import ui.main.RaicesUI;
-import ui.main.SSELUI;
+import ui.aproxpol.APUI;
+import ui.raices.RaicesUI;
+import ui.ssel.SSELUI;
 
 /**
  * @author Jedabero

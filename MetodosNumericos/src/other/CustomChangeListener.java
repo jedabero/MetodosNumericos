@@ -10,7 +10,8 @@ import javax.swing.event.ChangeListener;
 import resources.CustomException;
 import resources.O;
 
-import ui.main.RaicesUI;
+import ui.raices.FuncionPanel;
+import ui.raices.RaicesUI;
 
 /**
  * @author Jedabero
@@ -36,7 +37,6 @@ public class CustomChangeListener implements ChangeListener {
 		JSpinner spnr = (JSpinner) e.getSource();
 		switch (spnr.getName()) {
 		case "grado":
-			O.pln("aasasd");
 			grado = (int) spnr.getValue();
 			try {
 				fp = new FuncionPanel(grado);

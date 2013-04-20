@@ -1,7 +1,7 @@
 /**
  * 
  */
-package ui.main;
+package ui.raices;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -21,7 +21,6 @@ import funciones.Funcion;
 import other.CustomActionListener;
 import other.CustomChangeListener;
 import other.CustomWindowAdapter;
-import other.FuncionPanel;
 
 import resources.Add;
 import resources.CustomException;

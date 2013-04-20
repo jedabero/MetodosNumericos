@@ -1,7 +1,7 @@
 /**
  * 
  */
-package ui.main;
+package ui.aproxpol;
 
 import java.awt.GridBagLayout;
 
