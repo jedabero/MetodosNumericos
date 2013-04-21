@@ -8,7 +8,6 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import resources.CustomException;
-import resources.O;
 
 import ui.raices.FuncionPanel;
 import ui.raices.RaicesUI;
@@ -22,7 +21,6 @@ public class CustomChangeListener implements ChangeListener {
 	private RaicesUI rui;
 	private FuncionPanel fp;
 	private int grado;
-	private int it;
 	
 	/**
 	 * @param rui
@@ -44,10 +42,6 @@ public class CustomChangeListener implements ChangeListener {
 				e1.printStackTrace();
 			}
 			rui.setFpnlFuncion(fp);
-			break;
-		case "iter":
-			it = (int) spnr.getValue();
-			O.pln("Iteraciones: "+it);
 			break;
 		default:
 			break;

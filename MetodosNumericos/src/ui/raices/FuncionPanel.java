@@ -102,7 +102,7 @@ public class FuncionPanel extends JPanel {
 		try {
 			fnc = Funcion.polinomio(nTerms-1, coefs);
 		} catch (CustomException e) {
-			System.out.println(e);
+			e.printStackTrace();
 			e.printStackTrace();
 		}
 		

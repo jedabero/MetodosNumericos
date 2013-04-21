@@ -41,22 +41,12 @@ public class CustomActionListener implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		
-		String sTol = rui.getTxtTol().getText();
-		BigDecimal tol = new BigDecimal(sTol);
-		int maxIt = rui.getMaxIt();
-		String sX0A = rui.getTxtX0A().getText();
-		String sX1B = rui.getTxtX1B().getText();
-		BigDecimal x0A = new BigDecimal(sX0A);
-		BigDecimal x1B = new BigDecimal(sX1B);
-		Interval ab = new Interval(x0A, x1B);
-		
-		String xResult = "X = ";
-		
 		JButton btn = (JButton) e.getSource();
 		switch (btn.getText()) {
 		case "Crear Polinomio":
 			funcion = rui.getFpnlFuncion().getFnc();
 			rui.getLblEq().setText(funcion.getSpecific());
+			rui.getMpnlMetodos().setFuncion(funcion);
 			JOptionPane.showMessageDialog(null, "Función creada");//TODO
 			break;
 		case "Ver gráfica":
@@ -71,51 +61,6 @@ public class CustomActionListener implements ActionListener {
 				grafic(alf, alc);
 			}else{
 				JOptionPane.showMessageDialog(null, "Crea la función primero.");
-			}
-			break;
-		case "<html>Punto<p>Fijo":
-			try {
-				xResult += funcion.metodoPuntoFijo(tol, maxIt, x0A).stripTrailingZeros();
-				rui.getLblX().setText(xResult);
-			} catch (Exception e1) {
-				e1.printStackTrace();
-				JOptionPane.showMessageDialog(null, e1.getMessage());
-			}
-			break;
-		case "Bisección":
-			try {
-				xResult += funcion.metodoBiseccion(tol, maxIt, ab).stripTrailingZeros();
-				rui.getLblX().setText(xResult);
-			} catch (Exception e1) {
-				e1.printStackTrace();
-				JOptionPane.showMessageDialog(null, e1.getMessage());
-			}
-			break;
-		case "<html>Newton<p>Raphson":
-			try {
-				xResult += funcion.metodoNewtonRaphson(tol, maxIt, x0A).stripTrailingZeros();
-				rui.getLblX().setText(xResult);
-			} catch (Exception e1) {
-				e1.printStackTrace();
-				JOptionPane.showMessageDialog(null, e1.getMessage());
-			}
-			break;
-		case "Secante":
-			try {
-				xResult += funcion.metodoSecante(tol, maxIt, x0A, x1B).stripTrailingZeros();
-				rui.getLblX().setText(xResult);
-			} catch (Exception e1) {
-				e1.printStackTrace();
-				JOptionPane.showMessageDialog(null, e1.getMessage());
-			}
-			break;
-		case "<html>Regula<p>Falsi":
-			try {
-				xResult += funcion.metodoRegulaFalsi(tol, maxIt, ab).stripTrailingZeros();
-				rui.getLblX().setText(xResult);
-			} catch (Exception e1) {
-				e1.printStackTrace();
-				JOptionPane.showMessageDialog(null, e1.getMessage());
 			}
 			break;
 		default:

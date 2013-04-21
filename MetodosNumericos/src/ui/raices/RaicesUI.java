@@ -13,7 +13,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.JSpinner;
-import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 
 import funciones.Funcion;
@@ -31,14 +30,10 @@ import resources.CustomException;
  */
 public class RaicesUI {
 	
-	private FuncionPanel fpnlFuncion;
 	private JPanel thePanel;
+	private FuncionPanel fpnlFuncion;
 	private JLabel lblEq;
-	private JLabel lblX;
-	private JTextField txtTol;
-	private JSpinner spnrIt;
-	private JTextField txtX0A;
-	private JTextField txtX1B;
+	private MetodosPanel mpnlMetodos; 
 	private Funcion funcion;
 	private int grad;
 	/**
@@ -82,27 +77,8 @@ public class RaicesUI {
 		
 		JSeparator sprtr2 = new JSeparator(JSeparator.HORIZONTAL);
 		
-		//X0, X1, Intervalo [a, b]
-		JLabel lblInterv = new JLabel("Puntos iniciales ó Intervalo [a, b]");
-		JLabel lblX0A = new JLabel("<html>X<sub>0</sub> | A</hmtl>");
-		JLabel lblX1B = new JLabel("<html>X<sub>1</sub> | B</hmtl>");
-		txtX0A = new JTextField("0");
-		txtX1B = new JTextField("1");
-		//Tolerancia y maxIt
-		JLabel lblTol = new JLabel("Tolerancia", JLabel.CENTER);
-		txtTol = new JTextField("0.001");
-		JLabel lblIt = new JLabel("Iteraciones", JLabel.CENTER);
-		SpinnerNumberModel snmIt = new SpinnerNumberModel(15, 1, 25, 1);
-		spnrIt = new JSpinner(snmIt);
-		spnrIt.setName("iter");
 		//Métodos
-		JButton btnPuntoFijo = new JButton("<html>Punto<p>Fijo");
-		JButton btnBiseccion = new JButton("Bisección");
-		JButton btnNewtRaphs = new JButton("<html>Newton<p>Raphson");
-		JButton btnMeSecante = new JButton("Secante");
-		JButton btnReguFalsi = new JButton("<html>Regula<p>Falsi");
-		//Resultado
-		lblX = new JLabel("X =", JLabel.CENTER);
+		mpnlMetodos = new MetodosPanel();
 		
 		//0 - Tamaño Polinomio
 		Add.componente(thePanel, fpnlFuncion, 			0, 0, 5, 2, 1.0, 1.0,
@@ -126,56 +102,18 @@ public class RaicesUI {
 		//6 - Separator
 		Add.componente(thePanel, sprtr2, 				0, 6, 5, 1, 1.0, 1.0,
 				GridBagConstraints.HORIZONTAL, "");
-		//7 - X0, X1, Intervalo [a, b]
-		Add.componente(thePanel, lblInterv, 			0, 7, 5, 1, 1.0, 1.0,
-				GridBagConstraints.NONE, "");
-		Add.componente(thePanel, lblX0A, 				0, 8, 1, 1, 1.0, 1.0,
-				GridBagConstraints.NONE, "");
-		Add.componente(thePanel, txtX0A, 				1, 8, 1, 1, 1.0, 1.0,
-				GridBagConstraints.HORIZONTAL, "");
-		Add.componente(thePanel, lblX1B, 				3, 8, 1, 1, 1.0, 1.0,
-				GridBagConstraints.NONE, "");
-		Add.componente(thePanel, txtX1B, 				4, 8, 1, 1, 1.0, 1.0,
-				GridBagConstraints.HORIZONTAL, "");
-		//9 - Tolerancia y maxIt
-		Add.componente(thePanel, lblTol, 				0, 9, 1, 1, 1.0, 1.0,
-				GridBagConstraints.NONE, "");
-		Add.componente(thePanel, txtTol, 				1, 9, 2, 1, 1.0, 1.0,
-				GridBagConstraints.HORIZONTAL, "Tolerancia");
-		Add.componente(thePanel, lblIt, 				3, 9, 1, 1, 1.0, 1.0,
-				GridBagConstraints.NONE, "");
-		Add.componente(thePanel, spnrIt, 				4, 9, 1, 1, 1.0, 1.0,
-				GridBagConstraints.HORIZONTAL, "Máximo número de iteraciones");
+		//7 - MétodosPanel
+		Add.componente(thePanel, mpnlMetodos, 			0, 7, 5, 1, 1.0, 1.0,
+				GridBagConstraints.BOTH, "");
 		
-		//10 - Métodos
-		Add.componente(thePanel, btnPuntoFijo, 			0, 10, 1, 1, 1.0, 1.0,
-				GridBagConstraints.BOTH, "");
-		Add.componente(thePanel, btnBiseccion, 			1, 10, 1, 1, 1.0, 1.0,
-				GridBagConstraints.BOTH, "");
-		Add.componente(thePanel, btnNewtRaphs,		 	2, 10, 1, 1, 1.0, 1.0,
-				GridBagConstraints.BOTH, "");
-		Add.componente(thePanel, btnMeSecante, 			3, 10, 1, 1, 1.0, 1.0,
-				GridBagConstraints.BOTH, "");
-		Add.componente(thePanel, btnReguFalsi, 			4, 10, 1, 1, 1.0, 1.0,
-				GridBagConstraints.BOTH, "");
-		//11 - Resultado
-		Add.componente(thePanel, lblX,		 			0, 11, 5, 1, 1.0, 1.0,
-				GridBagConstraints.BOTH, "");
 		
 		
 		//Add ActionListeners
 		CustomActionListener al = new CustomActionListener(this);
 		btnCreaPol.addActionListener(al);
 		btnVerGrafica.addActionListener(al);
-		btnPuntoFijo.addActionListener(al);
-		btnBiseccion.addActionListener(al);
-		btnNewtRaphs.addActionListener(al);
-		btnMeSecante.addActionListener(al);
-		btnReguFalsi.addActionListener(al);
-		
 		CustomChangeListener cl = new CustomChangeListener(this);
 		spnrGradoPol.addChangeListener(cl);
-		spnrIt.addChangeListener(cl);
 	}
 	
 	/**
@@ -197,45 +135,17 @@ public class RaicesUI {
 	}
 
 	/**
+	 * @return the mpnlMetodos
+	 */
+	public MetodosPanel getMpnlMetodos() {
+		return mpnlMetodos;
+	}
+
+	/**
 	 * @return the lblEq
 	 */
 	public JLabel getLblEq() {
 		return lblEq;
-	}
-
-	/**
-	 * @return the lblX
-	 */
-	public JLabel getLblX() {
-		return lblX;
-	}
-
-	/**
-	 * @return the txtX0A
-	 */
-	public JTextField getTxtX0A() {
-		return txtX0A;
-	}
-
-	/**
-	 * @return the txtX1B
-	 */
-	public JTextField getTxtX1B() {
-		return txtX1B;
-	}
-
-	/**
-	 * @return the txtTol
-	 */
-	public JTextField getTxtTol() {
-		return txtTol;
-	}
-	
-	/**
-	 * @return the value in the spnrIt for maxIt
-	 */
-	public int getMaxIt(){
-		return (int)spnrIt.getValue();
 	}
 	
 }
