@@ -53,7 +53,16 @@ public class RaicesUI {
 		
 		thePanel = new JPanel(new GridBagLayout());
 		
-		//Polinomio
+		initComponents();
+		
+		theWindow.addWindowListener(wa);
+		theWindow.add(thePanel);
+		theWindow.setLocationRelativeTo(theWindow.getRootPane());
+		theWindow.setVisible(true);
+		theWindow.setName("RaicesUI");
+	}
+	
+	private void initComponents() throws CustomException{//Polinomio
 		grad = 2;
 		JLabel lblGradoPol = new JLabel("Grado de polinomio", JLabel.CENTER);
 		SpinnerNumberModel snmGradoPol = new SpinnerNumberModel(grad, 1, 25, 1);
@@ -149,9 +158,10 @@ public class RaicesUI {
 				GridBagConstraints.BOTH, "");
 		Add.componente(thePanel, btnReguFalsi, 			4, 10, 1, 1, 1.0, 1.0,
 				GridBagConstraints.BOTH, "");
-		//10 - Resultado
+		//11 - Resultado
 		Add.componente(thePanel, lblX,		 			0, 11, 5, 1, 1.0, 1.0,
 				GridBagConstraints.BOTH, "");
+		
 		
 		//Add ActionListeners
 		CustomActionListener al = new CustomActionListener(this);
@@ -166,15 +176,8 @@ public class RaicesUI {
 		CustomChangeListener cl = new CustomChangeListener(this);
 		spnrGradoPol.addChangeListener(cl);
 		spnrIt.addChangeListener(cl);
-		
-		
-		theWindow.addWindowListener(wa);
-		theWindow.add(thePanel);
-		theWindow.setLocationRelativeTo(theWindow.getRootPane());
-		theWindow.setVisible(true);
-		theWindow.setName("RaicesUI");
 	}
-
+	
 	/**
 	 * @return the fpnlFuncion
 	 */
