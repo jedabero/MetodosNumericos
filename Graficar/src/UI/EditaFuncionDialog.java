@@ -30,8 +30,8 @@ import javax.swing.SwingConstants;
 import resources.Add;
 import resources.LangResource;
 import resources.O;
-import resources.Constantes.TipoFuncion;
-import resources.Constantes.FuncionTrig;
+import resources.math.Constantes.FuncionTrig;
+import resources.math.Constantes.TipoFuncion;
 
 import funciones.Funcion;
 import grafica.JGrafica;

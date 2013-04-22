@@ -3,7 +3,7 @@ package funciones;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
-import resources.Constantes;
+import resources.math.Constantes;
 /**
  * Esta clase contiene la definición de una función explícita básica.
  * Contiene las propiedades comunes que se encuentran en la mayoría de las

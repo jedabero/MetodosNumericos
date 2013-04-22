@@ -5,8 +5,8 @@ package funciones;
 
 import java.math.BigDecimal;
 
-import resources.Big;
-import resources.M;
+import resources.math.Big;
+import resources.math.M;
 
 /**
  * Esta clase define las funciones trigonométricas.

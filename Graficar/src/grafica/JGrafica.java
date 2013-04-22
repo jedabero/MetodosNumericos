@@ -23,11 +23,9 @@ import javax.swing.JPanel;
 
 import funciones.Funcion;
 
-import resources.BigDecimalCoord;
-import resources.Big;
-import resources.CoordenadasGraficasMIA;
-import resources.Interval;
 import resources.O;
+import resources.math.Big;
+import resources.math.Interval;
 
 /**
  * Cualquier instancia de esta clase dibujará todas las funciones que le sean
@@ -50,7 +48,7 @@ public class JGrafica extends JPanel {
 	private Interval X;		//The x Interval
 	private Interval Y;		//The y Interval
 	//The ArrayList that contains the arrays of coordenates of the functions.
-	private ArrayList<BigDecimalCoord[]> alfCoords;
+	private ArrayList<BigDecimalPoint[]> alfCoords;
 	
 	private ArrayList<Funcion> funcionList;	//The list of functions
 	
@@ -124,7 +122,7 @@ public class JGrafica extends JPanel {
 	}
 	
 	private void calculos(){
-		alfCoords = new ArrayList<BigDecimalCoord[]>();
+		alfCoords = new ArrayList<BigDecimalPoint[]>();
 		
 		BigDecimal numP = new BigDecimal(Integer.toString(numeroPuntos-1));
 		step = X.length().divide(numP, 10, RoundingMode.HALF_UP).stripTrailingZeros();
@@ -140,12 +138,12 @@ public class JGrafica extends JPanel {
 			int index = lif.previousIndex();
 			BigDecimal x;//the x and y bdpoints to set
 			BigDecimal[] y = new BigDecimal[numeroPuntos];
-			BigDecimalCoord[] fCoords = new BigDecimalCoord[numeroPuntos];//the bdcoords to set
+			BigDecimalPoint[] fCoords = new BigDecimalPoint[numeroPuntos];//the bdcoords to set
 			for(int i=0;i<fCoords.length;i++){
 				x = X.min().add(step.multiply(BigDecimal.valueOf(i)));//x value
 				if(x.compareTo(X.max())==1) x = X.max();
 				y[i] = f.valorImagen(x);// y value
-				fCoords[i] = new BigDecimalCoord(x, y[i]);//setting bdcoords O.pln(fCoords[i]);
+				fCoords[i] = new BigDecimalPoint(x, y[i]);//setting bdcoords O.pln(fCoords[i]);
 			}
 			
 			alfCoords.add(index, fCoords);
@@ -198,9 +196,9 @@ public class JGrafica extends JPanel {
 		
 		//Draw the functions
 		g2d.setStroke(new BasicStroke(2));
-		ListIterator<BigDecimalCoord[]> libdc;//Coordinates iterator
+		ListIterator<BigDecimalPoint[]> libdc;//Coordinates iterator
 		for (libdc = alfCoords.listIterator(); libdc.hasNext();) {
-			BigDecimalCoord[] bdcArr = libdc.next();//current bdCoord array
+			BigDecimalPoint[] bdcArr = libdc.next();//current bdCoord array
 			int index = libdc.previousIndex();
 			g2d.setColor(colorList.get(index));
 			g2d.draw(polylineShape(changeCoordToPoint(bdcArr)));
@@ -208,10 +206,10 @@ public class JGrafica extends JPanel {
 		
 	}
 	
-	private ArrayList<Point> changeCoordToPoint(BigDecimalCoord[] bdcArr){
+	private ArrayList<Point> changeCoordToPoint(BigDecimalPoint[] bdcArr){
 		ArrayList<Point> aLpP = new ArrayList<Point>();
 		for(int i=0;i<bdcArr.length;i++){
-			BigDecimalCoord cord = bdcArr[i];
+			BigDecimalPoint cord = bdcArr[i];
 			BigDecimal xnum = cord.x().subtract(X.min());
 			BigDecimal xdiv = xnum.divide(X.length(), 5, RoundingMode.HALF_UP);
 			int x = (int)(gDim.width*(xdiv.doubleValue()));

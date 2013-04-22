@@ -8,10 +8,10 @@ import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.ListIterator;
 
-import resources.Constantes.FuncionTrig;
-import resources.Constantes.TipoFuncion;
+import resources.math.Interval;
+import resources.math.Constantes.FuncionTrig;
+import resources.math.Constantes.TipoFuncion;
 import resources.CustomException;
-import resources.Interval;
 import resources.O;
 
 /**
@@ -235,7 +235,7 @@ public class Funcion{
 			throws Exception{
 		//Obtener g(x)
 		int fnzc = firstNonZeroCoef();	//Se localiza el la posición del primer coeficiente diferente de 0
-		Funcion g = gx(fnzc);
+		Funcion gx = gx(fnzc);
 		
 		boolean fin = false;	//Switch
 		int k = 0;				//Índice de la iteración
@@ -245,14 +245,14 @@ public class Funcion{
 			switch (fnzc) {		//xr = g(x0)
 			case 0:
 				Termino t = getTerminos().get(0);
-				xr = t.getA().negate().divide(g.valorImagen(x0),
+				xr = t.getA().negate().divide(gx.valorImagen(x0),
 						20, RoundingMode.HALF_UP);
 				break;
 			case -1:
 				O.pln(-1+" <- again wat?");
 				break;
 			default:
-				xr = g.valorImagen(x0);
+				xr = gx.valorImagen(x0);
 				break;
 			}
 			
@@ -410,37 +410,43 @@ public class Funcion{
 	 */
 	public BigDecimal metodoRegulaFalsi(BigDecimal tol, int maxIt, Interval ab)
 			throws Exception {
-		boolean fin = false;	//Switch
-		int k = 0;				//Índice de la iteración
-		BigDecimal xa = BigDecimal.ZERO;
-		while((!fin)&&(k<=maxIt)){
-			BigDecimal fa = valorImagen(ab.min());
-			BigDecimal fb = valorImagen(ab.max());
-			BigDecimal fb_fa = fb.subtract(fa);
-			BigDecimal fr = ab.length().multiply(fb).divide(fb_fa, 20, RoundingMode.HALF_UP);
-			BigDecimal xr = ab.max().subtract(fr);
-			BigDecimal e = xa.subtract(xr).abs();	//Error inicial
-			if (e.compareTo(tol)<1) {	//Error igual o por debajo de la tolerancia?
-				fin = true;
-			}else{
-				BigDecimal fxr = valorImagen(xr);
-				if (fxr.signum()>1) {
-					ab.setMax(xr);
-				} else {
-					ab.setMin(xr);
+		if (rootExistentialityCriterion(ab)) {
+			boolean fin = false;	//Switch
+			int k = 0;				//Índice de la iteración
+			BigDecimal xa = BigDecimal.ZERO;
+			while((!fin)&&(k<=maxIt)){
+				BigDecimal fa = valorImagen(ab.min());
+				BigDecimal fb = valorImagen(ab.max());
+				BigDecimal fb_fa = fb.subtract(fa);
+				BigDecimal fr = ab.length().multiply(fb).divide(fb_fa, 20, RoundingMode.HALF_UP);
+				BigDecimal xr = ab.max().subtract(fr);
+				BigDecimal e = xa.subtract(xr).abs();	//Error inicial
+				if (e.compareTo(tol)<1) {	//Error igual o por debajo de la tolerancia?
+					fin = true;
+				}else{
+					BigDecimal fxr = valorImagen(xr);
+					if (fxr.signum()>1) {
+						ab.setMax(xr);
+					} else {
+						ab.setMin(xr);
+					}
+					xa = xr;
+					k++;
 				}
-				xa = xr;
-				k++;
+				
 			}
 			
+			if (fin) {
+				O.pln("x = "+xa);
+				return xa;
+			} else {
+				throw new Exception("No converge dentro del valor máximo de iteración");
+			}
+			
+		} else {
+			throw new Exception("No existe la raíz dentro del intervalo.");
 		}
 		
-		if (fin) {
-			O.pln("x = "+xa);
-			return xa;
-		} else {
-			throw new Exception("No converge dentro del valor máximo de iteración");
-		}
 	}
 	
 }

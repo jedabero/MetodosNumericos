@@ -1,7 +1,7 @@
 /**
  * 
  */
-package resources;
+package resources.math;
 
 /**
  * @version %I%

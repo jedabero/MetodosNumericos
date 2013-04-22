@@ -1,9 +1,8 @@
 /**
  * 
  */
-package resources;
+package grafica;
 
-import grafica.JGrafica;
 
 import java.awt.Point;
 import java.awt.event.MouseEvent;
@@ -12,6 +11,9 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 import javax.swing.event.MouseInputAdapter;
+
+import resources.O;
+import resources.math.Interval;
 
 /**
  * @author Jedabero
@@ -146,7 +148,7 @@ public class CoordenadasGraficasMIA extends MouseInputAdapter{
 			y1 = y1.setScale(3, RoundingMode.HALF_UP);
 			
 			
-			BigDecimalCoord coords = new BigDecimalCoord(x1, y1);
+			BigDecimalPoint coords = new BigDecimalPoint(x1, y1);
 			
 			jGra.setToolTipText(""+coords);
 		}

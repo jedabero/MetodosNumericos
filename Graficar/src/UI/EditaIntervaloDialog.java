@@ -15,7 +15,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import resources.Add;
-import resources.Interval;
+import resources.math.Interval;
 
 
 import grafica.JGrafica;

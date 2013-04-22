@@ -1,7 +1,7 @@
 /**
  * 
  */
-package resources;
+package resources.math;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;

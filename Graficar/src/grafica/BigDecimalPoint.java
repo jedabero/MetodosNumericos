@@ -1,7 +1,7 @@
 /**
  * 
  */
-package resources;
+package grafica;
 
 import java.awt.Point;
 import java.math.BigDecimal;
@@ -10,7 +10,7 @@ import java.math.BigDecimal;
  * @author Jedabero
  *
  */
-public class BigDecimalCoord{
+public class BigDecimalPoint{
 	
 	BigDecimal x;
 	BigDecimal y;
@@ -18,7 +18,7 @@ public class BigDecimalCoord{
 	/**
 	 * Crea un punto en formato BigDecimal iniciado en (0,0)
 	 */
-	public BigDecimalCoord(){
+	public BigDecimalPoint(){
 		this.x = BigDecimal.ZERO;
 		this.y = BigDecimal.ZERO;
 	}
@@ -27,7 +27,7 @@ public class BigDecimalCoord{
 	 * Crea un punto en formato BigDecimal según un punto en formato int.
 	 * @param p el punto a convertir
 	 */
-	public BigDecimalCoord(Point p){
+	public BigDecimalPoint(Point p){
 		this.x = BigDecimal.valueOf(p.x);
 		this.y = BigDecimal.valueOf(p.y);
 	}
@@ -38,7 +38,7 @@ public class BigDecimalCoord{
 	 * @param x
 	 * @param y
 	 */
-	public BigDecimalCoord(BigDecimal x, BigDecimal y) {
+	public BigDecimalPoint(BigDecimal x, BigDecimal y) {
 		this.x = x;
 		this.y = y;
 	}

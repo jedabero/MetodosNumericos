@@ -1,12 +1,12 @@
-package resources;
+package resources.math;
 
 
 import java.math.BigDecimal;
 import java.util.Random;
 
-
-import resources.Constantes.TipoFuncion;
-import resources.Constantes.FuncionTrig;
+import resources.CustomException;
+import resources.math.Constantes.FuncionTrig;
+import resources.math.Constantes.TipoFuncion;
 
 import funciones.Funcion;
 import funciones.Termino;

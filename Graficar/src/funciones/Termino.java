@@ -5,11 +5,11 @@ package funciones;
 
 import java.math.BigDecimal;
 
-import resources.Big;
-import resources.Constantes.FuncionTrig;
-import resources.Constantes.TipoFuncion;
+import resources.math.Big;
+import resources.math.M;
+import resources.math.Constantes.FuncionTrig;
+import resources.math.Constantes.TipoFuncion;
 import resources.CustomException;
-import resources.M;
 import resources.O;
 
 /**

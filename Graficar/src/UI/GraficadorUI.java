@@ -43,10 +43,10 @@ import funciones.Funcion;
 import grafica.JGrafica;
 
 import resources.Add;
-import resources.Interval;
 import resources.LangResource;
-import resources.M;
 import resources.O;
+import resources.math.Interval;
+import resources.math.M;
 
 /**
  * 
