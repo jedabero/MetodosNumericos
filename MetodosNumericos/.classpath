@@ -3,6 +3,6 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
 	<classpathentry kind="lib" path="C:/Users/Jedabero/workspace/Metodos_Matrices.jar" sourcepath="E:/workspace/Metodos Matrices/src"/>
-	<classpathentry kind="lib" path="C:/Users/Jedabero/workspace/GraficadorResources.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Jedabero/workspace/GraficadorResources.jar" sourcepath="C:/Users/Jedabero/git/Graficador/Graficar/src"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

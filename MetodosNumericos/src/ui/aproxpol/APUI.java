@@ -21,6 +21,11 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.table.DefaultTableModel;
 
+import funciones.Funcion;
+
+import metodosnumericos.Matriz;
+import metodosnumericos.SistemaEcuacionesLineales;
+
 import other.CustomWindowAdapter;
 import resources.Add;
 import resources.CustomException;
@@ -39,6 +44,8 @@ public class APUI implements ActionListener, ChangeListener{
 	private String[] headers = {"x", "f(x)"};
 	private int numPuntos = 2;
 	private JButton btnObtenPol;
+	private SistemaEcuacionesLineales sel;
+	private JLabel lblPolinomio;
 	
 	/**
 	 * @throws CustomException
@@ -79,6 +86,7 @@ public class APUI implements ActionListener, ChangeListener{
 		btnObtenPol = new JButton("Obten Polinomio");
 		btnObtenPol.addActionListener(this);
 		
+		lblPolinomio = new JLabel("");
 		
 		//0 - Numero de puntos
 		Add.componente(thePanel, lblNumPuntos, 0, 0, 1, 1, 1.0, 1.0,
@@ -94,12 +102,47 @@ public class APUI implements ActionListener, ChangeListener{
 		Add.componente(thePanel, btnObtenPol, 0, 6, 2, 1, 1.0, 1.0,
 				GridBagConstraints.BOTH, "");
 		
-		
+		//7 - Label del Polinomio
+		Add.componente(thePanel, lblPolinomio, 0, 7, 2, 1, 1.0, 1.0,
+				GridBagConstraints.BOTH, "");
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
+		
+		BigDecimal matriz[][] = new BigDecimal[numPuntos][numPuntos+1];
+		for (int i = 0; i < matriz.length; i++) {
+			BigDecimal xi = new BigDecimal(dm.getValueAt(i, 0).toString());
+			for (int j = 0; j < matriz.length; j++) {
+				matriz[i][j] = xi.pow(j);
+			}
+			matriz[i][numPuntos] = new BigDecimal(dm.getValueAt(i, 1).toString());
+		}
+		sel = new SistemaEcuacionesLineales(matriz);
+		
+		Matriz coef;
+		try {
+			coef = sel.metodoCramer();
+			coef.imprimirMatriz("Res");
+		} catch (Exception e1) {
+			e1.printStackTrace();
+			coef = new Matriz(matriz);
+		}
+		
+		BigDecimal coefs[] = new BigDecimal[numPuntos];
+		for (int i = 0; i < coefs.length; i++) {
+			coefs[i] = coef.getMatriz()[i][0].stripTrailingZeros();
+			System.out.println(coefs[i]);
+		}
+		
+		Funcion f = null;
+		try {
+			f = Funcion.polinomio(numPuntos-1, coefs);
+		} catch (CustomException e1) {
+			e1.printStackTrace();
+		}
+		
+		lblPolinomio.setText(f.getSpecific());
 		
 	}
 
