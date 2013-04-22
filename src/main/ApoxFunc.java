@@ -5,6 +5,7 @@
 package main;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -18,10 +19,9 @@ import metodosnumericos.SistemaEcuacionesLineales;
 public class ApoxFunc {
     
     public static void main(String[] args) {
-        int n = 0;
         Scanner in = new Scanner(System.in);
         System.out.println("Ingrese numero de puntos");
-        n = in.nextInt();
+        int n = in.nextInt();
         
         BigDecimal x[] = new BigDecimal[n];
         BigDecimal fx[] = new BigDecimal[n];
@@ -45,6 +45,7 @@ public class ApoxFunc {
         SistemaEcuacionesLineales sel = new SistemaEcuacionesLineales(mat);
         Matriz coef;
         try {
+            System.out.println("Determinante!!!!!!"+sel.getMatrizCoef().det());
             coef = sel.metodoCramer();
             coef.imprimirMatriz("Res");
         } catch (Exception ex) {
@@ -54,7 +55,7 @@ public class ApoxFunc {
         
         String pol = "";
         for (int i = 0; i < n; i++) {
-            pol += " + "+coef.getMatriz()[i][0]+"x^"+i;    
+            pol += " + "+coef.getMatriz()[i][0].setScale(9, RoundingMode.DOWN).stripTrailingZeros()+"x^"+i;    
         }
         System.out.println(pol);
         
