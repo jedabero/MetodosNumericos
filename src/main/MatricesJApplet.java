@@ -1,18 +1,19 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package main;
 
+import java.applet.Applet;
+import java.awt.Color;
 import java.awt.Container;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.math.BigDecimal;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JApplet;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
@@ -32,7 +33,8 @@ import resurces.RowNumberTable;
  *
  * @author Jedabero
  */
-public class MatricesJApplet extends JApplet implements ChangeListener, ItemListener{
+public class MatricesJApplet extends Applet
+        implements ChangeListener, ItemListener, ActionListener{
     
     private Matriz matriz;
     private JScrollPane scrlpMatriz;
@@ -41,6 +43,8 @@ public class MatricesJApplet extends JApplet implements ChangeListener, ItemList
     private DefaultTableModel dtmMatriz;
     private int nRows;
     private int nCols;
+    
+    private JButton btnUpdateMatriz;
     
     private SpinnerNumberModel spnmR;
     private JSpinner spnrRows;
@@ -56,6 +60,7 @@ public class MatricesJApplet extends JApplet implements ChangeListener, ItemList
     private String itemsMatr[];
     private JComboBox<String> cbOpMatriz;
     private JTable tblRes;
+    private JTable tblResRowHeaders;
     private JScrollPane scrlpRes;
     private DefaultTableModel dtmRes;
     
@@ -80,6 +85,7 @@ public class MatricesJApplet extends JApplet implements ChangeListener, ItemList
     }
     
     private void initComponents() {
+        this.setBackground(new Color(238, 238, 238));
         //SPINNERS
         JLabel lblR = new JLabel("Filas: ", JLabel.RIGHT);
         spnmR = new SpinnerNumberModel(3, 2, 25, 1);
@@ -88,7 +94,10 @@ public class MatricesJApplet extends JApplet implements ChangeListener, ItemList
         spnmC = new SpinnerNumberModel(3, 2, 25, 1);
         spnrCols = new JSpinner(spnmR);
         
+        btnUpdateMatriz = new JButton("Actualiza Matriz");
+        
         spnrRows.addChangeListener(this);
+        btnUpdateMatriz.addActionListener(this);
         
         componente(this, lblC, 0, 0, 1, 1, 1.0, 1.0,
                 GridBagConstraints.HORIZONTAL,"");
@@ -98,6 +107,8 @@ public class MatricesJApplet extends JApplet implements ChangeListener, ItemList
                 GridBagConstraints.HORIZONTAL,"");
         componente(this, spnrRows, 3, 0, 1, 1, 1.0, 1.0,
                 GridBagConstraints.HORIZONTAL,"");
+        componente(this, btnUpdateMatriz, 4, 0, 1, 1, 1.0, 1.0,
+                GridBagConstraints.BOTH,"");
         
         //MATRIZ
         nCols = 3;
@@ -142,6 +153,11 @@ public class MatricesJApplet extends JApplet implements ChangeListener, ItemList
                 GridBagConstraints.HORIZONTAL,"");
         
         txtRes = new JTextField();
+        try {
+            txtRes.setText(""+matriz.det());
+        } catch (Exception ex) {
+            Logger.getLogger(MatricesJApplet.class.getName()).log(Level.SEVERE, null, ex);
+        }
         componente(this, txtRes, 0, 4, 5, 1, 1.0, 1.0,
                 GridBagConstraints.HORIZONTAL,"");
         
@@ -159,7 +175,20 @@ public class MatricesJApplet extends JApplet implements ChangeListener, ItemList
         componente(this, cbOpMatriz, 1, 5, 4, 1, 1.0, 1.0,
                 GridBagConstraints.HORIZONTAL,"");
         
+        //Matriz resultado
+        dtmRes = new javax.swing.table.DefaultTableModel(
+            matriz.abs().getMatriz(),
+            new String [] {
+                "1", "2", "3"
+            });
+        tblRes = new JTable(dtmRes);
+        tblResRowHeaders = new RowNumberTable(tblRes);
+        scrlpRes = new JScrollPane();
+        scrlpRes.setRowHeaderView(tblResRowHeaders);
+        scrlpRes.setViewportView(tblRes);
         
+        componente(this, scrlpRes, 0, 6, 5, 2, 1.0, 1.0,
+                GridBagConstraints.BOTH,"");
         
     }
     
@@ -177,6 +206,15 @@ public class MatricesJApplet extends JApplet implements ChangeListener, ItemList
         }
         
         matriz = new Matriz(mt);
+    }
+    
+    private void setResultTable(Matriz m){
+        String h[] = new String[m.getN()];
+        for (int i = 0; i < h.length; i++) {
+            h[i] = ""+(i+1);
+        }
+        dtmRes.setDataVector(m.getMatriz(), h);
+        tblRes.setModel(dtmRes);
     }
     
     private static void componente(Container gbl, JComponent jc, int x, int y,
@@ -248,6 +286,26 @@ public class MatricesJApplet extends JApplet implements ChangeListener, ItemList
                     JOptionPane.showMessageDialog(this, "Not Implemented yet");
                 }else if(e.getItem().toString().equals(cbOpElem.getItemAt(4))){
                     JOptionPane.showMessageDialog(this, "Not Implemented yet");
+                }else if(e.getItem().toString().equals(cbOpMatriz.getItemAt(0))){
+                    setResultTable(matriz.abs());
+                }else if(e.getItem().toString().equals(cbOpMatriz.getItemAt(1))){
+                    setResultTable(matriz.adjunta());
+                }else if(e.getItem().toString().equals(cbOpMatriz.getItemAt(2))){
+                    setResultTable(matriz.cofactor());
+                }else if(e.getItem().toString().equals(cbOpMatriz.getItemAt(3))){
+                    setResultTable(matriz.diagonal());
+                }else if(e.getItem().toString().equals(cbOpMatriz.getItemAt(4))){
+                    setResultTable(matriz.inversa());
+                }else if(e.getItem().toString().equals(cbOpMatriz.getItemAt(5))){
+                    setResultTable(matriz.transpuesta());
+                }else if(e.getItem().toString().equals(cbOpMatriz.getItemAt(6))){
+                    setResultTable(matriz.trianguloInferior());
+                }else if(e.getItem().toString().equals(cbOpMatriz.getItemAt(7))){
+                    setResultTable(matriz.trianguloInferiorEstricto());
+                }else if(e.getItem().toString().equals(cbOpMatriz.getItemAt(8))){
+                    setResultTable(matriz.trianguloSuperior());
+                }else if(e.getItem().toString().equals(cbOpMatriz.getItemAt(9))){
+                    setResultTable(matriz.trianguloSuperiorEstricto());
                 }
             } catch (Exception ex) {
                     Logger.getLogger(MatricesJApplet.class.getName()).log(Level.SEVERE, null, ex);
@@ -257,5 +315,10 @@ public class MatricesJApplet extends JApplet implements ChangeListener, ItemList
         }
         
         
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        creaMatriz();
     }
 }

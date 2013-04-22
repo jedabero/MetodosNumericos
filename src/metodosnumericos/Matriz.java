@@ -292,7 +292,7 @@ public class Matriz {
     }
     
     public BigDecimal traza()throws Exception{
-        System.out.println("Sacando el valor de la traza...");
+        System.out.print("Sacando el valor de la traza...");
         BigDecimal tr = BigDecimal.ZERO;
         if (!esCuadrada()) {
             throw new Exception("Matriz no cuadrada.");
@@ -300,7 +300,7 @@ public class Matriz {
             for (int i = 0; i < n; i++) {
                 tr = tr.add(getMatriz()[i][i]);
             }
-            System.out.print(" "+tr);
+            System.out.println(" "+tr);
             return tr;
         }
     }
