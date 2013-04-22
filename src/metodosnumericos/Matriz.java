@@ -297,7 +297,7 @@ public class Matriz {
         if (!esCuadrada()) {
             throw new Exception("Matriz no cuadrada.");
         } else {
-            for (int i = 0; i < 10; i++) {
+            for (int i = 0; i < n; i++) {
                 tr = tr.add(getMatriz()[i][i]);
             }
             System.out.print(" "+tr);
