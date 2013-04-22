@@ -191,7 +191,7 @@ public final class EditaFuncionDialog extends JDialog{
 		cerrarBoton.addActionListener(cerrarAL);
 		
 		Add.componente(panelGrid, labelTipoFuncion, 0, 0, 1, 1, 1.0, 1.0,
-				GridBagConstraints.HORIZONTAL, null);
+				GridBagConstraints.HORIZONTAL, "");
 		Add.componente(panelGrid, dropTipoFuncion, 2, 0, 2, 1, 1.0, 1.0,
 				GridBagConstraints.HORIZONTAL, l.s("droplistTTT"));
 		Add.componente(panelGrid, propiedades, 0, 1, 4, 1, 1.0, 1.0,

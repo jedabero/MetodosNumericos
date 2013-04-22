@@ -57,7 +57,7 @@ public class JGrafica extends JPanel {
 	private boolean divPrin = true;	//paint main divisions?
 	private boolean divSec = false;	//paint secondary divisions?
 	private boolean etiquetas = true;	//paint axis numbers?
-	private boolean rangeY = true;	//TODO create an interval for this or smth
+	private boolean rangeY = false;	//TODO create an interval for this or smth
 	
 	/**
 	 * @return regresa si las divisiones principales están dibujadas
@@ -79,36 +79,26 @@ public class JGrafica extends JPanel {
 	/**
 	 * @return the gCoords
 	 */
-	public Point getgCoords() {
-		return gCoords;
-	}
+	public Point getgCoords() {return gCoords;}
 
 	/**
 	 * @return the gDim
 	 */
-	public Dimension getgDim() {
-		return gDim;
-	}
+	public Dimension getgDim() {return gDim;}
 	
 	/**
 	 * @return el intervalo X
 	 */
-	public Interval getXinterval(){
-		return X;
-	}
+	public Interval getXinterval(){return X;}
 	/**
 	 * @return el intervalo Y
 	 */
-	public Interval getYinterval(){
-		return Y;
-	}
+	public Interval getYinterval(){return Y;}
 	
 	/**
 	 * @return el paso
 	 */
-	public BigDecimal getStep(){
-		return step;
-	}
+	public BigDecimal getStep(){return step;}
 	
 	/**
 	 * @return la imagen del panel
