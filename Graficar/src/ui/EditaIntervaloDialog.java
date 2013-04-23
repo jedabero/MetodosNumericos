@@ -1,4 +1,6 @@
-package UI;
+package ui;
+
+import grafica.JGrafica;
 
 import java.awt.Color;
 import java.awt.Cursor;
@@ -16,9 +18,6 @@ import javax.swing.JTextField;
 
 import resources.Add;
 import resources.math.Interval;
-
-
-import grafica.JGrafica;
 
 /**
  * @author <a href="https://twitter.com/Jedabero" target="_blank">Jedabero</a>

@@ -2,7 +2,7 @@
  * %W% %E%
  */ 
 
-package UI;
+package ui.main.app;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -24,9 +24,8 @@ import java.util.ResourceBundle;
 import java.util.StringTokenizer;
 
 import javax.imageio.ImageIO;
-import javax.swing.JCheckBox;
-//import javax.swing.JComboBox;
 import javax.swing.AbstractButton;
+import javax.swing.JCheckBox;
 import javax.swing.JColorChooser;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -35,18 +34,19 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-//import javax.swing.JRadioButton;
 import javax.swing.JToolBar;
 import javax.swing.filechooser.FileNameExtensionFilter;
-
-import funciones.Funcion;
-import grafica.JGrafica;
 
 import resources.Add;
 import resources.LangResource;
 import resources.O;
 import resources.math.Interval;
 import resources.math.M;
+import ui.EditaDimensionesDialog;
+import ui.EditaFuncionDialog;
+import ui.EditaIntervaloDialog;
+import funciones.Funcion;
+import grafica.JGrafica;
 
 /**
  * 

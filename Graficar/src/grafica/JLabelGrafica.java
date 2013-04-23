@@ -15,8 +15,6 @@ import javax.swing.JLabel;
 
 import resources.O;
 import resources.math.Big;
-
-
 import funciones.FuncionBase;
 
 /**

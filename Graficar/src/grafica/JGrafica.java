@@ -20,12 +20,10 @@ import java.util.ListIterator;
 
 import javax.swing.JPanel;
 
-
-import funciones.Funcion;
-
 import resources.O;
 import resources.math.Big;
 import resources.math.Interval;
+import funciones.Funcion;
 
 /**
  * Cualquier instancia de esta clase dibujará todas las funciones que le sean

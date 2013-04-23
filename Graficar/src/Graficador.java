@@ -3,7 +3,10 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 import javax.swing.JOptionPane;
-import UI.GraficadorUI;
+
+import ui.main.app.GraficadorUI;
+
+
 
 
 /**

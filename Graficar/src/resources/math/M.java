@@ -7,7 +7,6 @@ import java.util.Random;
 import resources.CustomException;
 import resources.math.Constantes.FuncionTrig;
 import resources.math.Constantes.TipoFuncion;
-
 import funciones.Funcion;
 import funciones.Termino;
 

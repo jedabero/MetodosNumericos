@@ -8,11 +8,11 @@ import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.ListIterator;
 
-import resources.math.Interval;
-import resources.math.Constantes.FuncionTrig;
-import resources.math.Constantes.TipoFuncion;
 import resources.CustomException;
 import resources.O;
+import resources.math.Constantes.FuncionTrig;
+import resources.math.Constantes.TipoFuncion;
+import resources.math.Interval;
 
 /**
  * La clase {@code Funcion} define una función explícita de la forma

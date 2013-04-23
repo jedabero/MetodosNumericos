@@ -1,7 +1,7 @@
 /**
  * 
  */
-package UI;
+package ui;
 
 import grafica.JGrafica;
 

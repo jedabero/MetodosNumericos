@@ -1,4 +1,7 @@
-package UI;
+package ui;
+
+import funciones.Funcion;
+import grafica.JGrafica;
 
 import java.awt.Color;
 import java.awt.Cursor;
@@ -26,15 +29,11 @@ import javax.swing.JTextField;
 import javax.swing.JToolBar;
 import javax.swing.SwingConstants;
 
-
 import resources.Add;
 import resources.LangResource;
 import resources.O;
 import resources.math.Constantes.FuncionTrig;
 import resources.math.Constantes.TipoFuncion;
-
-import funciones.Funcion;
-import grafica.JGrafica;
 
 /**
  * Esta clase crea una ventana de dialogo en la que se mostrarán los
