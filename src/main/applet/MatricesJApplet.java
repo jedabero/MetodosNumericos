@@ -94,21 +94,16 @@ public class MatricesJApplet extends Applet
         spnmC = new SpinnerNumberModel(3, 2, 25, 1);
         spnrCols = new JSpinner(spnmR);
         
-        btnUpdateMatriz = new JButton("Actualiza Matriz");
-        
         spnrRows.addChangeListener(this);
-        btnUpdateMatriz.addActionListener(this);
         
-        componente(this, lblC, 0, 0, 1, 1, 1.0, 1.0,
+        componente(this, lblC, 0, 0, 1, 1, 1, 0.1,
                 GridBagConstraints.HORIZONTAL,"");
-        componente(this, spnrCols, 1, 0, 1, 1, 1.0, 1.0,
+        componente(this, spnrCols, 1, 0, 1, 1, 1, 0.1,
                 GridBagConstraints.HORIZONTAL,"");
-        componente(this, lblR, 2, 0, 1, 1, 1.0, 1.0,
+        componente(this, lblR, 2, 0, 1, 1, 1, 0.1,
                 GridBagConstraints.HORIZONTAL,"");
-        componente(this, spnrRows, 3, 0, 1, 1, 1.0, 1.0,
+        componente(this, spnrRows, 3, 0, 1, 1, 1, 0.1,
                 GridBagConstraints.HORIZONTAL,"");
-        componente(this, btnUpdateMatriz, 4, 0, 1, 1, 1.0, 1.0,
-                GridBagConstraints.BOTH,"");
         
         //MATRIZ
         nCols = 3;
@@ -128,7 +123,12 @@ public class MatricesJApplet extends Applet
         scrlpMatriz.setRowHeaderView(tblRowHeaders);
         scrlpMatriz.setViewportView(tblMatriz);
         
-        componente(this, scrlpMatriz, 0, 1, 5, 2, 1.0, 1.0,
+        componente(this, scrlpMatriz, 0, 1, 4, 4, 1.0, 1.0,
+                GridBagConstraints.BOTH,"");
+        
+        btnUpdateMatriz = new JButton("Actualiza Matriz");
+        btnUpdateMatriz.addActionListener(this);
+        componente(this, btnUpdateMatriz, 0, 5, 4, 1, 1.0, 0.5,
                 GridBagConstraints.BOTH,"");
         
         creaMatriz();
@@ -140,17 +140,17 @@ public class MatricesJApplet extends Applet
             "Multiplicar por..."
         };
         cbOpElem = new JComboBox<String>(itemsElem);
-        txtF1 = new JTextField();
-        txtF2 = new JTextField();
         cbOpElem.addItemListener(this);
-        componente(this, lblOpE, 0, 3, 1, 1, 1.0, 1.0,
+        txtF1 = new JTextField("0");
+        txtF2 = new JTextField("0");
+        componente(this, lblOpE, 0, 6, 1, 1, 1.0, 0.5,
                 GridBagConstraints.NONE,"");
-        componente(this, cbOpElem, 1, 3, 2, 1, 1.0, 1.0,
+        componente(this, cbOpElem, 1, 6, 3, 1, 1.0, 0.5,
                 GridBagConstraints.HORIZONTAL,"");
-        componente(this, txtF1, 3, 3, 1, 1, 1.0, 1.0,
-                GridBagConstraints.HORIZONTAL,"");
-        componente(this, txtF2, 4, 3, 1, 1, 1.0, 1.0,
-                GridBagConstraints.HORIZONTAL,"");
+        componente(this, txtF1, 0, 7, 2, 1, 1.0, 0.1,
+                GridBagConstraints.HORIZONTAL,"i");
+        componente(this, txtF2, 2, 7, 2, 1, 1.0, 0.1,
+                GridBagConstraints.HORIZONTAL,"j");
         
         txtRes = new JTextField();
         try {
@@ -158,8 +158,8 @@ public class MatricesJApplet extends Applet
         } catch (Exception ex) {
             Logger.getLogger(MatricesJApplet.class.getName()).log(Level.SEVERE, null, ex);
         }
-        componente(this, txtRes, 0, 4, 5, 1, 1.0, 1.0,
-                GridBagConstraints.HORIZONTAL,"");
+        componente(this, txtRes, 0, 8, 4, 1, 1.0, 0.1,
+                GridBagConstraints.HORIZONTAL,"Resultado");
         
         JLabel lblOpM = new JLabel("Mostrar Matriz");
         itemsMatr = new String[] {
@@ -170,9 +170,9 @@ public class MatricesJApplet extends Applet
         cbOpMatriz = new JComboBox<String>(itemsMatr);
         cbOpMatriz.addItemListener(this);
         
-        componente(this, lblOpM, 0, 5, 1, 1, 1.0, 1.0,
+        componente(this, lblOpM, 0, 9, 1, 1, 1.0, 0.5,
                 GridBagConstraints.NONE,"");
-        componente(this, cbOpMatriz, 1, 5, 4, 1, 1.0, 1.0,
+        componente(this, cbOpMatriz, 1, 9, 3, 1, 1.0, 0.5,
                 GridBagConstraints.HORIZONTAL,"");
         
         //Matriz resultado
@@ -187,7 +187,7 @@ public class MatricesJApplet extends Applet
         scrlpRes.setRowHeaderView(tblResRowHeaders);
         scrlpRes.setViewportView(tblRes);
         
-        componente(this, scrlpRes, 0, 6, 5, 2, 1.0, 1.0,
+        componente(this, scrlpRes, 0, 10, 4, 4, 1.0, 1.0,
                 GridBagConstraints.BOTH,"");
         
     }
@@ -277,13 +277,17 @@ public class MatricesJApplet extends Applet
         if(e.getStateChange() == ItemEvent.SELECTED){
             try {
                 if(e.getItem().toString().equals(cbOpElem.getItemAt(0))){
-                    txtRes.setText(matriz.det().toString());
+                    txtRes.setText(matriz.det()+"");
                 }else if(e.getItem().toString().equals(cbOpElem.getItemAt(1))){
-                    txtRes.setText(matriz.traza().toString());
+                    txtRes.setText(matriz.traza()+"");
                 }else if(e.getItem().toString().equals(cbOpElem.getItemAt(2))){
-                    JOptionPane.showMessageDialog(this, "Not Implemented yet");
+                    int I = Integer.parseInt(txtF1.getText());
+                    int J = Integer.parseInt(txtF2.getText());
+                    txtRes.setText(matriz.cofactor(I, J)+"");
                 }else if(e.getItem().toString().equals(cbOpElem.getItemAt(3))){
-                    JOptionPane.showMessageDialog(this, "Not Implemented yet");
+                    int I = Integer.parseInt(txtF1.getText());
+                    int J = Integer.parseInt(txtF2.getText());
+                    setResultTable(matriz.reducida(I, J));
                 }else if(e.getItem().toString().equals(cbOpElem.getItemAt(4))){
                     JOptionPane.showMessageDialog(this, "Not Implemented yet");
                 }else if(e.getItem().toString().equals(cbOpMatriz.getItemAt(0))){
