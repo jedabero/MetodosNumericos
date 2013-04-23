@@ -295,6 +295,7 @@ public class MatricesJApplet extends Applet
                 }else if(e.getItem().toString().equals(cbOpMatriz.getItemAt(3))){
                     setResultTable(matriz.diagonal());
                 }else if(e.getItem().toString().equals(cbOpMatriz.getItemAt(4))){
+                    System.out.println(matriz.detEquals0());
                     setResultTable(matriz.inversa());
                 }else if(e.getItem().toString().equals(cbOpMatriz.getItemAt(5))){
                     setResultTable(matriz.transpuesta());
@@ -308,7 +309,8 @@ public class MatricesJApplet extends Applet
                     setResultTable(matriz.trianguloSuperiorEstricto());
                 }
             } catch (Exception ex) {
-                    Logger.getLogger(MatricesJApplet.class.getName()).log(Level.SEVERE, null, ex);
+                    JOptionPane.showMessageDialog(this, ex.getMessage(),
+                            "Problema", JOptionPane.ERROR_MESSAGE);
             }
         }else if(e.getStateChange() == ItemEvent.DESELECTED){
             //DO NOTHING YET

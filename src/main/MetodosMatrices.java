@@ -353,6 +353,7 @@ public class MetodosMatrices extends javax.swing.JFrame {
         }
         sel = new SistemaEcuacionesLineales(mt);
     }
+    
     public void mostrarTabla(BigDecimal[][] mt, DefaultTableModel dtm,
             String[] th, JTable t){
         tol = new BigDecimal(txtTol.getText());

@@ -257,10 +257,14 @@ public class Matriz {
     
     public Matriz inversa() throws Exception{
         System.out.println("Obteniendo inversa...");
-        BigDecimal invDet = BigDecimal.ONE.divide(det(), 15, RoundingMode.UP);
-        Matriz mtrz = adjunta().multipicar(invDet);
-        System.out.println(mtrz.imprimirMatriz("Matriz inversa"));
-        return mtrz;
+        if(!detEquals0()){
+            BigDecimal invDet = BigDecimal.ONE.divide(det(), 15, RoundingMode.UP);
+            Matriz mtrz = adjunta().multipicar(invDet);
+            System.out.println(mtrz.imprimirMatriz("Matriz inversa"));
+            return mtrz;
+        }else{
+            throw new Exception("Determinante igual a 0");
+        }
     }
     
     public BigDecimal cofactor(int i, int j) throws Exception{
@@ -360,11 +364,18 @@ public class Matriz {
     }
     
     public Matriz multipicar(BigDecimal escalar){
+        escalar = escalar.stripTrailingZeros();
         System.out.println("Multiplicando por "+escalar);
         BigDecimal[][] matTemp = new BigDecimal[n][m];
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < m; j++) {
-                matTemp[i][j] = getMatriz()[i][j].multiply(escalar);
+                BigDecimal val = getMatriz()[i][j].multiply(escalar);
+                if(val.compareTo(BigDecimal.ZERO)==0){
+                    matTemp[i][j] = BigDecimal.ZERO;
+                }else{
+                    matTemp[i][j] = val.stripTrailingZeros();
+                }
+                
             }
         }
         Matriz mtrz = new Matriz(matTemp);
@@ -393,6 +404,11 @@ public class Matriz {
             throw new Exception("Columnas diferente de filas: Columnas:"
                     + m +" & Filas:"+multiplicando.n);
         }
+    }
+    
+    public boolean detEquals0()throws Exception{
+        boolean det0 = det().compareTo(BigDecimal.ZERO)==0;
+        return det0;
     }
     
     /**
