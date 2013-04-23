@@ -1,5 +1,5 @@
 
-package main;
+package main.app;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
