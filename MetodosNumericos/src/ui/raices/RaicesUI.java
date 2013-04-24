@@ -81,14 +81,14 @@ public class RaicesUI {
 		mpnlMetodos = new MetodosPanel();
 		
 		//0 - Tamaño Polinomio
-		Add.componente(thePanel, fpnlFuncion, 			0, 0, 5, 2, 1.0, 1.0,
-				GridBagConstraints.BOTH, "Edita los coeficientes de la función");
-		Add.componente(thePanel, lblGradoPol, 			0, 2, 2, 1, 1.0, 1.0,
+		Add.componente(thePanel, lblGradoPol, 			0, 0, 2, 1, 1.0, 1.0,
 				GridBagConstraints.NONE, "");
-		Add.componente(thePanel, spnrGradoPol, 			2, 2, 1, 1, 1.0, 1.0,
+		Add.componente(thePanel, spnrGradoPol, 			2, 0, 1, 1, 1.0, 1.0,
 				GridBagConstraints.HORIZONTAL, "Grado del Polinomio");
-		Add.componente(thePanel, btnCreaPol, 			3, 2, 2, 1, 1.0, 1.0,
+		Add.componente(thePanel, btnCreaPol, 			3, 0, 2, 1, 1.0, 1.0,
 				GridBagConstraints.BOTH, "");
+		Add.componente(thePanel, fpnlFuncion, 			0, 1, 5, 2, 1.0, 1.0,
+				GridBagConstraints.BOTH, "Edita los coeficientes de la función");
 		//3 - Separator
 		Add.componente(thePanel, sprtr1, 				0, 3, 5, 1, 1.0, 1.0,
 				GridBagConstraints.HORIZONTAL, "");
@@ -129,7 +129,7 @@ public class RaicesUI {
 	public void setFpnlFuncion(FuncionPanel fpnlFuncion) {
 		thePanel.remove(this.fpnlFuncion);
 		this.fpnlFuncion = fpnlFuncion;
-		Add.componente(thePanel, fpnlFuncion, 			0, 0, 5, 2, 1.0, 1.0,
+		Add.componente(thePanel, fpnlFuncion, 			0, 1, 5, 2, 1.0, 1.0,
 				GridBagConstraints.BOTH, "Edita los coeficientes de la función");
 		thePanel.revalidate();
 	}
