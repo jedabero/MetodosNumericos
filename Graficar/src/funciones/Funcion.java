@@ -8,6 +8,9 @@ import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.ListIterator;
 
+import metodosnumericos.Matriz;
+import metodosnumericos.SistemaEcuacionesLineales;
+
 import resources.CustomException;
 import resources.O;
 import resources.math.Constantes.FuncionTrig;
@@ -170,6 +173,41 @@ public class Funcion{
 		ArrayList<Termino> alT = new ArrayList<Termino>();
 		alT.add(Termino.trigonometrico(ft, coefA, coefB));
 		return new Funcion(alT);
+	}
+
+	/**
+	 * Crea una función a partir de un conjunto de puntos
+	 * @param x puntos
+	 * @param fx valor de la función en los puntos x
+	 * @return una función polinómica aproximada a los puntos dados
+	 * @throws Exception 
+	 */
+	public Funcion aproximacionPolinomialSimple(BigDecimal x[], BigDecimal fx[])
+			throws Exception {
+		int numPuntos = x.length;
+		if(numPuntos!=fx.length){
+			throw CustomException.arrayIncompleto();
+		}else{
+			BigDecimal matriz[][] = new BigDecimal[numPuntos][numPuntos+1];
+			
+			for (int i = 0; i < numPuntos; i++) {
+				for (int j = 0; j < numPuntos; j++) {
+					matriz[i][j] = x[i].pow(j);
+				}
+				matriz[i][numPuntos] = fx[i];
+			}
+			
+			SistemaEcuacionesLineales sel = new SistemaEcuacionesLineales(matriz);
+			Matriz coef = sel.metodoCramer();
+			BigDecimal coefs[] = new BigDecimal[numPuntos];
+			for (int i = 0; i < coefs.length; i++) {
+				coefs[i] = coef.getMatriz()[i][0].stripTrailingZeros();
+				System.out.println(coefs[i]);
+			}
+			
+			return Funcion.polinomio(numPuntos-1, coefs);
+			
+		}
 	}
 	
 	/**
