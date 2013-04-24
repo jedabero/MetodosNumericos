@@ -182,8 +182,8 @@ public class Funcion{
 	 * @return una función polinómica aproximada a los puntos dados
 	 * @throws Exception 
 	 */
-	public Funcion aproximacionPolinomialSimple(BigDecimal x[], BigDecimal fx[])
-			throws Exception {
+	public static Funcion aproximacionPolinomialSimple(
+			BigDecimal x[], BigDecimal fx[]) throws Exception {
 		int numPuntos = x.length;
 		if(numPuntos!=fx.length){
 			throw CustomException.arrayIncompleto();

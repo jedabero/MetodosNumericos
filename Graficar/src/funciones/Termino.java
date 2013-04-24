@@ -365,6 +365,62 @@ public class Termino {
 	}
 	
 	/**
+	 * Crea un término con todos los parámetros.
+	 * @param	a el coeficiente del término
+	 * @param	b el coeficiente de la variable
+	 * @param	f el tipo de función
+	 * @param	g el grado del término
+	 * @param	ft el tipo de función trigonométrica
+	 * @throws CustomException 
+	 */
+	public Termino(BigDecimal a, BigDecimal b, TipoFuncion f, int g,
+			FuncionTrig ft) throws CustomException{
+		A = a;
+		funcion = f;
+		switch (funcion) {
+		case CONSTANTE:
+			break;
+		case POLINOMICA:
+			if((g<1) || (g>999999999)){
+				grado = g;
+			}else{
+				throw CustomException.gradoMenorQue1();
+			}
+			break;
+		case TRIGONOMETRICA:
+			funTrig = ft;
+			switch(ft){
+			case SIN:
+			case COS:
+			case TAN:
+			case SEC:
+				B = b;
+				break;
+			case CSC:
+			case COT:
+				throw CustomException.coeficienteIgualA0(ft+"(0) = NaN");
+			default:
+			}
+			break;
+		case EXPONENCIAL:
+			B = b;
+			break;
+		case LOGARITMICA:
+			B = b;
+			break;
+		case RACIONAL:
+			break;
+		default:
+			
+			break;
+		}
+		
+		initGenEsp();
+	}
+	
+	
+	
+	/**
 	 * Crea un término con los parámetros mínimos.
 	 * Arroja un error si el tipo es {@link TipoFuncion#POLINOMICA} o 
 	 * {@link TipoFuncion#TRIGONOMETRICA}
@@ -397,7 +453,7 @@ public class Termino {
 		if(g<1 || g>999999999){
 			throw CustomException.gradoMenorQue1();
 		}else if(a.signum()==0){
-			throw CustomException.coefAeq0();
+			throw CustomException.coeficienteIgualA0(null);
 		}else{
 			grado  = g;
 		}
@@ -416,7 +472,7 @@ public class Termino {
 	private Termino(BigDecimal a, BigDecimal b, FuncionTrig ft)
 			throws CustomException {
 		if(a.signum()==0){
-			throw CustomException.coefAeq0();
+			throw CustomException.coeficienteIgualA0(null);
 		}
 		A = a;
 		B = b;
@@ -455,7 +511,7 @@ public class Termino {
 			O.pln("Error al crear polinomio: "+etm);
 			if(etm.equals(CustomException.gradoMenorQue1().getMessage())){
 				t = polinomio(1, coef);
-			}else if(etm.equals(CustomException.coefAeq0().getMessage())){
+			}else if(etm.equals(CustomException.coeficienteIgualA0(null).getMessage())){
 				t = polinomio(grado, BigDecimal.ONE);
 			}
 		}
@@ -581,7 +637,13 @@ public class Termino {
 	public void actualiza(BigDecimal a, BigDecimal b){
 		actualiza(a, b, getTipoFuncion(), getGrado(), getFunTrig());
 	}
-	
+	/*
+	public Termino multiplicar(BigDecimal multiplicando){
+		BigDecimal newA = getA().multiply(multiplicando);
+		Termino multiplicado;
+		return null;
+	}
+	*/
 	/**
 	 * TODO derivada del resto de funciones
 	 * @return la derivada de este termino

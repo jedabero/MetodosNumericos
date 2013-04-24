@@ -31,10 +31,11 @@ public class CustomException extends Exception {
 	
 	/**
 	 * Crea una excepción para cuando el coeficiente es 0.
+	 * @param m mensaje adicional
 	 * @return una excepción para cuando el coeficiente es 0
 	 */
-	public static CustomException coefAeq0(){
-		return new CustomException("Coeficiente A no puede ser cero (0)");
+	public static CustomException coeficienteIgualA0(String m){
+		return new CustomException("Coeficiente no puede ser cero (0): "+m);
 	}
 	
 	/**
