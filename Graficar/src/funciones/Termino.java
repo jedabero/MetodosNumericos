@@ -389,7 +389,7 @@ public class Termino {
 			break;
 		case TRIGONOMETRICA:
 			funTrig = ft;
-			switch(ft){
+			switch(funTrig){
 			case SIN:
 			case COS:
 			case TAN:
@@ -398,7 +398,12 @@ public class Termino {
 				break;
 			case CSC:
 			case COT:
-				throw CustomException.coeficienteIgualA0(ft+"(0) = NaN");
+				if(b.signum()==0){
+					throw CustomException.coeficienteIgualA0(ft+"(0) = NaN");
+				}else{
+					B = b;
+				}
+				break;
 			default:
 			}
 			break;
@@ -406,7 +411,11 @@ public class Termino {
 			B = b;
 			break;
 		case LOGARITMICA:
-			B = b;
+			if(b.signum()==0){
+				throw CustomException.coeficienteIgualA0("ln(0) = NaN");
+			}else{
+				B = b;
+			}
 			break;
 		case RACIONAL:
 			break;
@@ -418,161 +427,79 @@ public class Termino {
 		initGenEsp();
 	}
 	
-	
-	
 	/**
-	 * Crea un término con los parámetros mínimos.
-	 * Arroja un error si el tipo es {@link TipoFuncion#POLINOMICA} o 
-	 * {@link TipoFuncion#TRIGONOMETRICA}
-	 * El valor resultante del término va a depender de el tipo de función
-	 * {@code f} ya que es este quien define como calcularlo.
-	 * @param	a el coeficiente del término
-	 * @param	b el coeficiente de la variable
-	 * @param	f el tipo de función
-	 * @exception	Exception lanzado si el tipo de función es no esperado
-	 */
-	private Termino(BigDecimal a, BigDecimal b, TipoFuncion f)
-			throws CustomException {
-		if(f.equals(TipoFuncion.POLINOMICA)||f.equals(TipoFuncion.TRIGONOMETRICA)){
-			throw CustomException.tipoIncorrecto();
-		}else{
-			funcion = f;
-		}
-		A = a;
-		B = b;
-		initGenEsp();
-	}
-	
-	/**
-	 * Crea un término de tipo {@link TipoFuncion#POLINOMICA}.
-	 * 
-	 * @param	a el coeficiente del término
-	 * @param	g el grado del término
-	 */
-	private Termino(BigDecimal a, int g) throws CustomException {
-		if(g<1 || g>999999999){
-			throw CustomException.gradoMenorQue1();
-		}else if(a.signum()==0){
-			throw CustomException.coeficienteIgualA0(null);
-		}else{
-			grado  = g;
-		}
-		A = a;
-		B = BigDecimal.ONE;
-		funcion = TipoFuncion.POLINOMICA;
-		initGenEsp();
-	}
-	
-	/**
-	 * Crea un término del tipo {@link TipoFuncion#TRIGONOMETRICA}.
-	 * @param	a el coeficiente del término
-	 * @param	b el coeficiente de la variable
-	 * @param	ft el tipo de función trigonométrica
-	 */
-	private Termino(BigDecimal a, BigDecimal b, FuncionTrig ft)
-			throws CustomException {
-		if(a.signum()==0){
-			throw CustomException.coeficienteIgualA0(null);
-		}
-		A = a;
-		B = b;
-		funcion = TipoFuncion.TRIGONOMETRICA;
-		funTrig = ft; 
-		initGenEsp();
-	}
-	
-	/**
-	 * 
+	 * Crea un termino constante cuya imagen siempre será el valor de coef.
 	 * @param coef
-	 * @return una función constante
+	 * @return un termino constante
 	 */
 	public static Termino constante(BigDecimal coef){
-		Termino t;
 		try{
-			t = new Termino(coef, BigDecimal.ZERO, TipoFuncion.CONSTANTE);
+			return new Termino(coef, null, TipoFuncion.CONSTANTE, 0, null);
 		}catch(CustomException ce){
-			t = constante(BigDecimal.ONE);
+			ce.printStackTrace();
+			return null;
 		}
-		return t;
 	}
 	
 	/**
+	 * Crea un termino de tipo monomio
 	 * @param grado	el grado del monomio
 	 * @param coef	el coeficiente del término
-	 * @param pos	la posición en la función
 	 * @return un termino de tipo polinómico de grado {@code grado}
 	 */
 	public static Termino polinomio(int grado, BigDecimal coef){
-		Termino t = null;
 		try{
-			t = new Termino(coef, grado);
+			return new Termino(coef, null, TipoFuncion.POLINOMICA, grado, null);
 		}catch(CustomException et){
-			String etm = et.getMessage();
-			O.pln("Error al crear polinomio: "+etm);
-			if(etm.equals(CustomException.gradoMenorQue1().getMessage())){
-				t = polinomio(1, coef);
-			}else if(etm.equals(CustomException.coeficienteIgualA0(null).getMessage())){
-				t = polinomio(grado, BigDecimal.ONE);
-			}
+			et.printStackTrace();
+			return constante(coef);
 		}
-		return t;
 	}
 	
 	/**
 	 * @param ft	el tipo de función trigonométrica
 	 * @param coefA	el coeficiente del término
 	 * @param coefB	el coeficiente que acompaña a x
-	 * @param pos	la posición en la función
 	 * @return un termino de tipo trigonométrico tipo {@code ft}
 	 */
 	public static Termino trigonometrico(FuncionTrig ft, BigDecimal coefA,
 			BigDecimal coefB){
-		Termino t = null;
 		try{
-			t =  new Termino(coefA, coefB, ft);
+			return new Termino(coefA, coefB, TipoFuncion.TRIGONOMETRICA, 0, ft);
 		}catch(CustomException et){
-			String etm = et.getMessage();
-			O.pln("Error al crear función trigonométrica: "+etm);
-			t = trigonometrico(ft, BigDecimal.ONE, coefB);
+			et.printStackTrace();
+			return trigonometrico(ft, BigDecimal.ONE, coefB);
 		}
-		return t;
 	}
 	
 	/**
 	 * @param coefA el coeficiente del término
 	 * @param coefB el coeficiente que acompaña a x
-	 * @param i		la posición en la función
 	 * @return un termino de tipo exponencial
 	 */
 	public static Termino exponencial(BigDecimal coefA, BigDecimal coefB){
-		Termino t = null;
 		try{
-			t =  new Termino(coefA, coefB, TipoFuncion.EXPONENCIAL);
+			return new Termino(coefA, coefB, TipoFuncion.EXPONENCIAL, 0, null);
 		}catch(CustomException et){
-			String etm = et.getMessage();
-			O.pln("Error al crear función exponencial: "+etm);
-			t = exponencial(BigDecimal.ONE, coefB);
+			et.printStackTrace();
+			return null;
 		}
-		return t;
 	}
 	
 	/**
 	 * Crea un término de tipo logarítmico con los parámetros dados.
 	 * @param coefA el coeficiente del término
 	 * @param coefB el coeficiente que acompaña a x
-	 * @param i		la posición en la función
 	 * @return un termino de tipo logarítmico
 	 */
 	public static Termino logaritmo(BigDecimal coefA, BigDecimal coefB){
-		Termino t = null;
 		try{
-			t =  new Termino(coefA, coefB, TipoFuncion.LOGARITMICA);
+			return new Termino(coefA, coefB, TipoFuncion.LOGARITMICA, 0, null);
 		}catch(CustomException et){
 			String etm = et.getMessage();
 			O.pln("Error al crear función logarítmica: "+etm);
-			t = logaritmo(BigDecimal.ONE, coefB);
+			return logaritmo(coefA, BigDecimal.ONE);
 		}
-		return t;
 	}
 	
 	/**
