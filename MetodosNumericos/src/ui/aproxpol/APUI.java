@@ -21,14 +21,12 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.table.DefaultTableModel;
 
-import funciones.Funcion;
-
 import metodosnumericos.Matriz;
 import metodosnumericos.SistemaEcuacionesLineales;
-
 import other.CustomWindowAdapter;
 import resources.Add;
 import resources.CustomException;
+import funciones.Funcion;
 
 /**
  * @author Jedabero
@@ -48,9 +46,9 @@ public class APUI implements ActionListener, ChangeListener{
 	private JLabel lblPolinomio;
 	
 	/**
-	 * @throws CustomException
+	 * 
 	 */
-	public APUI() throws CustomException {
+	public APUI() {
 		CustomWindowAdapter wa = new CustomWindowAdapter();
 		JFrame theWindow = new JFrame("Ajuste de puntos a un Polinomio");
 		theWindow.setSize(500, 500);

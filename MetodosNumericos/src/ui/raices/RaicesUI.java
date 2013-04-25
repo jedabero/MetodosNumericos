@@ -15,14 +15,11 @@ import javax.swing.JSeparator;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 
-import funciones.Funcion;
-
 import other.CustomActionListener;
 import other.CustomChangeListener;
 import other.CustomWindowAdapter;
-
 import resources.Add;
-import resources.CustomException;
+import funciones.Funcion;
 
 /**
  * @author Jedabero
@@ -37,10 +34,9 @@ public class RaicesUI {
 	private Funcion funcion;
 	private int grad;
 	/**
-	 * @throws CustomException 
 	 * 
 	 */
-	public RaicesUI() throws CustomException{
+	public RaicesUI() {
 		CustomWindowAdapter wa = new CustomWindowAdapter();
 		JFrame theWindow = new JFrame("Raices de un Polinomio");
 		theWindow.setSize(500, 500);
@@ -57,7 +53,7 @@ public class RaicesUI {
 		theWindow.setName("RaicesUI");
 	}
 	
-	private void initComponents() throws CustomException{//Polinomio
+	private void initComponents() {//Polinomio
 		grad = 2;
 		JLabel lblGradoPol = new JLabel("Grado de polinomio", JLabel.CENTER);
 		SpinnerNumberModel snmGradoPol = new SpinnerNumberModel(grad, 1, 25, 1);

@@ -20,11 +20,10 @@ import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 
-import funciones.Funcion;
-
 import resources.Add;
 import resources.Interval;
 import resources.O;
+import funciones.Funcion;
 
 /**
  * @author Jedabero

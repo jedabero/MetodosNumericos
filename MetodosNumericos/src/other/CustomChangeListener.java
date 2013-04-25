@@ -7,8 +7,6 @@ import javax.swing.JSpinner;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import resources.CustomException;
-
 import ui.raices.FuncionPanel;
 import ui.raices.RaicesUI;
 
@@ -36,11 +34,7 @@ public class CustomChangeListener implements ChangeListener {
 		switch (spnr.getName().charAt(0)) {//TODO fix this to 1.7!
 		case 'g':
 			grado = Integer.parseInt(spnr.getValue().toString());//(int)spnr.getValue();
-			try {
-				fp = new FuncionPanel(grado);
-			} catch (CustomException e1) {
-				e1.printStackTrace();
-			}
+			fp = new FuncionPanel(grado);
 			rui.setFpnlFuncion(fp);
 			break;
 		default:

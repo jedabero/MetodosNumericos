@@ -8,8 +8,6 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import other.CustomWindowAdapter;
-
-import resources.CustomException;
 import resources.O;
 import ui.aproxpol.APUI;
 import ui.raices.RaicesUI;
@@ -23,9 +21,8 @@ public class Metodos {
 	
 	/**
 	 * @param args
-	 * @throws CustomException 
 	 */
-	public static void main(String[] args) throws CustomException {
+	public static void main(String[] args) {
 		if (args==null) {
 		}else if(args.length>0){
 			O.pln(args[0]);//TODO something with args, I'll figure it out later.
@@ -34,7 +31,7 @@ public class Metodos {
 		String options[] = {
 				"1. Raíces de un polinomio",
 				"2. Solución de Sistemas de Ecuaciones Lineales",
-				"3. Ajuste de puntos a polinomios",
+				"3. Ajuste polinomial",
 				"4. Integración Numérica",
 				"5. Salir"};
 		

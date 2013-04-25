@@ -14,7 +14,6 @@ import javax.swing.JTextField;
 
 import resources.Add;
 import resources.CustomException;
-
 import funciones.Funcion;
 
 /**
@@ -35,9 +34,8 @@ public class FuncionPanel extends JPanel {
 	
 	/**
 	 * @param grade
-	 * @throws CustomException 
 	 */
-	public FuncionPanel(int grade) throws CustomException {
+	public FuncionPanel(int grade) {
 		super(new GridBagLayout());
 		nTerms = grade+1;
 		lblListCoefs = new ArrayList<JLabel>(nTerms);
@@ -52,7 +50,11 @@ public class FuncionPanel extends JPanel {
 			txtListCoefs.add(temptxt);
 		}
 		
-		fnc = Funcion.polinomio(grade, coefs);
+		try {
+			fnc = Funcion.polinomio(grade, coefs);
+		} catch (CustomException e) {
+			e.printStackTrace();
+		}
 		
 		addComponents();
 		

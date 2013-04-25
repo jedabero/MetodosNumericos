@@ -13,12 +13,11 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-import funciones.Funcion;
-import grafica.JGrafica;
-
 import resources.Interval;
 import resources.O;
 import ui.raices.RaicesUI;
+import funciones.Funcion;
+import grafica.JGrafica;
 
 
 /**
