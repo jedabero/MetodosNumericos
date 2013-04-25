@@ -33,9 +33,9 @@ public class CustomChangeListener implements ChangeListener {
 	@Override
 	public void stateChanged(ChangeEvent e) {
 		JSpinner spnr = (JSpinner) e.getSource();
-		switch (spnr.getName()) {
-		case "grado":
-			grado = (int) spnr.getValue();
+		switch (spnr.getName().charAt(0)) {//TODO fix this to 1.7!
+		case 'g':
+			grado = Integer.parseInt(spnr.getValue().toString());//(int)spnr.getValue();
 			try {
 				fp = new FuncionPanel(grado);
 			} catch (CustomException e1) {

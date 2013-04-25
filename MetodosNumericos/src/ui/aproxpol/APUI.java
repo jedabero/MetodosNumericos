@@ -147,9 +147,9 @@ public class APUI implements ActionListener, ChangeListener{
 	}
 
 	@Override
-	public void stateChanged(ChangeEvent e) {
+	public void stateChanged(ChangeEvent e) {//TODO fix this to 1.7!
 		JSpinner spnr = (JSpinner) e.getSource();
-		int np = (int)spnr.getValue();
+		int np = Integer.parseInt(spnr.getValue().toString());//(int)spnr.getValue();
 		
 		Object p[][] = new Object[np][2];
 		for (int i = 0; i < numPuntos; i++) {

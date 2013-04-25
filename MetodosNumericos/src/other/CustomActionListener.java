@@ -42,14 +42,14 @@ public class CustomActionListener implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		
 		JButton btn = (JButton) e.getSource();
-		switch (btn.getText()) {
-		case "Crear Polinomio":
+		switch (btn.getText().charAt(0)) {
+		case 'C'://TODO "Crear Polinomio":
 			funcion = rui.getFpnlFuncion().getFnc();
 			rui.getLblEq().setText(funcion.getSpecific());
 			rui.getMpnlMetodos().setFuncion(funcion);
 			JOptionPane.showMessageDialog(null, "Función creada");//TODO
 			break;
-		case "Ver gráfica":
+		case 'V'://TODO "Ver gráfica":
 			if(funcion!=null){
 				ArrayList<Color> alc = new ArrayList<Color>(1);
 				alc.add(Color.BLUE);

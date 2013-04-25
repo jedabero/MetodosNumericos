@@ -311,7 +311,7 @@ public class MetodosPanel extends JPanel implements ItemListener, ActionListener
 	public void actionPerformed(ActionEvent e) {
 		String sTol = txtTol.getText();
 		BigDecimal tol = new BigDecimal(sTol);
-		int maxIt = (int)spnrIt.getValue();
+		int maxIt = Integer.parseInt(spnrIt.getValue().toString());//(int)spnrIt.getValue();
 		String sX0A = txtX0A.getText();
 		String sX1B = txtX1B.getText();
 		BigDecimal x0A = new BigDecimal(sX0A);
