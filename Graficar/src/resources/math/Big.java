@@ -462,7 +462,7 @@ public final class Big {
 	 * @throws Exception si n está fuera del rango 0 < n < 1676
 	 */
 	public static BigDecimal BigFactorial(int n) throws Exception{
-		BigDecimal a = new BigDecimal(""+1);
+		BigDecimal a = BigDecimal.ONE;
 		if(n<0){
 			throw new Exception("No hay factorial para enteros negativos");
 		}else if(n>1676){
