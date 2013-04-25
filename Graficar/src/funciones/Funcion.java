@@ -156,7 +156,7 @@ public class Funcion{
 		ArrayList<Termino> alT = new ArrayList<Termino>();
 		alT.add(Termino.constante(coefs[0]));
 		for(int i=1;i<=n;i++){
-			alT.add(Termino.polinomio(i, coefs[i]));
+			alT.add(Termino.monomio(i, coefs[i]));
 		}
 		return new Funcion(alT);
 	}
@@ -240,7 +240,7 @@ public class Funcion{
 				if (t.getGrado()<=1) {
 					alT.add(Termino.constante(t.getA()));
 				} else {
-					alT.add(Termino.polinomio(t.getGrado()-1, t.getA()));
+					alT.add(Termino.monomio(t.getGrado()-1, t.getA()));
 				}
 			}
 			return new Funcion(alT);

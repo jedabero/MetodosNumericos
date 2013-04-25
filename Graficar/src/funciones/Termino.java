@@ -447,7 +447,7 @@ public class Termino {
 	 * @param coef	el coeficiente del término
 	 * @return un termino de tipo polinómico de grado {@code grado}
 	 */
-	public static Termino polinomio(int grado, BigDecimal coef){
+	public static Termino monomio(int grado, BigDecimal coef){
 		try{
 			return new Termino(coef, null, TipoFuncion.POLINOMICA, grado, null);
 		}catch(CustomException et){
@@ -587,7 +587,7 @@ public class Termino {
 				return Termino.constante(a);
 			default:
 				try {
-					return polinomio(g, a);
+					return monomio(g, a);
 				} catch (Exception e) {
 					O.pln(e);
 					return null;
