@@ -150,7 +150,7 @@ public class SistemaEcuacionesLineales {
     }
     
     public Matriz metodoCramer() throws Exception{
-        return getMatrizCoef().inversa().multipicar(getVectorB());
+        return getMatrizCoef().inversa().multipicar(getVectorB()).prox(9);
     }
     
     /**
@@ -168,7 +168,7 @@ public class SistemaEcuacionesLineales {
             }
         }
         
-        return new Matriz(matFin);
+        return new Matriz(matFin).prox(20);
     }
     
     /**
@@ -188,7 +188,7 @@ public class SistemaEcuacionesLineales {
             }
         }
         
-        return new Matriz(matFin);
+        return new Matriz(matFin).prox(20);
     }
     
     /**
@@ -235,7 +235,7 @@ public class SistemaEcuacionesLineales {
             }
         }
         
-        return Matriz.ampliada(X, e);
+        return Matriz.ampliada(X, e).prox(tol.scale()+3);
     }
     
     /**
@@ -281,7 +281,7 @@ public class SistemaEcuacionesLineales {
             }
         }
         
-        return Matriz.ampliada(X, e);
+        return Matriz.ampliada(X, e).prox(tol.scale()+3);
     }
     
     /**

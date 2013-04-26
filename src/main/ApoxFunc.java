@@ -6,7 +6,6 @@ package main;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import metodosnumericos.Matriz;
@@ -19,18 +18,12 @@ import metodosnumericos.SistemaEcuacionesLineales;
 public class ApoxFunc {
     
     public static void main(String[] args) {
-        Scanner in = new Scanner(System.in);
-        System.out.println("Ingrese numero de puntos");
-        int n = in.nextInt();
-        
+        int n = 5;
         BigDecimal x[] = new BigDecimal[n];
         BigDecimal fx[] = new BigDecimal[n];
-        System.out.println("Ingrese T.T");
         for (int i = 0; i < n; i++) {
-            System.out.println("x"+i);
-            x[i] = in.nextBigDecimal();
-            System.out.println("F(x"+i+")");
-            fx[i] = in.nextBigDecimal();
+            x[i] = BigDecimal.valueOf(i);
+            fx[i] = BigDecimal.valueOf(Math.pow(10, i));
         }
         
         BigDecimal mat[][] = new BigDecimal[n][n+1];

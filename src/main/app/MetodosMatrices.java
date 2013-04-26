@@ -2,7 +2,6 @@
 package main.app;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -27,14 +26,7 @@ public class MetodosMatrices extends javax.swing.JFrame {
         
         matrizTabla = new BigDecimal[numEc][numInc+1];
         BigDecimal mt[][] = new BigDecimal[numEc][numInc+1];
-        for (int i = 0; i < matrizTabla.length; i++) {
-            for (int j = 0; j < matrizTabla[0].length; j++) {
-                matrizTabla[i][j] = BigDecimal.ONE;
-                mt[i][j] = matrizTabla[i][j];
-            }
-        }
         
-        sel = new SistemaEcuacionesLineales(mt);
         dtmMatriz = new javax.swing.table.DefaultTableModel(matrizTabla,tableHeaders);
         
         Object mt2[][] = new Object[numEc][numInc+1];
@@ -360,7 +352,7 @@ public class MetodosMatrices extends javax.swing.JFrame {
         Object[][] obj = new Object[mt.length][mt[0].length];
         for (int i = 0; i < mt.length; i++) {
             for (int j = 0; j < mt[0].length; j++) {
-                obj[i][j] = mt[i][j].setScale(tol.scale()*2, RoundingMode.HALF_UP).stripTrailingZeros();
+                obj[i][j] = mt[i][j];
             }
         }
         
