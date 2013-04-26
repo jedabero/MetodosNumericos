@@ -149,6 +149,14 @@ public class Matriz {
         return mtrz;
     }
     
+    public BigDecimal[] getFila(int n){
+        BigDecimal f[] = new BigDecimal[m];
+        for (int i = 0; i < m; i++) {
+            f[i] = matriz[n][i];
+        }
+        return f;
+    }
+    
     public Matriz diagonal() throws Exception{
         space();
         System.out.println("Obteniendo matriz diagonal...");
