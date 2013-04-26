@@ -157,6 +157,24 @@ public class Matriz {
         return f;
     }
     
+    public static Matriz pascal(int n){
+        BigDecimal t[][] = new BigDecimal[n][n];
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if ((i==0)||(i==j)) {
+                    t[i][j] = BigDecimal.ONE;
+                }else{
+                    if (i<j) {
+                        t[i][j] = BigDecimal.ZERO;
+                    } else {
+                        t[i][j] = t[i-1][j-1].add(t[i-1][j]);
+                    }
+                }
+            }
+        }
+        return new Matriz(t);
+    }
+    
     public Matriz diagonal() throws Exception{
         space();
         System.out.println("Obteniendo matriz diagonal...");
