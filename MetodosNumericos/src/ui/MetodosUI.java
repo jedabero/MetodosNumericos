@@ -3,12 +3,14 @@
  */
 package ui;
 
+import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
 import javax.swing.JMenuItem;
 import javax.swing.JMenuBar;
+import javax.swing.JPanel;
 
 import other.Add;
 
@@ -23,7 +25,16 @@ public class MetodosUI extends JFrame implements ActionListener{
 	 */
 	private static final long serialVersionUID = 6637458677520322115L;
 	
+	private static final String actions[] = {
+		"Polinomios",
+		"Sistemas de Ecuaciones Lineales",
+		"Aproximacion Polinomial",
+		"Integración Numérica",
+		"",
+		"Salir"};
+	
 	private JMenuBar mnbPrincipal = new JMenuBar();
+	private JPanel pnlPrincipal = new JPanel(new GridBagLayout());
 	
 	/**
 	 * 
@@ -34,22 +45,21 @@ public class MetodosUI extends JFrame implements ActionListener{
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		initBarraMenu();
-		
+		initPanel();
 		
 		setLocationRelativeTo(getRootPane());
 		setVisible(true);
 	}
 	
+	private void initPanel() {
+		
+		add(pnlPrincipal);
+	}
+
 	private void initBarraMenu() {
 		Add.menu(mnbPrincipal, "Acciones", 'A',
 				new int[]{0, 0, 0, 0, 2, 0},
-				new String[]{
-				"Polinomios",
-				"Sistemas de Ecuaciones Lineales",
-				"Aproximacion Polinomial",
-				"Integración Numérica",
-				"",
-				"Salir"},
+				actions,
 				new String[]{
 				"Grafica y obtén las raices de polinomios.",
 				"Soluciona sistemas Ax = B",
@@ -68,9 +78,10 @@ public class MetodosUI extends JFrame implements ActionListener{
 				"Información sobre esta aplicación.",
 				"", ""},
 				new ActionListener[]{this,null,this},
-				new String[][]{{},{},{"Hi","there","halp","me", "ok", "bye"}},
-				new boolean[][]{{},{},{false, true, false, true, false}},
-				new char[][]{{},{},{'R','R','R','C','C',' '}});
+				new String[][]{{},{},{"PolRoots","SSEL","AproxFunc", "Integra"}},
+				new boolean[][]{{},{},{false, true, false, true}},
+				new char[][]{{},{},{' ',' ',' ',' ',' '}});
+		
 		setJMenuBar(mnbPrincipal);
 	}
 
@@ -82,9 +93,15 @@ public class MetodosUI extends JFrame implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		String action = ((JMenuItem) e.getSource()).getText();
 		
-		if (action.equals("Salir")) {
+		if (action.equals(actions[5])) {
 			dispose();
-		} else {
+		} else if (action.equals(actions[0])) {//POLROOTS
+			
+		} else if (action.equals(actions[1])) {//SSEL
+			
+		} else if (action.equals(actions[2])) {//APROXFUNC
+
+		} else if (action.equals(actions[3])) {//NUMERICINTEGRATION
 
 		}
 		
