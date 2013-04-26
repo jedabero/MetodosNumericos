@@ -32,9 +32,13 @@ import funciones.Funcion;
  * @author Jedabero
  *
  */
-public class APUI implements ActionListener, ChangeListener{
+public class APUI extends JPanel implements ActionListener, ChangeListener{
 	
-	private JPanel thePanel;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 714904529268363806L;
+	
 	private JSpinner spnrNumPuntos;
 	private JScrollPane scpTable;
 	private JTable tblPuntos;
@@ -49,20 +53,11 @@ public class APUI implements ActionListener, ChangeListener{
 	 * 
 	 */
 	public APUI() {
-		CustomWindowAdapter wa = new CustomWindowAdapter();
-		JFrame theWindow = new JFrame("Ajuste de puntos a un Polinomio");
-		theWindow.setSize(500, 500);
-		theWindow.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-
-		thePanel = new JPanel(new GridBagLayout());
+		super(new GridBagLayout());
 		
 		initComponents();
 		
-		theWindow.addWindowListener(wa);
-		theWindow.add(thePanel);
-		theWindow.setLocationRelativeTo(theWindow.getRootPane());
-		theWindow.setVisible(true);
-		theWindow.setName("APUI");
+		setName("APUI");
 	}
 
 	private void initComponents() {
@@ -87,21 +82,21 @@ public class APUI implements ActionListener, ChangeListener{
 		lblPolinomio = new JLabel("");
 		
 		//0 - Numero de puntos
-		Add.componente(thePanel, lblNumPuntos, 0, 0, 1, 1, 1.0, 1.0,
+		Add.componente(this, lblNumPuntos, 0, 0, 1, 1, 1.0, 1.0,
 				GridBagConstraints.NONE, "");
-		Add.componente(thePanel, spnrNumPuntos, 1, 0, 1, 1, 1.0, 1.0,
+		Add.componente(this, spnrNumPuntos, 1, 0, 1, 1, 1.0, 1.0,
 				GridBagConstraints.HORIZONTAL, "Número de puntos");
 		
 		//1 - Tabla
-		Add.componente(thePanel, scpTable, 0, 1, 2, 5, 1.0, 1.0,
+		Add.componente(this, scpTable, 0, 1, 2, 5, 1.0, 1.0,
 				GridBagConstraints.BOTH, "");
 		
 		//6 - Botón obtenPol
-		Add.componente(thePanel, btnObtenPol, 0, 6, 2, 1, 1.0, 1.0,
+		Add.componente(this, btnObtenPol, 0, 6, 2, 1, 1.0, 1.0,
 				GridBagConstraints.BOTH, "");
 		
 		//7 - Label del Polinomio
-		Add.componente(thePanel, lblPolinomio, 0, 7, 2, 1, 1.0, 1.0,
+		Add.componente(this, lblPolinomio, 0, 7, 2, 1, 1.0, 1.0,
 				GridBagConstraints.BOTH, "");
 	}
 

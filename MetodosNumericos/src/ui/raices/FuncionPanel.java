@@ -43,17 +43,10 @@ public class FuncionPanel extends JPanel {
 		coefs = new BigDecimal[nTerms];
 		
 		for (int i = 0; i < nTerms; i++) {
-			coefs[i] = BigDecimal.ONE;
 			JLabel templbl = new JLabel("<html>A<sub>"+i+"</sub>= </html>", JLabel.RIGHT);
 			lblListCoefs.add(templbl);
-			JTextField temptxt = new JTextField(coefs[i].toString());
+			JTextField temptxt = new JTextField();
 			txtListCoefs.add(temptxt);
-		}
-		
-		try {
-			fnc = Funcion.polinomio(grade, coefs);
-		} catch (CustomException e) {
-			e.printStackTrace();
 		}
 		
 		addComponents();
@@ -102,7 +95,6 @@ public class FuncionPanel extends JPanel {
 		try {
 			fnc = Funcion.polinomio(nTerms-1, coefs);
 		} catch (CustomException e) {
-			e.printStackTrace();
 			e.printStackTrace();
 		}
 		

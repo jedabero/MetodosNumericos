@@ -11,14 +11,18 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.imageio.ImageIO;
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 
 import other.Add;
+import ui.aproxpol.APUI;
+import ui.raices.RaicesUI;
 
 /**
  * @author Jedabero
@@ -70,6 +74,16 @@ public class MetodosUI extends JFrame implements ActionListener{
 	
 	private void initPanel() {
 		
+		JLabel lblInitalText = new JLabel("<html>" +
+				"<H1>GOOD DAY SIR. YOU MAY NOW CHOOSE YOUR NEXT ADVENTURE...</H1>" +
+				"<center>srsly choose</center>" +
+				"<center>what're you waitong for?</center>" +
+				"<center>last line</center>" +
+				"</html>", JLabel.CENTER);
+		lblInitalText.setBorder(BorderFactory.createEtchedBorder());
+		Add.componente(pnlPrincipal, lblInitalText, 0, 0, 4, 1, 1, 1,
+				GridBagConstraints.BOTH, "");
+		
 		Image icons[] = null;
 		try{
 			icons = new Image[] {
@@ -81,7 +95,6 @@ public class MetodosUI extends JFrame implements ActionListener{
 			e.printStackTrace();
 		}
 		
-		
 		JButton btns[] = new JButton[actions.length];
 		
 		for (int i = 0; i < 4; i++) {
@@ -90,7 +103,7 @@ public class MetodosUI extends JFrame implements ActionListener{
 			btns[i].setHorizontalTextPosition(0);//CENTER
 			btns[i].setBackground(Color.WHITE);
 			btns[i].addActionListener(this);
-			Add.componente(pnlPrincipal, btns[i], i%2, i/2, 1, 1, 0.1, 0.1,
+			Add.componente(pnlPrincipal, btns[i], i%2, i/2 +1, 1, 1, 0.1, 0.1,
 					GridBagConstraints.NONE, ttt[i]);
 		}
 		
@@ -142,11 +155,22 @@ public class MetodosUI extends JFrame implements ActionListener{
 		if (action.equals(actions[5])) {
 			dispose();
 		} else if (action.equals(actions[0])) {//POLROOTS
-			
+			System.out.println("polinomio");
+			pnlPrincipal.removeAll();
+			pnlPrincipal.revalidate();
+			RaicesUI rui = new RaicesUI();
+			rui.setBorder(BorderFactory.createEtchedBorder());
+			Add.componente(pnlPrincipal, rui, 0, 1, 1, 1, 1, 1,
+					GridBagConstraints.BOTH, "");
 		} else if (action.equals(actions[1])) {//SSEL
 			
 		} else if (action.equals(actions[2])) {//APROXFUNC
-
+			pnlPrincipal.removeAll();
+			pnlPrincipal.revalidate();
+			APUI apui = new APUI();
+			apui.setBorder(BorderFactory.createEtchedBorder());
+			Add.componente(pnlPrincipal, apui, 0, 1, 1, 1, 1, 1,
+					GridBagConstraints.BOTH, "");
 		} else if (action.equals(actions[3])) {//NUMERICINTEGRATION
 
 		}
