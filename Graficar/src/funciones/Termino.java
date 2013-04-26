@@ -376,15 +376,16 @@ public class Termino {
 	public Termino(BigDecimal a, BigDecimal b, TipoFuncion f, int g,
 			FuncionTrig ft) throws CustomException{
 		A = a;
+		B = b;
 		funcion = f;
 		switch (funcion) {
 		case CONSTANTE:
 			break;
 		case POLINOMICA:
 			if((g<1) || (g>999999999)){
-				grado = g;
-			}else{
 				throw CustomException.gradoMenorQue1();
+			}else{
+				grado = g;
 			}
 			break;
 		case TRIGONOMETRICA:
@@ -394,27 +395,21 @@ public class Termino {
 			case COS:
 			case TAN:
 			case SEC:
-				B = b;
 				break;
 			case CSC:
 			case COT:
 				if(b.signum()==0){
 					throw CustomException.coeficienteIgualA0(ft+"(0) = NaN");
-				}else{
-					B = b;
 				}
 				break;
 			default:
 			}
 			break;
 		case EXPONENCIAL:
-			B = b;
 			break;
 		case LOGARITMICA:
 			if(b.signum()==0){
 				throw CustomException.coeficienteIgualA0("ln(0) = NaN");
-			}else{
-				B = b;
 			}
 			break;
 		case RACIONAL:
@@ -434,7 +429,7 @@ public class Termino {
 	 */
 	public static Termino constante(BigDecimal coef){
 		try{
-			return new Termino(coef, null, TipoFuncion.CONSTANTE, 0, null);
+			return new Termino(coef, BigDecimal.ZERO, TipoFuncion.CONSTANTE, 0, null);
 		}catch(CustomException ce){
 			ce.printStackTrace();
 			return null;
@@ -449,7 +444,7 @@ public class Termino {
 	 */
 	public static Termino monomio(int grado, BigDecimal coef){
 		try{
-			return new Termino(coef, null, TipoFuncion.POLINOMICA, grado, null);
+			return new Termino(coef, BigDecimal.ZERO, TipoFuncion.POLINOMICA, grado, null);
 		}catch(CustomException et){
 			et.printStackTrace();
 			return constante(coef);
