@@ -21,7 +21,7 @@ import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 
 import resources.Add;
-import resources.Interval;
+import resources.math.Interval;
 import resources.O;
 import funciones.Funcion;
 
