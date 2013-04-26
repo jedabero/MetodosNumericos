@@ -64,12 +64,29 @@ public final class Add {
 	 */
 	public static void menu(JMenuBar jmb, String texto, char mn, int types[],
 			String subTextos[], String subTTT[], ActionListener als[],
-			char mns[], String subItems[][], boolean states[][],
+			String subItems[][], boolean states[][],
 			char subTypes[][]){
 
 		JMenu jmiTemp = new JMenu(texto);
 		jmiTemp.setMnemonic(mn);
+		
+		char mns[] = new char[subTextos.length];
+		for (int i = 0; i < mns.length; i++) {
+			mns[i] = ' ';
+		}
+		
 		for (int i = 0; i < subTextos.length; i++) {
+			
+			String name = subTextos[i];
+			
+			for (int j = 0; j < name.length(); j++) {
+				char mnem = name.charAt(j);
+				if (!isCinV(mns, mnem)) {
+					mns[i] = mnem;
+					break;
+				}
+			}
+			
 			switch (types[i]) {
 			case 0:
 				menuItem(jmiTemp, subTextos[i], subTTT[i], als[i], mns[i]);
@@ -79,13 +96,24 @@ public final class Add {
 						subItems[i], states[i], subTypes[i]);
 				break;
 			default:
+				jmiTemp.addSeparator();
 				break;
 			}
+			
 		}
+		
 		
 		jmb.add(jmiTemp);
 		
-		
+	}
+	
+	private static boolean isCinV(char v[], char c){
+		for (int j = 0; j < v.length; j++) {
+			if(c==v[j]){
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	/**
@@ -99,7 +127,9 @@ public final class Add {
 	public static void menuItem(JMenu menu, String texto, String ttt,
 			ActionListener al, char mn){
 		JMenuItem temp = new JMenuItem(texto);
-		temp.setToolTipText(ttt);
+		if (!ttt.isEmpty()) {
+			temp.setToolTipText(ttt);
+		}
 		temp.setMnemonic(mn);
 		temp.addActionListener(al);
 		menu.add(temp);
@@ -120,18 +150,33 @@ public final class Add {
 			ActionListener al, char mn, String[] subItems, boolean[] states,
 			char[] types){
 		JMenu temp = new JMenu(texto);
-		temp.setToolTipText(ttt);
+		if (!ttt.isEmpty()) {
+			temp.setToolTipText(ttt);
+		}
 		temp.setMnemonic(mn);
 		ButtonGroup grupo = new ButtonGroup();
-		String nextName = "0";
+		
+		char mns[] = new char[subItems.length];
+		for (int i = 0; i < mns.length; i++) {
+			mns[i] = ' ';
+		}
+		
 		for(int i=0;i<subItems.length;i++){
+			
 			String name = subItems[i];
-			char mnem = name.charAt(0); 
-			if(mnem==nextName.charAt(0)) mnem = name.charAt(1);
+			
+			for (int j = 0; j < name.length(); j++) {
+				char mnem = name.charAt(j);
+				if (!isCinV(mns, mnem)) {
+					mns[i] = mnem;
+					break;
+				}
+			}
+			
 			switch(types[i]){
 			case 'R':
 				JRadioButtonMenuItem jrbmi = new JRadioButtonMenuItem(name);
-				jrbmi.setMnemonic(mnem);
+				jrbmi.setMnemonic(mns[i]);
 				jrbmi.setSelected(states[i]);
 				jrbmi.addActionListener(al);
 				grupo.add(jrbmi);
@@ -139,20 +184,19 @@ public final class Add {
 				break;
 			case 'C':
 				JCheckBoxMenuItem jcbmi = new JCheckBoxMenuItem(name);
-				jcbmi.setMnemonic(mnem);
+				jcbmi.setMnemonic(mns[i]);
 				jcbmi.setSelected(states[i]);
 				jcbmi.addActionListener(al);
 				temp.add(jcbmi);
 				break;
 			default:
 				JMenuItem jmi = new JMenuItem(name);
-				jmi.setMnemonic(mnem);
+				jmi.setMnemonic(mns[i]);
 				jmi.addActionListener(al);
 				temp.add(jmi);
 				break;
 			}
 			
-			nextName = name;
 		}
 		menu.add(temp);
 	}
