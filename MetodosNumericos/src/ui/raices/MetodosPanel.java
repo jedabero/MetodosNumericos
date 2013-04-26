@@ -61,7 +61,7 @@ public class MetodosPanel extends JPanel implements ItemListener, ActionListener
 	private Funcion funcion;
 	
 	/**
-	 * @param f la función a sacar raíz
+	 * 
 	 */
 	public MetodosPanel(){
 		super(new GridBagLayout());
