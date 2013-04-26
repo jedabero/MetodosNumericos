@@ -74,7 +74,7 @@ public class CustomActionListener implements ActionListener {
 		JGrafica jg = new JGrafica(alf, alc, frmGrafica.getSize(),
 				new Interval(BigDecimal.ONE.negate(), BigDecimal.ONE),
 				new Interval(BigDecimal.ONE.negate(), BigDecimal.ONE));
-		
+		jg.setBackground(Color.WHITE);
 		frmGrafica.add(jg);
 		frmGrafica.setVisible(true);
 		frmGrafica.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
