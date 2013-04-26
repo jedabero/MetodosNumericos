@@ -158,18 +158,20 @@ public class Matriz {
     }
     
     public static Matriz pascal(int n){
-        BigDecimal t[][] = new BigDecimal[n][n];
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
+        int a = n+1;
+        BigDecimal t[][] = new BigDecimal[a][a];
+        for (int i = 0; i < a; i++) {
+            for (int j = 0; j < a; j++) {
                 if ((i==0)||(i==j)) {
-                    t[i][j] = BigDecimal.ONE;
+                    t[j][i] = BigDecimal.ONE;
                 }else{
-                    if (i<j) {
-                        t[i][j] = BigDecimal.ZERO;
+                    if (j<i) {
+                        t[j][i] = BigDecimal.ZERO;
                     } else {
-                        t[i][j] = t[i-1][j-1].add(t[i-1][j]);
+                        t[j][i] = t[j-1][i-1].add(t[j-1][i]);
                     }
                 }
+                System.out.println(t[j][i]);
             }
         }
         return new Matriz(t);

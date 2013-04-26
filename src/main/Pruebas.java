@@ -2,6 +2,7 @@
 package main;
 
 import java.math.BigDecimal;
+import metodosnumericos.Matriz;
 import metodosnumericos.SistemaEcuacionesLineales;
 
 /**
@@ -14,6 +15,9 @@ public class Pruebas {
      * @param args the command line arguments
      */
     public static void main(String[] args) throws Exception {
+        
+        System.out.println(Matriz.pascal(10));
+        
         BigDecimal zero = BigDecimal.ZERO;
         BigDecimal uno = BigDecimal.ONE;
         BigDecimal cuatro = new BigDecimal(4);
@@ -30,6 +34,8 @@ public class Pruebas {
         m.metodoGauss().imprimirMatriz("primera gauss");
         SistemaEcuacionesLineales B = new SistemaEcuacionesLineales(mat);
         B.metodoJordan().imprimirMatriz("La misma jordan");
+        
+        
         
         /*
         double mat3[][] = {
