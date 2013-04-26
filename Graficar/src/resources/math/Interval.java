@@ -37,7 +37,7 @@ public class Interval {
 	 * @return el valor del centro de este intervalo
 	 */
 	public BigDecimal centre(){
-		return max.add(min).divide(BigDecimal.valueOf(2), 20, RoundingMode.HALF_UP);
+		return max.add(min).divide(BigDecimal.valueOf(2), max.scale()+2, RoundingMode.HALF_UP);
 	}
 	
 	/**

@@ -283,7 +283,7 @@ public class Funcion{
 			case 0:
 				Termino t = getTerminos().get(0);
 				xr = t.getA().negate().divide(gx.valorImagen(x0),
-						tol.scale()+1, RoundingMode.HALF_UP);
+						tol.scale()+3, RoundingMode.HALF_UP);
 				break;
 			case -1:
 				O.pln(-1+" <- again wat?");
@@ -380,7 +380,7 @@ public class Funcion{
 		while((!fin)&&(k<=maxIt)){
 			BigDecimal fx = valorImagen(x0);
 			BigDecimal fpx = derivada().valorImagen(x0);
-			BigDecimal fx_fpx = fx.divide(fpx, tol.scale()+1, RoundingMode.HALF_UP);
+			BigDecimal fx_fpx = fx.divide(fpx, tol.scale()+3, RoundingMode.HALF_UP);
 			BigDecimal xr = x0.subtract(fx_fpx);
 			BigDecimal e = x0.subtract(xr).abs();	//Error inicial
 			if (e.compareTo(tol)<1) {	//Error igual o por debajo de la tolerancia?
@@ -417,7 +417,7 @@ public class Funcion{
 			BigDecimal fx1 = valorImagen(x1);
 			BigDecimal x1_x0 = x1.subtract(x0);
 			BigDecimal fx1_fx0 = fx1.subtract(fx0);
-			BigDecimal fr = x1_x0.multiply(fx1).divide(fx1_fx0, tol.scale()+1, RoundingMode.HALF_UP);
+			BigDecimal fr = x1_x0.multiply(fx1).divide(fx1_fx0, tol.scale()+3, RoundingMode.HALF_UP);
 			BigDecimal xr = x1.subtract(fr);
 			BigDecimal e = x0.subtract(xr).abs();	//Error inicial
 			if (e.compareTo(tol)<1) {	//Error igual o por debajo de la tolerancia?
@@ -455,7 +455,7 @@ public class Funcion{
 				BigDecimal fa = valorImagen(ab.min());
 				BigDecimal fb = valorImagen(ab.max());
 				BigDecimal fb_fa = fb.subtract(fa);
-				BigDecimal fr = ab.length().multiply(fb).divide(fb_fa, tol.scale()+1, RoundingMode.HALF_UP);
+				BigDecimal fr = ab.length().multiply(fb).divide(fb_fa, tol.scale()+3, RoundingMode.HALF_UP);
 				BigDecimal xr = ab.max().subtract(fr);
 				BigDecimal e = xa.subtract(xr).abs();	//Error inicial
 				if (e.compareTo(tol)<1) {	//Error igual o por debajo de la tolerancia?
