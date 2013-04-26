@@ -3,7 +3,7 @@
  */
 package ui.ssel;
 
-import main.MetodosMatrices;
+import main.app.MetodosMatrices;
 import other.CustomWindowAdapter;
 
 /**
