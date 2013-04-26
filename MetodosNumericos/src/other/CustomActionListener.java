@@ -13,8 +13,8 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-import resources.math.Interval;
 import resources.O;
+import resources.math.Interval;
 import ui.raices.RaicesUI;
 import funciones.Funcion;
 import grafica.JGrafica;
