@@ -10,7 +10,6 @@ import java.util.ListIterator;
 
 import metodosnumericos.Matriz;
 import metodosnumericos.SistemaEcuacionesLineales;
-
 import resources.CustomException;
 import resources.O;
 import resources.math.Constantes.FuncionTrig;
