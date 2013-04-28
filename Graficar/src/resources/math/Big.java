@@ -1,6 +1,9 @@
 package resources.math;
+
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.ArrayList;
+
 
 import resources.O;
 
@@ -19,9 +22,13 @@ public final class Big {
 	 * A constant holding the largest positive finite value of type double as a
 	 * BigDecimal
 	 */
-	public static final BigDecimal DOUBLE_MAX =
-			new BigDecimal(Double.toString(Double.MAX_VALUE));
+	public static final BigDecimal DOUBLE_MAX = BigDecimal.valueOf(Double.MAX_VALUE);
 	
+	/**
+	 * A constant holding the largest positive finite value of type double as a
+	 * BigDecimal
+	 */
+	public static final BigDecimal INT_MAX = BigDecimal.valueOf(Integer.MAX_VALUE);
 	/**
 	 * The <code>double</code> value that is closer than any other to
      * <i>pi</i>, the ratio of the circumference of a circle to its
@@ -514,6 +521,96 @@ public final class Big {
 	}
 	
 	/**
+	 * @param v
+	 * @param k
+	 * @return TODO return
+	 * @throws Exception
+	 */
+	public static BigDecimal[] listaCombinaciones(BigDecimal v[], int k) throws Exception{
+		BigDecimal numEl = BigDecimal.ZERO;
+		try {
+			numEl = combinatoria(v.length, k);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		if (numEl.compareTo(INT_MAX)==1) {
+			throw new Exception("DEMASIADAS COMBINACIONES");
+		}
+		
+		ArrayList<BigDecimal> temp = new ArrayList<BigDecimal>();
+		
+		int poss[] = new int[k];
+		poss[0] = 0;
+		if (k>1) {
+			for (int i = 1; i < k; i++) {
+				poss[i] = i;
+			}
+		}
+		
+		addCombinaciones(poss, k-1, k, v, temp);
+		
+		return (BigDecimal[]) temp.toArray(new BigDecimal[0]);
+	}
+	
+	private static void addCombinaciones(int[] poss, int posACambiar, int k,
+			BigDecimal[] v, ArrayList<BigDecimal> temp) {
+		int numElem = v.length;
+		
+		BigDecimal prod = BigDecimal.ONE;
+		for (int i = 0; i < poss.length; i++) {
+			prod = prod.multiply(v[poss[i]]);
+		}
+		temp.add(prod);
+		
+		poss[posACambiar]++;
+		
+		if (poss[posACambiar]<numElem) { 
+			addCombinaciones(poss, posACambiar, k, v, temp);
+		} else {
+			int prevPosACambiar = posACambiar - 1;
+			
+			if (prevPosACambiar>=0) {
+				poss[prevPosACambiar]++;
+				poss[posACambiar] = poss[posACambiar - 1] +1;
+				
+				if (poss[prevPosACambiar]<(numElem-1)) { 
+					addCombinaciones(poss, posACambiar, k, v, temp);
+				} else {
+					boolean exit = false;
+					if (prevPosACambiar!=0) {
+						while((poss[prevPosACambiar]>=numElem-1)||(exit&&(prevPosACambiar>0))){
+							prevPosACambiar--;
+							poss[prevPosACambiar]++;
+							for (int i = prevPosACambiar+1; i < k; i++) {
+								poss[i] = poss[i-1] +1;
+								exit = (poss[i]==numElem);
+							}
+						}
+						if (!exit) {
+							addCombinaciones(poss, posACambiar, k, v, temp);
+						}
+					}
+				}
+				
+			}
+			
+		}
+		
+	}
+	
+	/**
+	 * @param v
+	 * @param k
+	 * @return TODO return
+	 */
+	public static BigDecimal multiplicaCombinaciones(BigDecimal v[], int k){
+		
+		return null;
+	}
+	
+	
+	/**
 	 * @param n
 	 * @param k
 	 * @return nPk
@@ -535,9 +632,17 @@ public final class Big {
 	 */
 	public static void main(String args[]){
 		try {
-			BigDecimal uno = new BigDecimal(Double.toString(8)).stripTrailingZeros();
-			BigDecimal dos = new BigDecimal(Double.toString(2)).stripTrailingZeros();
+			BigDecimal jua = new BigDecimal(Double.toString(8)).stripTrailingZeros();
+			BigDecimal cho = new BigDecimal(Double.toString(2)).stripTrailingZeros();
 			
+			BigDecimal bdV[] = {jua, cho, BigDecimal.ONE, BigDecimal.TEN.negate()};
+			
+			BigDecimal c[] = listaCombinaciones(bdV, 3);
+			for (int i = 0; i < c.length; i++) {
+				System.out.println(c[i]);
+			}
+			
+			/*
 			O.pln("pow("+uno+", "+dos+") = "+pow(uno, dos));
 			O.pln("log"+dos+" ("+uno+") = "+logB(uno, dos));
 			O.pln("sqrt("+uno.multiply(dos)+") = "+sqrt(uno.multiply(dos)));
@@ -546,6 +651,7 @@ public final class Big {
 			O.pln("exp("+uno+") = "+exp(uno));
 			
 			O.pln(acsc(BigDecimal.ZERO));
+			*/
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

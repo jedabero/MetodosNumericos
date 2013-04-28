@@ -12,6 +12,7 @@ import metodosnumericos.Matriz;
 import metodosnumericos.SistemaEcuacionesLineales;
 import resources.CustomException;
 import resources.O;
+import resources.math.Big;
 import resources.math.Constantes.FuncionTrig;
 import resources.math.Constantes.TipoFuncion;
 import resources.math.Interval;
@@ -173,7 +174,43 @@ public class Funcion{
 		alT.add(Termino.trigonometrico(ft, coefA, coefB));
 		return new Funcion(alT);
 	}
-
+	
+	/**
+	 * Crea una función que representa (x +/- a)^n
+	 * @param n el grado
+	 * @param a el valor absoluto de la constante a
+	 * @param sign el signo del binomio
+	 * @return (x-a)^n desarrollado
+	 * @throws Exception 
+	 */
+	public static Funcion binomionN(int n, BigDecimal a, char sign)
+			throws Exception{
+		BigDecimal temps[] = new BigDecimal[n+1];
+		
+		for (int i = 0; i < temps.length; i++) {
+			temps[i] = Big.combinatoria(n, i).multiply(a.pow(i));
+			switch (sign) {
+			case '+':
+				break;
+			case '-':
+				if (i%2==1) {
+					temps[i] = temps[i].negate();
+				}
+				break;
+			default:
+				throw new IllegalArgumentException("Debe ingresar '+' o '-' ");
+			}
+		}
+		
+		BigDecimal coefs[] = new BigDecimal[n+1];
+		for (int i = 0; i < coefs.length; i++) {
+			coefs[i] = temps[n-i];
+		}
+		
+		
+		return Funcion.polinomio(n, coefs);
+	}
+	
 	/**
 	 * Crea una función a partir de un conjunto de puntos
 	 * @param x puntos
