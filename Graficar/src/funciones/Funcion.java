@@ -175,6 +175,23 @@ public class Funcion{
 		return new Funcion(alT);
 	}
 	
+	//suma
+	//resta
+	//multiplicación
+	/**
+	 * @param multiplicando
+	 * @return la función multiplicada por multiplicando
+	 */
+	public Funcion multiplica(BigDecimal multiplicando){
+		ArrayList<Termino> alT = new ArrayList<Termino>();
+		for (Termino termino : getTerminos()) {
+			alT.add(termino.multiplica(multiplicando));
+		}
+		return new Funcion(alT);
+	}
+	
+	//división?
+	
 	/**
 	 * Crea una función que representa (x + a)^n
 	 * @param n el grado
@@ -218,6 +235,36 @@ public class Funcion{
 			coefs[i] = temps[temps.length-1-i];
 		}
 		return Funcion.polinomio(ai.length, coefs);
+	}
+	
+	/**
+	 * Crea una función a partir de un conjunto de puntos
+	 * @param x puntos
+	 * @param fx valor de la función en los puntos x
+	 * @return una función polinómica aproximada a los puntos dados
+	 * @throws Exception 
+	 */
+	public static Funcion aproximacionPolinomialLangrange(
+			BigDecimal x[], BigDecimal fx[]) throws Exception {
+		int numPuntos = x.length;
+		if(numPuntos!=fx.length){
+			throw CustomException.arrayIncompleto();
+		}else{
+			BigDecimal fxi_PIdxi[] = new BigDecimal[numPuntos];
+			BigDecimal groups[] = new BigDecimal[numPuntos];
+			Funcion polsLagr[] = new Funcion[numPuntos];
+			for (int i = 0; i < fxi_PIdxi.length; i++) {
+				BigDecimal divisor = Big.productoDiferencias(i, x);
+				fxi_PIdxi[i] = fx[i].divide(divisor, 20, RoundingMode.HALF_UP);
+				O.pln("fx/PIdx"+i+" = "+fxi_PIdxi[i]);
+				
+			}
+			
+			
+			
+			return null;
+		}
+		
 	}
 	
 	/**

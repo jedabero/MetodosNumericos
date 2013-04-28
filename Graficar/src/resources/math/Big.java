@@ -96,6 +96,33 @@ public final class Big {
 	}
 	
 	/**
+	 * @param v
+	 * @return la multiplicacion de todos los elementos de v
+	 */
+	public static BigDecimal multiplica(BigDecimal v[]){
+		BigDecimal prod = BigDecimal.ONE;
+		for (int i = 0; i < v.length; i++) {
+			prod = prod.multiply(v[i]);
+		}
+		return prod;
+	}
+	
+	/**
+	 * @param i
+	 * @param v
+	 * @return Pro(xi - xj)
+	 */
+	public static BigDecimal productoDiferencias(int i, BigDecimal v[]) {
+		BigDecimal prod = BigDecimal.ONE;
+		for (int j = 0; j < v.length; j++) {
+			if (j!=i) {
+				prod = v[i].subtract(v[j]);
+			}
+		}
+		return prod;
+	}
+	
+	/**
 	 * Regresa el valor máximo de un array de BigDecimal
 	 * @param	a el array a evaluar
 	 * @return	el valor máximo dentro de {@code a}.
@@ -647,9 +674,9 @@ public final class Big {
 			BigDecimal jua = new BigDecimal(Double.toString(8)).stripTrailingZeros();
 			BigDecimal cho = new BigDecimal(Double.toString(2)).stripTrailingZeros();
 			
-			BigDecimal bdV[] = {jua, cho, BigDecimal.ONE, BigDecimal.TEN.negate()};
+			BigDecimal bdV[] = {BigDecimal.ONE, PI_2, PI, TAU};
 			
-			funciones.Funcion f = funciones.Funcion.polinomioProductorio(bdV);
+			funciones.Funcion f = funciones.Funcion.aproximacionPolinomialLangrange(bdV, bdV);
 			
 			//System.out.println("4C1: "+sumaCombinaciones(bdV, 1));
 			//BigDecimal c[] = listaCombinaciones(bdV, 1);
@@ -657,7 +684,7 @@ public final class Big {
 				//System.out.println(c[i]);
 			//}
 			
-			System.out.println(f.getSpecific());
+			//System.out.println(f.getSpecific());
 			/*
 			O.pln("pow("+uno+", "+dos+") = "+pow(uno, dos));
 			O.pln("log"+dos+" ("+uno+") = "+logB(uno, dos));

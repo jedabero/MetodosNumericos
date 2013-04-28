@@ -378,18 +378,17 @@ public class Termino {
 		A = a;
 		B = b;
 		funcion = f;
+		grado = g;
+		funTrig = ft;
 		switch (funcion) {
 		case CONSTANTE:
 			break;
 		case POLINOMICA:
 			if((g<1) || (g>999999999)){
 				throw CustomException.gradoMenorQue1();
-			}else{
-				grado = g;
 			}
 			break;
 		case TRIGONOMETRICA:
-			funTrig = ft;
 			switch(funTrig){
 			case SIN:
 			case COS:
@@ -495,6 +494,16 @@ public class Termino {
 			O.pln("Error al crear función logarítmica: "+etm);
 			return logaritmo(coefA, BigDecimal.ONE);
 		}
+	}
+	
+	public Termino multiplica(BigDecimal m){
+		Termino t = null;
+		try {
+			t = new Termino(getA().multiply(m), getB(), getTipoFuncion(), getGrado(), getFunTrig());
+		} catch (CustomException e) {
+			e.printStackTrace();
+		}
+		return t;
 	}
 	
 	/**
