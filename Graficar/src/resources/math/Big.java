@@ -4,7 +4,6 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
 
-
 import resources.O;
 
 
@@ -82,6 +81,18 @@ public final class Big {
 	public static int randomSign(){
 		int toInt = (int)(2 - 4*Math.random());
 		return toInt==0 ? 1 : toInt;
+	}
+	
+	/**
+	 * @param v
+	 * @return suma de los elementos del vector
+	 */
+	public static BigDecimal suma(BigDecimal v[]) {
+		BigDecimal suma = BigDecimal.ZERO;
+		for (int i = 0; i < v.length; i++) {
+			suma = suma.add(v[i]);
+		}
+		return suma;
 	}
 	
 	/**
@@ -603,10 +614,11 @@ public final class Big {
 	 * @param v
 	 * @param k
 	 * @return TODO return
+	 * @throws Exception 
 	 */
-	public static BigDecimal multiplicaCombinaciones(BigDecimal v[], int k){
-		
-		return null;
+	public static BigDecimal sumaCombinaciones(BigDecimal v[], int k) throws Exception{
+		BigDecimal t[] = listaCombinaciones(v, k);
+		return suma(t);
 	}
 	
 	
@@ -637,11 +649,15 @@ public final class Big {
 			
 			BigDecimal bdV[] = {jua, cho, BigDecimal.ONE, BigDecimal.TEN.negate()};
 			
-			BigDecimal c[] = listaCombinaciones(bdV, 3);
-			for (int i = 0; i < c.length; i++) {
-				System.out.println(c[i]);
-			}
+			funciones.Funcion f = funciones.Funcion.polinomioProductorio(bdV);
 			
+			//System.out.println("4C1: "+sumaCombinaciones(bdV, 1));
+			//BigDecimal c[] = listaCombinaciones(bdV, 1);
+			//for (int i = 0; i < c.length; i++) {
+				//System.out.println(c[i]);
+			//}
+			
+			System.out.println(f.getSpecific());
 			/*
 			O.pln("pow("+uno+", "+dos+") = "+pow(uno, dos));
 			O.pln("log"+dos+" ("+uno+") = "+logB(uno, dos));

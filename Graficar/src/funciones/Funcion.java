@@ -176,30 +176,17 @@ public class Funcion{
 	}
 	
 	/**
-	 * Crea una función que representa (x +/- a)^n
+	 * Crea una función que representa (x + a)^n
 	 * @param n el grado
-	 * @param a el valor absoluto de la constante a
+	 * @param a la constante a 
 	 * @param sign el signo del binomio
-	 * @return (x-a)^n desarrollado
+	 * @return (x+a)^n desarrollado
 	 * @throws Exception 
 	 */
-	public static Funcion binomionN(int n, BigDecimal a, char sign)
-			throws Exception{
+	public static Funcion binomionN(int n, BigDecimal a) throws Exception {
 		BigDecimal temps[] = new BigDecimal[n+1];
-		
 		for (int i = 0; i < temps.length; i++) {
 			temps[i] = Big.combinatoria(n, i).multiply(a.pow(i));
-			switch (sign) {
-			case '+':
-				break;
-			case '-':
-				if (i%2==1) {
-					temps[i] = temps[i].negate();
-				}
-				break;
-			default:
-				throw new IllegalArgumentException("Debe ingresar '+' o '-' ");
-			}
 		}
 		
 		BigDecimal coefs[] = new BigDecimal[n+1];
@@ -207,8 +194,30 @@ public class Funcion{
 			coefs[i] = temps[n-i];
 		}
 		
-		
 		return Funcion.polinomio(n, coefs);
+	}
+	
+	/**
+	 * @param ai el array con las constantes
+	 * @return La función (x + a0)(x + a1)...(x + ai)...(x + an) desarrollada. 
+	 * @throws CustomException
+	 */
+	public static Funcion polinomioProductorio(BigDecimal ai[]) throws CustomException {
+		BigDecimal temps[] = new BigDecimal[ai.length+1];
+		temps[0] = BigDecimal.ONE;
+		for (int i = 1; i < temps.length; i++) {
+			try {
+				temps[i] = Big.sumaCombinaciones(ai, i);
+				System.out.println(i+"->"+temps[i]);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		BigDecimal coefs[] = new BigDecimal[temps.length];
+		for (int i = 0; i < coefs.length; i++) {
+			coefs[i] = temps[temps.length-1-i];
+		}
+		return Funcion.polinomio(ai.length, coefs);
 	}
 	
 	/**
