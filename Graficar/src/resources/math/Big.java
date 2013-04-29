@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
 
+import funciones.Termino;
+
 import resources.O;
 
 
@@ -40,7 +42,7 @@ public final class Big {
 	 * Half of {@link Big#PI}
 	 */
 	public static final BigDecimal PI_2 =
-			PI.divide(new BigDecimal(Integer.toString(2)));
+			PI.divide(BigDecimal.valueOf(2));
 	
 	/**
 	 * Double of {@link Big#PI}
@@ -689,7 +691,15 @@ public final class Big {
 			
 			BigDecimal bdV[] = {BigDecimal.ONE, PI_2, PI, TAU};
 			
+			@SuppressWarnings("unused")
 			funciones.Funcion f = funciones.Funcion.aproximacionPolinomialLangrange(bdV, bdV);
+			
+			Termino t = Termino.constante(PI_2);
+			Termino cm = t.copia().multiplica(BigDecimal.valueOf(2));
+			
+			System.out.println(t.getSpecific());
+			System.out.println(cm.getSpecific());
+			System.out.println(t.getSpecific());
 			
 			//System.out.println("4C1: "+sumaCombinaciones(bdV, 1));
 			//BigDecimal c[] = listaCombinaciones(bdV, 1);
@@ -697,7 +707,7 @@ public final class Big {
 				//System.out.println(c[i]);
 			//}
 			
-			//System.out.println(f.getSpecific());
+			
 			/*
 			O.pln("pow("+uno+", "+dos+") = "+pow(uno, dos));
 			O.pln("log"+dos+" ("+uno+") = "+logB(uno, dos));

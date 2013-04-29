@@ -175,7 +175,7 @@ public class FuncionTrigonometrica extends FuncionBase {
 	 * @param tipos 
 	 */
 	public FuncionTrigonometrica(int t, FuncionTrig[] tipos) {
-		super(TipoFuncion.TRIGONOMETRICA, t);
+		super(Tipo.TRIGONOMETRICA, t);
 		setTipos(tipos);
 		initB();
 		initFuncionStrings();

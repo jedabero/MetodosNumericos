@@ -135,7 +135,7 @@ public class FuncionPolinomica extends FuncionBase{
 	 * @param g el grado de la ecuación.
 	 */
 	public FuncionPolinomica(int g) {
-		super(TipoFuncion.POLINOMICA, g+1);
+		super(Tipo.POLINOMICA, g+1);
 		setGrado(g);
 		initFuncionStrings();
 	}
@@ -150,7 +150,7 @@ public class FuncionPolinomica extends FuncionBase{
 	public void update(BigDecimal p, BigDecimal[] interval, int g,
 			BigDecimal[] a){
 		setGrado(g);
-		super.update(p, g+1, interval, a, getB(), TipoFuncion.POLINOMICA);
+		super.update(p, g+1, interval, a, getB(), Tipo.POLINOMICA);
 	}
 	
 }

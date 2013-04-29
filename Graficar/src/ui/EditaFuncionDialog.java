@@ -33,7 +33,7 @@ import resources.Add;
 import resources.LangResource;
 import resources.O;
 import resources.math.Constantes.FuncionTrig;
-import resources.math.Constantes.TipoFuncion;
+import resources.math.Constantes.Tipo;
 
 /**
  * Esta clase crea una ventana de dialogo en la que se mostrarán los
@@ -73,7 +73,7 @@ public final class EditaFuncionDialog extends JDialog{
 	private JPanel panelGrid = new JPanel(new GridBagLayout());
 	
 	private JLabel labelTipoFuncion;
-	private JComboBox<TipoFuncion> dropTipoFuncion;
+	private JComboBox<Tipo> dropTipoFuncion;
 	private ItemListener selecTipoIL;
 	
 	private JLabel labelTerminos;
@@ -96,7 +96,7 @@ public final class EditaFuncionDialog extends JDialog{
 	private JButton cerrarBoton = new JButton();
 	private ActionListener cerrarAL;
 	
-	private TipoFuncion tipoFunOr;
+	private Tipo tipoFunOr;
 	
 	private LangResource l;
 	
@@ -148,8 +148,8 @@ public final class EditaFuncionDialog extends JDialog{
 		initListeners();
 		
 		labelTipoFuncion = new JLabel(l.s("fTypeL"));
-		dropTipoFuncion = new JComboBox<TipoFuncion>();
-		for(TipoFuncion f : TipoFuncion.values()){
+		dropTipoFuncion = new JComboBox<Tipo>();
+		for(Tipo f : Tipo.values()){
 			dropTipoFuncion.addItem(f);
 		}
 		dropTipoFuncion.setSelectedItem(tipoFunOr);
@@ -441,7 +441,7 @@ public final class EditaFuncionDialog extends JDialog{
 			public void itemStateChanged(ItemEvent e) {
 				if(e.getSource().equals(dropTipoFuncion)){
 					System.out.println("droporpdor");
-					TipoFuncion tempF = (TipoFuncion)e.getItem();
+					Tipo tempF = (Tipo)e.getItem();
 					if(e.getStateChange() == ItemEvent.SELECTED){
 						
 						switch(tempF){

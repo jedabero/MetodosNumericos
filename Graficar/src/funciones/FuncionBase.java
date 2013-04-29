@@ -25,7 +25,7 @@ public class FuncionBase implements Constantes{
 	/** La ecuación explícita de la función. */
 	private String funcion;
 	/** El tipo de función.  */
-	private TipoFuncion tipoFuncion;
+	private Tipo tipo;
 	/** Cantidad de ecuaciones creadas. */
 	private static int numeroEcuacion = 0;
 	
@@ -82,18 +82,18 @@ public class FuncionBase implements Constantes{
 
 	/**
 	 * Regresa el número correspondiente con el tipo de función.
-	 * @return the tipoFuncion
+	 * @return the tipo
 	 */
-	public TipoFuncion getTipoFuncion() {
-		return tipoFuncion;
+	public Tipo getTipoFuncion() {
+		return tipo;
 	}
 
 	/**
 	 * Modifica el tipo de función.
 	 * @param tipo el tipo de función.
 	 */
-	public void setTipoFuncion(TipoFuncion tipo) {
-		this.tipoFuncion = tipo;
+	public void setTipoFuncion(Tipo tipo) {
+		this.tipo = tipo;
 	}
 
 	/**
@@ -308,7 +308,7 @@ public class FuncionBase implements Constantes{
 	 * @param tipo el tipo de función
 	 * @param t el número de términos en la ecuación.
 	 */
-	public FuncionBase(TipoFuncion tipo, int t){
+	public FuncionBase(Tipo tipo, int t){
 		setTipoFuncion(tipo);
 		setTerminos(t);
 		initA();
@@ -328,7 +328,7 @@ public class FuncionBase implements Constantes{
 	 * @param tipo 
 	 */
 	public void update(BigDecimal p, int t, BigDecimal[] interval,
-			BigDecimal[] a, BigDecimal[] b, TipoFuncion tipo){
+			BigDecimal[] a, BigDecimal[] b, Tipo tipo){
 		setTipoFuncion(tipo);
 		setIntervalo(interval);
 		setPaso(p);
@@ -363,7 +363,7 @@ public class FuncionBase implements Constantes{
 	/**
 	 * @param tipo
 	 */
-	public void updateTipo(TipoFuncion tipo){
+	public void updateTipo(Tipo tipo){
 		update(getPaso(), getTerminos(), getIntervalo(), getA(), getB(), tipo);
 	}
 	

@@ -17,7 +17,7 @@ public interface Constantes {
 	 * @author Jedabero
 	 *
 	 */
-	public enum TipoFuncion{
+	public enum Tipo{
 		/** Constante para determinar la función como una constante. */
 		CONSTANTE,
 		/** Constante para determinar la función como Polinómica. */

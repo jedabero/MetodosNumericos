@@ -9,7 +9,7 @@ import resources.CustomException;
 import resources.O;
 import resources.math.Big;
 import resources.math.Constantes.FuncionTrig;
-import resources.math.Constantes.TipoFuncion;
+import resources.math.Constantes.Tipo;
 import resources.math.M;
 
 /**
@@ -43,7 +43,7 @@ public class Termino {
 	
 	private BigDecimal B;
 	
-	private TipoFuncion funcion;
+	private Tipo funcion;
 	
 	private FuncionTrig funTrig;
 	private static boolean xInRadians = true;
@@ -91,7 +91,7 @@ public class Termino {
 	 * Regresa el tipo de función de este término.
 	 * @return el tipo de función
 	 */
-	public TipoFuncion getTipoFuncion() {
+	public Tipo getTipoFuncion() {
 		return funcion;
 	}
 
@@ -99,7 +99,7 @@ public class Termino {
 	 * Modifica el actual tipo de función.
 	 * @param	funcion el nuevo tipo de función.
 	 */
-	public void setTipoFuncion(TipoFuncion funcion) {
+	public void setTipoFuncion(Tipo funcion) {
 		this.funcion = funcion;
 	}
 	
@@ -373,7 +373,7 @@ public class Termino {
 	 * @param	ft el tipo de función trigonométrica
 	 * @throws CustomException 
 	 */
-	public Termino(BigDecimal a, BigDecimal b, TipoFuncion f, int g,
+	public Termino(BigDecimal a, BigDecimal b, Tipo f, int g,
 			FuncionTrig ft) throws CustomException{
 		A = a;
 		B = b;
@@ -428,7 +428,7 @@ public class Termino {
 	 */
 	public static Termino constante(BigDecimal coef){
 		try{
-			return new Termino(coef, BigDecimal.ZERO, TipoFuncion.CONSTANTE, 0, null);
+			return new Termino(coef, BigDecimal.ZERO, Tipo.CONSTANTE, 0, null);
 		}catch(CustomException ce){
 			ce.printStackTrace();
 			return null;
@@ -443,7 +443,7 @@ public class Termino {
 	 */
 	public static Termino monomio(int grado, BigDecimal coef){
 		try{
-			return new Termino(coef, BigDecimal.ZERO, TipoFuncion.POLINOMICA, grado, null);
+			return new Termino(coef, BigDecimal.ZERO, Tipo.POLINOMICA, grado, null);
 		}catch(CustomException et){
 			et.printStackTrace();
 			return constante(coef);
@@ -459,7 +459,7 @@ public class Termino {
 	public static Termino trigonometrico(FuncionTrig ft, BigDecimal coefA,
 			BigDecimal coefB){
 		try{
-			return new Termino(coefA, coefB, TipoFuncion.TRIGONOMETRICA, 0, ft);
+			return new Termino(coefA, coefB, Tipo.TRIGONOMETRICA, 0, ft);
 		}catch(CustomException et){
 			et.printStackTrace();
 			return trigonometrico(ft, BigDecimal.ONE, coefB);
@@ -473,7 +473,7 @@ public class Termino {
 	 */
 	public static Termino exponencial(BigDecimal coefA, BigDecimal coefB){
 		try{
-			return new Termino(coefA, coefB, TipoFuncion.EXPONENCIAL, 0, null);
+			return new Termino(coefA, coefB, Tipo.EXPONENCIAL, 0, null);
 		}catch(CustomException et){
 			et.printStackTrace();
 			return null;
@@ -488,7 +488,7 @@ public class Termino {
 	 */
 	public static Termino logaritmo(BigDecimal coefA, BigDecimal coefB){
 		try{
-			return new Termino(coefA, coefB, TipoFuncion.LOGARITMICA, 0, null);
+			return new Termino(coefA, coefB, Tipo.LOGARITMICA, 0, null);
 		}catch(CustomException et){
 			String etm = et.getMessage();
 			O.pln("Error al crear función logarítmica: "+etm);
@@ -496,10 +496,70 @@ public class Termino {
 		}
 	}
 	
+	/**
+	 * @param t
+	 * @return un ter
+	 * @throws CustomException si el termino t es diferente a este termino.
+	 */
+	public Termino suma(Termino t) throws CustomException{
+		Termino temp = copia();
+		if(getTipoFuncion().equals(t.getTipoFuncion())){
+			switch (funcion) {
+			case CONSTANTE:
+				temp.actualiza(getA().add(t.getA()));
+				break;
+			case POLINOMICA:
+				if(getGrado()==t.getGrado()){
+					temp.actualiza(getA().add(t.getA()));
+				}else{
+					throw new CustomException("Termino a sumar de grado diferente.");
+				}
+				break;
+			case TRIGONOMETRICA:
+				if(getFunTrig().equals(t.getFunTrig())){
+					temp.actualiza(getA().add(t.getA()));
+				}else{
+					throw new CustomException("Termino trigonometrico a sumar de tipo diferente.");
+				}
+				break;
+			case EXPONENCIAL:
+			case LOGARITMICA:
+				if(getB().compareTo(t.getB())==0){
+					temp.actualiza(getA().add(t.getA()));
+				}else{
+					throw new CustomException("Terminos incompatibles.");
+				}
+				break;
+			case RACIONAL:
+				break;
+			default:
+				
+				break;
+			}
+			return temp;
+		}else{
+			throw CustomException.tipoIncorrecto();
+		}
+		
+	}
+	
+	/**
+	 * @param m
+	 * @return un termino cuyo coeficiente a es multiplicado por m.
+	 */
 	public Termino multiplica(BigDecimal m){
+		Termino t = copia();
+		t.actualiza(getA().multiply(m));
+		return t;
+	}
+	
+	/**
+	 * @return una copia de este termino
+	 */
+	public Termino copia(){
 		Termino t = null;
 		try {
-			t = new Termino(getA().multiply(m), getB(), getTipoFuncion(), getGrado(), getFunTrig());
+			t = new Termino(getA(), getB(), getTipoFuncion(), getGrado(), getFunTrig());
 		} catch (CustomException e) {
 			e.printStackTrace();
 		}
@@ -514,7 +574,7 @@ public class Termino {
 	 * @param g grado del polinomio, si es del tipo
 	 * @param ft tipos de la función trigonométrica, si es del tipo
 	 */
-	private void actualiza(BigDecimal a, BigDecimal b, TipoFuncion tf, int g,
+	private void actualiza(BigDecimal a, BigDecimal b, Tipo tf, int g,
 			FuncionTrig ft){
 		setA(a);
 		setTipoFuncion(tf);

@@ -14,7 +14,7 @@ import resources.CustomException;
 import resources.O;
 import resources.math.Big;
 import resources.math.Constantes.FuncionTrig;
-import resources.math.Constantes.TipoFuncion;
+import resources.math.Constantes.Tipo;
 import resources.math.Interval;
 
 /**
@@ -30,23 +30,23 @@ import resources.math.Interval;
 public class Funcion{
 	
 	private ArrayList<Termino> terminos;
-	private TipoFuncion tipo;
+	private Tipo tipo;
 	
 	private String generic;
 	private String specific;
 	private String toString;
 	
 	/**
-	 * @return el TipoFuncion
+	 * @return el Tipo
 	 */
-	public TipoFuncion getTipoFuncion() {
+	public Tipo getTipoFuncion() {
 		return tipo;
 	}
 
 	/**
-	 * @param tipo TipoFuncion 
+	 * @param tipo Tipo 
 	 */
-	public void setTipoFuncion(TipoFuncion tipo) {
+	public void setTipoFuncion(Tipo tipo) {
 		this.tipo = tipo;
 	}
 

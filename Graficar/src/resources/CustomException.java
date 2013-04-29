@@ -17,7 +17,7 @@ public class CustomException extends Exception {
 	/**
 	 * @param m
 	 */
-	private CustomException(String m){
+	public CustomException(String m){
 		super(m);
 	}
 	
