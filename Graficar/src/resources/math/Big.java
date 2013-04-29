@@ -667,12 +667,25 @@ public final class Big {
 	}
 	
 	/**
+	 * @param i
+	 * @param v
+	 * @return an array with length v.length-1 and without the element at i.
+	 */
+	public static BigDecimal[] removeElementAt(int i, BigDecimal v[]){
+		ArrayList<BigDecimal> temp = new ArrayList<BigDecimal>(v.length-1);
+		for (int j = 0; j < v.length; j++) {
+			if(j!=i){
+				temp.add(v[j]);
+			}
+		}
+		return (BigDecimal[])temp.toArray(new BigDecimal[0]);
+	}
+	
+	/**
 	 * @param args
 	 */
 	public static void main(String args[]){
 		try {
-			BigDecimal jua = new BigDecimal(Double.toString(8)).stripTrailingZeros();
-			BigDecimal cho = new BigDecimal(Double.toString(2)).stripTrailingZeros();
 			
 			BigDecimal bdV[] = {BigDecimal.ONE, PI_2, PI, TAU};
 			

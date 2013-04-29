@@ -225,7 +225,6 @@ public class Funcion{
 		for (int i = 1; i < temps.length; i++) {
 			try {
 				temps[i] = Big.sumaCombinaciones(ai, i);
-				System.out.println(i+"->"+temps[i]);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -257,6 +256,13 @@ public class Funcion{
 				BigDecimal divisor = Big.productoDiferencias(i, x);
 				fxi_PIdxi[i] = fx[i].divide(divisor, 20, RoundingMode.HALF_UP);
 				O.pln("fx/PIdx"+i+" = "+fxi_PIdxi[i]);
+				groups = Big.removeElementAt(i, x);
+				for (int j = 0; j < groups.length; j++) {
+					groups[j] = groups[j].negate();
+					O.pln(groups[j]);
+				}
+				polsLagr[i] = Funcion.polinomioProductorio(groups);
+				O.pln(polsLagr[i].multiplica(fxi_PIdxi[i]).specific);
 				
 			}
 			
