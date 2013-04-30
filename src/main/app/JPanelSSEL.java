@@ -4,17 +4,60 @@
  */
 package main.app;
 
+import java.math.BigDecimal;
+import metodosnumericos.SistemaEcuacionesLineales;
+
 /**
  *
  * @author Jedabero
  */
 public class JPanelSSEL extends javax.swing.JPanel {
 
+    private int numEc = 3;
+    private BigDecimal[][] mainMatriz;
+    private BigDecimal tol;
+    private SistemaEcuacionesLineales mainSel;
+    
+    private javax.swing.JTable tblSistRowHeaders;
+    private javax.swing.table.DefaultTableModel dtmSistema;
+    private String tblSistHeaders[] = new String[numEc+1];
+    
+    private javax.swing.JTable tblAnalitRowHeaders;
+    private javax.swing.table.DefaultTableModel dtmAnal;
+    
+    private javax.swing.JTable tblIteratRowHeaders;
+    private javax.swing.table.DefaultTableModel dtmIter;
+    private String tblIterHeaders[];
+    
     /**
      * Creates new form JPanelSSEL
      */
     public JPanelSSEL() {
+        tblIterHeaders = new String[]{"<html>x<sub>i</sub></html>", "<html>e<sub>i</sub></html>"};
+        
+        for (int i = 0; i < numEc; i++) {
+            tblSistHeaders[i] = "<html>x<sub>"+(i+1)+"</sub></html>";
+        }
+        tblSistHeaders[numEc] = "<html>b</html>";
+        
+        mainMatriz = new BigDecimal[numEc][numEc+1];
+        dtmSistema = new javax.swing.table.DefaultTableModel(mainMatriz, tblSistHeaders);
+        
+        dtmAnal = new javax.swing.table.DefaultTableModel(mainMatriz, tblSistHeaders);
+        
+        dtmIter = new javax.swing.table.DefaultTableModel(new BigDecimal[numEc][2], tblIterHeaders);
+        
         initComponents();
+        tblSistRowHeaders = new resurces.RowNumberTable(tblSistema);
+        scpSist.setRowHeaderView(tblSistRowHeaders);
+        
+        
+        tblAnalitRowHeaders = new resurces.RowNumberTable(tblAnalit);
+        scpAnal.setRowHeaderView(tblAnalitRowHeaders);
+        
+        tblIteratRowHeaders = new resurces.RowNumberTable(tblIterat);
+        scpItr.setRowHeaderView(tblIteratRowHeaders);
+        
     }
 
     /**
@@ -26,19 +69,21 @@ public class JPanelSSEL extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        pnlSistema = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
-        spnNumEc = new javax.swing.JSpinner();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblSistema = new javax.swing.JTable();
+        jPanel2 = new javax.swing.JPanel();
         pnlAnalitico = new javax.swing.JPanel();
         btnGauss = new javax.swing.JButton();
         btnJordan = new javax.swing.JButton();
         btnCramer = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        scpAnal = new javax.swing.JScrollPane();
+        tblAnalit = new javax.swing.JTable();
+        pnlSistema = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        spnNumEc = new javax.swing.JSpinner();
+        scpSist = new javax.swing.JScrollPane();
+        tblSistema = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         spnIt = new javax.swing.JSpinner();
@@ -46,81 +91,36 @@ public class JPanelSSEL extends javax.swing.JPanel {
         txtTol = new javax.swing.JTextField();
         btnJacobi = new javax.swing.JButton();
         btnSeidel = new javax.swing.JButton();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
-
-        pnlSistema.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-
-        jLabel2.setText("Sistema de ecuaciones");
-
-        jLabel1.setText("Numero de ecuaciones:");
-
-        tblSistema.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane1.setViewportView(tblSistema);
-
-        javax.swing.GroupLayout pnlSistemaLayout = new javax.swing.GroupLayout(pnlSistema);
-        pnlSistema.setLayout(pnlSistemaLayout);
-        pnlSistemaLayout.setHorizontalGroup(
-            pnlSistemaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlSistemaLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(pnlSistemaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlSistemaLayout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel1)
-                        .addGap(18, 18, 18)
-                        .addComponent(spnNumEc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(pnlSistemaLayout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
-        );
-        pnlSistemaLayout.setVerticalGroup(
-            pnlSistemaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlSistemaLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(pnlSistemaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel1)
-                    .addComponent(spnNumEc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+        scpItr = new javax.swing.JScrollPane();
+        tblIterat = new javax.swing.JTable();
 
         pnlAnalitico.setBorder(javax.swing.BorderFactory.createTitledBorder("Métodos Analíticos"));
 
         btnGauss.setText("Gauss");
+        btnGauss.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGaussActionPerformed(evt);
+            }
+        });
 
         btnJordan.setText("Jordan");
+        btnJordan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnJordanActionPerformed(evt);
+            }
+        });
 
         btnCramer.setText("Cramer");
+        btnCramer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCramerActionPerformed(evt);
+            }
+        });
 
         jLabel3.setText("Matriz resultante");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane2.setViewportView(jTable1);
+        tblAnalit.setModel(dtmAnal);
+        scpAnal.setViewportView(tblAnalit);
 
         javax.swing.GroupLayout pnlAnaliticoLayout = new javax.swing.GroupLayout(pnlAnalitico);
         pnlAnalitico.setLayout(pnlAnaliticoLayout);
@@ -129,15 +129,16 @@ public class JPanelSSEL extends javax.swing.JPanel {
             .addGroup(pnlAnaliticoLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnlAnaliticoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2)
+                    .addComponent(scpAnal, javax.swing.GroupLayout.DEFAULT_SIZE, 462, Short.MAX_VALUE)
                     .addGroup(pnlAnaliticoLayout.createSequentialGroup()
                         .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
                         .addComponent(btnGauss)
                         .addGap(18, 18, 18)
                         .addComponent(btnJordan)
                         .addGap(18, 18, 18)
-                        .addComponent(btnCramer)))
+                        .addComponent(btnCramer)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         pnlAnaliticoLayout.setVerticalGroup(
@@ -150,34 +151,81 @@ public class JPanelSSEL extends javax.swing.JPanel {
                     .addComponent(btnCramer)
                     .addComponent(jLabel3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(scpAnal, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        pnlSistema.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        jLabel2.setText("Sistema de ecuaciones");
+
+        jLabel1.setText("Número de ecuaciones:");
+
+        spnNumEc.setModel(new javax.swing.SpinnerNumberModel(3, 2, 25, 1));
+        spnNumEc.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                spnNumEcStateChanged(evt);
+            }
+        });
+
+        tblSistema.setModel(dtmSistema);
+        scpSist.setViewportView(tblSistema);
+
+        javax.swing.GroupLayout pnlSistemaLayout = new javax.swing.GroupLayout(pnlSistema);
+        pnlSistema.setLayout(pnlSistemaLayout);
+        pnlSistemaLayout.setHorizontalGroup(
+            pnlSistemaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlSistemaLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(pnlSistemaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(scpSist)
+                    .addGroup(pnlSistemaLayout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel1)
+                        .addGap(18, 18, 18)
+                        .addComponent(spnNumEc, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
+        );
+        pnlSistemaLayout.setVerticalGroup(
+            pnlSistemaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlSistemaLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(pnlSistemaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel1)
+                    .addComponent(spnNumEc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(scpSist, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Método Iterativos"));
 
         jLabel4.setText("Iteraciones:");
 
+        spnIt.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(15), Integer.valueOf(5), null, Integer.valueOf(1)));
+
         jLabel5.setText("Tolerancia:");
 
         txtTol.setColumns(8);
 
         btnJacobi.setText("Jacobi");
+        btnJacobi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnJacobiActionPerformed(evt);
+            }
+        });
 
         btnSeidel.setText("Seidel");
-
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+        btnSeidel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSeidelActionPerformed(evt);
             }
-        ));
-        jScrollPane3.setViewportView(jTable2);
+        });
+
+        tblIterat.setModel(dtmIter);
+        scpItr.setViewportView(tblIterat);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -186,11 +234,11 @@ public class JPanelSSEL extends javax.swing.JPanel {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 467, Short.MAX_VALUE)
+                    .addComponent(scpItr)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(spnIt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(spnIt, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -214,34 +262,73 @@ public class JPanelSSEL extends javax.swing.JPanel {
                     .addComponent(btnJacobi)
                     .addComponent(btnSeidel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(scpItr, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(pnlSistema, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(pnlAnalitico, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(pnlSistema, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(pnlAnalitico, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(pnlSistema, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(pnlAnalitico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jScrollPane1.setViewportView(jPanel2);
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane1)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane1)
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void spnNumEcStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_spnNumEcStateChanged
+        numEc = Integer.parseInt(((javax.swing.JSpinner) evt.getSource()).getValue().toString());
+        
+    }//GEN-LAST:event_spnNumEcStateChanged
+
+    private void btnGaussActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGaussActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnGaussActionPerformed
+
+    private void btnJordanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnJordanActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnJordanActionPerformed
+
+    private void btnCramerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCramerActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnCramerActionPerformed
+
+    private void btnJacobiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnJacobiActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnJacobiActionPerformed
+
+    private void btnSeidelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeidelActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnSeidelActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCramer;
     private javax.swing.JButton btnGauss;
@@ -254,15 +341,17 @@ public class JPanelSSEL extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
     private javax.swing.JPanel pnlAnalitico;
     private javax.swing.JPanel pnlSistema;
+    private javax.swing.JScrollPane scpAnal;
+    private javax.swing.JScrollPane scpItr;
+    private javax.swing.JScrollPane scpSist;
     private javax.swing.JSpinner spnIt;
     private javax.swing.JSpinner spnNumEc;
+    private javax.swing.JTable tblAnalit;
+    private javax.swing.JTable tblIterat;
     private javax.swing.JTable tblSistema;
     private javax.swing.JTextField txtTol;
     // End of variables declaration//GEN-END:variables

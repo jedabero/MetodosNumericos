@@ -2,6 +2,8 @@
 package main;
 
 import java.math.BigDecimal;
+import javax.swing.JFrame;
+import main.app.JPanelSSEL;
 import metodosnumericos.Matriz;
 import metodosnumericos.SistemaEcuacionesLineales;
 
@@ -36,6 +38,12 @@ public class Pruebas {
         B.metodoJordan().imprimirMatriz("La misma jordan");
         
         
+        
+        JFrame fd = new JFrame("asdasd");
+        fd.setVisible(true);
+        fd.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        fd.add(new JPanelSSEL());
+        fd.setSize(600, 600);
         
         /*
         double mat3[][] = {
