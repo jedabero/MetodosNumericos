@@ -4,8 +4,6 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
 
-import funciones.Termino;
-
 import resources.O;
 
 
@@ -688,18 +686,18 @@ public final class Big {
 	 */
 	public static void main(String args[]){
 		try {
+
+			BigDecimal bdVx[] = {BigDecimal.ONE, BigDecimal.valueOf(2), BigDecimal.valueOf(3), BigDecimal.valueOf(4)};
+			BigDecimal bdVfx[] = {BigDecimal.TEN, BigDecimal.TEN.pow(2), BigDecimal.TEN.pow(3), BigDecimal.TEN.pow(4)};
 			
-			BigDecimal bdV[] = {BigDecimal.ONE, PI_2, PI, TAU};
 			
-			@SuppressWarnings("unused")
-			funciones.Funcion f = funciones.Funcion.aproximacionPolinomialLangrange(bdV, bdV);
+			funciones.Funcion f = funciones.Funcion.aproximacionPolinomialLangrange(bdVx, bdVfx);
+			funciones.Funcion ff = funciones.Funcion.aproximacionPolinomialSimple(bdVx, bdVfx);
+			System.out.println("f langrange"+f.valorImagen(BigDecimal.valueOf(2)));
+			System.out.println("f simple"+ff.valorImagen(BigDecimal.valueOf(2)));
 			
-			Termino t = Termino.constante(PI_2);
-			Termino cm = t.copia().multiplica(BigDecimal.valueOf(2));
 			
-			System.out.println(t.getSpecific());
-			System.out.println(cm.getSpecific());
-			System.out.println(t.getSpecific());
+			
 			
 			//System.out.println("4C1: "+sumaCombinaciones(bdV, 1));
 			//BigDecimal c[] = listaCombinaciones(bdV, 1);

@@ -29,6 +29,11 @@ import resources.math.Interval;
  */
 public class Funcion{
 	
+	/**
+	 * Función que representa el cero
+	 */
+	public static Funcion ZERO = new Funcion(Termino.ZERO);
+	
 	private ArrayList<Termino> terminos;
 	private Tipo tipo;
 	
@@ -176,6 +181,68 @@ public class Funcion{
 	}
 	
 	//suma
+	/**
+	 * @param t
+	 * @return la suma de esta función y el término t
+	 * @throws CustomException
+	 */
+	public Funcion sumar(Termino t)throws CustomException {
+		Funcion tempF = copia();
+		switch (t.getTipoFuncion()) {
+		case CONSTANTE:
+		case POLINOMICA:
+			boolean added = false;
+			ArrayList<Termino> alt = tempF.getTerminos();
+			for (int i = 0; i < alt.size(); i++) {
+				Termino tempT = alt.get(i);
+				if(tempT.getGrado()==t.getGrado()){
+					tempT = tempT.suma(t);
+					alt.set(i, tempT);
+					added = true;
+				}
+			}
+			if (!added) {
+				tempF.getTerminos().add(t);
+			}
+			break;
+
+		default:
+			//TODO soportar sumas de términos de tipos que no sean POLINOMIO
+			throw new CustomException("tipo de suma no soportado todavía");
+		}
+		tempF.initGenEsp();
+		return tempF;
+	}
+	
+	/**
+	 * @param f
+	 * @return well this is obviuos now
+	 * @throws CustomException
+	 */
+	public Funcion sumar(Funcion f){
+		Funcion temp = copia();
+		for (int i = 0; i < f.getTerminos().size(); i++) {
+			try {
+				temp = temp.sumar(f.getTerminos().get(i));
+			} catch (CustomException e) {
+				e.printStackTrace();
+			}
+		}
+		return temp;
+	}
+	
+	/**
+	 * @param vF
+	 * @return la función resultante de la suma de las funciones en el vector vF
+	 */
+	public static Funcion sumar(Funcion vF[]){
+		Funcion sum = ZERO;
+		for (int i = 0; i < vF.length; i++) {
+			sum = sum.sumar(vF[i]);
+		}
+		return sum;
+	}
+	
 	//resta
 	//multiplicación
 	/**
@@ -183,14 +250,25 @@ public class Funcion{
 	 * @return la función multiplicada por multiplicando
 	 */
 	public Funcion multiplica(BigDecimal multiplicando){
+		ArrayList<Termino> alt = new ArrayList<Termino>();
+		for (Termino termino : getTerminos()) {
+			alt.add(termino.multiplica(multiplicando));
+		}
+		Funcion tempF = new Funcion(alt);
+		return tempF;
+	}
+
+	//división?
+	/**
+	 * @return una copia de esta función
+	 */
+	public Funcion copia(){
 		ArrayList<Termino> alT = new ArrayList<Termino>();
 		for (Termino termino : getTerminos()) {
-			alT.add(termino.multiplica(multiplicando));
+			alT.add(termino);
 		}
 		return new Funcion(alT);
 	}
-	
-	//división?
 	
 	/**
 	 * Crea una función que representa (x + a)^n
@@ -200,10 +278,14 @@ public class Funcion{
 	 * @return (x+a)^n desarrollado
 	 * @throws Exception 
 	 */
-	public static Funcion binomionN(int n, BigDecimal a) throws Exception {
+	public static Funcion binomionN(int n, BigDecimal a){
 		BigDecimal temps[] = new BigDecimal[n+1];
 		for (int i = 0; i < temps.length; i++) {
-			temps[i] = Big.combinatoria(n, i).multiply(a.pow(i));
+			try {
+				temps[i] = Big.combinatoria(n, i).multiply(a.pow(i));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 		
 		BigDecimal coefs[] = new BigDecimal[n+1];
@@ -211,7 +293,12 @@ public class Funcion{
 			coefs[i] = temps[n-i];
 		}
 		
-		return Funcion.polinomio(n, coefs);
+		try {
+			return Funcion.polinomio(n, coefs);
+		} catch (CustomException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 	
 	/**
@@ -243,8 +330,8 @@ public class Funcion{
 	 * @return una función polinómica aproximada a los puntos dados
 	 * @throws Exception 
 	 */
-	public static Funcion aproximacionPolinomialLangrange(
-			BigDecimal x[], BigDecimal fx[]) throws Exception {
+	public static Funcion aproximacionPolinomialLangrange(BigDecimal x[],
+			BigDecimal fx[]) throws Exception {
 		int numPuntos = x.length;
 		if(numPuntos!=fx.length){
 			throw CustomException.arrayIncompleto();
@@ -255,20 +342,16 @@ public class Funcion{
 			for (int i = 0; i < fxi_PIdxi.length; i++) {
 				BigDecimal divisor = Big.productoDiferencias(i, x);
 				fxi_PIdxi[i] = fx[i].divide(divisor, 20, RoundingMode.HALF_UP);
-				O.pln("fx/PIdx"+i+" = "+fxi_PIdxi[i]);
 				groups = Big.removeElementAt(i, x);
 				for (int j = 0; j < groups.length; j++) {
 					groups[j] = groups[j].negate();
 					O.pln(groups[j]);
 				}
 				polsLagr[i] = Funcion.polinomioProductorio(groups);
-				O.pln(polsLagr[i].multiplica(fxi_PIdxi[i]).specific);
-				
+				polsLagr[i] = polsLagr[i].multiplica(fxi_PIdxi[i]);
 			}
 			
-			
-			
-			return null;
+			return Funcion.sumar(polsLagr);
 		}
 		
 	}

@@ -39,6 +39,11 @@ import resources.math.M;
  */
 public class Termino {
 	
+	/**
+	 * Término que representa el cero
+	 */
+	public static Termino ZERO = Termino.constante(BigDecimal.ZERO);
+	
 	private BigDecimal A;
 	
 	private BigDecimal B;
@@ -501,7 +506,7 @@ public class Termino {
 	 * @return un ter
 	 * @throws CustomException si el termino t es diferente a este termino.
 	 */
-	public Termino suma(Termino t) throws CustomException{
+	public Termino suma(Termino t) throws CustomException {
 		Termino temp = copia();
 		if(getTipoFuncion().equals(t.getTipoFuncion())){
 			switch (funcion) {
