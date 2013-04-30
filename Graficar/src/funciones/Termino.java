@@ -554,7 +554,7 @@ public class Termino {
 	 */
 	public Termino multiplica(BigDecimal m){
 		Termino t = copia();
-		t.actualiza(getA().multiply(m));
+		t.actualiza(getA().multiply(m).stripTrailingZeros());
 		return t;
 	}
 	

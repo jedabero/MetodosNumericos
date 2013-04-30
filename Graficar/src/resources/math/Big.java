@@ -116,7 +116,7 @@ public final class Big {
 		BigDecimal prod = BigDecimal.ONE;
 		for (int j = 0; j < v.length; j++) {
 			if (j!=i) {
-				prod = v[i].subtract(v[j]);
+				prod = prod.multiply(v[i].subtract(v[j]));
 			}
 		}
 		return prod;
@@ -561,7 +561,7 @@ public final class Big {
 	/**
 	 * @param v
 	 * @param k
-	 * @return TODO return
+	 * @return una lista con las conbinaciones en k de los elementos del vector v
 	 * @throws Exception
 	 */
 	public static BigDecimal[] listaCombinaciones(BigDecimal v[], int k) throws Exception{
@@ -640,7 +640,7 @@ public final class Big {
 	/**
 	 * @param v
 	 * @param k
-	 * @return TODO return
+	 * @return la suma de las combinaciones en k de los elementos del vector v
 	 * @throws Exception 
 	 */
 	public static BigDecimal sumaCombinaciones(BigDecimal v[], int k) throws Exception{
@@ -687,14 +687,14 @@ public final class Big {
 	public static void main(String args[]){
 		try {
 
-			BigDecimal bdVx[] = {BigDecimal.ONE, BigDecimal.valueOf(2), BigDecimal.valueOf(3), BigDecimal.valueOf(4)};
-			BigDecimal bdVfx[] = {BigDecimal.TEN, BigDecimal.TEN.pow(2), BigDecimal.TEN.pow(3), BigDecimal.TEN.pow(4)};
+			BigDecimal bdVx[] = {BigDecimal.ONE, BigDecimal.valueOf(5), BigDecimal.valueOf(10), BigDecimal.valueOf(20)};
+			BigDecimal bdVfx[] = {BigDecimal.valueOf(56.5), BigDecimal.valueOf(113), BigDecimal.valueOf(181), BigDecimal.valueOf(214.5)};
 			
 			
 			funciones.Funcion f = funciones.Funcion.aproximacionPolinomialLangrange(bdVx, bdVfx);
 			funciones.Funcion ff = funciones.Funcion.aproximacionPolinomialSimple(bdVx, bdVfx);
-			System.out.println("f langrange"+f.valorImagen(BigDecimal.valueOf(2)));
-			System.out.println("f simple"+ff.valorImagen(BigDecimal.valueOf(2)));
+			System.out.println("f langrange "+f);
+			System.out.println("f simple "+ff);
 			
 			
 			

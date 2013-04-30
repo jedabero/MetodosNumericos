@@ -333,22 +333,27 @@ public class Funcion{
 	public static Funcion aproximacionPolinomialLangrange(BigDecimal x[],
 			BigDecimal fx[]) throws Exception {
 		int numPuntos = x.length;
-		if(numPuntos!=fx.length){
+		if(numPuntos!=fx.length){	//Se verifica que los puntos estén completos
 			throw CustomException.arrayIncompleto();
 		}else{
-			BigDecimal fxi_PIdxi[] = new BigDecimal[numPuntos];
-			BigDecimal groups[] = new BigDecimal[numPuntos];
+			//Este vector corresponde a los polinomios formados 
+			//por cada término de la sumatoria.
 			Funcion polsLagr[] = new Funcion[numPuntos];
-			for (int i = 0; i < fxi_PIdxi.length; i++) {
+			for (int i = 0; i < numPuntos; i++) {
+				//divisor = Productoria(Xi - Xj)
 				BigDecimal divisor = Big.productoDiferencias(i, x);
-				fxi_PIdxi[i] = fx[i].divide(divisor, 20, RoundingMode.HALF_UP);
-				groups = Big.removeElementAt(i, x);
-				for (int j = 0; j < groups.length; j++) {
-					groups[j] = groups[j].negate();
-					O.pln(groups[j]);
+				//F(Xi) y cada divisor no dependen de X, por lo tanto su división
+				//es una constante que luego será multiplicada a cada polinomio
+				BigDecimal fxi_PIdxi = fx[i].divide(divisor, 10, RoundingMode.HALF_UP);
+				//
+				BigDecimal negativeXs[] = new BigDecimal[numPuntos];
+				negativeXs = Big.removeElementAt(i, x);
+				for (int j = 0; j < negativeXs.length; j++) {
+					negativeXs[j] = negativeXs[j].negate();
 				}
-				polsLagr[i] = Funcion.polinomioProductorio(groups);
-				polsLagr[i] = polsLagr[i].multiplica(fxi_PIdxi[i]);
+				polsLagr[i] = Funcion.polinomioProductorio(negativeXs);
+				polsLagr[i] = polsLagr[i].multiplica(fxi_PIdxi);
+				
 			}
 			
 			return Funcion.sumar(polsLagr);
@@ -366,26 +371,29 @@ public class Funcion{
 	public static Funcion aproximacionPolinomialSimple(
 			BigDecimal x[], BigDecimal fx[]) throws Exception {
 		int numPuntos = x.length;
-		if(numPuntos!=fx.length){
+		if(numPuntos!=fx.length){	//Se verifica que los puntos estén completos
 			throw CustomException.arrayIncompleto();
 		}else{
+			//Inicialización del SEL
 			BigDecimal matriz[][] = new BigDecimal[numPuntos][numPuntos+1];
-			
 			for (int i = 0; i < numPuntos; i++) {
 				for (int j = 0; j < numPuntos; j++) {
 					matriz[i][j] = x[i].pow(j);
 				}
 				matriz[i][numPuntos] = fx[i];
 			}
-			
 			SistemaEcuacionesLineales sel = new SistemaEcuacionesLineales(matriz);
+			
+			//Se resuelve el sistema por el método de Cramer
 			Matriz coef = sel.metodoCramer();
+			
+			//Por último se pasa la matriz 1xn a un vector n
 			BigDecimal coefs[] = new BigDecimal[numPuntos];
 			for (int i = 0; i < coefs.length; i++) {
 				coefs[i] = coef.getMatriz()[i][0].stripTrailingZeros();
-				System.out.println(coefs[i]);
 			}
 			
+			//Finalmente se crea el polinomio.
 			return Funcion.polinomio(numPuntos-1, coefs);
 			
 		}
