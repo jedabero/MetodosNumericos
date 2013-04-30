@@ -46,7 +46,7 @@ public class CustomActionListener implements ActionListener {
 			funcion = rui.getFpnlFuncion().getFnc();
 			rui.getLblEq().setText(funcion.getSpecific());
 			rui.getMpnlMetodos().setFuncion(funcion);
-			JOptionPane.showMessageDialog(null, "Función creada");//TODO
+			JOptionPane.showMessageDialog(null, "Función creada");//TODO función creada
 			break;
 		case 'V'://TODO "Ver gráfica":
 			if(funcion!=null){
