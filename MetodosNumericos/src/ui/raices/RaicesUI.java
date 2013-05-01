@@ -8,7 +8,6 @@ import java.awt.GridBagLayout;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
@@ -17,7 +16,6 @@ import javax.swing.SpinnerNumberModel;
 
 import other.CustomActionListener;
 import other.CustomChangeListener;
-import other.CustomWindowAdapter;
 import resources.Add;
 import funciones.Funcion;
 
@@ -25,32 +23,27 @@ import funciones.Funcion;
  * @author Jedabero
  *
  */
-public class RaicesUI {
+public class RaicesUI extends JPanel{
 	
-	private JPanel thePanel;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5011837883282426768L;
+	
 	private FuncionPanel fpnlFuncion;
 	private JLabel lblEq;
-	private MetodosPanel mpnlMetodos; 
+	private MetodosRaicesPanel mpnlMetodos; 
 	private Funcion funcion;
 	private int grad;
 	/**
 	 * 
 	 */
 	public RaicesUI() {
-		CustomWindowAdapter wa = new CustomWindowAdapter();
-		JFrame theWindow = new JFrame("Raices de un Polinomio");
-		theWindow.setSize(500, 500);
-		theWindow.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		
-		thePanel = new JPanel(new GridBagLayout());
+		super(new GridBagLayout());
 		
 		initComponents();
 		
-		theWindow.addWindowListener(wa);
-		theWindow.add(thePanel);
-		theWindow.setLocationRelativeTo(theWindow.getRootPane());
-		theWindow.setVisible(true);
-		theWindow.setName("RaicesUI");
+		setName("RaicesUI");
 	}
 	
 	private void initComponents() {//Polinomio
@@ -74,32 +67,32 @@ public class RaicesUI {
 		JSeparator sprtr2 = new JSeparator(JSeparator.HORIZONTAL);
 		
 		//Métodos
-		mpnlMetodos = new MetodosPanel();
+		mpnlMetodos = new MetodosRaicesPanel();
 		
 		//0 - Tamaño Polinomio
-		Add.componente(thePanel, lblGradoPol, 			0, 0, 2, 1, 1.0, 1.0,
+		Add.componente(this, lblGradoPol, 			0, 0, 2, 1, 1.0, 1.0,
 				GridBagConstraints.NONE, "");
-		Add.componente(thePanel, spnrGradoPol, 			2, 0, 1, 1, 1.0, 1.0,
+		Add.componente(this, spnrGradoPol, 			2, 0, 1, 1, 1.0, 1.0,
 				GridBagConstraints.HORIZONTAL, "Grado del Polinomio");
-		Add.componente(thePanel, btnCreaPol, 			3, 0, 2, 1, 1.0, 1.0,
+		Add.componente(this, btnCreaPol, 			3, 0, 2, 1, 1.0, 1.0,
 				GridBagConstraints.BOTH, "");
-		Add.componente(thePanel, fpnlFuncion, 			0, 1, 5, 2, 1.0, 1.0,
+		Add.componente(this, fpnlFuncion, 			0, 1, 5, 2, 1.0, 1.0,
 				GridBagConstraints.BOTH, "Edita los coeficientes de la función");
 		//3 - Separator
-		Add.componente(thePanel, sprtr1, 				0, 3, 5, 1, 1.0, 1.0,
+		Add.componente(this, sprtr1, 				0, 3, 5, 1, 1.0, 1.0,
 				GridBagConstraints.HORIZONTAL, "");
 		
 		//4 - Mostrar Polinomio
-		Add.componente(thePanel, lblEq, 				0, 4, 4, 2, 1.0, 1.0,
+		Add.componente(this, lblEq, 				0, 4, 4, 2, 1.0, 1.0,
 				GridBagConstraints.BOTH, "Función");
-		Add.componente(thePanel, btnVerGrafica, 		4, 4, 1, 2, 1.0, 1.0,
+		Add.componente(this, btnVerGrafica, 		4, 4, 1, 2, 1.0, 1.0,
 				GridBagConstraints.BOTH, "Vea la gráfica de está función en " +
 						"una nueva ventana");
 		//6 - Separator
-		Add.componente(thePanel, sprtr2, 				0, 6, 5, 1, 1.0, 1.0,
+		Add.componente(this, sprtr2, 				0, 6, 5, 1, 1.0, 1.0,
 				GridBagConstraints.HORIZONTAL, "");
 		//7 - MétodosPanel
-		Add.componente(thePanel, mpnlMetodos, 			0, 7, 5, 1, 1.0, 1.0,
+		Add.componente(this, mpnlMetodos, 			0, 7, 5, 1, 1.0, 1.0,
 				GridBagConstraints.BOTH, "");
 		
 		
@@ -123,17 +116,17 @@ public class RaicesUI {
 	 * @param fpnlFuncion the fpnlFuncion to set
 	 */
 	public void setFpnlFuncion(FuncionPanel fpnlFuncion) {
-		thePanel.remove(this.fpnlFuncion);
+		this.remove(this.fpnlFuncion);
 		this.fpnlFuncion = fpnlFuncion;
-		Add.componente(thePanel, fpnlFuncion, 			0, 1, 5, 2, 1.0, 1.0,
+		Add.componente(this, fpnlFuncion, 			0, 1, 5, 2, 1.0, 1.0,
 				GridBagConstraints.BOTH, "Edita los coeficientes de la función");
-		thePanel.revalidate();
+		this.revalidate();
 	}
 
 	/**
 	 * @return the mpnlMetodos
 	 */
-	public MetodosPanel getMpnlMetodos() {
+	public MetodosRaicesPanel getMpnlMetodos() {
 		return mpnlMetodos;
 	}
 

@@ -20,7 +20,7 @@ import funciones.Funcion;
  * @author Jedabero
  *
  */
-public class MetodosPanel extends JPanel implements ItemListener, ActionListener {
+public class MetodosAproxFunPanel extends JPanel implements ItemListener, ActionListener {
 	
 	/**
 	 * 
@@ -30,7 +30,7 @@ public class MetodosPanel extends JPanel implements ItemListener, ActionListener
 		"Polinomio Simple", "Polinomio de Lagrange",
 		"Newton-Raphson", "Secante", "Regula-Falsi"};
 	
-	private JButton btnCalcula;
+	private JButton btnAjustarPol;
 	private JComboBox<String> listaMetodos;
 	private JLabel lblPol;
 	
@@ -38,17 +38,16 @@ public class MetodosPanel extends JPanel implements ItemListener, ActionListener
 	/**
 	 * 
 	 */
-	public MetodosPanel(){
+	public MetodosAproxFunPanel(){
 		super(new GridBagLayout());
 		
 		listaMetodos = new JComboBox<String>(strMetodos);
 		listaMetodos.addItemListener(this);
 		
-		lblPol = new JLabel();
-		lblPol.getIconTextGap();
+		lblPol = new JLabel("<html>P<sub>n</sub>(x)</html>");
 		
-		btnCalcula = new JButton("AjustarPolinomio");
-		btnCalcula.addActionListener(this);
+		btnAjustarPol = new JButton("AjustarPolinomio");
+		btnAjustarPol.addActionListener(this);
 	}
 	
 

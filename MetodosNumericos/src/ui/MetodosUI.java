@@ -3,16 +3,26 @@
  */
 package ui;
 
+import java.awt.Color;
+import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.imageio.ImageIO;
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JMenuBar;
+import javax.swing.JLabel;
 import javax.swing.JMenuItem;
+import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 
 import other.Add;
+import ui.aproxpol.APUI;
+import ui.raices.RaicesUI;
 
 /**
  * @author Jedabero
@@ -32,6 +42,17 @@ public class MetodosUI extends JFrame implements ActionListener{
 		"Integración Numérica",
 		"",
 		"Salir"};
+	private static final String ttt[] = new String[]{
+		"Grafica y obtén las raices de polinomios.",
+		"Soluciona sistemas Ax = B",
+		"Obtén la ecuación de los puntos una tabla tabulada",
+		"Integración",
+		"",""};
+	private static final String iconsURL[] = {
+			"/ui/img/Pol.png",
+			"/ui/img/SEL.png",
+			"/ui/img/AproxF.png",
+			"/ui/img/Integration.png"};
 	
 	private JMenuBar mnbPrincipal = new JMenuBar();
 	private JPanel pnlPrincipal = new JPanel(new GridBagLayout());
@@ -53,6 +74,42 @@ public class MetodosUI extends JFrame implements ActionListener{
 	
 	private void initPanel() {
 		
+		JLabel lblInitalText = new JLabel("<html>" +
+				"<H1>GOOD DAY SIR. YOU MAY NOW CHOOSE YOUR NEXT ADVENTURE...</H1>" +
+				"<center>srsly choose</center>" +
+				"<center>what're you waitong for?</center>" +
+				"<center>last line</center>" +
+				"</html>", JLabel.CENTER);
+		lblInitalText.setBorder(BorderFactory.createEtchedBorder());
+		Add.componente(pnlPrincipal, lblInitalText, 0, 0, 4, 1, 1, 1,
+				GridBagConstraints.BOTH, "");
+		
+		Image icons[] = null;
+		try{
+			icons = new Image[] {
+					ImageIO.read(getClass().getResource(iconsURL[0])),
+					ImageIO.read(getClass().getResource(iconsURL[1])),
+					ImageIO.read(getClass().getResource(iconsURL[2])),
+					ImageIO.read(getClass().getResource(iconsURL[3])),};
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		
+		JButton btns[] = new JButton[actions.length];
+		
+		for (int i = 0; i < 4; i++) {
+			btns[i] = new JButton(actions[i], new ImageIcon(icons[i]));
+			btns[i].setVerticalTextPosition(3);//BOTTOM
+			btns[i].setHorizontalTextPosition(0);//CENTER
+			btns[i].setBackground(Color.WHITE);
+			btns[i].addActionListener(this);
+			Add.componente(pnlPrincipal, btns[i], i%2, i/2 +1, 1, 1, 0.1, 0.1,
+					GridBagConstraints.NONE, ttt[i]);
+		}
+		
+		
+		
+		
 		add(pnlPrincipal);
 	}
 
@@ -60,12 +117,7 @@ public class MetodosUI extends JFrame implements ActionListener{
 		Add.menu(mnbPrincipal, "Acciones", 'A',
 				new int[]{0, 0, 0, 0, 2, 0},
 				actions,
-				new String[]{
-				"Grafica y obtén las raices de polinomios.",
-				"Soluciona sistemas Ax = B",
-				"Obtén la ecuación de los puntos una tabla tabulada",
-				"Integración",
-				"",""},
+				ttt,
 				new ActionListener[]{this,this,this,this,null,this},
 				null, null, null);
 		Add.menu(mnbPrincipal, "Ayuda", 'Y',
@@ -91,16 +143,34 @@ public class MetodosUI extends JFrame implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		String action = ((JMenuItem) e.getSource()).getText();
+		String action = "";
+		if(e.getSource() instanceof JMenuItem){
+			action = ((JMenuItem) e.getSource()).getText();
+		}else if(e.getSource() instanceof JButton){
+			action = ((JButton) e.getSource()).getText();
+		}
+		
+		
 		
 		if (action.equals(actions[5])) {
 			dispose();
 		} else if (action.equals(actions[0])) {//POLROOTS
-			
+			System.out.println("polinomio");
+			pnlPrincipal.removeAll();
+			pnlPrincipal.revalidate();
+			RaicesUI rui = new RaicesUI();
+			rui.setBorder(BorderFactory.createEtchedBorder());
+			Add.componente(pnlPrincipal, rui, 0, 1, 1, 1, 1, 1,
+					GridBagConstraints.BOTH, "");
 		} else if (action.equals(actions[1])) {//SSEL
 			
 		} else if (action.equals(actions[2])) {//APROXFUNC
-
+			pnlPrincipal.removeAll();
+			pnlPrincipal.revalidate();
+			APUI apui = new APUI();
+			apui.setBorder(BorderFactory.createEtchedBorder());
+			Add.componente(pnlPrincipal, apui, 0, 1, 1, 1, 1, 1,
+					GridBagConstraints.BOTH, "");
 		} else if (action.equals(actions[3])) {//NUMERICINTEGRATION
 
 		}
