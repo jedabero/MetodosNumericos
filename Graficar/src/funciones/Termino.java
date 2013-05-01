@@ -511,18 +511,18 @@ public class Termino {
 		if(getTipoFuncion().equals(t.getTipoFuncion())){
 			switch (funcion) {
 			case CONSTANTE:
-				temp.actualiza(getA().add(t.getA()));
+				temp.actualiza(getA().add(t.getA()).stripTrailingZeros());
 				break;
 			case POLINOMICA:
 				if(getGrado()==t.getGrado()){
-					temp.actualiza(getA().add(t.getA()));
+					temp.actualiza(getA().add(t.getA()).stripTrailingZeros());
 				}else{
 					throw new CustomException("Termino a sumar de grado diferente.");
 				}
 				break;
 			case TRIGONOMETRICA:
 				if(getFunTrig().equals(t.getFunTrig())){
-					temp.actualiza(getA().add(t.getA()));
+					temp.actualiza(getA().add(t.getA()).stripTrailingZeros());
 				}else{
 					throw new CustomException("Termino trigonometrico a sumar de tipo diferente.");
 				}
@@ -530,7 +530,7 @@ public class Termino {
 			case EXPONENCIAL:
 			case LOGARITMICA:
 				if(getB().compareTo(t.getB())==0){
-					temp.actualiza(getA().add(t.getA()));
+					temp.actualiza(getA().add(t.getA()).stripTrailingZeros());
 				}else{
 					throw new CustomException("Terminos incompatibles.");
 				}
