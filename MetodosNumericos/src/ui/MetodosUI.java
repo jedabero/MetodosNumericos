@@ -21,7 +21,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 
 import other.Add;
-import ui.aproxpol.APUI;
+import ui.aproxpol.AproxFunUI;
 import ui.raices.RaicesUI;
 
 /**
@@ -167,9 +167,9 @@ public class MetodosUI extends JFrame implements ActionListener{
 		} else if (action.equals(actions[2])) {//APROXFUNC
 			pnlPrincipal.removeAll();
 			pnlPrincipal.revalidate();
-			APUI apui = new APUI();
-			apui.setBorder(BorderFactory.createEtchedBorder());
-			Add.componente(pnlPrincipal, apui, 0, 1, 1, 1, 1, 1,
+			AproxFunUI aproxFunUI = new AproxFunUI();
+			aproxFunUI.setBorder(BorderFactory.createEtchedBorder());
+			Add.componente(pnlPrincipal, aproxFunUI, 0, 1, 1, 1, 1, 1,
 					GridBagConstraints.BOTH, "");
 		} else if (action.equals(actions[3])) {//NUMERICINTEGRATION
 

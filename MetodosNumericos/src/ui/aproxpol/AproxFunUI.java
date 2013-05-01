@@ -11,6 +11,7 @@ import java.math.BigDecimal;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
@@ -30,32 +31,34 @@ import funciones.Funcion;
  * @author Jedabero
  *
  */
-public class APUI extends JPanel implements ActionListener, ChangeListener{
+public class AproxFunUI extends JPanel implements ActionListener, ChangeListener{
 	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 714904529268363806L;
 	
+	private static final String strMetodos[] = {
+		"Polinomio Simple", "Polinomio de Lagrange"};
 	private JSpinner spnrNumPuntos;
 	private JScrollPane scpTable;
 	private JTable tblPuntos;
 	DefaultTableModel dm;
 	private String[] headers = {"x", "f(x)"};
 	private int numPuntos = 2;
-	private JButton btnObtenPol;
+	private JButton btnObtenPol[];
 	private SistemaEcuacionesLineales sel;
 	private JLabel lblPolinomio;
 	
 	/**
 	 * 
 	 */
-	public APUI() {
+	public AproxFunUI() {
 		super(new GridBagLayout());
 		
 		initComponents();
 		
-		setName("APUI");
+		setName("AproxFunUI");
 	}
 
 	private void initComponents() {
@@ -74,8 +77,11 @@ public class APUI extends JPanel implements ActionListener, ChangeListener{
 		scpTable = new JScrollPane();
 		scpTable.setViewportView(tblPuntos);
 		
-		btnObtenPol = new JButton("Obten Polinomio");
-		btnObtenPol.addActionListener(this);
+		btnObtenPol = new JButton[strMetodos.length];
+		for(int i = 0; i<btnObtenPol.length; i++){
+			btnObtenPol[i] = new JButton(strMetodos[i]);
+			btnObtenPol[i].addActionListener(this);
+		}
 		
 		lblPolinomio = new JLabel("");
 		
@@ -90,8 +96,10 @@ public class APUI extends JPanel implements ActionListener, ChangeListener{
 				GridBagConstraints.BOTH, "");
 		
 		//6 - Botón obtenPol
-		Add.componente(this, btnObtenPol, 0, 6, 2, 1, 1.0, 1.0,
-				GridBagConstraints.BOTH, "");
+		for (int i = 0; i < btnObtenPol.length; i++) {
+			Add.componente(this, btnObtenPol[i], i, 6, 1, 1, 1.0, 1.0,
+					GridBagConstraints.BOTH, "");
+		}
 		
 		//7 - Label del Polinomio
 		Add.componente(this, lblPolinomio, 0, 7, 2, 1, 1.0, 1.0,
@@ -101,35 +109,24 @@ public class APUI extends JPanel implements ActionListener, ChangeListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		
-		BigDecimal matriz[][] = new BigDecimal[numPuntos][numPuntos+1];
-		for (int i = 0; i < matriz.length; i++) {
-			BigDecimal xi = new BigDecimal(dm.getValueAt(i, 0).toString());
-			for (int j = 0; j < matriz.length; j++) {
-				matriz[i][j] = xi.pow(j);
-			}
-			matriz[i][numPuntos] = new BigDecimal(dm.getValueAt(i, 1).toString());
-		}
-		sel = new SistemaEcuacionesLineales(matriz);
-		
-		Matriz coef;
-		try {
-			coef = sel.metodoCramer();
-			coef.imprimirMatriz("Res");
-		} catch (Exception e1) {
-			e1.printStackTrace();
-			coef = new Matriz(matriz);
-		}
-		
-		BigDecimal coefs[] = new BigDecimal[numPuntos];
-		for (int i = 0; i < coefs.length; i++) {
-			coefs[i] = coef.getMatriz()[i][0].stripTrailingZeros();
-			System.out.println(coefs[i]);
+		BigDecimal x[] = new BigDecimal[numPuntos];
+		BigDecimal fx[] = new BigDecimal[numPuntos];
+		for (int i = 0; i < numPuntos; i++) {
+			x[i] = new BigDecimal(dm.getValueAt(i, 0).toString());
+			fx[i] = new BigDecimal(dm.getValueAt(i, 1).toString());
 		}
 		
 		Funcion f = null;
+		
+		JButton btn = (JButton) e.getSource();
 		try {
-			f = Funcion.polinomio(numPuntos-1, coefs);
-		} catch (CustomException e1) {
+			if(btn.equals(btnObtenPol[0])){
+				f = Funcion.aproximacionPolinomialSimple(x, fx);
+			}else if(btn.equals(btnObtenPol[1])){
+				
+			}
+		} catch (Exception e1) {
+			JOptionPane.showMessageDialog(this, e1.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 			e1.printStackTrace();
 		}
 		

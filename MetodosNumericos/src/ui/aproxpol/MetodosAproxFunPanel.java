@@ -27,8 +27,7 @@ public class MetodosAproxFunPanel extends JPanel implements ItemListener, Action
 	 */
 	private static final long serialVersionUID = -3368266880335331013L;
 	private static final String strMetodos[] = {
-		"Polinomio Simple", "Polinomio de Lagrange",
-		"Newton-Raphson", "Secante", "Regula-Falsi"};
+		"Polinomio Simple", "Polinomio de Lagrange"};
 	
 	private JButton btnAjustarPol;
 	private JComboBox<String> listaMetodos;

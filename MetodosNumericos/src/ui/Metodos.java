@@ -9,7 +9,7 @@ import javax.swing.JOptionPane;
 
 import other.CustomWindowAdapter;
 import resources.O;
-import ui.aproxpol.APUI;
+import ui.aproxpol.AproxFunUI;
 import ui.raices.RaicesUI;
 import ui.ssel.SSELUI;
 
@@ -56,7 +56,7 @@ public class Metodos {
 		case 3:
 			//TODO Ajuste de puntos a polinomio
 			O.pln(code);
-			new APUI();
+			new AproxFunUI();
 			break;
 		case 4:
 			//TODO Integración Numérica
