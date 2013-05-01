@@ -29,7 +29,7 @@ import funciones.Funcion;
  * @author Jedabero
  *
  */
-public class MetodosPanel extends JPanel implements ItemListener, ActionListener {
+public class MetodosRaicesPanel extends JPanel implements ItemListener, ActionListener {
 
 	/**
 	 * 
@@ -63,7 +63,7 @@ public class MetodosPanel extends JPanel implements ItemListener, ActionListener
 	/**
 	 * 
 	 */
-	public MetodosPanel(){
+	public MetodosRaicesPanel(){
 		super(new GridBagLayout());
 		
 		listaMetodos = new JComboBox<String>(strMetodos);
@@ -285,7 +285,6 @@ public class MetodosPanel extends JPanel implements ItemListener, ActionListener
 			switch (m) {
 			case 0:
 				initPanelPF();
-				System.out.println("init PF");
 				break;
 			case 1:
 				initPanelB();

@@ -32,7 +32,7 @@ public class RaicesUI extends JPanel{
 	
 	private FuncionPanel fpnlFuncion;
 	private JLabel lblEq;
-	private MetodosPanel mpnlMetodos; 
+	private MetodosRaicesPanel mpnlMetodos; 
 	private Funcion funcion;
 	private int grad;
 	/**
@@ -67,7 +67,7 @@ public class RaicesUI extends JPanel{
 		JSeparator sprtr2 = new JSeparator(JSeparator.HORIZONTAL);
 		
 		//Métodos
-		mpnlMetodos = new MetodosPanel();
+		mpnlMetodos = new MetodosRaicesPanel();
 		
 		//0 - Tamaño Polinomio
 		Add.componente(this, lblGradoPol, 			0, 0, 2, 1, 1.0, 1.0,
@@ -126,7 +126,7 @@ public class RaicesUI extends JPanel{
 	/**
 	 * @return the mpnlMetodos
 	 */
-	public MetodosPanel getMpnlMetodos() {
+	public MetodosRaicesPanel getMpnlMetodos() {
 		return mpnlMetodos;
 	}
 
