@@ -21,10 +21,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.table.DefaultTableModel;
 
-import metodosnumericos.Matriz;
-import metodosnumericos.SistemaEcuacionesLineales;
 import resources.Add;
-import resources.CustomException;
 import funciones.Funcion;
 
 /**
@@ -47,7 +44,6 @@ public class AproxFunUI extends JPanel implements ActionListener, ChangeListener
 	private String[] headers = {"x", "f(x)"};
 	private int numPuntos = 2;
 	private JButton btnObtenPol[];
-	private SistemaEcuacionesLineales sel;
 	private JLabel lblPolinomio;
 	
 	/**
