@@ -119,7 +119,7 @@ public class AproxFunUI extends JPanel implements ActionListener, ChangeListener
 			if(btn.equals(btnObtenPol[0])){
 				f = Funcion.aproximacionPolinomialSimple(x, fx);
 			}else if(btn.equals(btnObtenPol[1])){
-				
+				f = Funcion.aproximacionPolinomialLangrange(x, fx);
 			}
 		} catch (Exception e1) {
 			JOptionPane.showMessageDialog(this, e1.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
