@@ -35,10 +35,7 @@ public class JPanelSSEL extends javax.swing.JPanel {
     public JPanelSSEL() {
         tblIterHeaders = new String[]{"<html>x<sub>i</sub></html>", "<html>e<sub>i</sub></html>"};
         
-        for (int i = 0; i < numEc; i++) {
-            tblSistHeaders[i] = "<html>x<sub>"+(i+1)+"</sub></html>";
-        }
-        tblSistHeaders[numEc] = "<html>b</html>";
+        resetTableHeaders();
         
         mainMatriz = new BigDecimal[numEc][numEc+1];
         dtmSistema = new javax.swing.table.DefaultTableModel(mainMatriz, tblSistHeaders);
@@ -304,8 +301,39 @@ public class JPanelSSEL extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void resetTableHeaders(){
+        tblSistHeaders = new String[numEc+1];
+        for (int i = 0; i < numEc; i++) {
+            tblSistHeaders[i] = "<html>x<sub>"+(i+1)+"</sub></html>";
+        }
+        tblSistHeaders[numEc] = "<html>b</html>";
+    }
+    
+    private void resetTable(int n){
+        dtmSistema.setColumnCount(n+1);
+        
+        boolean disminuyendo = (n<numEc);
+        
+        if (disminuyendo) {
+            dtmSistema.removeRow(n);
+            for (int i = 0; i < n; i++) {
+                dtmSistema.setValueAt(null, i, n);
+            }
+        } else {
+            dtmSistema.addRow(new Object[n]);   
+            for (int i = 0; i < n; i++) {
+                dtmSistema.setValueAt(null, i, n-1);
+            }
+        }
+        
+    }
+    
     private void spnNumEcStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_spnNumEcStateChanged
-        numEc = Integer.parseInt(((javax.swing.JSpinner) evt.getSource()).getValue().toString());
+        int n = Integer.parseInt(((javax.swing.JSpinner) evt.getSource()).getValue().toString());
+        resetTable(n);
+        numEc = n;
+        resetTableHeaders();
+        dtmSistema.setColumnIdentifiers(tblSistHeaders);
         
     }//GEN-LAST:event_spnNumEcStateChanged
 
