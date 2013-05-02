@@ -13,6 +13,7 @@ public class JPanelSSEL extends javax.swing.JPanel {
 
     private int numEc = 3;
     private BigDecimal[][] mainMatriz;
+    private int it;
     private BigDecimal tol;
     private SistemaEcuacionesLineales mainSel;
     
@@ -206,6 +207,7 @@ public class JPanelSSEL extends javax.swing.JPanel {
         jLabel5.setText("Tolerancia:");
 
         txtTol.setColumns(8);
+        txtTol.setText("0.001");
 
         btnJacobi.setText("Jacobi");
         btnJacobi.addActionListener(new java.awt.event.ActionListener() {
@@ -359,15 +361,33 @@ public class JPanelSSEL extends javax.swing.JPanel {
     }//GEN-LAST:event_btnCramerActionPerformed
 
     private void btnJacobiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnJacobiActionPerformed
-        // TODO add your handling code here:
+        creaMatriz();
+        checkIterErrors();
+        try {
+            dtmIter.setDataVector(mainSel.metodoJacobi(it, tol).getMatriz(),
+                    tblIterHeaders);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this.getParent(), ex.getMessage(),
+                            "Error ", JOptionPane.ERROR_MESSAGE);
+        }
+        
     }//GEN-LAST:event_btnJacobiActionPerformed
 
     private void btnSeidelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeidelActionPerformed
-        // TODO add your handling code here:
+        creaMatriz();
+        checkIterErrors();
+        try {
+            dtmIter.setDataVector(mainSel.metodoSeidel(it, tol).getMatriz(),
+                    tblIterHeaders);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this.getParent(), ex.getMessage(),
+                            "Error ", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btnSeidelActionPerformed
 
     private void creaMatriz(){
         wasThereAnError = false;
+        
         mainMatriz = new BigDecimal[numEc][numEc+1];
         for (int i = 0; i < numEc; i++) {
             for (int j = 0; j < numEc+1; j++) {
@@ -376,6 +396,7 @@ public class JPanelSSEL extends javax.swing.JPanel {
                     v = dtmSistema.getValueAt(i, j).toString();
                     mainMatriz[i][j] = new BigDecimal(v);
                 } catch (Exception e) {
+                    wasThereAnError = true;
                     String varerr = ((j<numEc)? "x<sub>"+(j+1)+"</sub>":"b");
                     JOptionPane.showMessageDialog(this,
                             "<html>Ecuación "+(i+1)+", "+varerr+" : "+v+"</html>",
@@ -388,7 +409,22 @@ public class JPanelSSEL extends javax.swing.JPanel {
         if (!wasThereAnError) {
             mainSel = new SistemaEcuacionesLineales(mainMatriz);
         }
+    }
+    
+    private void checkIterErrors(){
         
+        String toltext = txtTol.getText();
+        try {
+            tol = new BigDecimal(toltext);
+        } catch (Exception e) {
+            toltext += (toltext.isEmpty())? "Vacío":"";
+            JOptionPane.showMessageDialog(this.getParent(),
+                    toltext + " es invalido.",
+                    "Error en el valor de la Toleracia",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+        
+        it = Integer.parseInt(spnIt.getValue().toString());
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
