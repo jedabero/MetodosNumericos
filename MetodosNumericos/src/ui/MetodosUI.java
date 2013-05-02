@@ -20,10 +20,10 @@ import javax.swing.JMenuItem;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 
+import main.app.JPanelSSEL;
 import other.Add;
 import ui.aproxpol.AproxFunUI;
 import ui.raices.RaicesUI;
-
 /**
  * @author Jedabero
  *
@@ -163,7 +163,12 @@ public class MetodosUI extends JFrame implements ActionListener{
 			Add.componente(pnlPrincipal, rui, 0, 1, 1, 1, 1, 1,
 					GridBagConstraints.BOTH, "");
 		} else if (action.equals(actions[1])) {//SSEL
-			
+			pnlPrincipal.removeAll();
+			pnlPrincipal.revalidate();
+			JPanelSSEL ssel = new JPanelSSEL();
+			ssel.setBorder(BorderFactory.createEtchedBorder());
+			Add.componente(pnlPrincipal, ssel, 0, 1, 1, 1, 1, 1,
+					GridBagConstraints.BOTH, "");
 		} else if (action.equals(actions[2])) {//APROXFUNC
 			pnlPrincipal.removeAll();
 			pnlPrincipal.revalidate();
