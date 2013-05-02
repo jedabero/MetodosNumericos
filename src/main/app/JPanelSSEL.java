@@ -1,10 +1,8 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package main.app;
 
 import java.math.BigDecimal;
+import javax.swing.JOptionPane;
 import metodosnumericos.SistemaEcuacionesLineales;
 
 /**
@@ -17,6 +15,8 @@ public class JPanelSSEL extends javax.swing.JPanel {
     private BigDecimal[][] mainMatriz;
     private BigDecimal tol;
     private SistemaEcuacionesLineales mainSel;
+    
+    private boolean wasThereAnError = false;
     
     private javax.swing.JTable tblSistRowHeaders;
     private javax.swing.table.DefaultTableModel dtmSistema;
@@ -338,15 +338,24 @@ public class JPanelSSEL extends javax.swing.JPanel {
     }//GEN-LAST:event_spnNumEcStateChanged
 
     private void btnGaussActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGaussActionPerformed
-        // TODO add your handling code here:
+        creaMatriz();
+        dtmAnal.setDataVector(mainSel.metodoGauss().getMatriz(), tblSistHeaders);
     }//GEN-LAST:event_btnGaussActionPerformed
 
     private void btnJordanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnJordanActionPerformed
-        // TODO add your handling code here:
+        creaMatriz();
+        dtmAnal.setDataVector(mainSel.metodoJordan().getMatriz(), tblSistHeaders);
     }//GEN-LAST:event_btnJordanActionPerformed
 
     private void btnCramerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCramerActionPerformed
-        // TODO add your handling code here:
+        creaMatriz();
+        try {
+            dtmAnal.setDataVector(mainSel.metodoCramer().getMatriz(),
+                    new String[]{"<html>x<sub>i</sub></html>"});
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this.getParent(), ex.getMessage(),
+                            "Error ", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btnCramerActionPerformed
 
     private void btnJacobiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnJacobiActionPerformed
@@ -357,6 +366,31 @@ public class JPanelSSEL extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnSeidelActionPerformed
 
+    private void creaMatriz(){
+        wasThereAnError = false;
+        mainMatriz = new BigDecimal[numEc][numEc+1];
+        for (int i = 0; i < numEc; i++) {
+            for (int j = 0; j < numEc+1; j++) {
+                String v = "";
+                try {
+                    v = dtmSistema.getValueAt(i, j).toString();
+                    mainMatriz[i][j] = new BigDecimal(v);
+                } catch (Exception e) {
+                    String varerr = ((j<numEc)? "x<sub>"+(j+1)+"</sub>":"b");
+                    JOptionPane.showMessageDialog(this,
+                            "<html>Ecuación "+(i+1)+", "+varerr+" : "+v+"</html>",
+                            "Error en ", JOptionPane.ERROR_MESSAGE);
+                }
+                
+            }
+        }
+        
+        if (!wasThereAnError) {
+            mainSel = new SistemaEcuacionesLineales(mainMatriz);
+        }
+        
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCramer;
     private javax.swing.JButton btnGauss;
