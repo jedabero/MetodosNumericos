@@ -682,6 +682,51 @@ public final class Big {
 	}
 	
 	/**
+	 * @param x
+	 * @param y
+	 * @return una lista con las diferencias divididas definidas
+	 */
+	public static BigDecimal[] listaDiferenciasDivididas(BigDecimal x[],
+			BigDecimal y[]){
+		BigDecimal diffDivs[] = new BigDecimal[x.length];
+		for (int i = 0; i < diffDivs.length; i++) {
+			int pos[] = new int[i+1];
+			pos[0] = 0;
+			if(i>0){
+				for (int j = 1; j < i;pos[j] = j, j++);
+			}
+			diffDivs[i] = diferenciaDividida(pos, x, y);
+		}
+		
+		return diffDivs;
+	}
+	
+	private static BigDecimal diferenciaDividida(int[] pos, BigDecimal[] x,
+			BigDecimal[] y) {
+		if (pos.length==1) {
+			return y[pos[0]];
+		} else {
+			
+			BigDecimal xDifference = x[pos[pos.length-1]].subtract(x[pos[0]]);
+			
+			int pos1[] = new int[pos.length-1];
+			int pos0[] = new int[pos.length-1];
+			for (int i = 0; i < pos.length; i++) {
+				pos1[i] = pos[i+1];
+				pos0[i] = pos[i];
+			}
+			
+			BigDecimal Y1 = diferenciaDividida(pos1, x, y);
+			BigDecimal Y0 = diferenciaDividida(pos0, x, y);
+			
+			BigDecimal yDifference = Y1.subtract(Y0);
+			
+			return yDifference.divide(xDifference, 15, RoundingMode.HALF_UP);
+			
+		}
+	}
+
+	/**
 	 * @param args
 	 */
 	public static void main(String args[]){

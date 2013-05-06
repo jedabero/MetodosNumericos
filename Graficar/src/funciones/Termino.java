@@ -503,7 +503,7 @@ public class Termino {
 	
 	/**
 	 * @param t
-	 * @return un ter
+	 * @return un término
 	 * @throws CustomException si el termino t es diferente a este termino.
 	 */
 	public Termino suma(Termino t) throws CustomException {

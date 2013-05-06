@@ -362,14 +362,34 @@ public class Funcion{
 	}
 	
 	/**
+	 * @param x
+	 * @param fx
+	 * @return una función polinómica aproximada a los puntos dados
+	 * @throws Exception
+	 */
+	public static Funcion aproximacionPolinomialNewton(BigDecimal x[],
+			BigDecimal fx[]) throws Exception {
+		int numPuntos = x.length;
+		if(numPuntos!=fx.length){	//Se verifica que los puntos estén completos
+			throw CustomException.arrayIncompleto();
+		}else{
+			BigDecimal dd[] = Big.listaDiferenciasDivididas(x, fx);
+			
+			
+			
+			return null;
+		}
+	}
+	
+	/**
 	 * Crea una función a partir de un conjunto de puntos
 	 * @param x puntos
 	 * @param fx valor de la función en los puntos x
 	 * @return una función polinómica aproximada a los puntos dados
 	 * @throws Exception 
 	 */
-	public static Funcion aproximacionPolinomialSimple(
-			BigDecimal x[], BigDecimal fx[]) throws Exception {
+	public static Funcion aproximacionPolinomialSimple(BigDecimal x[],
+			BigDecimal fx[]) throws Exception {
 		int numPuntos = x.length;
 		if(numPuntos!=fx.length){	//Se verifica que los puntos estén completos
 			throw CustomException.arrayIncompleto();
