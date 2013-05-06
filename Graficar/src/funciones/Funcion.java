@@ -374,10 +374,16 @@ public class Funcion{
 			throw CustomException.arrayIncompleto();
 		}else{
 			BigDecimal dd[] = Big.listaDiferenciasDivididas(x, fx);
+			Funcion[] parte = new Funcion[numPuntos];
+			parte[0] = new Funcion(Termino.constante(dd[0]));
 			
+			for (int i = 1; i < parte.length; i++) {
+				BigDecimal a[] = new BigDecimal[i];
+				for (int j = 0; j < a.length;a[j] = x[j], j++)
+				parte[i] = polinomioProductorio(a);
+			}
 			
-			
-			return null;
+			return sumar(parte);
 		}
 	}
 	
