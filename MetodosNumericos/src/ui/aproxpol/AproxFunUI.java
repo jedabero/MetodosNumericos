@@ -36,7 +36,7 @@ public class AproxFunUI extends JPanel implements ActionListener, ChangeListener
 	private static final long serialVersionUID = 714904529268363806L;
 	
 	private static final String strMetodos[] = {
-		"Polinomio Simple", "Polinomio de Lagrange"};
+		"Polinomio Simple", "Polinomio de Lagrange", "Polinomio de Newton"};
 	private JSpinner spnrNumPuntos;
 	private JScrollPane scpTable;
 	private JTable tblPuntos;
@@ -88,7 +88,7 @@ public class AproxFunUI extends JPanel implements ActionListener, ChangeListener
 				GridBagConstraints.HORIZONTAL, "Número de puntos");
 		
 		//1 - Tabla
-		Add.componente(this, scpTable, 0, 1, 2, 5, 1.0, 1.0,
+		Add.componente(this, scpTable, 0, 1, 3, 5, 1.0, 1.0,
 				GridBagConstraints.BOTH, "");
 		
 		//6 - Botón obtenPol
@@ -120,6 +120,8 @@ public class AproxFunUI extends JPanel implements ActionListener, ChangeListener
 				f = Funcion.aproximacionPolinomialSimple(x, fx);
 			}else if(btn.equals(btnObtenPol[1])){
 				f = Funcion.aproximacionPolinomialLangrange(x, fx);
+			}else if(btn.equals(btnObtenPol[2])){
+				f = Funcion.aproximacionPolinomialNewton(x, fx);
 			}
 		} catch (Exception e1) {
 			JOptionPane.showMessageDialog(this, e1.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
