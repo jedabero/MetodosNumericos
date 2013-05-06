@@ -28,11 +28,9 @@ import funciones.Funcion;
  * @author Jedabero
  *
  */
-public class AproxFunUI extends JPanel implements ActionListener, ChangeListener{
+public class AproxFunUI extends JPanel implements ActionListener, ChangeListener {
 	
-	/**
-	 * 
-	 */
+	/** */
 	private static final long serialVersionUID = 714904529268363806L;
 	
 	private static final String strMetodos[] = {

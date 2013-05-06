@@ -3,32 +3,43 @@
  */
 package ui.raices;
 
+import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.math.BigDecimal;
+import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
-import other.CustomActionListener;
-import other.CustomChangeListener;
 import resources.Add;
+import resources.O;
+import resources.math.Interval;
 import funciones.Funcion;
+import grafica.JGrafica;
 
 /**
  * @author Jedabero
  *
  */
-public class RaicesUI extends JPanel{
+public class RaicesUI extends JPanel  implements ActionListener, ChangeListener {
 	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -5011837883282426768L;
+	private JFrame frmGrafica;
 	
 	private FuncionPanel fpnlFuncion;
 	private JLabel lblEq;
@@ -98,43 +109,61 @@ public class RaicesUI extends JPanel{
 		
 		
 		//Add ActionListeners
-		CustomActionListener al = new CustomActionListener(this);
-		btnCreaPol.addActionListener(al);
-		btnVerGrafica.addActionListener(al);
-		CustomChangeListener cl = new CustomChangeListener(this);
-		spnrGradoPol.addChangeListener(cl);
-	}
-	
-	/**
-	 * @return the fpnlFuncion
-	 */
-	public FuncionPanel getFpnlFuncion() {
-		return fpnlFuncion;
+		btnCreaPol.addActionListener(this);
+		btnVerGrafica.addActionListener(this);
+		spnrGradoPol.addChangeListener(this);
 	}
 
-	/**
-	 * @param fpnlFuncion the fpnlFuncion to set
-	 */
-	public void setFpnlFuncion(FuncionPanel fpnlFuncion) {
-		this.remove(this.fpnlFuncion);
-		this.fpnlFuncion = fpnlFuncion;
+	@Override
+	public void stateChanged(ChangeEvent e) {
+		JSpinner spnr = (JSpinner) e.getSource();
+		remove(fpnlFuncion);
+		fpnlFuncion = new FuncionPanel(Integer.parseInt(spnr.getValue().toString()));//(int)spnr.getValue();
 		Add.componente(this, fpnlFuncion, 			0, 1, 5, 2, 1.0, 1.0,
 				GridBagConstraints.BOTH, "Edita los coeficientes de la función");
-		this.revalidate();
+		revalidate();
 	}
 
-	/**
-	 * @return the mpnlMetodos
-	 */
-	public MetodosRaicesPanel getMpnlMetodos() {
-		return mpnlMetodos;
-	}
-
-	/**
-	 * @return the lblEq
-	 */
-	public JLabel getLblEq() {
-		return lblEq;
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		JButton btn = (JButton) e.getSource();
+		switch (btn.getText().charAt(0)) {
+		case 'C'://TODO "Crear Polinomio":
+			funcion = fpnlFuncion.getFnc();
+			lblEq.setText(funcion.getSpecific());
+			mpnlMetodos.setFuncion(funcion);
+			JOptionPane.showMessageDialog(null, "Función creada");//TODO función creada
+			break;
+		case 'V'://TODO "Ver gráfica":
+			if(funcion!=null){
+				ArrayList<Color> alc = new ArrayList<Color>(1);
+				alc.add(Color.BLUE);
+				ArrayList<Funcion> alf = new ArrayList<Funcion>(1);
+				alf.add(funcion);
+				if(frmGrafica!=null){
+					frmGrafica.dispose();
+				}
+				grafic(alf, alc);
+			}else{
+				JOptionPane.showMessageDialog(null, "Crea la función primero.");
+			}
+			break;
+		default:
+			O.pln(btn.getName());
+			break;
+		}
+		
 	}
 	
+	private void grafic(ArrayList<Funcion> alf, ArrayList<Color> alc){
+		frmGrafica = new JFrame(""+funcion);
+		frmGrafica.setSize(800, 400);
+		JGrafica jg = new JGrafica(alf, alc, frmGrafica.getSize(),
+				new Interval(BigDecimal.ONE.negate(), BigDecimal.ONE),
+				new Interval(BigDecimal.ONE.negate(), BigDecimal.ONE));
+		jg.setBackground(Color.WHITE);
+		frmGrafica.add(jg);
+		frmGrafica.setVisible(true);
+		frmGrafica.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+	}
 }

@@ -21,7 +21,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 
 import main.app.JPanelSSEL;
-import other.Add;
+import resources.Add;
 import ui.aproxpol.AproxFunUI;
 import ui.raices.RaicesUI;
 /**
