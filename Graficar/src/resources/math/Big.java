@@ -721,7 +721,7 @@ public final class Big {
 			
 			BigDecimal yDifference = Y1.subtract(Y0);
 			
-			return yDifference.divide(xDifference, 15, RoundingMode.HALF_UP);
+			return yDifference.divide(xDifference, 10, RoundingMode.HALF_UP);
 			
 		}
 	}
