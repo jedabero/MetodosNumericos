@@ -12,6 +12,7 @@ import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JComponent;
 import javax.swing.JDesktopPane;
 import javax.swing.JMenu;
+import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JRadioButtonMenuItem;
 
@@ -46,6 +47,73 @@ public final class Add {
 		gbc.weightx = wx; gbc.weighty = wy;
 		gbc.fill = f;
 		gbl.add(jc, gbc);
+	}
+	
+	/**
+	 * @param jmb		barra de menu
+	 * @param texto		texto del menu
+	 * @param mn		mnemonic del menu
+	 * @param types		tipos de item (item(0) o submenu(1))
+	 * @param subTextos	textos de los items
+	 * @param subTTT	ToolTipText de los items
+	 * @param als		actionListeners de los items
+	 * @param mns		mnemonics de los items
+	 * @param subItems	textos de los subItems
+	 * @param states	estados de cada item
+	 * @param subTypes	tipos de cada item
+	 */
+	public static void menu(JMenuBar jmb, String texto, char mn, int types[],
+			String subTextos[], String subTTT[], ActionListener als[],
+			String subItems[][], boolean states[][],
+			char subTypes[][]){
+
+		JMenu jmiTemp = new JMenu(texto);
+		jmiTemp.setMnemonic(mn);
+		
+		char mns[] = new char[subTextos.length];
+		for (int i = 0; i < mns.length; i++) {
+			mns[i] = ' ';
+		}
+		
+		for (int i = 0; i < subTextos.length; i++) {
+			
+			String name = subTextos[i];
+			
+			for (int j = 0; j < name.length(); j++) {
+				char mnem = name.charAt(j);
+				if (!isCinV(mns, mnem)) {
+					mns[i] = mnem;
+					break;
+				}
+			}
+			
+			switch (types[i]) {
+			case 0:
+				menuItem(jmiTemp, subTextos[i], subTTT[i], als[i], mns[i]);
+				break;
+			case 1:
+				subMenu(jmiTemp, subTextos[i], subTTT[i], als[i], mns[i],
+						subItems[i], states[i], subTypes[i]);
+				break;
+			default:
+				jmiTemp.addSeparator();
+				break;
+			}
+			
+		}
+		
+		
+		jmb.add(jmiTemp);
+		
+	}
+	
+	private static boolean isCinV(char v[], char c){
+		for (int j = 0; j < v.length; j++) {
+			if(c==v[j]){
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	/**
