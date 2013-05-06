@@ -344,7 +344,7 @@ public class Funcion{
 				BigDecimal divisor = Big.productoDiferencias(i, x);
 				//F(Xi) y cada divisor no dependen de X, por lo tanto su división
 				//es una constante que luego será multiplicada a cada polinomio
-				BigDecimal fxi_PIdxi = fx[i].divide(divisor, 10, RoundingMode.HALF_UP);
+				BigDecimal fxi_PIdxi = fx[i].divide(divisor, 15, RoundingMode.HALF_UP);
 				//
 				BigDecimal negativeXs[] = new BigDecimal[numPuntos];
 				negativeXs = Big.removeElementAt(i, x);
@@ -379,8 +379,8 @@ public class Funcion{
 			
 			for (int i = 1; i < parte.length; i++) {
 				BigDecimal a[] = new BigDecimal[i];
-				for (int j = 0; j < a.length;a[j] = x[j], j++)
-				parte[i] = polinomioProductorio(a);
+				for (int j = 0; j < a.length;a[j] = x[j].negate(), j++);
+				parte[i] = polinomioProductorio(a).multiplica(dd[i]);
 			}
 			
 			return sumar(parte);

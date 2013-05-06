@@ -693,7 +693,7 @@ public final class Big {
 			int pos[] = new int[i+1];
 			pos[0] = 0;
 			if(i>0){
-				for (int j = 1; j < i;pos[j] = j, j++);
+				for (int j = 1; j < pos.length; pos[j] = j, j++);
 			}
 			diffDivs[i] = diferenciaDividida(pos, x, y);
 		}
@@ -711,7 +711,7 @@ public final class Big {
 			
 			int pos1[] = new int[pos.length-1];
 			int pos0[] = new int[pos.length-1];
-			for (int i = 0; i < pos.length; i++) {
+			for (int i = 0; i < pos.length-1; i++) {
 				pos1[i] = pos[i+1];
 				pos0[i] = pos[i];
 			}
@@ -738,8 +738,10 @@ public final class Big {
 			
 			funciones.Funcion f = funciones.Funcion.aproximacionPolinomialLangrange(bdVx, bdVfx);
 			funciones.Funcion ff = funciones.Funcion.aproximacionPolinomialSimple(bdVx, bdVfx);
+			funciones.Funcion fff = funciones.Funcion.aproximacionPolinomialNewton(bdVx, bdVfx);
 			System.out.println("f langrange "+f);
 			System.out.println("f simple "+ff);
+			System.out.println("f newton "+fff);
 			
 			
 			
