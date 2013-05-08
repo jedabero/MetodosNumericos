@@ -1,12 +1,13 @@
 
-package main;
+package ui.main;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import metodosnumericos.Matriz;
-import metodosnumericos.SistemaEcuacionesLineales;
+
+import vectores.Matriz;
+import vectores.SistemaEcuacionesLineales;
 
 /**
  *
@@ -14,6 +15,9 @@ import metodosnumericos.SistemaEcuacionesLineales;
  */
 public class ApoxFunc {
     
+    /**
+     * @param args
+     */
     public static void main(String[] args) {
         int n = 5;
         BigDecimal x[] = new BigDecimal[n];

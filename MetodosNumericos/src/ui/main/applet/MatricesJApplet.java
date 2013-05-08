@@ -1,5 +1,5 @@
 
-package main.applet;
+package ui.main.applet;
 
 import java.applet.Applet;
 import java.awt.Color;
@@ -13,6 +13,7 @@ import java.awt.event.ItemListener;
 import java.math.BigDecimal;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
@@ -26,8 +27,9 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.table.DefaultTableModel;
-import metodosnumericos.Matriz;
-import resurces.RowNumberTable;
+
+import resources.RowNumberTable;
+import vectores.Matriz;
 
 /**
  *
@@ -36,7 +38,11 @@ import resurces.RowNumberTable;
 public class MatricesJApplet extends Applet
         implements ChangeListener, ItemListener, ActionListener{
     
-    private Matriz matriz;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 5286129162295380504L;
+	private Matriz matriz;
     private JScrollPane scrlpMatriz;
     private JTable tblMatriz;
     private JTable tblRowHeaders;
@@ -48,7 +54,8 @@ public class MatricesJApplet extends Applet
     
     private SpinnerNumberModel spnmR;
     private JSpinner spnrRows;
-    private SpinnerNumberModel spnmC;
+    @SuppressWarnings("unused")
+	private SpinnerNumberModel spnmC;
     private JSpinner spnrCols;
     
     private String itemsElem[];

@@ -8,14 +8,14 @@ import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.ListIterator;
 
-import metodosnumericos.Matriz;
-import metodosnumericos.SistemaEcuacionesLineales;
 import resources.CustomException;
 import resources.O;
 import resources.math.Big;
 import resources.math.Constantes.FuncionTrig;
 import resources.math.Constantes.Tipo;
 import resources.math.Interval;
+import vectores.Matriz;
+import vectores.SistemaEcuacionesLineales;
 
 /**
  * La clase {@code Funcion} define una función explícita de la forma

@@ -2,12 +2,13 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package resurces;
+package resources;
 
 import java.awt.Component;
 import java.awt.Font;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -27,8 +28,15 @@ import javax.swing.table.TableColumn;
 public class RowNumberTable extends JTable
 implements ChangeListener, PropertyChangeListener {
     
-    private JTable main;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -1767496883477992384L;
+	private JTable main;
     
+    /**
+     * @param table
+     */
     public RowNumberTable(JTable table)	{
 	this.main = table;
 	main.addPropertyChangeListener( this );
@@ -119,7 +127,12 @@ implements ChangeListener, PropertyChangeListener {
 	 *  Borrow the renderer from JDK1.4.2 table header
 	 */
     private static class RowNumberRenderer extends DefaultTableCellRenderer{
-        public RowNumberRenderer(){
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = -4567672531818693241L;
+
+		public RowNumberRenderer(){
             setHorizontalAlignment(JLabel.CENTER);
         }
         

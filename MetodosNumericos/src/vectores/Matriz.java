@@ -1,4 +1,4 @@
-package metodosnumericos;
+package vectores;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -8,13 +8,15 @@ import java.util.Scanner;
  * 
  * @author Jedabero
  */
+@SuppressWarnings("javadoc")
 public class Matriz {
     
     private static int spc = 0;
     
     private BigDecimal matriz[][];  //Matriz
 
-    public BigDecimal[][] getMatriz() {
+    
+	public BigDecimal[][] getMatriz() {
         return matriz;
     }
 

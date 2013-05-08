@@ -1,4 +1,4 @@
-package metodosnumericos;
+package vectores;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -10,6 +10,7 @@ import java.util.logging.Logger;
  *
  * @author Jedabero
  */
+@SuppressWarnings("javadoc")
 public class SistemaEcuacionesLineales {
     
     private Matriz matrizCoef;  //Matriz de coeficientes.
@@ -192,7 +193,7 @@ public class SistemaEcuacionesLineales {
     }
     
     /**
-     * TODO desciption and fix it because it doesn't work!
+     * TODO description and fix it because it doesn't work!
      * @param maxIt
      * @param tol 
      */

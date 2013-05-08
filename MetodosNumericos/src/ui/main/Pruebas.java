@@ -1,11 +1,13 @@
 
-package main;
+package ui.main;
 
 import java.math.BigDecimal;
+
 import javax.swing.JFrame;
-import main.app.JPanelSSEL;
-import metodosnumericos.Matriz;
-import metodosnumericos.SistemaEcuacionesLineales;
+
+import ui.main.app.JPanelSSEL;
+import vectores.Matriz;
+import vectores.SistemaEcuacionesLineales;
 
 /**
  *
@@ -15,6 +17,7 @@ public class Pruebas {
     
     /**
      * @param args the command line arguments
+     * @throws Exception 
      */
     public static void main(String[] args) throws Exception {
         

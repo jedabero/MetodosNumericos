@@ -1,5 +1,5 @@
 
-package metodosnumericos;
+package vectores;
 
 import java.math.BigDecimal;
 import java.util.Scanner;
@@ -8,8 +8,8 @@ import java.util.Scanner;
  *
  * @author Jedabero
  */
+@SuppressWarnings("javadoc")
 public class Vector {
-    
     
     private BigDecimal vector[];
     

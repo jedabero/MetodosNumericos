@@ -1,7 +1,7 @@
 /**
  * 
  */
-package ui;
+package ui.main.app;
 
 import java.awt.Color;
 import java.awt.GridBagConstraints;
@@ -16,11 +16,10 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JMenuItem;
 import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
-import main.app.JPanelSSEL;
 import resources.Add;
 import ui.aproxpol.AproxFunUI;
 import ui.raices.RaicesUI;
