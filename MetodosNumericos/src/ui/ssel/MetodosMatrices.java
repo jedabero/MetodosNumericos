@@ -1,5 +1,5 @@
 
-package ui.main.app;
+package ui.ssel;
 
 import java.math.BigDecimal;
 

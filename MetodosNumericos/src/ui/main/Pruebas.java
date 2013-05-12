@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 
 import javax.swing.JFrame;
 
-import ui.main.app.JPanelSSEL;
+import ui.ssel.JPanelSSEL;
 import vectores.Matriz;
 import vectores.SistemaEcuacionesLineales;
 

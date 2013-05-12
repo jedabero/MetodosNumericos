@@ -23,6 +23,7 @@ import javax.swing.JPanel;
 import resources.Add;
 import ui.aproxpol.AproxFunUI;
 import ui.raices.RaicesUI;
+import ui.ssel.JPanelSSEL;
 /**
  * @author Jedabero
  *

@@ -63,9 +63,7 @@ public class AproxFunUI extends JPanel implements ActionListener, ChangeListener
 		spnrNumPuntos = new JSpinner(snmNumPun);
 		spnrNumPuntos.addChangeListener(this);
 		
-		BigDecimal p0[][] = {
-				{BigDecimal.ZERO, BigDecimal.ONE},
-				{BigDecimal.ONE, BigDecimal.TEN}};
+		Object p0[][] = new Object[2][2];
 		dm = new DefaultTableModel(p0, headers);
 		tblPuntos = new JTable(dm);
 		scpTable = new JScrollPane();
@@ -134,19 +132,14 @@ public class AproxFunUI extends JPanel implements ActionListener, ChangeListener
 	public void stateChanged(ChangeEvent e) {//TODO fix this to 1.7!
 		JSpinner spnr = (JSpinner) e.getSource();
 		int np = Integer.parseInt(spnr.getValue().toString());//(int)spnr.getValue();
-		
-		Object p[][] = new Object[np][2];
-		for (int i = 0; i < numPuntos; i++) {
-			for (int j = 0; j < 2; j++) {
-				p[i][j] = new BigDecimal(dm.getValueAt(i, j).toString());
-			}
+		boolean increase = np > numPuntos;
+		if(increase){
+			dm.addRow(new Object[2]);
+		}else{
+			dm.removeRow(np);
 		}
-		p[np-1][0] = BigDecimal.ONE;
-		p[np-1][1] = BigDecimal.TEN;
 		numPuntos = np;
 		
-		dm.setDataVector(p, headers);
-		tblPuntos.setModel(dm);
 	}
 	
 }

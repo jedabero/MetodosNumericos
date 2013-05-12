@@ -70,8 +70,8 @@ public class RaicesUI extends JPanel  implements ActionListener, ChangeListener 
 		JSeparator sprtr1 = new JSeparator(JSeparator.HORIZONTAL);
 		
 		//Mostrar Polinomio
-		funcion = fpnlFuncion.getFnc();
-		lblEq = new JLabel(funcion.getSpecific(), JLabel.CENTER);
+		//funcion = fpnlFuncion.getFnc(); TODO funcion init
+		lblEq = new JLabel(/*funcion.getSpecific()*/"", JLabel.CENTER);
 		lblEq.setBorder(BorderFactory.createEtchedBorder());
 		JButton btnVerGrafica = new JButton("Ver gráfica");
 		
