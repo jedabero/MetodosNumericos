@@ -753,7 +753,15 @@ public final class Big {
 			
 		}
 	}
-
+	
+	/**
+	 * @param n el número
+	 * @return el exponente
+	 */
+	public int getExponent(BigDecimal n){
+		return n.precision() - n.scale() - 1;
+	}
+	
 	/**
 	 * @param args
 	 */
@@ -768,13 +776,17 @@ public final class Big {
 			funciones.Funcion f = new funciones.Funcion(funciones.Termino.exponencial(BigDecimal.ONE, BigDecimal.ONE));
 			O.pln(f);
 			Interval ab = new Interval(BigDecimal.ZERO, BigDecimal.ONE);
-			O.pln(f.integracionTrapecioSimple(ab));
-			O.pln(f.integracionTrapecioCompuesto(ab, 10));
-			O.pln(f.integracionSimpsonSimple1_3(ab));
-			O.pln(f.integracionSimpson3_8(ab));
-			O.pln(f.integracionSimpsonCompuesto(ab, 1112));
+			O.pln(f.integracionTrapecioSimple(ab, 5));
+			O.pln(f.integracionTrapecioCompuesto(ab, 10, 5));
+			O.pln(f.integracionSimpsonSimple1_3(ab, 5));
+			O.pln(f.integracionSimpson3_8(ab, 5));
+			O.pln(f.integracionSimpsonCompuesto(ab, 1112, 5));
 			
-			
+			BigDecimal tr = new BigDecimal("0.0000000001234E+8");
+			O.pln(tr);
+			int exp = tr.precision() - tr.scale() - 1;
+			O.pln(tr.scale()+"-"+tr.precision()+"="+(tr.scale()-tr.precision()));
+			O.pln(exp);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

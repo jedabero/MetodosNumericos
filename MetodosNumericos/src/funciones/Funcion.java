@@ -466,11 +466,12 @@ public class Funcion {
 	 * Calcula el valor de la integral de la función desde a hasta b por el
 	 * método trapezoidal simple.
 	 * @param ab intervalo de integración
+	 * @param scale 
 	 * @return el valor de la integral de la función desde a hasta b.
 	 */
-	public BigDecimal integracionTrapecioSimple(Interval ab){
+	public BigDecimal integracionTrapecioSimple(Interval ab, int scale){
 		Interval fafb = valoresExtremos(ab);//Se obtiene fa y fb
-		return ab.length().multiply(fafb.centre());
+		return ab.length().multiply(fafb.centre(scale));
 	}
 	
 	/**
@@ -478,9 +479,10 @@ public class Funcion {
 	 * método trapezoidal compuesto.
 	 * @param ab intervalo de integración
 	 * @param n subintervals
+	 * @param scale 
 	 * @return el valor de la integral de la función desde a hasta b.
 	 */
-	public BigDecimal integracionTrapecioCompuesto(Interval ab, int n){
+	public BigDecimal integracionTrapecioCompuesto(Interval ab, int n, int scale){
 		Interval fab = valoresExtremos(ab);//Se obtiene fa y fb
 		//Se halla la distancia entre puntos
 		BigDecimal h = ab.length().divide(BigDecimal.valueOf(n), 15, RoundingMode.HALF_UP);
@@ -498,6 +500,7 @@ public class Funcion {
 		sumatfx = sumatfx.multiply(BigDecimal.valueOf(2)).add(fab.min()).add(fab.max());
 		//El resultado se multiplica por h/2
 		BigDecimal res = h.divide(BigDecimal.valueOf(2)).multiply(sumatfx);
+		
 		return res.stripTrailingZeros();
 	}
 	
@@ -505,9 +508,10 @@ public class Funcion {
 	 * Calcula el valor de la integral de la función desde a hasta b por el
 	 * método Simpson simple 1/3.
 	 * @param ab intervalo de integración
+	 * @param scale 
 	 * @return el valor de la integral de la función desde a hasta b.
 	 */
-	public BigDecimal integracionSimpsonSimple1_3(Interval ab){
+	public BigDecimal integracionSimpsonSimple1_3(Interval ab, int scale){
 		Interval fab = valoresExtremos(ab);//Se obtiene fa y fb
 		//Se halla h
 		BigDecimal h = ab.centre().subtract(ab.min()).stripTrailingZeros();
@@ -527,9 +531,10 @@ public class Funcion {
 	 * Calcula el valor de la integral de la función desde a hasta b por el
 	 * método Simpson simple 3/8.
 	 * @param ab intervalo de integración
+	 * @param scale 
 	 * @return el valor de la integral de la función desde a hasta b.
 	 */
-	public BigDecimal integracionSimpson3_8(Interval ab){
+	public BigDecimal integracionSimpson3_8(Interval ab, int scale){
 		Interval fab = valoresExtremos(ab);//Se obtiene fa y fb
 		//Se halla la distancia entre puntos
 		BigDecimal h = ab.length().divide(BigDecimal.valueOf(3), 15, RoundingMode.HALF_UP);
@@ -553,15 +558,15 @@ public class Funcion {
 	 * método Simpson compuesto.
 	 * @param ab intervalo de integración
 	 * @param n subintervals
+	 * @param scale 
 	 * @return el valor de la integral de la función desde a hasta b.
 	 */
-	public BigDecimal integracionSimpsonCompuesto(Interval ab, int n){
+	public BigDecimal integracionSimpsonCompuesto(Interval ab, int n, int scale){
 		n = (n%2==0)? n : n+1; //Se fuerza n como par
 		Interval fab = valoresExtremos(ab);//Se obtiene fa y fb
 		//Se halla la distancia entre puntos
 		BigDecimal h = ab.length().divide(BigDecimal.valueOf(n), 15, RoundingMode.HALF_UP);
 		h = h.stripTrailingZeros();
-		O.pln("h="+h);
 		//Luego se hallan los puntos entre a y b y los valores de la función en estos
 		BigDecimal x[] = new BigDecimal[n-1];
 		BigDecimal fx[] = new BigDecimal[n-1];
@@ -570,14 +575,8 @@ public class Funcion {
 			fx[i] = valorImagen(x[i]).stripTrailingZeros();
 		}
 		
-		O.p(ab.min());
-		O.pln(java.util.Arrays.toString(x)+ab.max());
-		O.p(fab.min());
-		O.pln(java.util.Arrays.toString(fx)+fab.max());
-		
 		BigDecimal sumaimp = Big.sumaPosPares(fx);//Se suman los impares
 		BigDecimal sumapar = Big.sumaPosImpares(fx);//Se suman los pares
-		O.pln("Eimp="+sumaimp+", Epar="+sumapar);
 		//Se multiplica sumaimp por 4
 		BigDecimal sumatfx = sumaimp.multiply(BigDecimal.valueOf(4));
 		//Se multiplica sumapar por 2 y se añade al acumulado

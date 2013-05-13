@@ -664,24 +664,40 @@ public class Termino {
 		case CONSTANTE:
 			return constante(BigDecimal.ZERO);
 		case POLINOMICA:
-			BigDecimal a = getA().multiply(BigDecimal.valueOf(getGrado()));
+			BigDecimal ap = getA().multiply(BigDecimal.valueOf(getGrado()));
 			int g = getGrado() - 1;
 			switch (g) {
 			case 0:
-				return constante(a);
+				return constante(ap);
 			default:
 				try {
-					return monomio(g, a);
+					return monomio(g, ap);
 				} catch (Exception e) {
 					O.pln(e);
 					return null;
 				}
 			}
-			
 		case TRIGONOMETRICA:
-			return null;
+			BigDecimal at = getA().multiply(getB());
+			FuncionTrig ft = null;
+			switch (getFunTrig()) {
+			case SIN:
+				ft = FuncionTrig.COS;
+				break;
+			case COS:
+				at = at.negate();
+				ft = FuncionTrig.SIN;
+			case TAN:
+			case SEC:
+			case CSC:
+			case COT:
+			default:
+				break;
+			}
+			return trigonometrico(ft, at, getB());
 		case EXPONENCIAL:
-			return null;
+			BigDecimal ae = getA().multiply(getB());
+			return exponencial(ae, getB());
 		case LOGARITMICA:
 			return null;
 		case RACIONAL:
@@ -711,9 +727,28 @@ public class Termino {
 			}
 			
 		case TRIGONOMETRICA:
-			return null;
+			BigDecimal at = getA().divide(getB(), 15, RoundingMode.UP);
+			at = at.stripTrailingZeros();
+			FuncionTrig ft = null;
+			switch (getFunTrig()) {
+			case SIN:
+				at = at.negate();
+				ft = FuncionTrig.COS;
+				break;
+			case COS:
+				ft = FuncionTrig.SIN;
+			case TAN:
+			case SEC:
+			case CSC:
+			case COT:
+			default:
+				break;
+			}
+			return trigonometrico(ft, at, getB());
 		case EXPONENCIAL:
-			return null;
+			BigDecimal ae = getA().divide(getB(), 15, RoundingMode.UP);
+			ae = ae.stripTrailingZeros();
+			return exponencial(ae, getB());
 		case LOGARITMICA:
 			return null;
 		case RACIONAL:
@@ -724,16 +759,6 @@ public class Termino {
 		return null;
 	}
 	
-	/**
-	 * Calcula el valor de la integral del término desde a hasta b por el método
-	 * trapezoidal simple.
-	 * @param ab
-	 * @return el valor de la integral del término desde a hasta b.
-	 */
-	public BigDecimal integracionTrapecioSimple(Interval ab){
-		Interval fafb = valoresExtremos(ab);
-		return ab.length().multiply(fafb.centre());
-	}
 	
 	
 	
