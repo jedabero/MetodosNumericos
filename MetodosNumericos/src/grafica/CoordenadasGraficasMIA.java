@@ -32,6 +32,8 @@ public class CoordenadasGraficasMIA extends MouseInputAdapter{
 	private static BigDecimal ten = BigDecimal.TEN;
 	private static BigDecimal five = ten.divide(dos);
 	
+	private Point prevPoint = new Point();
+	
 	/**
 	 * @param jg 
 	 * @param x 
@@ -53,11 +55,19 @@ public class CoordenadasGraficasMIA extends MouseInputAdapter{
 		this.Y = y;
 	}
 	
-	public void mousePressed(MouseEvent me) { }
+	public void mousePressed(MouseEvent me) {
+		O.pln("Pressed");
+	}
 
-	public void mouseDragged(MouseEvent me) { }
+	public void mouseDragged(MouseEvent mde) {
+		O.pln(mde.getPoint().toString());
+		O.pln(mde.getWhen());
+		
+	}
 
-	public void mouseReleased(MouseEvent me) { }
+	public void mouseReleased(MouseEvent me) {
+		O.pln("Released");
+	}
 	
 	public void mouseWheelMoved(MouseWheelEvent mwe) {
 		//Get X and Y scales and precisions

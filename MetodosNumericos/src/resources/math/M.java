@@ -33,9 +33,9 @@ public final class M {
 		
 		BigDecimal r;
 		for(int i=0;i<randTerminos;i++){
-			r = BigDecimal.valueOf(3*Math.random()*Big.randomSign()).setScale(2, 2);
+			r = BigDecimal.valueOf(3*Math.random()*Math2.randomSign()).setScale(2, 2);
 			constA[i] = r;
-			r = BigDecimal.valueOf(3*Math.random()*Big.randomSign()).setScale(2, 2);
+			r = BigDecimal.valueOf(3*Math.random()*Math2.randomSign()).setScale(2, 2);
 			constB[i] = r;
 			tp[i] = FuncionTrig.values()[(int)(6*Math.random())];
 		}

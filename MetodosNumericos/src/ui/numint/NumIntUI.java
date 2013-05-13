@@ -12,9 +12,8 @@ import javax.swing.JPanel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import funciones.Funcion;
-
 import ui.raices.FuncionPanel;
+import funciones.Funcion;
 
 /**
  * @author Jedabero

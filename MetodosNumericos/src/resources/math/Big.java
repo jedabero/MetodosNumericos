@@ -33,20 +33,17 @@ public final class Big {
      * <i>pi</i>, the ratio of the circumference of a circle to its
      * diameter.
 	 */
-	public static final BigDecimal PI =
-			new BigDecimal(Double.toString(Math.PI));
+	public static final BigDecimal PI = BigDecimal.valueOf(Math.PI);
 	
 	/**
 	 * Half of {@link Big#PI}
 	 */
-	public static final BigDecimal PI_2 =
-			PI.divide(BigDecimal.valueOf(2));
+	public static final BigDecimal PI_2 = BigDecimal.valueOf(Math2.PI_2);
 	
 	/**
 	 * Double of {@link Big#PI}
 	 */
-	public static final BigDecimal TAU =
-			PI.multiply(new BigDecimal(Integer.toString(2)));
+	public static final BigDecimal TAU = BigDecimal.valueOf(Math2.TAU);
 	
 	/**
 	 * Convierte el número al entero más cercano, dependiendo si es un máximo o no.
@@ -74,14 +71,6 @@ public final class Big {
 		return bd;
 	}//Fin de compareToInt
 	
-	/**
-	 * Da un valor aleatorio entre -1 y 1
-	 * @return	un entero que puede ser -1, 0 o 1
-	 */
-	public static int randomSign(){
-		int toInt = (int)(2 - 4*Math.random());
-		return toInt==0 ? 1 : toInt;
-	}
 	
 	/**
 	 * @param v
@@ -204,7 +193,7 @@ public final class Big {
 	
 	/**
 	 * Calcula el seno trigonométrico del ángulo
-	 * @see		Math#sin(double)
+	 * @see		Math2#sin(double)
 	 * @param	a el ángulo en radianes
 	 * @return	el seno de {@code a}
 	 */
@@ -217,7 +206,7 @@ public final class Big {
 	
 	/**
 	 * Calcula el coseno trigonométrico del ángulo
-	 * @see		Math#cos(double)
+	 * @see		Math2#cos(double)
 	 * @param	a el ángulo en radianes
 	 * @return	el coseno de {@code a}
 	 */
@@ -230,7 +219,7 @@ public final class Big {
 	
 	/**
 	 * Calcula la tangente trigonométrico del ángulo
-	 * @see		Math#tan(double)
+	 * @see		Math2#tan(double)
 	 * @param	a el ángulo en radianes
 	 * @return	la tangente de {@code a}
 	 */
@@ -286,7 +275,7 @@ public final class Big {
 	
 	/**
 	 * Calcula el seno trigonométrico del ángulo
-	 * @see		Math#sin(double)
+	 * @see		Math2#sin(double)
 	 * @param	a el ángulo en radianes
 	 * @return	el seno de {@code a}
 	 */
@@ -298,7 +287,7 @@ public final class Big {
 	
 	/**
 	 * Calcula el coseno trigonométrico del ángulo
-	 * @see		Math#cos(double)
+	 * @see		Math2#cos(double)
 	 * @param	a el ángulo en radianes
 	 * @return	el coseno de {@code a}
 	 */
@@ -310,7 +299,7 @@ public final class Big {
 	
 	/**
 	 * Calcula la tangente trigonométrico del ángulo
-	 * @see		Math#tan(double)
+	 * @see		Math2#tan(double)
 	 * @param	a el ángulo en radianes
 	 * @return	la tangente de {@code a}
 	 */
@@ -367,7 +356,7 @@ public final class Big {
 	}
 	
 	/**
-	 * @see		Math#toRadians(double)
+	 * @see		Math2#toRadians(double)
 	 * @param	a el ángulo en grados
 	 * @return	el ángulo {@code a} en radianes 
 	 */
@@ -376,7 +365,7 @@ public final class Big {
 	}
 	
 	/**
-	 * @see		Math#toDegrees(double)
+	 * @see		Math2#toDegrees(double)
 	 * @param	a el ángulo en radianes
 	 * @return	el ángulo {@code a} en grados 
 	 */
@@ -419,7 +408,7 @@ public final class Big {
 	
 	/**
 	 * Regresa el numero de Euler elevado a la potencia del valor del {@code BigDecimal}
-	 * @see Math#exp(double)
+	 * @see Math2#exp(double)
 	 * @param	x el exponente a elevar {@code e}.
 	 * @return e<sup>x</sup>, en el que e es la base de los logaritmos naturales
 	 */
@@ -438,7 +427,7 @@ public final class Big {
 	
 	/**
 	 * Regresa el logaritmo natural (base {@code e}) del valor del {@code BigDecimal}
-	 * @see Math#log(double)
+	 * @see Math2#log(double)
 	 * @param	x un valor
 	 * @return ln {@code x}, logaritmo natural de {@code x}
 	 */

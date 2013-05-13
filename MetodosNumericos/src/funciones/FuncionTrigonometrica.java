@@ -5,8 +5,8 @@ package funciones;
 
 import java.math.BigDecimal;
 
-import resources.math.Big;
 import resources.math.M;
+import resources.math.Math2;
 
 /**
  * Esta clase define las funciones trigonométricas.
@@ -115,7 +115,7 @@ public class FuncionTrigonometrica extends FuncionBase {
 			boolean isInf  = (signBi==0)&&((tip==FuncionTrig.CSC)||(tip==FuncionTrig.COT));
 			
 			if(isInf){
-				getB()[i] = BigDecimal.ONE.multiply(BigDecimal.valueOf(Big.randomSign()));
+				getB()[i] = BigDecimal.ONE.multiply(BigDecimal.valueOf(Math2.randomSign()));
 			}
 			
 			if(isZero) signAi=0;
