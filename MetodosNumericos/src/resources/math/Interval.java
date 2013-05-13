@@ -41,6 +41,14 @@ public class Interval {
 	}
 	
 	/**
+	 * @param scale scale
+	 * @return el valor del centro de este intervalo
+	 */
+	public BigDecimal centre(int scale){
+		return max.add(min).divide(BigDecimal.valueOf(2), scale, RoundingMode.HALF_UP);
+	}
+	
+	/**
 	 * @return el mínimo valor del intervalo
 	 */
 	public BigDecimal min(){

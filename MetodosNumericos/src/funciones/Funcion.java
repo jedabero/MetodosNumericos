@@ -707,7 +707,7 @@ public class Funcion {
 			int k = 0;				//Índice de la iteración
 			BigDecimal xa = BigDecimal.ZERO;
 			while((!fin)&&(k<=maxIt)){
-				BigDecimal xm = ab.centre();	//valor medio
+				BigDecimal xm = ab.centre(tol.scale()+3);	//valor medio
 				BigDecimal e = xa.subtract(xm).abs();	//Error inicial
 				if (e.compareTo(tol)<1) {	//Error igual o por debajo de la tolerancia?
 					fin = true;
