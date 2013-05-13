@@ -469,9 +469,9 @@ public class Funcion {
 	 * @param scale 
 	 * @return el valor de la integral de la función desde a hasta b.
 	 */
-	public BigDecimal integracionTrapecioSimple(Interval ab, int scale){
+	public BigDecimal integracionTrapecioSimple(Interval ab){
 		Interval fafb = valoresExtremos(ab);//Se obtiene fa y fb
-		return ab.length().multiply(fafb.centre(scale));
+		return ab.length().multiply(fafb.centre());
 	}
 	
 	/**
@@ -482,7 +482,7 @@ public class Funcion {
 	 * @param scale 
 	 * @return el valor de la integral de la función desde a hasta b.
 	 */
-	public BigDecimal integracionTrapecioCompuesto(Interval ab, int n, int scale){
+	public BigDecimal integracionTrapecioCompuesto(Interval ab, int n){
 		Interval fab = valoresExtremos(ab);//Se obtiene fa y fb
 		//Se halla la distancia entre puntos
 		BigDecimal h = ab.length().divide(BigDecimal.valueOf(n), 15, RoundingMode.HALF_UP);
@@ -511,7 +511,7 @@ public class Funcion {
 	 * @param scale 
 	 * @return el valor de la integral de la función desde a hasta b.
 	 */
-	public BigDecimal integracionSimpsonSimple1_3(Interval ab, int scale){
+	public BigDecimal integracionSimpsonSimple1_3(Interval ab){
 		Interval fab = valoresExtremos(ab);//Se obtiene fa y fb
 		//Se halla h
 		BigDecimal h = ab.centre().subtract(ab.min()).stripTrailingZeros();
@@ -534,7 +534,7 @@ public class Funcion {
 	 * @param scale 
 	 * @return el valor de la integral de la función desde a hasta b.
 	 */
-	public BigDecimal integracionSimpson3_8(Interval ab, int scale){
+	public BigDecimal integracionSimpson3_8(Interval ab){
 		Interval fab = valoresExtremos(ab);//Se obtiene fa y fb
 		//Se halla la distancia entre puntos
 		BigDecimal h = ab.length().divide(BigDecimal.valueOf(3), 15, RoundingMode.HALF_UP);
@@ -561,7 +561,7 @@ public class Funcion {
 	 * @param scale 
 	 * @return el valor de la integral de la función desde a hasta b.
 	 */
-	public BigDecimal integracionSimpsonCompuesto(Interval ab, int n, int scale){
+	public BigDecimal integracionSimpsonCompuesto(Interval ab, int n){
 		n = (n%2==0)? n : n+1; //Se fuerza n como par
 		Interval fab = valoresExtremos(ab);//Se obtiene fa y fb
 		//Se halla la distancia entre puntos

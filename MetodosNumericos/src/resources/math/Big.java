@@ -762,35 +762,4 @@ public final class Big {
 		return n.precision() - n.scale() - 1;
 	}
 	
-	/**
-	 * @param args
-	 */
-	@SuppressWarnings("unused")
-	public static void main(String args[]){
-		try {
-
-			BigDecimal bdVx[] = {BigDecimal.ONE, BigDecimal.valueOf(5), BigDecimal.valueOf(10), BigDecimal.valueOf(20)};
-			BigDecimal bdVfx[] = {BigDecimal.valueOf(56.5), BigDecimal.valueOf(113), BigDecimal.valueOf(181), BigDecimal.valueOf(214.5)};
-			
-			funciones.Funcion f2 = funciones.Funcion.polinomio(3, bdVx);
-			funciones.Funcion f = new funciones.Funcion(funciones.Termino.exponencial(BigDecimal.ONE, BigDecimal.ONE));
-			O.pln(f);
-			Interval ab = new Interval(BigDecimal.ZERO, BigDecimal.ONE);
-			O.pln(f.integracionTrapecioSimple(ab, 5));
-			O.pln(f.integracionTrapecioCompuesto(ab, 10, 5));
-			O.pln(f.integracionSimpsonSimple1_3(ab, 5));
-			O.pln(f.integracionSimpson3_8(ab, 5));
-			O.pln(f.integracionSimpsonCompuesto(ab, 1112, 5));
-			
-			BigDecimal tr = new BigDecimal("0.0000000001234E+8");
-			O.pln(tr);
-			int exp = tr.precision() - tr.scale() - 1;
-			O.pln(tr.scale()+"-"+tr.precision()+"="+(tr.scale()-tr.precision()));
-			O.pln(exp);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-	
-	
 }
