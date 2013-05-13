@@ -463,8 +463,8 @@ public class Funcion {
 	}
 	
 	/**
-	 * Calcula el valor de la integral del término desde a hasta b por el método
-	 * trapezoidal simple.
+	 * Calcula el valor de la integral de la función desde a hasta b por el
+	 * método trapezoidal simple.
 	 * @param ab intervalo de integración
 	 * @return el valor de la integral de la función desde a hasta b.
 	 */
@@ -474,8 +474,8 @@ public class Funcion {
 	}
 	
 	/**
-	 * Calcula el valor de la integral del término desde a hasta b por el método
-	 * trapezoidal compuesto.
+	 * Calcula el valor de la integral de la función desde a hasta b por el
+	 * método trapezoidal compuesto.
 	 * @param ab intervalo de integración
 	 * @param n subintervals
 	 * @return el valor de la integral de la función desde a hasta b.
@@ -498,12 +498,12 @@ public class Funcion {
 		sumatfx = sumatfx.multiply(BigDecimal.valueOf(2)).add(fab.min()).add(fab.max());
 		//El resultado se multiplica por h/2
 		BigDecimal res = h.divide(BigDecimal.valueOf(2)).multiply(sumatfx);
-		return res;
+		return res.stripTrailingZeros();
 	}
 	
 	/**
-	 * Calcula el valor de la integral del término desde a hasta b por el método
-	 * Simpson simple 1/3.
+	 * Calcula el valor de la integral de la función desde a hasta b por el
+	 * método Simpson simple 1/3.
 	 * @param ab intervalo de integración
 	 * @return el valor de la integral de la función desde a hasta b.
 	 */
@@ -518,15 +518,15 @@ public class Funcion {
 		BigDecimal sumatfx = fx1; 
 		sumatfx = sumatfx.multiply(BigDecimal.valueOf(4)).add(fab.min()).add(fab.max());
 		//El resultado se multiplica por h/3
-		BigDecimal res = h.divide(BigDecimal.valueOf(3)).multiply(sumatfx);
-		return res;
+		BigDecimal res = h.divide(BigDecimal.valueOf(3), 15, RoundingMode.HALF_UP);
+		res = res.multiply(sumatfx);
+		return res.stripTrailingZeros();
 	}
 	
 	/**
-	 * Calcula el valor de la integral del término desde a hasta b por el método
-	 * Simpson simple 3/8.
+	 * Calcula el valor de la integral de la función desde a hasta b por el
+	 * método Simpson simple 3/8.
 	 * @param ab intervalo de integración
-	 * @param n subintervals
 	 * @return el valor de la integral de la función desde a hasta b.
 	 */
 	public BigDecimal integracionSimpson3_8(Interval ab){
@@ -545,7 +545,49 @@ public class Funcion {
 		sumatfx = sumatfx.multiply(BigDecimal.valueOf(3)).add(fab.min()).add(fab.max());
 		//El resultado se multiplica por h/2
 		BigDecimal res = h.multiply(BigDecimal.valueOf(0.375)).multiply(sumatfx);
-		return res;
+		return res.stripTrailingZeros();
+	}
+	
+	/**
+	 * Calcula el valor de la integral de la función desde a hasta b por el
+	 * método Simpson compuesto.
+	 * @param ab intervalo de integración
+	 * @param n subintervals
+	 * @return el valor de la integral de la función desde a hasta b.
+	 */
+	public BigDecimal integracionSimpsonCompuesto(Interval ab, int n){
+		n = (n%2==0)? n : n+1; //Se fuerza n como par
+		Interval fab = valoresExtremos(ab);//Se obtiene fa y fb
+		//Se halla la distancia entre puntos
+		BigDecimal h = ab.length().divide(BigDecimal.valueOf(n), 15, RoundingMode.HALF_UP);
+		h = h.stripTrailingZeros();
+		O.pln("h="+h);
+		//Luego se hallan los puntos entre a y b y los valores de la función en estos
+		BigDecimal x[] = new BigDecimal[n-1];
+		BigDecimal fx[] = new BigDecimal[n-1];
+		for (int i = 0; i < x.length; i++) {
+			x[i] = ab.min().add(h.multiply(BigDecimal.valueOf(i+1)));
+			fx[i] = valorImagen(x[i]).stripTrailingZeros();
+		}
+		
+		O.p(ab.min());
+		O.pln(java.util.Arrays.toString(x)+ab.max());
+		O.p(fab.min());
+		O.pln(java.util.Arrays.toString(fx)+fab.max());
+		
+		BigDecimal sumaimp = Big.sumaPosPares(fx);//Se suman los impares
+		BigDecimal sumapar = Big.sumaPosImpares(fx);//Se suman los pares
+		O.pln("Eimp="+sumaimp+", Epar="+sumapar);
+		//Se multiplica sumaimp por 4
+		BigDecimal sumatfx = sumaimp.multiply(BigDecimal.valueOf(4));
+		//Se multiplica sumapar por 2 y se añade al acumulado
+		sumatfx = sumatfx.add(sumapar.multiply(BigDecimal.valueOf(2)));
+		//Luego se añaden fa y fb 
+		sumatfx = sumatfx.add(fab.min()).add(fab.max());
+		//El resultado se multiplica por h/2
+		BigDecimal res = h.divide(BigDecimal.valueOf(3), 15, RoundingMode.HALF_UP);
+		res = res.multiply(sumatfx);
+		return res.stripTrailingZeros();
 	}
 	
 	private int firstNonZeroCoef(){

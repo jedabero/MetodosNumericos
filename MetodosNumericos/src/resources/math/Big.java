@@ -97,6 +97,34 @@ public final class Big {
 	
 	/**
 	 * @param v
+	 * @return suma de los elementos en posiciones impares del vector
+	 */
+	public static BigDecimal sumaPosImpares(BigDecimal v[]) {
+		BigDecimal suma = BigDecimal.ZERO;
+		for (int i = 0; i < v.length; i++) {
+			if(i%2==1){
+				suma = suma.add(v[i]);
+			}
+		}
+		return suma;
+	}
+	
+	/**
+	 * @param v
+	 * @return suma de los elementos en posiciones pares del vector
+	 */
+	public static BigDecimal sumaPosPares(BigDecimal v[]) {
+		BigDecimal suma = BigDecimal.ZERO;
+		for (int i = 0; i < v.length; i++) {
+			if(i%2==0){
+				suma = suma.add(v[i]);
+			}
+		}
+		return suma;
+	}
+	
+	/**
+	 * @param v
 	 * @return la multiplicacion de todos los elementos de v
 	 */
 	public static BigDecimal multiplica(BigDecimal v[]){
@@ -736,8 +764,15 @@ public final class Big {
 			BigDecimal bdVx[] = {BigDecimal.ONE, BigDecimal.valueOf(5), BigDecimal.valueOf(10), BigDecimal.valueOf(20)};
 			BigDecimal bdVfx[] = {BigDecimal.valueOf(56.5), BigDecimal.valueOf(113), BigDecimal.valueOf(181), BigDecimal.valueOf(214.5)};
 			
-			funciones.Funcion f = funciones.Funcion.polinomio(3, bdVx);
+			funciones.Funcion f2 = funciones.Funcion.polinomio(3, bdVx);
+			funciones.Funcion f = new funciones.Funcion(funciones.Termino.exponencial(BigDecimal.ONE, BigDecimal.ONE));
 			O.pln(f);
+			Interval ab = new Interval(BigDecimal.ZERO, BigDecimal.ONE);
+			O.pln(f.integracionTrapecioSimple(ab));
+			O.pln(f.integracionTrapecioCompuesto(ab, 10));
+			O.pln(f.integracionSimpsonSimple1_3(ab));
+			O.pln(f.integracionSimpson3_8(ab));
+			O.pln(f.integracionSimpsonCompuesto(ab, 1112));
 			
 			
 		} catch (Exception e) {
