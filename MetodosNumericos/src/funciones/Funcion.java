@@ -477,7 +477,7 @@ public class Funcion {
 	 * Calcula el valor de la integral del término desde a hasta b por el método
 	 * trapezoidal compuesto.
 	 * @param ab intervalo de integración
-	 * @param n subintervalos
+	 * @param n subintervals
 	 * @return el valor de la integral de la función desde a hasta b.
 	 */
 	public BigDecimal integracionTrapecioCompuesto(Interval ab, int n){
@@ -498,6 +498,53 @@ public class Funcion {
 		sumatfx = sumatfx.multiply(BigDecimal.valueOf(2)).add(fab.min()).add(fab.max());
 		//El resultado se multiplica por h/2
 		BigDecimal res = h.divide(BigDecimal.valueOf(2)).multiply(sumatfx);
+		return res;
+	}
+	
+	/**
+	 * Calcula el valor de la integral del término desde a hasta b por el método
+	 * Simpson simple 1/3.
+	 * @param ab intervalo de integración
+	 * @return el valor de la integral de la función desde a hasta b.
+	 */
+	public BigDecimal integracionSimpsonSimple1_3(Interval ab){
+		Interval fab = valoresExtremos(ab);//Se obtiene fa y fb
+		//Se halla h
+		BigDecimal h = ab.centre().subtract(ab.min()).stripTrailingZeros();
+		//Luego se halla x1 y f(x1)
+		BigDecimal x1 = ab.centre().stripTrailingZeros();
+		BigDecimal fx1 = valorImagen(x1);
+		//Se suman cada uno
+		BigDecimal sumatfx = fx1; 
+		sumatfx = sumatfx.multiply(BigDecimal.valueOf(4)).add(fab.min()).add(fab.max());
+		//El resultado se multiplica por h/3
+		BigDecimal res = h.divide(BigDecimal.valueOf(3)).multiply(sumatfx);
+		return res;
+	}
+	
+	/**
+	 * Calcula el valor de la integral del término desde a hasta b por el método
+	 * Simpson simple 3/8.
+	 * @param ab intervalo de integración
+	 * @param n subintervals
+	 * @return el valor de la integral de la función desde a hasta b.
+	 */
+	public BigDecimal integracionSimpson3_8(Interval ab){
+		Interval fab = valoresExtremos(ab);//Se obtiene fa y fb
+		//Se halla la distancia entre puntos
+		BigDecimal h = ab.length().divide(BigDecimal.valueOf(3), 15, RoundingMode.HALF_UP);
+		h = h.stripTrailingZeros();
+		//Luego se hallan los puntos entre a y b y los valores de la función en estos
+		BigDecimal x1 = ab.min().add(h);
+		BigDecimal x2 = ab.max().subtract(h);
+		BigDecimal fx1 = valorImagen(x1);
+		BigDecimal fx2 = valorImagen(x2);
+		//Se suman cada uno
+		BigDecimal sumatfx = fx1.add(fx2);
+		//Luego se multiplica la suma por 2 y se añaden fa y fb 
+		sumatfx = sumatfx.multiply(BigDecimal.valueOf(3)).add(fab.min()).add(fab.max());
+		//El resultado se multiplica por h/2
+		BigDecimal res = h.multiply(BigDecimal.valueOf(0.375)).multiply(sumatfx);
 		return res;
 	}
 	
