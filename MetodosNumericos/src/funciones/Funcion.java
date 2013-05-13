@@ -681,12 +681,13 @@ public class Funcion {
 	}
 	
 	private boolean rootExistentialityCriterion(Interval ab){
-		BigDecimal fa = valorImagen(ab.min());
-		BigDecimal fb = valorImagen(ab.max());
-		BigDecimal ce = fa.multiply(fb);
+		Interval fab = valoresExtremos(ab);
+		BigDecimal ce = fab.min().multiply(fab.max());
 		switch (ce.signum()) {
+		case 0:
 		case -1:
 			return true;
+		case 1:
 		default:
 			return false;
 		}
@@ -707,6 +708,10 @@ public class Funcion {
 			BigDecimal xa = BigDecimal.ZERO;
 			while((!fin)&&(k<=maxIt)){
 				BigDecimal xm = ab.centre(tol.scale()+3);	//valor medio
+				if(xm.signum()==0){	//En caso de que el centro sea cero se debe
+									//evitar convergencia inmediata
+					xm = xm.add(tol.movePointRight(1));
+				}
 				BigDecimal e = xa.subtract(xm).abs();	//Error inicial
 				if (e.compareTo(tol)<1) {	//Error igual o por debajo de la tolerancia?
 					fin = true;

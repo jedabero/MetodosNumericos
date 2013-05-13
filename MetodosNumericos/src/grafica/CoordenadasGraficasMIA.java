@@ -60,7 +60,7 @@ public class CoordenadasGraficasMIA extends MouseInputAdapter{
 	public void mouseReleased(MouseEvent me) { }
 	
 	public void mouseWheelMoved(MouseWheelEvent mwe) {
-		
+		//Get X and Y scales and precisions
 		int xScale = X.length().scale();
 		int xPresi = X.length().precision();
 		O.pln("xScale:"+xScale+"|xPresicion:"+xPresi);
@@ -75,7 +75,7 @@ public class CoordenadasGraficasMIA extends MouseInputAdapter{
 		int yPresi = Y.length().precision();
 		O.pln("yScale:"+yScale+"|yPresicion:"+yPresi);
 		if(yScale>0){
-			dy = uno.divide(ten.pow(xScale-1));
+			dy = uno.divide(ten.pow(yScale-1));
 		}else{
 			dy = uno;
 		}
