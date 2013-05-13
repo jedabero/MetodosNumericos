@@ -729,40 +729,17 @@ public final class Big {
 	/**
 	 * @param args
 	 */
+	@SuppressWarnings("unused")
 	public static void main(String args[]){
 		try {
 
 			BigDecimal bdVx[] = {BigDecimal.ONE, BigDecimal.valueOf(5), BigDecimal.valueOf(10), BigDecimal.valueOf(20)};
 			BigDecimal bdVfx[] = {BigDecimal.valueOf(56.5), BigDecimal.valueOf(113), BigDecimal.valueOf(181), BigDecimal.valueOf(214.5)};
 			
-			
-			funciones.Funcion f = funciones.Funcion.aproximacionPolinomialLangrange(bdVx, bdVfx);
-			funciones.Funcion ff = funciones.Funcion.aproximacionPolinomialSimple(bdVx, bdVfx);
-			funciones.Funcion fff = funciones.Funcion.aproximacionPolinomialNewton(bdVx, bdVfx);
-			System.out.println("f langrange "+f);
-			System.out.println("f simple "+ff);
-			System.out.println("f newton "+fff);
+			funciones.Funcion f = funciones.Funcion.polinomio(3, bdVx);
+			O.pln(f);
 			
 			
-			
-			
-			//System.out.println("4C1: "+sumaCombinaciones(bdV, 1));
-			//BigDecimal c[] = listaCombinaciones(bdV, 1);
-			//for (int i = 0; i < c.length; i++) {
-				//System.out.println(c[i]);
-			//}
-			
-			
-			/*
-			O.pln("pow("+uno+", "+dos+") = "+pow(uno, dos));
-			O.pln("log"+dos+" ("+uno+") = "+logB(uno, dos));
-			O.pln("sqrt("+uno.multiply(dos)+") = "+sqrt(uno.multiply(dos)));
-			O.pln("cbrt("+uno+") = "+cbrt(uno));
-			O.pln("ln("+uno+") = "+ln(uno));
-			O.pln("exp("+uno+") = "+exp(uno));
-			
-			O.pln(acsc(BigDecimal.ZERO));
-			*/
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -770,22 +747,3 @@ public final class Big {
 	
 	
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

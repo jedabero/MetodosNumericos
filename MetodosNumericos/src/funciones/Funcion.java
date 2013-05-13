@@ -27,7 +27,7 @@ import vectores.SistemaEcuacionesLineales;
  * @author Jedabero
  *
  */
-public class Funcion{
+public class Funcion {
 	
 	/**
 	 * Función que representa el cero
@@ -427,6 +427,18 @@ public class Funcion{
 	}
 	
 	/**
+	 * @param ab
+	 * @return un intervalo cuyo mínimo corresponde al valor de la función en ab.min
+	 * y cuyo máximo corresponde al valor de la función en ab.máx
+	 */
+	public Interval valoresExtremos(Interval ab){
+		BigDecimal fa = valorImagen(ab.min());
+		BigDecimal fb = valorImagen(ab.max());
+		Interval fafb = new Interval(fa, fb);
+		return fafb;
+	}
+	
+	/**
 	 * @return la derivada de esta función
 	 */
 	public Funcion derivada(){
@@ -436,6 +448,57 @@ public class Funcion{
 			alT.add(iterator.next().derivada()); 
 		}
 		return new Funcion(alT);
+	}
+
+	/**
+	 * @return la integral indefinida de esta función
+	 */
+	public Funcion integralIndef(){
+		ArrayList<Termino> alT = new ArrayList<Termino>();
+		for (ListIterator<Termino> iterator = getTerminos().listIterator();
+				iterator.hasNext();) {
+			alT.add(iterator.next().integralIndef()); 
+		}
+		return new Funcion(alT);
+	}
+	
+	/**
+	 * Calcula el valor de la integral del término desde a hasta b por el método
+	 * trapezoidal simple.
+	 * @param ab intervalo de integración
+	 * @return el valor de la integral de la función desde a hasta b.
+	 */
+	public BigDecimal integracionTrapecioSimple(Interval ab){
+		Interval fafb = valoresExtremos(ab);//Se obtiene fa y fb
+		return ab.length().multiply(fafb.centre());
+	}
+	
+	/**
+	 * Calcula el valor de la integral del término desde a hasta b por el método
+	 * trapezoidal compuesto.
+	 * @param ab intervalo de integración
+	 * @param n subintervalos
+	 * @return el valor de la integral de la función desde a hasta b.
+	 */
+	public BigDecimal integracionTrapecioCompuesto(Interval ab, int n){
+		Interval fab = valoresExtremos(ab);//Se obtiene fa y fb
+		//Se halla la distancia entre puntos
+		BigDecimal h = ab.length().divide(BigDecimal.valueOf(n), 15, RoundingMode.HALF_UP);
+		h = h.stripTrailingZeros();
+		//Luego se hallan los puntos entre a y b y los valores de la función en estos
+		BigDecimal x[] = new BigDecimal[n-1];
+		BigDecimal fx[] = new BigDecimal[n-1];
+		for (int i = 0; i < x.length; i++) {
+			x[i] = ab.min().add(h.multiply(BigDecimal.valueOf(i+1)));
+			fx[i] = valorImagen(x[i]).stripTrailingZeros();
+		}
+		//Se suman cada uno
+		BigDecimal sumatfx = Big.suma(fx);
+		//Luego se multiplica la suma por 2 y se añaden fa y fb 
+		sumatfx = sumatfx.multiply(BigDecimal.valueOf(2)).add(fab.min()).add(fab.max());
+		//El resultado se multiplica por h/2
+		BigDecimal res = h.divide(BigDecimal.valueOf(2)).multiply(sumatfx);
+		return res;
 	}
 	
 	private int firstNonZeroCoef(){

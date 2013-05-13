@@ -34,6 +34,7 @@ public class MetodosUI extends JFrame implements ActionListener{
 	 * 
 	 */
 	private static final long serialVersionUID = 6637458677520322115L;
+	private int resultScale = 3;
 	
 	private static final String actions[] = {
 		"Polinomios",
@@ -120,6 +121,7 @@ public class MetodosUI extends JFrame implements ActionListener{
 				ttt,
 				new ActionListener[]{this,this,this,this,null,this},
 				null, null, null);
+		
 		Add.menu(mnbPrincipal, "Ayuda", 'Y',
 				new int[]{0, 2, 1},
 				new String[]{
@@ -183,6 +185,20 @@ public class MetodosUI extends JFrame implements ActionListener{
 	}
 	
 	
+	/**
+	 * @return the resultScale
+	 */
+	public int getResultScale() {
+		return resultScale;
+	}
+
+	/**
+	 * @param resultScale the resultScale to set
+	 */
+	public void setResultScale(int resultScale) {
+		this.resultScale = resultScale;
+	}
+
 	/**
 	 * @param args
 	 */

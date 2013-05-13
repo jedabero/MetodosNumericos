@@ -4,12 +4,14 @@
 package funciones;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 import resources.CustomException;
 import resources.O;
 import resources.math.Big;
 import resources.math.Constantes.FuncionTrig;
 import resources.math.Constantes.Tipo;
+import resources.math.Interval;
 import resources.math.M;
 
 /**
@@ -640,6 +642,19 @@ public class Termino {
 		return null;
 	}
 	*/
+
+	/**
+	 * @param ab
+	 * @return un intervalo cuyo mínimo corresponde al valor de la función en ab.min
+	 * y cuyo máximo corresponde al valor de la función en ab.máx
+	 */
+	public Interval valoresExtremos(Interval ab){
+		BigDecimal fa = valorImagen(ab.min());
+		BigDecimal fb = valorImagen(ab.max());
+		Interval fafb = new Interval(fa, fb);
+		return fafb;
+	}
+	
 	/**
 	 * TODO derivada del resto de funciones
 	 * @return la derivada de este termino
@@ -647,13 +662,13 @@ public class Termino {
 	public Termino derivada(){
 		switch (this.getTipoFuncion()) {
 		case CONSTANTE:
-			return Termino.constante(BigDecimal.ZERO);
+			return constante(BigDecimal.ZERO);
 		case POLINOMICA:
 			BigDecimal a = getA().multiply(BigDecimal.valueOf(getGrado()));
 			int g = getGrado() - 1;
 			switch (g) {
 			case 0:
-				return Termino.constante(a);
+				return constante(a);
 			default:
 				try {
 					return monomio(g, a);
@@ -676,5 +691,51 @@ public class Termino {
 		}
 		return null;
 	}
+	
+	/** TODO la integral del resto de funciones
+	 * @return la integral indefinida de este término
+	 */
+	public Termino integralIndef(){
+		switch (getTipoFuncion()) {
+		case CONSTANTE:
+			return monomio(1, getA());
+		case POLINOMICA:
+			int g = getGrado() + 1;
+			BigDecimal a = getA().divide(BigDecimal.valueOf(g), 15, RoundingMode.UP);
+			a = a.stripTrailingZeros();
+			try {
+				return monomio(g, a);
+			} catch (Exception e) {
+				O.pln(e);
+				return null;
+			}
+			
+		case TRIGONOMETRICA:
+			return null;
+		case EXPONENCIAL:
+			return null;
+		case LOGARITMICA:
+			return null;
+		case RACIONAL:
+			break;
+		default: 
+			return null;
+		}
+		return null;
+	}
+	
+	/**
+	 * Calcula el valor de la integral del término desde a hasta b por el método
+	 * trapezoidal simple.
+	 * @param ab
+	 * @return el valor de la integral del término desde a hasta b.
+	 */
+	public BigDecimal integracionTrapecioSimple(Interval ab){
+		Interval fafb = valoresExtremos(ab);
+		return ab.length().multiply(fafb.centre());
+	}
+	
+	
+	
 	
 }
