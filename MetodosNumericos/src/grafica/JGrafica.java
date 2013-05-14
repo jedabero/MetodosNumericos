@@ -269,30 +269,31 @@ public class JGrafica extends JPanel {
 	
 	private ArrayList<Point> changeCoordToPointAreaIntegral(BigDecimalPoint[] bdcArr){
 		ArrayList<Point> aLpP = new ArrayList<Point>();
-		O.pln(integralX);
 		if(integralX==null){
 			integralX = X;
 		}
-		O.pln(integralX);
+		
 		for(int i=0;i<bdcArr.length;i++){
 			BigDecimalPoint cord = bdcArr[i];
-			BigDecimal xnum = cord.x().subtract(X.min());
-			BigDecimal xdiv = xnum.divide(X.length(), 5, RoundingMode.HALF_UP);
-			int x = (int)(gDim.width*(xdiv.doubleValue()));
-			BigDecimal ynum = cord.y().subtract(Y.min());
-			BigDecimal ydiv = ynum.divide(Y.length(), 5, RoundingMode.HALF_UP);
-			int y = (int)(gDim.height*(1-ydiv.doubleValue()));
-			
-			Point p = new Point(x,y);
-			p.translate(gCoords.x, gCoords.y);
-			
-			if(p.y<gCoords.y){
-				p.y = gCoords.y;
-			}else if(p.y>gCoords.y+gDim.height){
-				p.y = gCoords.y+gDim.height;
+			if((cord.x.compareTo(integralX.min())>=0)&&(cord.x.compareTo(integralX.max())<=0)){
+				BigDecimal xnum = cord.x().subtract(X.min());
+				BigDecimal xdiv = xnum.divide(X.length(), 5, RoundingMode.HALF_UP);
+				int x = (int)(gDim.width*(xdiv.doubleValue()));
+				BigDecimal ynum = cord.y().subtract(Y.min());
+				BigDecimal ydiv = ynum.divide(Y.length(), 5, RoundingMode.HALF_UP);
+				int y = (int)(gDim.height*(1-ydiv.doubleValue()));
+				
+				Point p = new Point(x,y);
+				p.translate(gCoords.x, gCoords.y);
+				
+				if(p.y<gCoords.y){
+					p.y = gCoords.y;
+				}else if(p.y>gCoords.y+gDim.height){
+					p.y = gCoords.y+gDim.height;
+				}
+				
+				aLpP.add(p);
 			}
-			
-			aLpP.add(p);
 		}
 		return aLpP;
 	}
