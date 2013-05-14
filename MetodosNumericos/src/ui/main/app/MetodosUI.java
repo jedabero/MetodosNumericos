@@ -45,11 +45,11 @@ public class MetodosUI extends JFrame implements ActionListener{
 		"",
 		"Salir"};
 	private static final String ttt[] = new String[]{
-		"Grafica y obtén las raíces de polinomios.",
-		"Soluciona sistemas Ax = B",
-		"Obtén un polinomio que aproxima los puntos una tabla tabulada",
-		"Métodos de integración numérica",
-		"",""};
+		"Grafica y obtén las raíces de polinomios. (Alt + A, R)",
+		"Soluciona sistemas Ax = B. (Alt + A, S)",
+		"Obtén un polinomio que aproxima los puntos una tabla tabulada. (Alt + A, A)",
+		"Métodos de integración numérica. (Alt + A, I)",
+		"","Terminar la aplicación. (Alt + A, L)"};
 	private static final String iconsURL[] = {
 			"/ui/img/Pol.png",
 			"/ui/img/SEL.png",
@@ -72,6 +72,15 @@ public class MetodosUI extends JFrame implements ActionListener{
 		
 		setLocationRelativeTo(getRootPane());
 		setVisible(true);
+		
+		try{
+			setIconImage(
+					new ImageIcon(getClass().getResource(iconsURL[0])).getImage());
+			}catch(Exception e){
+				System.out.println("FILE NOT FOUND");
+				setIconImage(null);
+			}//end of try/catch
+		
 	}
 	
 	private void initPanel() {
@@ -79,7 +88,7 @@ public class MetodosUI extends JFrame implements ActionListener{
 		JLabel lblInitalText = new JLabel("<html>" +
 				"<H1>Elija el tema que desea realizar.</H1>" +
 				"<center>Puede hacerlo presionando alguno de los botones abajo</center>" +
-				"<center>Tambié puede hacerlo en el menú de Acciones(Alt + A)</center>" +
+				"<center>También puede hacerlo en el menú de Acciones. (Alt + A)</center>" +
 				"</html>", JLabel.CENTER);
 		lblInitalText.setBorder(BorderFactory.createEtchedBorder());
 		Add.componente(pnlPrincipal, lblInitalText, 0, 0, 4, 1, 1, 1,
@@ -123,7 +132,7 @@ public class MetodosUI extends JFrame implements ActionListener{
 				null, null, null);
 		
 		Add.menu(mnbPrincipal, "Ayuda", 'Y',
-				new int[]{0, 2, 1},
+				new int[]{0, 2, 0},
 				new String[]{
 				"Información",
 				"",
@@ -132,7 +141,7 @@ public class MetodosUI extends JFrame implements ActionListener{
 				"Información sobre esta aplicación.",
 				"", ""},
 				new ActionListener[]{this,null,this},
-				new String[][]{{},{},{"PolRoots","SSEL","AproxFunc", "Integra"}},
+				null,
 				new boolean[][]{{},{},{false, true, false, true}},
 				new char[][]{{},{},{' ',' ',' ',' ',' '}});
 		
