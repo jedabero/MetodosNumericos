@@ -94,7 +94,7 @@ public class AproxFunUI extends JPanel implements ActionListener, ChangeListener
 		}
 		
 		//7 - Label del Polinomio
-		Add.componente(this, lblPolinomio, 0, 7, 2, 1, 1.0, 1.0,
+		Add.componente(this, lblPolinomio, 0, 7, 3, 3, 1.0, 1.0,
 				GridBagConstraints.BOTH, "");
 	}
 

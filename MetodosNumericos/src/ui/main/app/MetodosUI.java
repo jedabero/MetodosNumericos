@@ -22,6 +22,7 @@ import javax.swing.JPanel;
 
 import resources.Add;
 import ui.aproxpol.AproxFunUI;
+import ui.numint.NumIntUI;
 import ui.raices.RaicesUI;
 import ui.ssel.JPanelSSEL;
 /**
@@ -179,7 +180,12 @@ public class MetodosUI extends JFrame implements ActionListener{
 			Add.componente(pnlPrincipal, aproxFunUI, 0, 1, 1, 1, 1, 1,
 					GridBagConstraints.BOTH, "");
 		} else if (action.equals(actions[3])) {//NUMERICINTEGRATION
-
+			pnlPrincipal.removeAll();
+			pnlPrincipal.revalidate();
+			NumIntUI numIntUI = new NumIntUI();
+			numIntUI.setBorder(BorderFactory.createEtchedBorder());
+			Add.componente(pnlPrincipal, numIntUI, 0, 1, 1, 1, 1, 1,
+					GridBagConstraints.BOTH, "");
 		}
 		
 	}
