@@ -135,7 +135,7 @@ public class MetodosIntegracionPanel extends JPanel implements ActionListener,
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
+		
 		String sN = spnrN.getValue().toString();
 		int n = Integer.parseInt(sN);//(int)spnrN.getValue();
 		
@@ -146,7 +146,7 @@ public class MetodosIntegracionPanel extends JPanel implements ActionListener,
 		ab = new Interval(A, B);
 		
 		String result = "";
-		
+		//TODO rounding numbers
 		switch (currMethod) {
 		case 0:
 			result += funcion.integracionTrapecioSimple(ab);
