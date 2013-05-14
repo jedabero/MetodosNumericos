@@ -656,7 +656,7 @@ public class Termino {
 	}
 	
 	/**
-	 * TODO derivada del resto de funciones
+	 * TODO derivada Trigonométricas, Logarítmica, Racional y otras
 	 * @return la derivada de este termino
 	 */
 	public Termino derivada(){
@@ -699,16 +699,13 @@ public class Termino {
 			BigDecimal ae = getA().multiply(getB());
 			return exponencial(ae, getB());
 		case LOGARITMICA:
-			return null;
 		case RACIONAL:
-			break;
 		default: 
 			return null;
 		}
-		return null;
 	}
 	
-	/** TODO la integral del resto de funciones
+	/** TODO integral Trigonométricas, Logarítmica, Racional y otras
 	 * @return la integral indefinida de este término
 	 */
 	public Termino integralIndef(){
@@ -750,13 +747,10 @@ public class Termino {
 			ae = ae.stripTrailingZeros();
 			return exponencial(ae, getB());
 		case LOGARITMICA:
-			return null;
 		case RACIONAL:
-			break;
 		default: 
 			return null;
 		}
-		return null;
 	}
 	
 	
