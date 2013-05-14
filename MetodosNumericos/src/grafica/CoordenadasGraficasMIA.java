@@ -57,12 +57,24 @@ public class CoordenadasGraficasMIA extends MouseInputAdapter{
 	
 	public void mousePressed(MouseEvent me) {
 		O.pln("Pressed");
+		prevPoint = me.getPoint();
 	}
 
 	public void mouseDragged(MouseEvent mde) {
-		O.pln(mde.getPoint().toString());
-		O.pln(mde.getWhen());
+		Point currPoint = mde.getPoint();
 		
+		dx = BigDecimal.valueOf((prevPoint.x - currPoint.x)/200.0);
+		O.pln("dx:"+dx);
+		dy = BigDecimal.valueOf((prevPoint.y - currPoint.y)/200.0).negate();
+		O.pln("dy:"+dy);
+		
+		X.setMax(X.max().add(dx));
+		X.setMin(X.min().add(dx));
+		Y.setMax(Y.max().add(dy));
+		Y.setMin(Y.min().add(dy));
+		jGra.updateIntervals(X, Y);
+		
+		prevPoint = currPoint;
 	}
 
 	public void mouseReleased(MouseEvent me) {
@@ -89,7 +101,7 @@ public class CoordenadasGraficasMIA extends MouseInputAdapter{
 		}else{
 			dy = uno;
 		}
-		O.pln("dy:"+dx);
+		O.pln("dy:"+dy);
 		//TODO coordGmia xPresi
 		
 		int whlrot = mwe.getWheelRotation();

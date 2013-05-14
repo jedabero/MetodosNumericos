@@ -166,32 +166,6 @@ public final class Big {
 	}
 	
 	/**
-	 * Regresa el valor máximo de un array de int
-	 * @param	a el array a evaluar
-	 * @return	el valor máximo dentro de {@code a}.
-	 */
-	public static int max(int a[]){
-		int max = a[0];
-		for(int i: a){
-			if(max<=i) max = i;
-		}
-		return max;
-	}
-	
-	/**
-	 * Regresa el valor mínimo de un array de int
-	 * @param	a el array a evaluar
-	 * @return	el valor mínimo dentro de {@code a}.
-	 */
-	public static int min(int a[]){
-		int min = a[0];
-		for(int i: a){
-			if(min>=i) min = i;
-		}
-		return min;
-	}
-	
-	/**
 	 * Calcula el seno trigonométrico del ángulo
 	 * @see		Math2#sin(double)
 	 * @param	a el ángulo en radianes
@@ -523,34 +497,12 @@ public final class Big {
 	 * @return n! el factorial de n en BigDecimal
 	 * @throws Exception si n está fuera del rango 0 < n < 1676
 	 */
-	public static BigDecimal BigFactorial(int n) throws Exception{
+	public static BigDecimal factorial(int n) throws Exception{
 		BigDecimal a = BigDecimal.ONE;
 		if(n<0){
 			throw new Exception("No hay factorial para enteros negativos");
-		}else if(n>1676){
-			throw new Exception("Factorial de "+n+" es muy grande.");
 		}else{
 			for(int i=1;i<n+1;i++) a = a.multiply(new BigDecimal(""+i));
-		}
-		
-		return a;
-	}
-	
-	/**
-	 * Regresa el factorial del número n
-	 * @param n el número
-	 * @return n! el factorial de n en entero
-	 * @throws Exception si n está fuera del rango 0 < n < 20
-	 */
-	public static long factorial(int n) throws Exception{
-		long a = 1L;
-		if(n<0){
-			throw new Exception("No hay factorial para enteros negativos");
-		}else if(n>20){
-			throw new Exception("Factorial de "+n+" es muy grande: > " +
-					Long.MAX_VALUE+". Utilice BigFactorial");
-		}else{
-			for(int i=1;i<n+1;i++) a *= i;
 		}
 		
 		return a;
@@ -567,10 +519,10 @@ public final class Big {
 		if(n<k){
 			throw new Exception(n+"<"+k);
 		}else{
-			BigDecimal fn = BigFactorial(n);
-			BigDecimal fk = BigFactorial(k);
+			BigDecimal fn = factorial(n);
+			BigDecimal fk = factorial(k);
 			int n_k = n - k;
-			BigDecimal fn_k = BigFactorial(n_k);
+			BigDecimal fn_k = factorial(n_k);
 			return fn.divide(fk.multiply(fn_k));
 		}
 	}
@@ -676,9 +628,9 @@ public final class Big {
 		if(n<k){
 			throw new Exception(n+"<"+k);
 		}else{
-			BigDecimal fn = BigFactorial(n);
+			BigDecimal fn = factorial(n);
 			int n_k = n - k;
-			BigDecimal fn_k = BigFactorial(n_k);
+			BigDecimal fn_k = factorial(n_k);
 			return fn.divide(fn_k);
 		}
 	}

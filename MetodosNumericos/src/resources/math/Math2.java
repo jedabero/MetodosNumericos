@@ -28,5 +28,86 @@ public final class Math2 {
 		int toInt = (int)(2 - 4*Math.random());
 		return toInt==0 ? 1 : toInt;
 	}
+
+	/**
+	 * Regresa el valor máximo de un array de int
+	 * @param	a el array a evaluar
+	 * @return	el valor máximo dentro de {@code a}.
+	 */
+	public static int max(int a[]){
+		int max = a[0];
+		for(int i: a){
+			if(max<=i) max = i;
+		}
+		return max;
+	}
+	
+	/**
+	 * Regresa el valor mínimo de un array de int
+	 * @param	a el array a evaluar
+	 * @return	el valor mínimo dentro de {@code a}.
+	 */
+	public static int min(int a[]){
+		int min = a[0];
+		for(int i: a){
+			if(min>=i) min = i;
+		}
+		return min;
+	}
+
+	/**
+	 * Regresa el factorial del número n
+	 * @param n el número
+	 * @return n! el factorial de n en entero
+	 * @throws Exception si n está fuera del rango 0 < n < 20
+	 */
+	public static long factorial(int n) throws Exception{
+		long a = 1L;
+		if(n<0){
+			throw new Exception("No hay factorial para enteros negativos");
+		}else if(n>20){
+			throw new Exception("Factorial de "+n+" es muy grande: > " +
+					Long.MAX_VALUE+". Utilice BigFactorial");
+		}else{
+			for(int i=1;i<n+1;i++) a *= i;
+		}
+		
+		return a;
+	}
+	
+	/**
+	 * @param n
+	 * @param k
+	 * @return nCk
+	 * @throws Exception
+	 */
+	public static long combinatoria(int n, int k) throws Exception {
+		if(n<k){
+			throw new Exception(n+"<"+k);
+		}else{
+			long fn = factorial(n);
+			long fk = factorial(k);
+			int n_k = n - k;
+			long fn_k = factorial(n_k);
+			return fn/(fn_k*fk);
+		}
+	}
+	
+	/**
+	 * @param n
+	 * @param k
+	 * @return nPk
+	 * @throws Exception
+	 */
+	public static long permutacion(int n, int k) throws Exception {
+		if(n<k){
+			throw new Exception(n+"<"+k);
+		}else{
+			long fn = factorial(n);
+			int n_k = n - k;
+			long fn_k = factorial(n_k);
+			return fn/(fn_k);
+		}
+	}
 	
 }
