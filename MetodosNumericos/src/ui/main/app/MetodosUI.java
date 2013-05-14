@@ -38,17 +38,17 @@ public class MetodosUI extends JFrame implements ActionListener{
 	private int resultScale = 3;
 	
 	private static final String actions[] = {
-		"Polinomios",
-		"Sistemas de Ecuaciones Lineales",
-		"Aproximacion Polinomial",
+		"Raíces de Polinomios",
+		"Solución de Sistemas de Ecuaciones Lineales",
+		"Aproximación Polinomial",
 		"Integración Numérica",
 		"",
 		"Salir"};
 	private static final String ttt[] = new String[]{
-		"Grafica y obtén las raices de polinomios.",
+		"Grafica y obtén las raíces de polinomios.",
 		"Soluciona sistemas Ax = B",
-		"Obtén la ecuación de los puntos una tabla tabulada",
-		"Integración",
+		"Obtén un polinomio que aproxima los puntos una tabla tabulada",
+		"Métodos de integración numérica",
 		"",""};
 	private static final String iconsURL[] = {
 			"/ui/img/Pol.png",
@@ -77,10 +77,9 @@ public class MetodosUI extends JFrame implements ActionListener{
 	private void initPanel() {
 		
 		JLabel lblInitalText = new JLabel("<html>" +
-				"<H1>GOOD DAY SIR. YOU MAY NOW CHOOSE YOUR NEXT ADVENTURE...</H1>" +
-				"<center>srsly choose</center>" +
-				"<center>what're you waitong for?</center>" +
-				"<center>last line</center>" +
+				"<H1>Elija el tema que desea realizar.</H1>" +
+				"<center>Puede hacerlo presionando alguno de los botones abajo</center>" +
+				"<center>Tambié puede hacerlo en el menú de Acciones(Alt + A)</center>" +
 				"</html>", JLabel.CENTER);
 		lblInitalText.setBorder(BorderFactory.createEtchedBorder());
 		Add.componente(pnlPrincipal, lblInitalText, 0, 0, 4, 1, 1, 1,
@@ -152,7 +151,6 @@ public class MetodosUI extends JFrame implements ActionListener{
 		}else if(e.getSource() instanceof JButton){
 			action = ((JButton) e.getSource()).getText();
 		}
-		
 		
 		
 		if (action.equals(actions[5])) {
