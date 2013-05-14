@@ -77,7 +77,7 @@ public final class Add {
 		
 		for (int i = 0; i < subTextos.length; i++) {
 			
-			String name = subTextos[i];
+			String name = subTextos[i].toUpperCase();
 			
 			for (int j = 0; j < name.length(); j++) {
 				char mnem = name.charAt(j);
@@ -101,7 +101,6 @@ public final class Add {
 			}
 			
 		}
-		
 		
 		jmb.add(jmiTemp);
 		
