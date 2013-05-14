@@ -62,7 +62,7 @@ public class JGrafica extends JPanel {
 	private boolean etiquetas = true;	//paint axis numbers?
 	private boolean rangeY = false;	//TODO create an interval for this or smth
 	
-	private boolean mostrarAreaIntegral = false;//TODO integral
+	private boolean mostrarAreaIntegral = false;
 	
 	/**
 	 * @return regresa si las divisiones principales están dibujadas
