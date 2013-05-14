@@ -534,7 +534,7 @@ public class Funcion {
 	 * @param scale 
 	 * @return el valor de la integral de la función desde a hasta b.
 	 */
-	public BigDecimal integracionSimpson3_8(Interval ab){
+	public BigDecimal integracionSimpsonSimple3_8(Interval ab){
 		Interval fab = valoresExtremos(ab);//Se obtiene fa y fb
 		//Se halla la distancia entre puntos
 		BigDecimal h = ab.length().divide(BigDecimal.valueOf(3), 15, RoundingMode.HALF_UP);

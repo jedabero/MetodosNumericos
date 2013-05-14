@@ -17,6 +17,7 @@ import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 
 import resources.Add;
+import resources.O;
 import resources.math.Interval;
 
 import funciones.Funcion;
@@ -107,7 +108,12 @@ public class MetodosIntegracionPanel extends JPanel implements ActionListener,
 	
 	@Override
 	public void itemStateChanged(ItemEvent e) {
-		// TODO Auto-generated method stub
+		for (int i = 0; i < strMetodos.length; i++) {
+			if(e.getItem().toString().equals(strMetodos[i])){
+				currMethod = i;
+				break;
+			}
+		}
 
 	}
 
@@ -123,8 +129,31 @@ public class MetodosIntegracionPanel extends JPanel implements ActionListener,
 		BigDecimal B = new BigDecimal(sB);
 		Interval ab = new Interval(A, B);
 		
-		funcion.integracionTrapecioSimple(ab);
-
+		String result = "";
+		
+		switch (currMethod) {
+		case 0:
+			result += funcion.integracionTrapecioSimple(ab);
+			break;
+		case 1:
+			result += funcion.integracionTrapecioCompuesto(ab, n);
+			break;
+		case 2:
+			result += funcion.integracionSimpsonSimple1_3(ab);
+			break;
+		case 3:
+			result += funcion.integracionSimpsonSimple3_8(ab);
+			break;
+		case 4:
+			result += funcion.integracionSimpsonCompuesto(ab, n);
+			break;
+		default:
+			O.pln(e.getSource().toString());
+			break;
+		}
+		
+		txtRes.setText(result);
+		
 	}
 
 }
