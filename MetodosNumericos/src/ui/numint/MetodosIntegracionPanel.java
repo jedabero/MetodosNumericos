@@ -19,7 +19,6 @@ import javax.swing.SpinnerNumberModel;
 import resources.Add;
 import resources.O;
 import resources.math.Interval;
-
 import funciones.Funcion;
 
 /**

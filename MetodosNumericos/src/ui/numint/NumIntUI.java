@@ -26,7 +26,6 @@ import javax.swing.event.ChangeListener;
 import resources.Add;
 import resources.O;
 import resources.math.Interval;
-
 import ui.raices.FuncionPanel;
 import funciones.Funcion;
 import grafica.JGrafica;
