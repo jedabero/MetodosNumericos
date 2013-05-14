@@ -41,11 +41,16 @@ public class JGrafica extends JPanel {
 	private Point gCoords;	//Inside graphic starting coordinates.
 	private Dimension gDim;	//Inside graphic dimensions.
 	
+	private int yAxis;
+	private int xAxis;
+	
 	private BigDecimal step;//Step to separate the values of x
 	private int numeroPuntos = 201;	//Number of max divisions
 	private Interval X;		//The x Interval
 	private Interval Y;		//The y Interval
-	//The ArrayList that contains the arrays of coordenates of the functions.
+	private Interval integralX;//TODO The x interval of integration
+	
+	//The ArrayList that contains the arrays of coordinates of the functions.
 	private ArrayList<BigDecimalPoint[]> alfCoords;
 	
 	private ArrayList<Funcion> funcionList;	//The list of functions
@@ -56,6 +61,8 @@ public class JGrafica extends JPanel {
 	private boolean divSec = false;	//paint secondary divisions?
 	private boolean etiquetas = true;	//paint axis numbers?
 	private boolean rangeY = false;	//TODO create an interval for this or smth
+	
+	private boolean mostrarAreaIntegral = false;//TODO integral
 	
 	/**
 	 * @return regresa si las divisiones principales están dibujadas
@@ -73,6 +80,41 @@ public class JGrafica extends JPanel {
 	 * @return regresa si las etiquetas de eje están dibujadas
 	 */
 	public boolean isEtiquetas(){return etiquetas;}
+	
+	/**
+	 * @return the rangeY
+	 */
+	public boolean isRangeY() {
+		return rangeY;
+	}
+	
+	/**
+	 * @return the mostrarAreaIntegral
+	 */
+	public boolean isMostrarAreaIntegral() {
+		return mostrarAreaIntegral;
+	}
+	
+	/**
+	 * @param rangeY the rangeY to set
+	 */
+	public void setRangeY(boolean rangeY) {
+		this.rangeY = rangeY;
+	}
+	
+	/**
+	 * @param integralX the integralX to set
+	 */
+	public void setIntegralX(Interval integralX) {
+		this.integralX = integralX;
+	}
+	
+	/**
+	 * @param mostrarAreaIntegral the mostrarAreaIntegral to set
+	 */
+	public void setMostrarAreaIntegral(boolean mostrarAreaIntegral) {
+		this.mostrarAreaIntegral = mostrarAreaIntegral;
+	}
 	
 	/**
 	 * @return the gCoords
@@ -189,7 +231,13 @@ public class JGrafica extends JPanel {
 			BigDecimalPoint[] bdcArr = libdc.next();//current bdCoord array
 			int index = libdc.previousIndex();
 			g2d.setColor(colorList.get(index));
-			g2d.draw(polylineShape(changeCoordToPoint(bdcArr)));
+			ArrayList<Point> alp = changeCoordToPoint(bdcArr);
+			g2d.draw(polylineShape(alp));
+			if(mostrarAreaIntegral){
+				ArrayList<Point> alpai = changeCoordToPointAreaIntegral(bdcArr);
+				g2d.draw(polylineShapeAreaIntegral(alpai));
+			}
+			
 		}
 		
 	}
@@ -210,7 +258,39 @@ public class JGrafica extends JPanel {
 			p.translate(gCoords.x, gCoords.y);
 			
 			boolean pOutOfScope = p.y<gCoords.y||p.y>gCoords.y+gDim.height;
-			if(pOutOfScope) p = null;
+			if(pOutOfScope){
+				p = null;
+			}
+			
+			aLpP.add(p);
+		}
+		return aLpP;
+	}
+	
+	private ArrayList<Point> changeCoordToPointAreaIntegral(BigDecimalPoint[] bdcArr){
+		ArrayList<Point> aLpP = new ArrayList<Point>();
+		O.pln(integralX);
+		if(integralX==null){
+			integralX = X;
+		}
+		O.pln(integralX);
+		for(int i=0;i<bdcArr.length;i++){
+			BigDecimalPoint cord = bdcArr[i];
+			BigDecimal xnum = cord.x().subtract(X.min());
+			BigDecimal xdiv = xnum.divide(X.length(), 5, RoundingMode.HALF_UP);
+			int x = (int)(gDim.width*(xdiv.doubleValue()));
+			BigDecimal ynum = cord.y().subtract(Y.min());
+			BigDecimal ydiv = ynum.divide(Y.length(), 5, RoundingMode.HALF_UP);
+			int y = (int)(gDim.height*(1-ydiv.doubleValue()));
+			
+			Point p = new Point(x,y);
+			p.translate(gCoords.x, gCoords.y);
+			
+			if(p.y<gCoords.y){
+				p.y = gCoords.y;
+			}else if(p.y>gCoords.y+gDim.height){
+				p.y = gCoords.y+gDim.height;
+			}
 			
 			aLpP.add(p);
 		}
@@ -243,14 +323,44 @@ public class JGrafica extends JPanel {
 		return p2d;
 	}
 	
+	private Shape polylineShapeAreaIntegral(ArrayList<Point> alP){
+		Path2D p2d = new Path2D.Double();
+		ListIterator<Point> iterator;
+		boolean isPointFirst = true;
+		Point prevPoint = null;
+		for (iterator = alP.listIterator(); iterator.hasNext();) {
+			Point currentPoint = iterator.next();
+			
+			if(currentPoint==null){
+				isPointFirst = true;
+			}else{
+				if(isPointFirst){
+					p2d.moveTo(currentPoint.x, currentPoint.y);
+					isPointFirst = false;
+				}else{
+					p2d.lineTo(prevPoint.x, xAxis);
+					p2d.lineTo(currentPoint.x, xAxis);
+					p2d.lineTo(currentPoint.x, currentPoint.y);
+				}
+			}
+			
+			prevPoint = currentPoint;
+		}
+		
+		return p2d;
+	}
+	
 	private void dibujarEjesDivisionesYEtiquetas(Graphics2D g2D, boolean divP,
 			boolean divSec, boolean et) {
 		FontMetrics fm = g2D.getFontMetrics();
 		BigDecimal bdxf = X.min().negate().divide(X.length(), 5, RoundingMode.HALF_EVEN);
-		int yAxis = (int)(gDim.width*(bdxf.doubleValue())) + gCoords.x;
+		yAxis = (int)(gDim.width*(bdxf.doubleValue())) + gCoords.x;
+		yAxis = (yAxis<gCoords.x)?gCoords.x:yAxis;
+		yAxis = (yAxis>gCoords.x+gDim.width)?gCoords.x+gDim.width:yAxis;
 		BigDecimal bdyf = Y.min().negate().divide(Y.length(), 5, RoundingMode.HALF_EVEN);
-		int xAxis = (int)(gDim.height*(1-bdyf.doubleValue())) + gCoords.y;
-		
+		xAxis = (int)(gDim.height*(1-bdyf.doubleValue())) + gCoords.y;
+		xAxis = (xAxis<gCoords.y)?gCoords.y:xAxis;
+		xAxis = (xAxis>gCoords.y+gDim.height)?gCoords.y+gDim.height:xAxis;
 		BigDecimal bdNumPuntos = BigDecimal.valueOf(numeroPuntos-1);
 		BigDecimal yStep = Y.length().divide(bdNumPuntos, 5, RoundingMode.HALF_UP);
 		for(int i=0;i<numeroPuntos;i++){

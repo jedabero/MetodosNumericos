@@ -51,6 +51,7 @@ public class MetodosIntegracionPanel extends JPanel implements ActionListener,
 	private JSpinner spnrN;
 	
 	private Funcion funcion;
+	private Interval ab;
 	
 	/**
 	 * 
@@ -106,6 +107,22 @@ public class MetodosIntegracionPanel extends JPanel implements ActionListener,
 		this.funcion = funcion;
 	}
 	
+	/**
+	 * @return the ab
+	 */
+	public Interval getAb() {
+		String sA = txtA.getText();
+		String sB = txtB.getText();
+		if(sA.isEmpty()||sB.isEmpty()){
+			ab = null;
+		}else{
+			BigDecimal A = new BigDecimal(sA);
+			BigDecimal B = new BigDecimal(sB);
+			ab = new Interval(A, B);
+		}
+		return ab;
+	}
+
 	@Override
 	public void itemStateChanged(ItemEvent e) {
 		for (int i = 0; i < strMetodos.length; i++) {
@@ -127,7 +144,7 @@ public class MetodosIntegracionPanel extends JPanel implements ActionListener,
 		String sB = txtB.getText();
 		BigDecimal A = new BigDecimal(sA);
 		BigDecimal B = new BigDecimal(sB);
-		Interval ab = new Interval(A, B);
+		ab = new Interval(A, B);
 		
 		String result = "";
 		

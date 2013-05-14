@@ -163,11 +163,17 @@ public class NumIntUI extends JPanel implements ActionListener, ChangeListener {
 	
 	private void grafic(ArrayList<Funcion> alf, ArrayList<Color> alc){
 		frmGrafica = new JFrame(""+funcion);
-		frmGrafica.setSize(800, 400);
+		frmGrafica.setSize(800, 600);
 		JGrafica jg = new JGrafica(alf, alc, frmGrafica.getSize(),
 				new Interval(BigDecimal.ONE.negate(), BigDecimal.ONE),
 				new Interval(BigDecimal.ONE.negate(), BigDecimal.ONE));
 		jg.setBackground(Color.WHITE);
+		jg.setMostrarAreaIntegral(true);
+		jg.setRangeY(true);
+		Interval ab = mpnl.getAb();
+		if(ab != null){
+			jg.setIntegralX(ab);
+		}
 		frmGrafica.add(jg);
 		frmGrafica.setVisible(true);
 		frmGrafica.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
