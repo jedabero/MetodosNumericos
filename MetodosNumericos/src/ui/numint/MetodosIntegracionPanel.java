@@ -1,5 +1,6 @@
 package ui.numint;
 
+import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -7,10 +8,15 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.math.BigDecimal;
 
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
+import javax.swing.SpinnerNumberModel;
 
+import resources.Add;
 import resources.math.Interval;
 
 import funciones.Funcion;
@@ -27,13 +33,23 @@ public class MetodosIntegracionPanel extends JPanel implements ActionListener,
 	 */
 	private static final long serialVersionUID = 2673246938861102403L;
 	
-	private Funcion funcion;
-
+	private static final String strMetodos[] = new String[]{
+		"Trapezoidal Simple", "Trapezoidal Compuesto", "Simpson Simple 1/3",
+		"Simpson Simple 3/8", "Simpson Compuesto"};
+	private int currMethod = 0;
+	
+	private JButton btnIntegrar;
+	private JComboBox<String> listaMetodos;
+	private JLabel lblA;
+	private JLabel lblB;
+	private JLabel lblN;
+	private JLabel lblRes;
 	private JTextField txtA;
-
 	private JTextField txtB;
-
-	private JSpinner spnrIt;
+	private JTextField txtRes;	
+	private JSpinner spnrN;
+	
+	private Funcion funcion;
 	
 	/**
 	 * 
@@ -41,6 +57,45 @@ public class MetodosIntegracionPanel extends JPanel implements ActionListener,
 	public MetodosIntegracionPanel(){
 		super(new GridBagLayout());
 		
+		listaMetodos = new JComboBox<String>(strMetodos);
+		listaMetodos.addItemListener(this);
+		
+		lblA = new JLabel("Limite inferior", JLabel.CENTER);
+		lblB = new JLabel("Limite superior", JLabel.CENTER);
+		txtA = new JTextField();
+		txtB = new JTextField();
+		
+		lblN = new JLabel("sub-intervalos", JLabel.CENTER);
+		SpinnerNumberModel snmN = new SpinnerNumberModel(1, 1, 1000, 1);
+		spnrN = new JSpinner(snmN);
+		
+		btnIntegrar = new JButton("Integrar");
+		btnIntegrar.addActionListener(this);
+		
+		lblRes = new JLabel("Resultado =    ", JLabel.CENTER);
+		txtRes = new JTextField();
+		txtRes.setEditable(false);
+		
+		Add.componente(this, listaMetodos, 0, 0, 8, 1, 1.0, 1.0,
+				GridBagConstraints.BOTH, "Selecciona un método.");
+		Add.componente(this, lblA, 0, 1, 1, 1, 1.0, 1.0,
+				GridBagConstraints.NONE, "");
+		Add.componente(this, txtA, 1, 1, 2, 1, 1.0, 1.0,
+				GridBagConstraints.HORIZONTAL, "Limite inferior.");
+		Add.componente(this, lblB, 3, 1, 1, 1, 1.0, 1.0,
+				GridBagConstraints.NONE, "");
+		Add.componente(this, txtB, 4, 1, 2, 1, 1.0, 1.0,
+				GridBagConstraints.HORIZONTAL, "Limite superior.");
+		Add.componente(this, lblN, 6, 1, 1, 1, 1.0, 1.0,
+				GridBagConstraints.NONE, "");
+		Add.componente(this, spnrN, 7, 1, 1, 1, 1.0, 1.0,
+				GridBagConstraints.HORIZONTAL, "Número de subintervalos.");
+		Add.componente(this, lblRes, 0, 2, 2, 1, 1.0, 1.0,
+				GridBagConstraints.NONE, "");
+		Add.componente(this, txtRes, 2, 2, 4, 1, 1.0, 1.0,
+				GridBagConstraints.HORIZONTAL, "Resultado de la integral.");
+		Add.componente(this, btnIntegrar, 6, 2, 2, 1, 1.0, 1.0,
+				GridBagConstraints.BOTH, "Integra");
 	}
 	
 	/**
@@ -59,8 +114,8 @@ public class MetodosIntegracionPanel extends JPanel implements ActionListener,
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-		String sN = spnrIt.getValue().toString();
-		int n = Integer.parseInt(sN);//(int)spnrIt.getValue();
+		String sN = spnrN.getValue().toString();
+		int n = Integer.parseInt(sN);//(int)spnrN.getValue();
 		
 		String sA = txtA.getText();
 		String sB = txtB.getText();

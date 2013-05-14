@@ -29,7 +29,8 @@ import funciones.Funcion;
  * @author Jedabero
  *
  */
-public class MetodosRaicesPanel extends JPanel implements ItemListener, ActionListener {
+public class MetodosRaicesPanel extends JPanel implements ItemListener,
+		ActionListener {
 
 	/**
 	 * 
@@ -77,8 +78,8 @@ public class MetodosRaicesPanel extends JPanel implements ItemListener, ActionLi
 		
 		lblX0A = new JLabel();
 		lblX1B = new JLabel();
-		txtX0A = new JTextField("0");
-		txtX1B = new JTextField("1");
+		txtX0A = new JTextField();
+		txtX1B = new JTextField();
 		
 		lblTol = new JLabel("Tolerancia", JLabel.CENTER);
 		txtTol = new JTextField("0.001");
@@ -89,8 +90,9 @@ public class MetodosRaicesPanel extends JPanel implements ItemListener, ActionLi
 		btnFind = new JButton("Encontrar Raíz");
 		btnFind.addActionListener(this);
 		
-		lblX = new JLabel("X =", JLabel.CENTER);
+		lblX = new JLabel("X =    ", JLabel.RIGHT);
 		txtX = new JTextField();
+		txtX.setEditable(false);
 		
 		initComponents();
 	}
