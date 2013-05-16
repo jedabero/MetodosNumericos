@@ -42,15 +42,19 @@ import resources.math.M;
 public class Termino {
 	
 	/**
-	 * Término que representa el cero
+	 * Término que representa el cero (0)
 	 */
 	public static Termino ZERO = Termino.constante(BigDecimal.ZERO);
+	/**
+	 * Término que representa el uno (1)
+	 */
+	public static Termino ONE = Termino.constante(BigDecimal.ONE);
 	
 	private BigDecimal A;
 	
 	private BigDecimal B;
 	
-	private Tipo funcion;
+	private Tipo tipoFuncion;
 	
 	private FuncionTrig funTrig;
 	private static boolean xInRadians = true;
@@ -99,15 +103,15 @@ public class Termino {
 	 * @return el tipo de función
 	 */
 	public Tipo getTipoFuncion() {
-		return funcion;
+		return tipoFuncion;
 	}
 
 	/**
 	 * Modifica el actual tipo de función.
-	 * @param	funcion el nuevo tipo de función.
+	 * @param	tipoFuncion el nuevo tipo de función.
 	 */
-	public void setTipoFuncion(Tipo funcion) {
-		this.funcion = funcion;
+	public void setTipoFuncion(Tipo tipoFuncion) {
+		this.tipoFuncion = tipoFuncion;
 	}
 	
 	/**
@@ -178,7 +182,7 @@ public class Termino {
 	 * @return el valor evaluado.
 	 */
 	public BigDecimal valorImagen(BigDecimal x) {
-		switch(this.funcion){
+		switch(this.tipoFuncion){
 		case CONSTANTE:
 			return getA();
 		case POLINOMICA:
@@ -384,10 +388,10 @@ public class Termino {
 			FuncionTrig ft) throws CustomException{
 		A = a;
 		B = b;
-		funcion = f;
+		tipoFuncion = f;
 		grado = g;
 		funTrig = ft;
-		switch (funcion) {
+		switch (tipoFuncion) {
 		case CONSTANTE:
 			break;
 		case POLINOMICA:
@@ -511,7 +515,7 @@ public class Termino {
 	public Termino suma(Termino t) throws CustomException {
 		Termino temp = copia();
 		if(getTipoFuncion().equals(t.getTipoFuncion())){
-			switch (funcion) {
+			switch (tipoFuncion) {
 			case CONSTANTE:
 				temp.actualiza(getA().add(t.getA()).stripTrailingZeros());
 				break;

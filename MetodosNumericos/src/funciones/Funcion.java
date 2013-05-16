@@ -104,8 +104,8 @@ public class Funcion {
 	/** Inicializa la representación específica y general del término. */
 	public void initGenEsp(){
 		ListIterator<Termino> iterator;
-		String g = "<html>";
-		String s = g;
+		String g = "";
+		String s = "";
 		toString = "";
 		
 		for (iterator = getTerminos().listIterator(); iterator.hasNext();) {
@@ -117,8 +117,8 @@ public class Funcion {
 			toString += (indexIs0?"":" + ") + term;
 		}
 		
-		this.generic = g+"</html>";
-		this.specific = s+"</html>";
+		this.generic = g;
+		this.specific = s;
 	}
 	
 	public String toString(){
@@ -159,9 +159,13 @@ public class Funcion {
 			throws CustomException{
 		if(coefs.length<=n) throw CustomException.arrayIncompleto();
 		ArrayList<Termino> alT = new ArrayList<Termino>();
-		alT.add(Termino.constante(coefs[0]));
+		if(coefs[0].signum() != 0){
+			alT.add(Termino.constante(coefs[0]));	
+		}
 		for(int i=1;i<=n;i++){
-			alT.add(Termino.monomio(i, coefs[i]));
+			if(coefs[i].signum() != 0){
+				alT.add(Termino.monomio(i, coefs[i]));	
+			}
 		}
 		return new Funcion(alT);
 	}
