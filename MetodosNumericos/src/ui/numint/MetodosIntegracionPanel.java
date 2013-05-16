@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -19,6 +20,7 @@ import javax.swing.SpinnerNumberModel;
 import resources.Add;
 import resources.O;
 import resources.math.Interval;
+import ui.main.app.MetodosUI;
 import funciones.Funcion;
 
 /**
@@ -73,7 +75,7 @@ public class MetodosIntegracionPanel extends JPanel implements ActionListener,
 		btnIntegrar = new JButton("Integrar");
 		btnIntegrar.addActionListener(this);
 		
-		lblRes = new JLabel("Resultado =    ", JLabel.CENTER);
+		lblRes = new JLabel("Resultado =    ", JLabel.RIGHT);
 		txtRes = new JTextField();
 		txtRes.setEditable(false);
 		
@@ -145,30 +147,33 @@ public class MetodosIntegracionPanel extends JPanel implements ActionListener,
 		BigDecimal B = new BigDecimal(sB);
 		ab = new Interval(A, B);
 		
-		String result = "";
-		//TODO rounding numbers
+		BigDecimal result;
 		switch (currMethod) {
 		case 0:
-			result += funcion.integracionTrapecioSimple(ab);
+			result = funcion.integracionTrapecioSimple(ab);
 			break;
 		case 1:
-			result += funcion.integracionTrapecioCompuesto(ab, n);
+			result = funcion.integracionTrapecioCompuesto(ab, n);
 			break;
 		case 2:
-			result += funcion.integracionSimpsonSimple1_3(ab);
+			result = funcion.integracionSimpsonSimple1_3(ab);
 			break;
 		case 3:
-			result += funcion.integracionSimpsonSimple3_8(ab);
+			result = funcion.integracionSimpsonSimple3_8(ab);
 			break;
 		case 4:
-			result += funcion.integracionSimpsonCompuesto(ab, n);
+			result = funcion.integracionSimpsonCompuesto(ab, n);
 			break;
 		default:
 			O.pln(e.getSource().toString());
+			result=null;
 			break;
 		}
-		
-		txtRes.setText(result);
+		//Ugly way to get a method
+		MetodosUI mui = (MetodosUI)getParent().getParent().getParent().getParent().getParent().getParent();
+		int scale = (mui).getResultScale();
+		result = result.setScale(scale, RoundingMode.HALF_UP);
+		txtRes.setText(result.stripTrailingZeros().toString());
 		
 	}
 

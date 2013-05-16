@@ -18,7 +18,10 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
 
 import resources.Add;
 import ui.aproxpol.AproxFunUI;
@@ -35,7 +38,7 @@ public class MetodosUI extends JFrame implements ActionListener{
 	 * 
 	 */
 	private static final long serialVersionUID = 6637458677520322115L;
-	private int resultScale = 3;
+	private int resultScale = 5;
 	
 	private static final String actions[] = {
 		"Raíces de Polinomios",
@@ -131,6 +134,11 @@ public class MetodosUI extends JFrame implements ActionListener{
 				new ActionListener[]{this,this,this,this,null,this},
 				null, null, null);
 		
+		Add.menu(mnbPrincipal, "Opciones", 'O', new int[]{0},
+				new String[]{"Cifras Decimales"},
+				new String[]{"Cambia el número de decimales de los resultados"},
+				new ActionListener[]{this}, null, null, null);
+		
 		Add.menu(mnbPrincipal, "Ayuda", 'Y',
 				new int[]{0, 2, 0},
 				new String[]{
@@ -193,6 +201,13 @@ public class MetodosUI extends JFrame implements ActionListener{
 			numIntUI.setBorder(BorderFactory.createEtchedBorder());
 			Add.componente(pnlPrincipal, numIntUI, 0, 1, 1, 1, 1, 1,
 					GridBagConstraints.BOTH, "");
+		}else if(action.equals("Cifras Decimales")){
+			SpinnerNumberModel sModel = new SpinnerNumberModel(resultScale, 0, 30, 1);
+			JSpinner jspn = new JSpinner(sModel);
+			JOptionPane.showMessageDialog(this, jspn,
+					"Indique el número de decimales a mostrar.",
+					JOptionPane.PLAIN_MESSAGE);
+			setResultScale(Integer.parseInt(jspn.getValue().toString()));
 		}
 		
 	}
