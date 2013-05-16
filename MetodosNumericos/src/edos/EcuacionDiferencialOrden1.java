@@ -6,6 +6,8 @@ package edos;
 import java.math.BigDecimal;
 
 import resources.CustomException;
+import resources.math.Constantes.FuncionTrig;
+import resources.math.Constantes.Tipo;
 
 import funciones.Funcion;
 import funciones.Termino;
@@ -73,25 +75,37 @@ public class EcuacionDiferencialOrden1 {
 		toString = init;
 		
 
-		gS += Qx.getGeneric()+" + ";
-		sS += Qx.getSpecific()+" + ";
-		toString += Qx+" + ";
+		gS += Qx.getGeneric();
+		sS += Qx.getSpecific();
+		toString += Qx;
 		
-		if(Px.getTerminos().size() == 1){
-			if(Px.getTerminos().get(0).getA().compareTo(BigDecimal.ONE) != 0){
-				gS += Px.getGeneric();
-				sS += Px.getSpecific();
-				toString += Px;
+		switch (Px.getTerminos().size()) {
+		case 0:
+			break;
+		case 1:
+			Termino t0 = Px.getTerminos().get(0);
+			boolean Aeq1 = (t0.getA().compareTo(BigDecimal.ONE) == 0);
+			boolean TeqK = (t0.getTipoFuncion() == Tipo.CONSTANTE);
+			System.out.println(Aeq1+":"+TeqK);
+			if(!(Aeq1&&TeqK)){
+				gS += " + "+Px.getGeneric()+"y";
+				sS += " + "+Px.getSpecific()+"y";
+				toString += " + "+Px+"y";
+			}else{
+				gS += " + y";
+				sS += " + y";
+				toString += " + y";
 			}
-		}else{
-			gS += "("+Px.getGeneric()+")";
-			sS += "("+Px.getSpecific()+")";
-			toString += "("+Px+")";
+			break;
+		default:
+			gS += " + ("+Px.getGeneric()+")y";
+			sS += " + ("+Px.getSpecific()+")y";
+			toString += " + ("+Px+")y";
+			break;
 		}
 		
-		toString += "y";
-		generic = gS + "y";
-		specific = sS + "y";
+		generic = gS;
+		specific = sS;
 	}
 	
 	@Override
@@ -128,17 +142,13 @@ public class EcuacionDiferencialOrden1 {
 	 */
 	public static void main(String[] args){
 		try {
-			Funcion px = Funcion.polinomio(0, new BigDecimal[]{BigDecimal.ONE});
-			Funcion qx = Funcion.polinomio(1, new BigDecimal[]{BigDecimal.ZERO, BigDecimal.ONE});
+			Funcion px = Funcion.trigonometrica(FuncionTrig.COS, BigDecimal.valueOf(1), BigDecimal.ONE);
+			Funcion qx = Funcion.polinomio(2,
+					new BigDecimal[]{BigDecimal.valueOf(1.1), BigDecimal.valueOf(1.2), BigDecimal.valueOf(1.3)});
 			EcuacionDiferencialOrden1 edo1 = new EcuacionDiferencialOrden1(px, qx);
-			System.out.println(edo1.getGeneric());
 			System.out.println(edo1);
-			System.out.println(edo1.getSpecific());
-			javax.swing.JFrame asjf = new javax.swing.JFrame("testst");
-			asjf.setVisible(true);
-			asjf.add(new javax.swing.JLabel("<html>"+edo1.getSpecific()+"</html>"));
-			asjf.setSize(500, 200);
-			asjf.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
+			
+			System.out.println(edo1.valor(BigDecimal.ONE, BigDecimal.TEN));
 			
 		} catch (CustomException e) {
 			// TODO Auto-generated catch block
