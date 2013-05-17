@@ -149,13 +149,11 @@ public class EcuacionDiferencialOrden1 {
 	 */
 	public BigDecimal valorDerivada(BigDecimal x, BigDecimal y){
 		BigDecimal PxVal = Px.valorImagen(x);
-		BigDecimal Px2Val = PxVal.pow(2);
+		BigDecimal PxDY = PxVal.multiply(valor(x, y));
 		BigDecimal dPxVal = dPx.valorImagen(x);
-		BigDecimal acum = dPxVal.add(Px2Val).multiply(y);
-		BigDecimal QxVal = Qx.valorImagen(x);
+		BigDecimal dPxY = dPxVal.multiply(y);
 		BigDecimal dQxVal = dQx.valorImagen(x);
-		BigDecimal PxQxdQx = PxVal.multiply(QxVal).add(dQxVal);
-		acum = acum.add(PxQxdQx);
+		BigDecimal acum = dPxY.add(dQxVal).add(PxDY);
 		return acum;
 	}
 	
