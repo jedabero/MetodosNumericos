@@ -565,6 +565,16 @@ public class Termino {
 	}
 	
 	/**
+	 * @param m
+	 * @return un termino multiplicado por otro
+	 */
+	public Termino multiplica(Termino m){
+		Termino t = copia();
+		//TODO MULTIPLICACION DE TÉRMINOS!
+		return t;
+	}
+	
+	/**
 	 * @return una copia de este termino
 	 */
 	public Termino copia(){

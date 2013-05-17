@@ -49,6 +49,30 @@ public class Interval {
 	}
 	
 	/**
+	 * @param n número de sub-intervalos
+	 * @return el tamaño del paso según un número de sub-intervalos
+	 */
+	public BigDecimal step(int n){
+		BigDecimal h = length().divide(BigDecimal.valueOf(n), 15, RoundingMode.HALF_UP);
+		return h.stripTrailingZeros();
+	}
+	
+	/**
+	 * @param n número de sub-intervalos
+	 * @return un conjunto de n + 1 puntos tal que x<sub>i</sub> = min + i*h 
+	 */
+	public BigDecimal[] conjuntoPuntos(int n){
+		BigDecimal h = step(n);
+		BigDecimal x[] = new BigDecimal[n+1];
+		x[0] = min();
+		for (int i = 1; i < x.length-1; i++) {
+			x[i] = min().add(h.multiply(BigDecimal.valueOf(i)));
+		}
+		x[n] = max();
+		return x;
+	}
+	
+	/**
 	 * @return el mínimo valor del intervalo
 	 */
 	public BigDecimal min(){

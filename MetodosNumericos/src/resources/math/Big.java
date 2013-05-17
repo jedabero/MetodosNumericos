@@ -44,6 +44,11 @@ public final class Big {
 	 * Double of {@link Big#PI}
 	 */
 	public static final BigDecimal TAU = BigDecimal.valueOf(Math2.TAU);
+
+	/**
+	 * Double of {@link BigDecimal#ONE}
+	 */
+	public static final BigDecimal TWO = BigDecimal.valueOf(2);
 	
 	/**
 	 * Convierte el número al entero más cercano, dependiendo si es un máximo o no.
