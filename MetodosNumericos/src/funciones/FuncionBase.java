@@ -14,7 +14,7 @@ import resources.math.Constantes;
  * la <b>ecuación</b> genérica (ej: mx + b), la <b>función</b> (ej: 4x + 3) y el
  * <b>tipo de función</b>.
  * @since 0.1
- * @deprecated desde la versión 0.4, por Funcion
+ * @deprecated desde la versión 0.4, por {@link Funcion}
  * @see Funcion
  * @author <a href="https://twitter.com/Jedabero" target="_blank">Jedabero</a>
  *

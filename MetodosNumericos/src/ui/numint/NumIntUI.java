@@ -26,7 +26,7 @@ import javax.swing.event.ChangeListener;
 import resources.Add;
 import resources.O;
 import resources.math.Interval;
-import ui.raices.FuncionPanel;
+import ui.FuncionPanel;
 import funciones.Funcion;
 import grafica.JGrafica;
 
@@ -81,7 +81,8 @@ public class NumIntUI extends JPanel implements ActionListener, ChangeListener {
 		JSeparator sprtr2 = new JSeparator(JSeparator.HORIZONTAL);
 		
 		//Métodos
-		mpnl = new MetodosIntegracionPanel();	
+		mpnl = new MetodosIntegracionPanel();
+		
 		//0 - Tamaño Polinomio
 		Add.componente(this, lblGradoPol, 			0, 0, 2, 1, 1.0, 1.0,
 				GridBagConstraints.NONE, "");

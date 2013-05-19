@@ -9,7 +9,7 @@ import java.math.BigDecimal;
  * desde i = 0 hasta n, donde n es el grado de la función.
  * @author <a href="https://twitter.com/Jedabero" target="_blank">Jedabero</a>
  * @since 0.1
- * @deprecated desde la versión 0.4, por Funcion
+ * @deprecated desde la versión 0.4, por {@link Funcion#polinomio(int, BigDecimal[])}
  * @see Funcion
  */
 

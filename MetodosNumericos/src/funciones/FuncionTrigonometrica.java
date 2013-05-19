@@ -11,7 +11,7 @@ import resources.math.Math2;
 /**
  * Esta clase define las funciones trigonométricas.
  * @author <a href="https://twitter.com/Jedabero" target="_blank">Jedabero</a>
- * @deprecated desde la versión 0.4, por Funcion
+ * @deprecated desde la versión 0.4, por {@link Funcion#trigonometrica(resources.math.Constantes.FuncionTrig, BigDecimal, BigDecimal)}
  * @see Funcion
  * @since 0.2
  */

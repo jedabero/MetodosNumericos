@@ -94,8 +94,6 @@ public class MetodosUI extends JFrame implements ActionListener{
 				"<center>También puede hacerlo en el menú de Acciones. (Alt + A)</center>" +
 				"</html>", JLabel.CENTER);
 		lblInitalText.setBorder(BorderFactory.createEtchedBorder());
-		Add.componente(pnlPrincipal, lblInitalText, 0, 0, 4, 1, 1, 1,
-				GridBagConstraints.BOTH, "");
 		
 		Image icons[] = null;
 		try{
@@ -119,9 +117,6 @@ public class MetodosUI extends JFrame implements ActionListener{
 			Add.componente(pnlPrincipal, btns[i], i%2, i/2 +1, 1, 1, 0.1, 0.1,
 					GridBagConstraints.NONE, ttt[i]);
 		}
-		
-		
-		
 		
 		add(pnlPrincipal);
 	}
