@@ -99,6 +99,8 @@ public class MetodosIntegracionPanel extends JPanel implements ActionListener,
 				GridBagConstraints.HORIZONTAL, "Resultado de la integral.");
 		Add.componente(this, btnIntegrar, 6, 2, 2, 1, 1.0, 1.0,
 				GridBagConstraints.BOTH, "Integra");
+		
+		setBorder(javax.swing.BorderFactory.createTitledBorder("Métodos de Integración"));
 	}
 	
 	/**

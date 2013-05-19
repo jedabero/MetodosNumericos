@@ -41,6 +41,7 @@ public class AproxFunUI extends JPanel implements ActionListener, ChangeListener
 	DefaultTableModel dm;
 	private String[] headers = {"x", "f(x)"};
 	private int numPuntos = 2;
+	private JPanel pnlMetodos;
 	private JButton btnObtenPol[];
 	private JLabel lblPolinomio;
 	
@@ -68,6 +69,10 @@ public class AproxFunUI extends JPanel implements ActionListener, ChangeListener
 		tblPuntos = new JTable(dm);
 		scpTable = new JScrollPane();
 		scpTable.setViewportView(tblPuntos);
+		scpTable.setBorder(javax.swing.BorderFactory.createTitledBorder("Tabla Tabulada"));
+		
+		pnlMetodos = new JPanel(new GridBagLayout());
+		pnlMetodos.setBorder(javax.swing.BorderFactory.createTitledBorder("Métodos de aproximación"));
 		
 		btnObtenPol = new JButton[strMetodos.length];
 		for(int i = 0; i<btnObtenPol.length; i++){
@@ -75,7 +80,7 @@ public class AproxFunUI extends JPanel implements ActionListener, ChangeListener
 			btnObtenPol[i].addActionListener(this);
 		}
 		
-		lblPolinomio = new JLabel("");
+		lblPolinomio = new JLabel("", JLabel.CENTER);
 		
 		//0 - Numero de puntos
 		Add.componente(this, lblNumPuntos, 0, 0, 1, 1, 1.0, 1.0,
@@ -84,18 +89,23 @@ public class AproxFunUI extends JPanel implements ActionListener, ChangeListener
 				GridBagConstraints.HORIZONTAL, "Número de puntos");
 		
 		//1 - Tabla
-		Add.componente(this, scpTable, 0, 1, 3, 5, 1.0, 1.0,
+		Add.componente(this, scpTable, 0, 1, 3, 4, 1.0, 1.0,
 				GridBagConstraints.BOTH, "");
 		
-		//6 - Botón obtenPol
+		//5 - 0 - Botón obtenPol
 		for (int i = 0; i < btnObtenPol.length; i++) {
-			Add.componente(this, btnObtenPol[i], i, 6, 1, 1, 1.0, 1.0,
+			Add.componente(pnlMetodos, btnObtenPol[i], i, 0, 1, 1, 1.0, 1.0,
 					GridBagConstraints.BOTH, "");
 		}
 		
-		//7 - Label del Polinomio
-		Add.componente(this, lblPolinomio, 0, 7, 3, 3, 1.0, 1.0,
+		//5 - 1 - Label del Polinomio
+		Add.componente(pnlMetodos, lblPolinomio, 0, 1, 3, 3, 1.0, 1.0,
 				GridBagConstraints.BOTH, "");
+		
+		//5 - Panel de métodos
+		Add.componente(this, pnlMetodos, 0, 5, 3, 4, 1.0, 1.0,
+				GridBagConstraints.BOTH, "");
+		
 	}
 
 	@Override

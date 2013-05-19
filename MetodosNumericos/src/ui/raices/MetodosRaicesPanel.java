@@ -95,6 +95,7 @@ public class MetodosRaicesPanel extends JPanel implements ItemListener,
 		txtX.setEditable(false);
 		
 		initComponents();
+		setBorder(javax.swing.BorderFactory.createTitledBorder("Métodos Iterativos"));
 	}
 
 	private void initComponents() {

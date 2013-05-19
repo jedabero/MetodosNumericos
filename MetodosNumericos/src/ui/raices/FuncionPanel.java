@@ -51,6 +51,8 @@ public class FuncionPanel extends JPanel {
 		
 		addComponents();
 		
+		setBorder(javax.swing.BorderFactory.createTitledBorder("Edición de los " +
+				"coeficientes del polinomio"));
 	}
 	
 	/**
