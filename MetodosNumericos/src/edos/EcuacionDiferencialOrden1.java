@@ -206,7 +206,7 @@ public class EcuacionDiferencialOrden1 {
 	 * @return el valor de y(X.max()) por el método con las Serie de Taylor
 	 * hasta el tercer término.
 	 */
-	public BigDecimal metodoSeriesTaylor3(Interval X, BigDecimal y0, int n) {
+	public BigDecimal metodoSeriesTaylorOrden2(Interval X, BigDecimal y0, int n) {
 		BigDecimal h = X.step(n);
 		BigDecimal xn[] = X.conjuntoPuntos(n);
 		BigDecimal yn = y0;
@@ -264,7 +264,7 @@ public class EcuacionDiferencialOrden1 {
 			BigDecimal y0 = BigDecimal.valueOf(1);
 			BigDecimal res = edo1.metodoEulerSimple(X, y0, 10);
 			BigDecimal resm = edo1.metodoEulerSimpleModificado(X, y0, 10);
-			BigDecimal rst3 = edo1.metodoSeriesTaylor3(X, y0, 10);
+			BigDecimal rst3 = edo1.metodoSeriesTaylorOrden2(X, y0, 10);
 			BigDecimal rrk = edo1.metodoRungeKutta(X, y0, 10);
 			System.out.println("yn="+res);
 			System.out.println("yn="+resm);

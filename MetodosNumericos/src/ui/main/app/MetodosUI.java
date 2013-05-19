@@ -25,6 +25,7 @@ import javax.swing.SpinnerNumberModel;
 
 import resources.Add;
 import ui.aproxpol.AproxFunUI;
+import ui.ecdiff.EcDiffUI;
 import ui.numint.NumIntUI;
 import ui.raices.RaicesUI;
 import ui.ssel.JPanelSSEL;
@@ -34,9 +35,6 @@ import ui.ssel.JPanelSSEL;
  */
 public class MetodosUI extends JFrame implements ActionListener{
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 6637458677520322115L;
 	private int resultScale = 5;
 	
@@ -45,6 +43,7 @@ public class MetodosUI extends JFrame implements ActionListener{
 		"Solución de Sistemas de Ecuaciones Lineales",
 		"Aproximación Polinomial",
 		"Integración Numérica",
+		"Ecuaciones diferenciales",
 		"",
 		"Salir"};
 	private static final String ttt[] = new String[]{
@@ -52,12 +51,14 @@ public class MetodosUI extends JFrame implements ActionListener{
 		"Soluciona sistemas Ax = B. (Alt + A, S)",
 		"Obtén un polinomio que aproxima los puntos una tabla tabulada. (Alt + A, A)",
 		"Métodos de integración numérica. (Alt + A, I)",
-		"","Terminar la aplicación. (Alt + A, L)"};
+		"Resolución de ecuaciones diferenciales ordinarias de primer orden.",
+		" ","Terminar la aplicación. (Alt + A, L)"};
 	private static final String iconsURL[] = {
 			"/ui/img/Pol.png",
 			"/ui/img/SEL.png",
 			"/ui/img/AproxF.png",
-			"/ui/img/Integration.png"};
+			"/ui/img/Integration.png",
+			"/ui/img/ecdiff.png"};
 	
 	private JMenuBar mnbPrincipal = new JMenuBar();
 	private JPanel pnlPrincipal = new JPanel(new GridBagLayout());
@@ -89,11 +90,13 @@ public class MetodosUI extends JFrame implements ActionListener{
 	private void initPanel() {
 		
 		JLabel lblInitalText = new JLabel("<html>" +
-				"<H1>Elija el tema que desea realizar.</H1>" +
+				"<H1><center>Elija el tema que desea realizar</center>.</H1>" +
 				"<center>Puede hacerlo presionando alguno de los botones abajo</center>" +
 				"<center>También puede hacerlo en el menú de Acciones. (Alt + A)</center>" +
 				"</html>", JLabel.CENTER);
 		lblInitalText.setBorder(BorderFactory.createEtchedBorder());
+		Add.componente(pnlPrincipal, lblInitalText, 0, 0, 4, 1, 1, 1,
+				GridBagConstraints.BOTH, "");
 		
 		Image icons[] = null;
 		try{
@@ -101,20 +104,22 @@ public class MetodosUI extends JFrame implements ActionListener{
 					ImageIO.read(getClass().getResource(iconsURL[0])),
 					ImageIO.read(getClass().getResource(iconsURL[1])),
 					ImageIO.read(getClass().getResource(iconsURL[2])),
-					ImageIO.read(getClass().getResource(iconsURL[3])),};
+					ImageIO.read(getClass().getResource(iconsURL[3])),
+					ImageIO.read(getClass().getResource(iconsURL[4])),};
 		}catch(Exception e){
 			e.printStackTrace();
 		}
 		
 		JButton btns[] = new JButton[actions.length];
 		
-		for (int i = 0; i < 4; i++) {
+		for (int i = 0; i < 5; i++) {
 			btns[i] = new JButton(actions[i], new ImageIcon(icons[i]));
 			btns[i].setVerticalTextPosition(3);//BOTTOM
 			btns[i].setHorizontalTextPosition(0);//CENTER
 			btns[i].setBackground(Color.WHITE);
 			btns[i].addActionListener(this);
-			Add.componente(pnlPrincipal, btns[i], i%2, i/2 +1, 1, 1, 0.1, 0.1,
+			System.out.println(i);
+			Add.componente(pnlPrincipal, btns[i], i%3, i/3 +1, 1, 1, 0.1, 0.1,
 					GridBagConstraints.NONE, ttt[i]);
 		}
 		
@@ -123,10 +128,10 @@ public class MetodosUI extends JFrame implements ActionListener{
 
 	private void initBarraMenu() {
 		Add.menu(mnbPrincipal, "Acciones", 'A',
-				new int[]{0, 0, 0, 0, 2, 0},
+				new int[]{0, 0, 0, 0, 0, 2, 0},
 				actions,
 				ttt,
-				new ActionListener[]{this,this,this,this,null,this},
+				new ActionListener[]{this,this,this,this,this,null,this},
 				null, null, null);
 		
 		Add.menu(mnbPrincipal, "Opciones", 'O', new int[]{0},
@@ -195,6 +200,13 @@ public class MetodosUI extends JFrame implements ActionListener{
 			NumIntUI numIntUI = new NumIntUI();
 			numIntUI.setBorder(BorderFactory.createEtchedBorder());
 			Add.componente(pnlPrincipal, numIntUI, 0, 1, 1, 1, 1, 1,
+					GridBagConstraints.BOTH, "");
+		}else if (action.equals(actions[4])) {//NUMERICINTEGRATION
+			pnlPrincipal.removeAll();
+			pnlPrincipal.revalidate();
+			EcDiffUI ecDiffUI = new EcDiffUI();
+			ecDiffUI.setBorder(BorderFactory.createEtchedBorder());
+			Add.componente(pnlPrincipal, ecDiffUI, 0, 1, 1, 1, 1, 1,
 					GridBagConstraints.BOTH, "");
 		}else if(action.equals("Cifras Decimales")){
 			SpinnerNumberModel sModel = new SpinnerNumberModel(resultScale, 0, 30, 1);

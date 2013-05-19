@@ -131,7 +131,7 @@ public class RaicesUI extends JPanel  implements ActionListener, ChangeListener 
 		switch (btn.getText().charAt(0)) {
 		case 'C'://TODO "Crear Polinomio":
 			funcion = fpnlFuncion.getFnc();
-			lblEq.setText(funcion.getSpecific());
+			lblEq.setText("<html>"+funcion.getSpecific()+"</html>");
 			mpnlMetodos.setFuncion(funcion);
 			JOptionPane.showMessageDialog(null, "Función creada");//TODO función creada
 			break;

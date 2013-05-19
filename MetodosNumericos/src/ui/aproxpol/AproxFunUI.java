@@ -80,7 +80,7 @@ public class AproxFunUI extends JPanel implements ActionListener, ChangeListener
 			btnObtenPol[i].addActionListener(this);
 		}
 		
-		lblPolinomio = new JLabel("", JLabel.CENTER);
+		lblPolinomio = new JLabel("Polinomio aproximado: ", JLabel.CENTER);
 		
 		//0 - Numero de puntos
 		Add.componente(this, lblNumPuntos, 0, 0, 1, 1, 1.0, 1.0,
@@ -134,7 +134,7 @@ public class AproxFunUI extends JPanel implements ActionListener, ChangeListener
 			e1.printStackTrace();
 		}
 		
-		lblPolinomio.setText(f.getSpecific());
+		lblPolinomio.setText("<html>Polinomio aproximado: "+f.getSpecific()+"</html>");
 		
 	}
 
