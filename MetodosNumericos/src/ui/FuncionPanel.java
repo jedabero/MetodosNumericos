@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import resources.Add;
 import resources.CustomException;
@@ -20,7 +22,7 @@ import funciones.Funcion;
  * @author Jedabero
  *
  */
-public class FuncionPanel extends JPanel {
+public class FuncionPanel extends JPanel implements ChangeListener {
 
 	/**
 	 * 
@@ -101,6 +103,12 @@ public class FuncionPanel extends JPanel {
 		}
 		
 		return fnc;
+	}
+
+	@Override
+	public void stateChanged(ChangeEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }
