@@ -10,7 +10,9 @@ import java.util.ArrayList;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JSpinner;
 import javax.swing.JTextField;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -22,27 +24,49 @@ import funciones.Funcion;
  * @author Jedabero
  *
  */
-public class FuncionPanel extends JPanel implements ChangeListener {
+public class EditaPolinomioPanel extends JPanel implements ChangeListener {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -1282401764833016997L;
+	
 	private int nTerms;
+	
+	private SpinnerNumberModel snmGradoPol;
+	private JSpinner spnrGradoPol;
+	
+	private JPanel pnlCoefs;
 	private ArrayList<JLabel> lblListCoefs;
 	private ArrayList<JTextField> txtListCoefs;
+	
 	private Funcion fnc;
 	private BigDecimal[] coefs;
 	
 	/**
 	 * @param grade
 	 */
-	public FuncionPanel(int grade) {
+	public EditaPolinomioPanel() {
 		super(new GridBagLayout());
-		nTerms = grade+1;
+		
+		
+		initComponents();
+		addComponents();
+		
+		setBorder(javax.swing.BorderFactory.createTitledBorder("Edición de los " +
+				"coeficientes del polinomio"));
+	}
+	
+	private void initComponents() {
+		nTerms = 4;
+		
+		snmGradoPol = new SpinnerNumberModel(nTerms-1, 1, 25, 1);
+		spnrGradoPol = new JSpinner(snmGradoPol);
+		spnrGradoPol.addChangeListener(this);
+		
+		pnlCoefs = new JPanel(new GridBagLayout());
 		lblListCoefs = new ArrayList<JLabel>(nTerms);
-		txtListCoefs = new ArrayList<JTextField>(nTerms);
-		coefs = new BigDecimal[nTerms];
+		txtListCoefs  = new ArrayList<JTextField>(nTerms);
 		
 		for (int i = 0; i < nTerms; i++) {
 			JLabel templbl = new JLabel("<html>A<sub>"+i+"</sub>= </html>", JLabel.RIGHT);
@@ -51,29 +75,33 @@ public class FuncionPanel extends JPanel implements ChangeListener {
 			txtListCoefs.add(temptxt);
 		}
 		
-		addComponents();
-		
-		setBorder(javax.swing.BorderFactory.createTitledBorder("Edición de los " +
-				"coeficientes del polinomio"));
+		coefs = new BigDecimal[nTerms];
 	}
-	
+
 	/**
 	 * 
 	 */
 	public void addComponents(){
+		Add.componente(this, new JLabel("Grado del polinomio", JLabel.CENTER),
+				0, 0, 1, 1, 1.0, 1.0, GridBagConstraints.NONE, "");
+		Add.componente(this, spnrGradoPol, 1, 0, 1, 1, 1.0, 1.0,
+				GridBagConstraints.NONE, "Grado del Polinomio");
 		
 		for (int i = 0; i < nTerms; i++) {
 			int xL = (2*i)%4 + ((i%2==0)? 0 : 2);
 			int xT = (2*i +1)%4 + ((i%2==0)? 0 : 2);
 			int y = (i/2);
 			
-			Add.componente(this, lblListCoefs.get(i),
+			Add.componente(pnlCoefs, lblListCoefs.get(i),
 					xL, y, 1, 1, 0.25, 1.0,
 					GridBagConstraints.BOTH, "");
-			Add.componente(this, txtListCoefs.get(i),
+			Add.componente(pnlCoefs, txtListCoefs.get(i),
 					xT, y, 3, 1, 1.0, 1.0,
 					GridBagConstraints.BOTH, "");
 		}
+		
+		Add.componente(this, pnlCoefs, 0, 1, 2, 2, 1.0, 1.0,
+				GridBagConstraints.BOTH, "Edita los coeficientes");
 		
 	}
 	
@@ -107,8 +135,7 @@ public class FuncionPanel extends JPanel implements ChangeListener {
 
 	@Override
 	public void stateChanged(ChangeEvent e) {
-		// TODO Auto-generated method stub
-		
+		//Integer.parseInt(spnr.getValue().toString()));(int)spnr.getValue();
 	}
 	
 }

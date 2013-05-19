@@ -18,15 +18,11 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
-import javax.swing.JSpinner;
-import javax.swing.SpinnerNumberModel;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 
 import resources.Add;
 import resources.O;
 import resources.math.Interval;
-import ui.FuncionPanel;
+import ui.EditaPolinomioPanel;
 import funciones.Funcion;
 import grafica.JGrafica;
 
@@ -34,7 +30,7 @@ import grafica.JGrafica;
  * @author Jedabero
  *
  */
-public class RaicesUI extends JPanel  implements ActionListener, ChangeListener {
+public class RaicesUI extends JPanel  implements ActionListener {
 	
 	/**
 	 * 
@@ -42,11 +38,11 @@ public class RaicesUI extends JPanel  implements ActionListener, ChangeListener 
 	private static final long serialVersionUID = -5011837883282426768L;
 	private JFrame frmGrafica;
 	
-	private FuncionPanel fpnlFuncion;
+	private EditaPolinomioPanel fpnlFuncion;
 	private JLabel lblEq;
 	private MetodosRaicesPanel mpnlMetodos; 
 	private Funcion funcion;
-	private int grad;
+	
 	/**
 	 * 
 	 */
@@ -59,13 +55,8 @@ public class RaicesUI extends JPanel  implements ActionListener, ChangeListener 
 	}
 	
 	private void initComponents() {//Polinomio
-		grad = 2;
-		JLabel lblGradoPol = new JLabel("Grado de polinomio", JLabel.CENTER);
-		SpinnerNumberModel snmGradoPol = new SpinnerNumberModel(grad, 1, 25, 1);
-		JSpinner spnrGradoPol = new JSpinner(snmGradoPol);
-		spnrGradoPol.setName("grado");
 		//Ingresar Polinomio
-		fpnlFuncion = new FuncionPanel(grad);
+		fpnlFuncion = new EditaPolinomioPanel();
 		JButton btnCreaPol = new JButton("Crear Polinomio");
 		
 		JSeparator sprtr1 = new JSeparator(JSeparator.HORIZONTAL);
@@ -82,10 +73,6 @@ public class RaicesUI extends JPanel  implements ActionListener, ChangeListener 
 		mpnlMetodos = new MetodosRaicesPanel();
 		
 		//0 - Tamaño Polinomio
-		Add.componente(this, lblGradoPol, 			0, 0, 2, 1, 1.0, 1.0,
-				GridBagConstraints.NONE, "");
-		Add.componente(this, spnrGradoPol, 			2, 0, 1, 1, 1.0, 1.0,
-				GridBagConstraints.HORIZONTAL, "Grado del Polinomio");
 		Add.componente(this, btnCreaPol, 			3, 0, 2, 1, 1.0, 1.0,
 				GridBagConstraints.BOTH, "");
 		Add.componente(this, fpnlFuncion, 			0, 1, 5, 2, 1.0, 1.0,
@@ -112,17 +99,6 @@ public class RaicesUI extends JPanel  implements ActionListener, ChangeListener 
 		//Add ActionListeners
 		btnCreaPol.addActionListener(this);
 		btnVerGrafica.addActionListener(this);
-		spnrGradoPol.addChangeListener(this);
-	}
-
-	@Override
-	public void stateChanged(ChangeEvent e) {
-		JSpinner spnr = (JSpinner) e.getSource();
-		remove(fpnlFuncion);
-		fpnlFuncion = new FuncionPanel(Integer.parseInt(spnr.getValue().toString()));//(int)spnr.getValue();
-		Add.componente(this, fpnlFuncion, 			0, 1, 5, 2, 1.0, 1.0,
-				GridBagConstraints.BOTH, "Edita los coeficientes de la función");
-		revalidate();
 	}
 
 	@Override

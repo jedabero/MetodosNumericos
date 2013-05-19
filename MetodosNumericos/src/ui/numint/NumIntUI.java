@@ -18,15 +18,11 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
-import javax.swing.JSpinner;
-import javax.swing.SpinnerNumberModel;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 
 import resources.Add;
 import resources.O;
 import resources.math.Interval;
-import ui.FuncionPanel;
+import ui.EditaPolinomioPanel;
 import funciones.Funcion;
 import grafica.JGrafica;
 
@@ -34,7 +30,7 @@ import grafica.JGrafica;
  * @author Jedabero
  *
  */
-public class NumIntUI extends JPanel implements ActionListener, ChangeListener {
+public class NumIntUI extends JPanel implements ActionListener{
 
 	/**
 	 * 
@@ -42,11 +38,10 @@ public class NumIntUI extends JPanel implements ActionListener, ChangeListener {
 	private static final long serialVersionUID = 1094301241514865205L;
 	
 	private JFrame frmGrafica;
-	private FuncionPanel fpnl;
+	private EditaPolinomioPanel fpnl;
 	private JLabel lblEq;
 	private MetodosIntegracionPanel mpnl;
 	private Funcion funcion;
-	private int grad;
 	
 	/**
 	 * 
@@ -61,13 +56,8 @@ public class NumIntUI extends JPanel implements ActionListener, ChangeListener {
 	
 	
 	private void initComponents() {
-		grad = 2;
-		JLabel lblGradoPol = new JLabel("Grado de polinomio", JLabel.CENTER);
-		SpinnerNumberModel snmGradoPol = new SpinnerNumberModel(grad, 1, 25, 1);
-		JSpinner spnrGradoPol = new JSpinner(snmGradoPol);
-		spnrGradoPol.setName("grado");
 		//Ingresar Polinomio
-		fpnl = new FuncionPanel(grad);
+		fpnl = new EditaPolinomioPanel();
 		JButton btnCreaPol = new JButton("Crear Polinomio");
 		
 		JSeparator sprtr1 = new JSeparator(JSeparator.HORIZONTAL);
@@ -84,10 +74,7 @@ public class NumIntUI extends JPanel implements ActionListener, ChangeListener {
 		mpnl = new MetodosIntegracionPanel();
 		
 		//0 - Tamaño Polinomio
-		Add.componente(this, lblGradoPol, 			0, 0, 2, 1, 1.0, 1.0,
-				GridBagConstraints.NONE, "");
-		Add.componente(this, spnrGradoPol, 			2, 0, 1, 1, 1.0, 1.0,
-				GridBagConstraints.HORIZONTAL, "Grado del Polinomio");
+		
 		Add.componente(this, btnCreaPol, 			3, 0, 2, 1, 1.0, 1.0,
 				GridBagConstraints.BOTH, "");
 		Add.componente(this, fpnl, 			0, 1, 5, 2, 1.0, 1.0,
@@ -114,20 +101,7 @@ public class NumIntUI extends JPanel implements ActionListener, ChangeListener {
 		//Add ActionListeners
 		btnCreaPol.addActionListener(this);
 		btnVerGrafica.addActionListener(this);
-		spnrGradoPol.addChangeListener(this);
 		
-	}
-
-
-	@Override
-	public void stateChanged(ChangeEvent e) {
-		JSpinner spnr = (JSpinner) e.getSource();
-		remove(fpnl);
-		fpnl = new FuncionPanel(Integer.parseInt(spnr.getValue().toString()));//(int)spnr.getValue();
-		Add.componente(this, fpnl, 			0, 1, 5, 2, 1.0, 1.0,
-				GridBagConstraints.BOTH, "Edita los coeficientes de la función");
-		revalidate();
-
 	}
 
 	@Override
@@ -136,7 +110,7 @@ public class NumIntUI extends JPanel implements ActionListener, ChangeListener {
 		switch (btn.getText().charAt(0)) {
 		case 'C'://TODO "Crear Polinomio":
 			funcion = fpnl.getFnc();
-			lblEq.setText(funcion.getSpecific());
+			lblEq.setText("<html>"+funcion.getSpecific()+"</html>");
 			mpnl.setFuncion(funcion);
 			JOptionPane.showMessageDialog(null, "Función creada");//TODO función creada
 			break;
