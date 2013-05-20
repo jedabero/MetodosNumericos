@@ -62,7 +62,14 @@ public class EcDiffUI extends JPanel implements ChangeListener, ActionListener,
 
 	private void initComponents() {
 		pnlEdicion = new JPanel(new GridBagLayout());
-		
+		Add.componente(pnlEdicion, new JLabel("<html><center>" +
+				"Resolución de ecuaciones ordinarias de primer orden" +
+				"<table border=0 cellspacing=0 cellpadding=0 width=\"40%\" align=\"center\" class=\"equation\"><tr>"
+				+"<td nowrap align=center><i>dy</i><hr noshade size=1><i>dx</i></td>"
+				+"<td nowrap> &nbsp; &nbsp;=&nbsp; &nbsp; <i>Q(x) + P(x)y</i></td>"
+				+"<td width=\"50%\"></td></tr></table>" +
+				"</center></html>", JLabel.CENTER),
+				0, 0, 2, 1, 1.0, 1.0, GridBagConstraints.NONE, "");
 		
 		
 		pnlMetodos = new JPanel(new GridBagLayout());
