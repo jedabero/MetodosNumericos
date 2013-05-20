@@ -9,6 +9,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
@@ -31,7 +32,7 @@ public class EditaPolinomioPanel extends JPanel implements ChangeListener {
 	 */
 	private static final long serialVersionUID = -1282401764833016997L;
 	
-	private int nTerms;
+	private int grado;
 	
 	private SpinnerNumberModel snmGradoPol;
 	private JSpinner spnrGradoPol;
@@ -49,33 +50,32 @@ public class EditaPolinomioPanel extends JPanel implements ChangeListener {
 	public EditaPolinomioPanel() {
 		super(new GridBagLayout());
 		
-		
 		initComponents();
 		addComponents();
 		
-		setBorder(javax.swing.BorderFactory.createTitledBorder("Edición de los " +
-				"coeficientes del polinomio"));
+		setBorder(javax.swing.BorderFactory.createTitledBorder("Edición del "
+				+"polinomio"));
 	}
 	
 	private void initComponents() {
-		nTerms = 4;
+		grado = 3;
 		
-		snmGradoPol = new SpinnerNumberModel(nTerms-1, 1, 25, 1);
+		snmGradoPol = new SpinnerNumberModel(grado, 1, 25, 1);
 		spnrGradoPol = new JSpinner(snmGradoPol);
 		spnrGradoPol.addChangeListener(this);
 		
 		pnlCoefs = new JPanel(new GridBagLayout());
-		lblListCoefs = new ArrayList<JLabel>(nTerms);
-		txtListCoefs  = new ArrayList<JTextField>(nTerms);
+		lblListCoefs = new ArrayList<JLabel>(grado+1);
+		txtListCoefs  = new ArrayList<JTextField>(grado);
 		
-		for (int i = 0; i < nTerms; i++) {
+		for (int i = 0; i <= grado; i++) {
 			JLabel templbl = new JLabel("<html>A<sub>"+i+"</sub>= </html>", JLabel.RIGHT);
 			lblListCoefs.add(templbl);
 			JTextField temptxt = new JTextField();
 			txtListCoefs.add(temptxt);
 		}
 		
-		coefs = new BigDecimal[nTerms];
+		coefs = new BigDecimal[grado+1];
 	}
 
 	/**
@@ -87,7 +87,17 @@ public class EditaPolinomioPanel extends JPanel implements ChangeListener {
 		Add.componente(this, spnrGradoPol, 1, 0, 1, 1, 1.0, 1.0,
 				GridBagConstraints.NONE, "Grado del Polinomio");
 		
-		for (int i = 0; i < nTerms; i++) {
+		layoutCoefsPanel();
+		
+		Add.componente(this, pnlCoefs, 0, 1, 2, 2, 1.0, 1.0,
+				GridBagConstraints.BOTH, "Edita los coeficientes");
+		
+	}
+	
+	private void layoutCoefsPanel(){
+		pnlCoefs.removeAll();
+		pnlCoefs.revalidate();
+		for (int i = 0; i < lblListCoefs.size(); i++) {
 			int xL = (2*i)%4 + ((i%2==0)? 0 : 2);
 			int xT = (2*i +1)%4 + ((i%2==0)? 0 : 2);
 			int y = (i/2);
@@ -99,35 +109,32 @@ public class EditaPolinomioPanel extends JPanel implements ChangeListener {
 					xT, y, 3, 1, 1.0, 1.0,
 					GridBagConstraints.BOTH, "");
 		}
-		
-		Add.componente(this, pnlCoefs, 0, 1, 2, 2, 1.0, 1.0,
-				GridBagConstraints.BOTH, "Edita los coeficientes");
-		
+
+		pnlCoefs.repaint();
+		revalidate();
 	}
-	
 	
 	/**
 	 * @return la función
 	 */
-	public Funcion getFnc() {
-		
-		for (int i = 0; i < nTerms; i++) {
+	public Funcion getPol() {
+		coefs = new BigDecimal[grado+1];
+		for (int i = 0; i <= grado; i++) {
 			JTextField txtTemp = txtListCoefs.get(i);
 			String text = txtTemp.getText();
-			BigDecimal tempBD;
+			BigDecimal tempBD = null;
 			try {
 				tempBD = new BigDecimal(text);
 			} catch (Exception e) {
-				tempBD = BigDecimal.ONE;
-				txtTemp.setText(tempBD.toString());
+				JOptionPane.showMessageDialog(pnlCoefs, "Error en "+e.getMessage(), "Error", JOptionPane.WARNING_MESSAGE);
 			}
 			coefs[i] = tempBD;
 		}
 		
 		try {
-			fnc = Funcion.polinomio(nTerms-1, coefs);
+			return Funcion.polinomio(grado, coefs);
 		} catch (CustomException e) {
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(pnlCoefs, "Error en "+e.getMessage(), "Error", JOptionPane.WARNING_MESSAGE);
 		}
 		
 		return fnc;
@@ -135,7 +142,19 @@ public class EditaPolinomioPanel extends JPanel implements ChangeListener {
 
 	@Override
 	public void stateChanged(ChangeEvent e) {
-		//Integer.parseInt(spnr.getValue().toString()));(int)spnr.getValue();
+		int g = Integer.parseInt(spnrGradoPol.getValue().toString());//(int)spnr.getValue();
+		System.out.println("prevG: "+grado+"; newG: "+g);
+		if(grado<g) {
+			JLabel templbl = new JLabel("<html>A<sub>"+g+"</sub>= </html>", JLabel.RIGHT);
+			lblListCoefs.add(templbl);
+			JTextField temptxt = new JTextField();
+			txtListCoefs.add(temptxt);
+		} else if(grado>g) {
+			lblListCoefs.remove(lblListCoefs.size()-1);
+			txtListCoefs.remove(txtListCoefs.size()-1);
+		}
+		layoutCoefsPanel();
+		grado = g;
 	}
 	
 }
