@@ -37,7 +37,7 @@ import ui.ssel.JPanelSSEL;
 public class MetodosUI extends JFrame implements ActionListener{
 	
 	private static final long serialVersionUID = 6637458677520322115L;
-	private int resultScale = 5;
+	private static int resultScale = 5;
 	
 	private static final String actions[] = {
 		"Raíces de Polinomios",
@@ -220,7 +220,7 @@ public class MetodosUI extends JFrame implements ActionListener{
 	/**
 	 * @return the resultScale
 	 */
-	public int getResultScale() {
+	public static int getResultScale() {
 		return resultScale;
 	}
 
@@ -228,7 +228,7 @@ public class MetodosUI extends JFrame implements ActionListener{
 	 * @param resultScale the resultScale to set
 	 */
 	public void setResultScale(int resultScale) {
-		this.resultScale = resultScale;
+		MetodosUI.resultScale = resultScale;
 	}
 
 	/**

@@ -9,6 +9,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -20,8 +22,13 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import edos.EcuacionDiferencialOrden1;
+import funciones.Funcion;
+
 import resources.Add;
+import resources.math.Interval;
 import ui.EditaPolinomioPanel;
+import ui.main.app.MetodosUI;
 
 /**
  * @author Jedabero
@@ -31,6 +38,8 @@ public class EcDiffUI extends JPanel implements ChangeListener, ActionListener,
 		ItemListener{
 	
 	private static final long serialVersionUID = 3179335173657009527L;
+	
+	private EcuacionDiferencialOrden1 edo1;
 	
 	private JPanel pnlEdicion;
 	private EditaPolinomioPanel eppQx;
@@ -159,10 +168,46 @@ public class EcDiffUI extends JPanel implements ChangeListener, ActionListener,
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		JButton btn = (JButton) e.getSource();
 		
-
+		BigDecimal res = null;
+		
+		if (btn.equals(btnCreaEc)) {
+			Funcion Px = eppPx.getPol();
+			Funcion Qx = eppQx.getPol();
+			edo1 = new EcuacionDiferencialOrden1(Px, Qx);
+			lblEc.setText("<html>"+edo1.getSpecific()+"</html>");
+		} else if (btn.equals(btnFind[0])) {
+			Object o[] = getParams();
+			res = edo1.metodoEulerSimple((Interval)o[0], (BigDecimal)o[1], Integer.parseInt(o[2].toString()));
+		} else if(btn.equals(btnFind[1])){
+			Object o[] = getParams();
+			res = edo1.metodoEulerSimpleModificado((Interval)o[0], (BigDecimal)o[1], Integer.parseInt(o[2].toString()));
+		} else if(btn.equals(btnFind[2])){
+			Object o[] = getParams();
+			res = edo1.metodoSeriesTaylorOrden2((Interval)o[0], (BigDecimal)o[1], Integer.parseInt(o[2].toString()));
+		} else if(btn.equals(btnFind[3])){
+			Object o[] = getParams();
+			res = edo1.metodoRungeKutta((Interval)o[0], (BigDecimal)o[1], Integer.parseInt(o[2].toString()));
+		}
+		
+		int scale = MetodosUI.getResultScale();
+		try {
+			res = res.setScale(scale, RoundingMode.HALF_UP);
+			lblRes.setText(res.stripTrailingZeros().toString());
+		} catch (Exception e2) {
+			// TODO: handle exception
+		}
 	}
-
+	
+	private Object[] getParams(){
+		Object[] obj = new Object[3];
+		obj[0] = new Interval(new BigDecimal(txtX0.getText()), new BigDecimal(txtXn.getText()));
+		obj[1] = new BigDecimal(txtY0.getText());
+		obj[2] = Integer.parseInt(spnrN.getValue().toString());//(int)spnrIt.getValue();
+		return obj;
+	}
+	
 	@Override
 	public void stateChanged(ChangeEvent e) {
 		// TODO Auto-generated method stub

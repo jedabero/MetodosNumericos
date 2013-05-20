@@ -171,9 +171,8 @@ public class MetodosIntegracionPanel extends JPanel implements ActionListener,
 			result=null;
 			break;
 		}
-		//Ugly way to get a method
-		MetodosUI mui = (MetodosUI)getParent().getParent().getParent().getParent().getParent().getParent();
-		int scale = (mui).getResultScale();
+		
+		int scale = MetodosUI.getResultScale();
 		result = result.setScale(scale, RoundingMode.HALF_UP);
 		txtRes.setText(result.stripTrailingZeros().toString());
 		
