@@ -62,7 +62,6 @@ public class RaicesUI extends JPanel  implements ActionListener {
 		JSeparator sprtr1 = new JSeparator(JSeparator.HORIZONTAL);
 		
 		//Mostrar Polinomio
-		//funcion = fpnlFuncion.getFnc(); TODO funcion init
 		lblEq = new JLabel("", JLabel.CENTER);
 		lblEq.setBorder(BorderFactory.createEtchedBorder());
 		JButton btnVerGrafica = new JButton("Ver gráfica");
@@ -107,9 +106,13 @@ public class RaicesUI extends JPanel  implements ActionListener {
 		switch (btn.getText().charAt(0)) {
 		case 'C'://TODO "Crear Polinomio":
 			funcion = fpnlFuncion.getPol();
-			lblEq.setText("<html>"+funcion.getSpecific()+"</html>");
-			mpnlMetodos.setFuncion(funcion);
-			JOptionPane.showMessageDialog(null, "Función creada");//TODO función creada
+			if(funcion!=null){
+				lblEq.setText("<html>"+funcion.getSpecific()+"</html>");
+				mpnlMetodos.setFuncion(funcion);
+				JOptionPane.showMessageDialog(this, "Función creada");//TODO función creada
+			} else {
+				JOptionPane.showMessageDialog(this, "No se pudo crear la función");
+			}
 			break;
 		case 'V'://TODO "Ver gráfica":
 			if(funcion!=null){

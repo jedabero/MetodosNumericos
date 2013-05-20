@@ -159,10 +159,12 @@ public class Funcion {
 			throws CustomException{
 		if(coefs.length<=n) throw CustomException.arrayIncompleto();
 		ArrayList<Termino> alT = new ArrayList<Termino>();
+		if(coefs[0]==null) throw new CustomException("A<sub>0</sub> = null");
 		if(coefs[0].signum() != 0){
 			alT.add(Termino.constante(coefs[0]));	
 		}
 		for(int i=1;i<=n;i++){
+			if(coefs[i]==null) throw new CustomException("A<sub>"+i+"</sub> = null");
 			if(coefs[i].signum() != 0){
 				alT.add(Termino.monomio(i, coefs[i]));	
 			}

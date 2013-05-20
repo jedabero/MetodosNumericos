@@ -31,10 +31,7 @@ import funciones.Funcion;
  */
 public class MetodosRaicesPanel extends JPanel implements ItemListener,
 		ActionListener {
-
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = 6392349745120763796L;
 	
 	private static final String strMetodos[] = {"Punto Fijo", "Bissección",
@@ -250,7 +247,7 @@ public class MetodosRaicesPanel extends JPanel implements ItemListener,
 	@Override
 	public void itemStateChanged(ItemEvent e) {
 		if(e.getStateChange() == ItemEvent.SELECTED){
-			System.out.println("metodoanterior: "+currMethod+"."+strMetodos[currMethod]);
+			O.pln("metodoanterior: "+currMethod+"."+strMetodos[currMethod]);
 			//Remover panel actual
 			switch (currMethod) {
 			case 0:
@@ -281,7 +278,7 @@ public class MetodosRaicesPanel extends JPanel implements ItemListener,
 				}
 			}
 
-			System.out.println("metodoseleccionado: "+m+"."+strm);
+			O.pln("metodoseleccionado: "+m+"."+strm);
 			
 			currMethod = m;
 			
@@ -310,64 +307,69 @@ public class MetodosRaicesPanel extends JPanel implements ItemListener,
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		String sTol = txtTol.getText();
-		BigDecimal tol = new BigDecimal(sTol);
-		int maxIt = Integer.parseInt(spnrIt.getValue().toString());//(int)spnrIt.getValue();
-		String sX0A = txtX0A.getText();
-		String sX1B = txtX1B.getText();
-		BigDecimal x0A = new BigDecimal(sX0A);
-		BigDecimal x1B = new BigDecimal(sX1B);
-		Interval ab = new Interval(x0A, x1B);
-		
-		String xResult = "";
-		
-		switch (currMethod) {
-		case 0:
-			try {
-				xResult += funcion.metodoPuntoFijo(tol, maxIt, x0A);
-			} catch (Exception e1) {
-				e1.printStackTrace();
-				JOptionPane.showMessageDialog(null, e1.getMessage());
+		if(funcion!=null){
+			String sTol = txtTol.getText();
+			BigDecimal tol = new BigDecimal(sTol);
+			int maxIt = Integer.parseInt(spnrIt.getValue().toString());//(int)spnrIt.getValue();
+			String sX0A = txtX0A.getText();
+			String sX1B = txtX1B.getText();
+			BigDecimal x0A = new BigDecimal(sX0A);
+			BigDecimal x1B = new BigDecimal(sX1B);
+			Interval ab = new Interval(x0A, x1B);
+			
+			String xResult = "";
+			
+			switch (currMethod) {
+			case 0:
+				try {
+					xResult += funcion.metodoPuntoFijo(tol, maxIt, x0A);
+				} catch (Exception e1) {
+					e1.printStackTrace();
+					JOptionPane.showMessageDialog(null, e1.getMessage());
+				}
+				break;
+			case 1:
+				try {
+					xResult += funcion.metodoBiseccion(tol, maxIt, ab);
+				} catch (Exception e1) {
+					e1.printStackTrace();
+					JOptionPane.showMessageDialog(null, e1.getMessage());
+				}
+				break;
+			case 2:
+				try {
+					xResult += funcion.metodoNewtonRaphson(tol, maxIt, x0A);
+				} catch (Exception e1) {
+					e1.printStackTrace();
+					JOptionPane.showMessageDialog(null, e1.getMessage());
+				}
+				break;
+			case 3:
+				try {
+					xResult += funcion.metodoSecante(tol, maxIt, x0A, x1B);
+				} catch (Exception e1) {
+					e1.printStackTrace();
+					JOptionPane.showMessageDialog(null, e1.getMessage());
+				}
+				break;
+			case 4:
+				try {
+					xResult += funcion.metodoRegulaFalsi(tol, maxIt, ab);
+				} catch (Exception e1) {
+					e1.printStackTrace();
+					JOptionPane.showMessageDialog(null, e1.getMessage());
+				}
+				break;
+			default:
+				O.pln(e.getSource().toString());
+				break;
 			}
-			break;
-		case 1:
-			try {
-				xResult += funcion.metodoBiseccion(tol, maxIt, ab);
-			} catch (Exception e1) {
-				e1.printStackTrace();
-				JOptionPane.showMessageDialog(null, e1.getMessage());
-			}
-			break;
-		case 2:
-			try {
-				xResult += funcion.metodoNewtonRaphson(tol, maxIt, x0A);
-			} catch (Exception e1) {
-				e1.printStackTrace();
-				JOptionPane.showMessageDialog(null, e1.getMessage());
-			}
-			break;
-		case 3:
-			try {
-				xResult += funcion.metodoSecante(tol, maxIt, x0A, x1B);
-			} catch (Exception e1) {
-				e1.printStackTrace();
-				JOptionPane.showMessageDialog(null, e1.getMessage());
-			}
-			break;
-		case 4:
-			try {
-				xResult += funcion.metodoRegulaFalsi(tol, maxIt, ab);
-			} catch (Exception e1) {
-				e1.printStackTrace();
-				JOptionPane.showMessageDialog(null, e1.getMessage());
-			}
-			break;
-		default:
-			O.pln(e.getSource().toString());
-			break;
+			
+			txtX.setText(xResult);
+		} else {
+			JOptionPane.showMessageDialog(null, "Crea la función primero.");
 		}
 		
-		txtX.setText(xResult);
 		
 	}
 	

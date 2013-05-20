@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Scanner;
 
+import resources.O;
+
 /**
  * 
  * @author Jedabero
@@ -42,9 +44,9 @@ public class Matriz {
     public Matriz(boolean ingresar){
         if(ingresar){
             Scanner in = new Scanner(System.in);
-            System.out.println("Filas: ");
+            O.pln("Filas: ");
             this.n = in.nextInt();
-            System.out.println("Columnas: ");
+            O.pln("Columnas: ");
             this.m = in.nextInt();
             matriz = new BigDecimal[n][m];
             ingresarMatriz();
@@ -102,7 +104,7 @@ public class Matriz {
         BigDecimal[][] tempM = new BigDecimal[n][m];
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < m; j++) {
-                System.out.print("Ingrese A("+(i+1)+","+(j+1)+") ");
+                O.p("Ingrese A("+(i+1)+","+(j+1)+") ");
                 tempM[i][j] = new BigDecimal(in.nextDouble());
             }
         }
@@ -126,7 +128,7 @@ public class Matriz {
     
     private void space(){
         for (int i = 0; i < spc; i++) {
-            System.out.print("|");
+            O.p("|");
         }
     }
     
@@ -147,7 +149,7 @@ public class Matriz {
             }
         }
         Matriz mtrz = new Matriz(temp);
-        System.out.println(mtrz.imprimirMatriz("Matriz prox"));
+        O.pln(mtrz.imprimirMatriz("Matriz prox"));
         return mtrz;
     }
     
@@ -173,7 +175,7 @@ public class Matriz {
                         t[j][i] = t[j-1][i-1].add(t[j-1][i]);
                     }
                 }
-                System.out.println(t[j][i]);
+                O.pln(t[j][i]);
             }
         }
         return new Matriz(t);
@@ -181,7 +183,7 @@ public class Matriz {
     
     public Matriz diagonal() throws Exception{
         space();
-        System.out.println("Obteniendo matriz diagonal...");
+        O.pln("Obteniendo matriz diagonal...");
         if (esCuadrada()) {
             BigDecimal temp[][] = new BigDecimal[n][m];
             for (int i = 0; i < n; i++) {
@@ -195,7 +197,7 @@ public class Matriz {
                 
             }
             Matriz mtrz = new Matriz(temp);
-            System.out.println(mtrz.imprimirMatriz("Matriz diagonal"));
+            O.pln(mtrz.imprimirMatriz("Matriz diagonal"));
             return mtrz;
         } else {
             throw new Exception("No es cuadrada.");
@@ -204,7 +206,7 @@ public class Matriz {
     
     public Matriz trianguloSuperior() throws Exception{
         space();
-        System.out.println("Obteniendo matriz de triangulo superior...");
+        O.pln("Obteniendo matriz de triangulo superior...");
         if (esCuadrada()) {
             BigDecimal temp[][] = new BigDecimal[n][m];
             for (int i = 0; i < n; i++) {
@@ -217,7 +219,7 @@ public class Matriz {
                 }
             }
             Matriz mtrz = new Matriz(temp);
-            System.out.println(mtrz.imprimirMatriz("Matriz triangular superior"));
+            O.pln(mtrz.imprimirMatriz("Matriz triangular superior"));
             return mtrz;
         } else {
             throw new Exception("No es cuadrada.");
@@ -226,16 +228,16 @@ public class Matriz {
     
     public Matriz trianguloSuperiorEstricto() throws Exception{
         space(); spc++;
-        System.out.println("Obteniendo matriz de triangulo superior estricto...");
+        O.pln("Obteniendo matriz de triangulo superior estricto...");
         Matriz mtrz = trianguloSuperior().restar(diagonal());
-        System.out.println(mtrz.imprimirMatriz("Matriz triangula superior estricta"));
+        O.pln(mtrz.imprimirMatriz("Matriz triangula superior estricta"));
         spc--;
         return mtrz;
     }
     
     public Matriz trianguloInferior() throws Exception{
         space();
-        System.out.println("Obteniendo matriz de triangulo inferior...");
+        O.pln("Obteniendo matriz de triangulo inferior...");
         if (esCuadrada()) {
             BigDecimal temp[][] = new BigDecimal[n][m];
             for (int i = 0; i < n; i++) {
@@ -248,7 +250,7 @@ public class Matriz {
                 }
             }
             Matriz mtrz = new Matriz(temp);
-            System.out.println(mtrz.imprimirMatriz("Matriz triangular inferior"));
+            O.pln(mtrz.imprimirMatriz("Matriz triangular inferior"));
             return mtrz;
         } else {
             throw new Exception("No es cuadrada.");
@@ -257,9 +259,9 @@ public class Matriz {
     
     public Matriz trianguloInferiorEstricto() throws Exception{
         space(); spc++;
-        System.out.println("Obteniendo matriz de triangulo inferior estricto...");
+        O.pln("Obteniendo matriz de triangulo inferior estricto...");
         Matriz mtrz = trianguloInferior().restar(diagonal());
-        System.out.println(mtrz.imprimirMatriz("Matriz triangula inferior estricta"));
+        O.pln(mtrz.imprimirMatriz("Matriz triangula inferior estricta"));
         spc--;
         return mtrz;
     }
@@ -286,7 +288,7 @@ public class Matriz {
             }
         }
         AB.setMatriz(temp);
-        System.out.println(AB.imprimirMatriz("Matriz "+nT+"x"+mT));
+        O.pln(AB.imprimirMatriz("Matriz "+nT+"x"+mT));
         return AB;
     }
     
@@ -306,7 +308,7 @@ public class Matriz {
     
     public Matriz transpuesta(){
         space();
-        System.out.println("Obteniendo transpuesta...");
+        O.pln("Obteniendo transpuesta...");
         BigDecimal[][] tempM = new BigDecimal[m][n];
         for (int i = 0; i < matriz.length; i++) {
             for (int j = 0; j < matriz[0].length; j++) {
@@ -314,18 +316,18 @@ public class Matriz {
             }
         }
         Matriz mtrz = new Matriz(tempM);
-        System.out.println(mtrz.imprimirMatriz("Matriz transpuesta"));
+        O.pln(mtrz.imprimirMatriz("Matriz transpuesta"));
         return mtrz;
     }
     
     public Matriz inversa() throws Exception{
         space();
-        System.out.println("Obteniendo inversa...");
+        O.pln("Obteniendo inversa...");
         if(!detEquals0()){
             spc++;
             BigDecimal invDet = BigDecimal.ONE.divide(det(), 20, RoundingMode.UP);
             Matriz mtrz = adjunta().multipicar(invDet);
-            System.out.println(mtrz.imprimirMatriz("Matriz inversa"));
+            O.pln(mtrz.imprimirMatriz("Matriz inversa"));
             spc--;
             return mtrz;
         }else{
@@ -335,18 +337,18 @@ public class Matriz {
     
     public BigDecimal cofactor(int i, int j) throws Exception{
         space(); spc++;
-        System.out.println("Obteniendo cofactor "+i+","+j+"...");
+        O.pln("Obteniendo cofactor "+i+","+j+"...");
         BigDecimal detRed = reducida(i, j).det();
         BigDecimal cof = detRed.multiply(BigDecimal.ONE.negate().pow(i+j));
         space();
-        System.out.println("... cofactor "+i+","+j+" = "+cof);
+        O.pln("... cofactor "+i+","+j+" = "+cof);
         spc--;
         return cof;
     }
     
     public Matriz cofactor() throws Exception{
         space(); spc++;
-        System.out.println("Obteniendo matriz de cofactores...");
+        O.pln("Obteniendo matriz de cofactores...");
         BigDecimal temp[][] = new BigDecimal[n][m];
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < m; j++) {
@@ -354,23 +356,23 @@ public class Matriz {
             }
         }
         Matriz mtrz = new Matriz(temp);
-        System.out.println(mtrz.imprimirMatriz("Matriz cofactor"));
+        O.pln(mtrz.imprimirMatriz("Matriz cofactor"));
         spc--;
         return mtrz;
     }
     
     public Matriz adjunta() throws Exception{
         space(); spc++;
-        System.out.println("Obteniendo matriz adjunta...");
+        O.pln("Obteniendo matriz adjunta...");
         Matriz mtrz = cofactor().transpuesta();
-        System.out.println(mtrz.imprimirMatriz("Matriz adjunta"));
+        O.pln(mtrz.imprimirMatriz("Matriz adjunta"));
         spc--;
         return mtrz;
     }
     
     public BigDecimal traza()throws Exception{
         space();
-        System.out.print("Sacando el valor de la traza...");
+        O.p("Sacando el valor de la traza...");
         BigDecimal tr = BigDecimal.ZERO;
         if (!esCuadrada()) {
             throw new Exception("Matriz no cuadrada.");
@@ -378,14 +380,14 @@ public class Matriz {
             for (int i = 0; i < n; i++) {
                 tr = tr.add(getMatriz()[i][i]);
             }
-            System.out.println(" "+tr);
+            O.pln(" "+tr);
             return tr;
         }
     }
     
     public Matriz abs(){
         space();
-        System.out.println("Sacando valor absoluto a: "+this);
+        O.pln("Sacando valor absoluto a: "+this);
         BigDecimal temp[][] = new BigDecimal[n][m];
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < m; j++) {
@@ -393,7 +395,7 @@ public class Matriz {
             }
         }
         Matriz mtrz = new Matriz(temp);
-        System.out.println(mtrz.imprimirMatriz("Matriz con valor absoluto"));
+        O.pln(mtrz.imprimirMatriz("Matriz con valor absoluto"));
         return mtrz;
     }
     
@@ -403,7 +405,7 @@ public class Matriz {
     
     public Matriz sumar(Matriz sumando) throws Exception{
         space();
-        System.out.println("Sumando "+sumando);
+        O.pln("Sumando "+sumando);
         if((n==sumando.n)&&(m==sumando.m)){
             BigDecimal[][] matTemp = new BigDecimal[n][m];
             for (int i = 0; i < n; i++) {
@@ -412,7 +414,7 @@ public class Matriz {
                 }
             }
             Matriz mtrz = new Matriz(matTemp);
-            System.out.println(mtrz.imprimirMatriz("Matriz resultante suma"));
+            O.pln(mtrz.imprimirMatriz("Matriz resultante suma"));
             return mtrz;
         }else{
             throw new Exception("Tamaño(s) diferente(s): n:"+n+"!="+sumando.n
@@ -442,7 +444,7 @@ public class Matriz {
     public Matriz multipicar(BigDecimal escalar){
         space();
         escalar = escalar.stripTrailingZeros();
-        System.out.println("Multiplicando por "+escalar);
+        O.pln("Multiplicando por "+escalar);
         BigDecimal[][] matTemp = new BigDecimal[n][m];
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < m; j++) {
@@ -456,13 +458,13 @@ public class Matriz {
             }
         }
         Matriz mtrz = new Matriz(matTemp);
-        System.out.println(mtrz.imprimirMatriz("Matriz resultante"));
+        O.pln(mtrz.imprimirMatriz("Matriz resultante"));
         return mtrz;
     }
     
     public Matriz multipicar(Matriz multiplicando) throws Exception{
         space();
-        System.out.println("Multiplicando por "+multiplicando);
+        O.pln("Multiplicando por "+multiplicando);
         if((m==multiplicando.n)){
             BigDecimal[][] matTemp = new BigDecimal[n][multiplicando.m];
             for (int i = 0; i < n; i++) {
@@ -476,7 +478,7 @@ public class Matriz {
                 }
             }
             Matriz mtrz = new Matriz(matTemp);
-            System.out.println(mtrz.imprimirMatriz("Matriz resultante mult"));
+            O.pln(mtrz.imprimirMatriz("Matriz resultante mult"));
             return mtrz;
         }else{
             throw new Exception("Columnas diferente de filas: Columnas:"
@@ -496,7 +498,7 @@ public class Matriz {
      */
     public BigDecimal det() throws Exception{
         space(); spc++;
-        System.out.println("Obteniendo determinate...");
+        O.pln("Obteniendo determinate...");
         BigDecimal mTemp[][] = getMatriz();
         BigDecimal det = BigDecimal.ZERO;
         if(esCuadrada()){
@@ -517,7 +519,7 @@ public class Matriz {
                 }
             }
             space();
-            System.out.println("... determinante = "+det);
+            O.pln("... determinante = "+det);
             spc--;
             return det;
         }else{
@@ -527,7 +529,7 @@ public class Matriz {
     
     public Matriz reducida(int i, int j) throws Exception{
         space();
-        System.out.println("Reduciento matriz en "+i+", "+j+"...");
+        O.pln("Reduciento matriz en "+i+", "+j+"...");
         BigDecimal mTemp[][] = getMatriz();
         BigDecimal matRed[][] = new BigDecimal[mTemp.length-1][mTemp[0].length-1];
         if((i<n)&&(j<m)){
@@ -545,7 +547,7 @@ public class Matriz {
                 }
             }
             Matriz mtrz = new Matriz(matRed);
-            System.out.println(mtrz.imprimirMatriz("Matriz reducida en "+i+", "+j));
+            O.pln(mtrz.imprimirMatriz("Matriz reducida en "+i+", "+j));
             return mtrz;
         } else {
             throw new Exception("Indice(s) por fuera de la(s) dimension(es)");

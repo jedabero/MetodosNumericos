@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 
 import javax.swing.JFrame;
 
+import resources.O;
 import ui.ssel.JPanelSSEL;
 import vectores.Matriz;
 import vectores.SistemaEcuacionesLineales;
@@ -21,7 +22,7 @@ public class Pruebas {
      */
     public static void main(String[] args) throws Exception {
         
-        System.out.println(Matriz.pascal(10));
+        O.pln(Matriz.pascal(10));
         
         BigDecimal zero = BigDecimal.ZERO;
         BigDecimal uno = BigDecimal.ONE;

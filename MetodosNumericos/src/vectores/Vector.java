@@ -4,6 +4,8 @@ package vectores;
 import java.math.BigDecimal;
 import java.util.Scanner;
 
+import resources.O;
+
 /**
  *
  * @author Jedabero
@@ -51,7 +53,7 @@ public class Vector {
         Scanner in = new Scanner(System.in);
         BigDecimal[] tempV = new BigDecimal[lentgh];
         for (int i = 0; i < lentgh; i++) {
-            System.out.print("Ingrese V("+(i+1)+") ");
+            O.p("Ingrese V("+(i+1)+") ");
             tempV[i] = new BigDecimal(in.nextDouble());
         }
         setVector(tempV);

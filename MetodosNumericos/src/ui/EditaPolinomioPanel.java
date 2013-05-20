@@ -19,6 +19,7 @@ import javax.swing.event.ChangeListener;
 
 import resources.Add;
 import resources.CustomException;
+import resources.O;
 import funciones.Funcion;
 
 /**
@@ -119,23 +120,25 @@ public class EditaPolinomioPanel extends JPanel implements ChangeListener {
 	 */
 	public Funcion getPol() {
 		coefs = new BigDecimal[grado+1];
+		JTextField txtTemp;
 		for (int i = 0; i <= grado; i++) {
-			JTextField txtTemp = txtListCoefs.get(i);
+			txtTemp = txtListCoefs.get(i);
 			String text = txtTemp.getText();
 			BigDecimal tempBD = null;
 			try {
 				tempBD = new BigDecimal(text);
 			} catch (Exception e) {
-				JOptionPane.showMessageDialog(pnlCoefs, "Error en "+e.getMessage(), "Error", JOptionPane.WARNING_MESSAGE);
+				JOptionPane.showMessageDialog(pnlCoefs,
+						"<html>Coeficiente A<sub>"+i+"</sub>: "+(text.isEmpty()?"vacío":text)+"</html>",
+						"Error", JOptionPane.WARNING_MESSAGE);
 			}
 			coefs[i] = tempBD;
 		}
 		
 		try {
-			return Funcion.polinomio(grado, coefs);
-		} catch (CustomException e) {
-			JOptionPane.showMessageDialog(pnlCoefs, "Error en "+e.getMessage(), "Error", JOptionPane.WARNING_MESSAGE);
-		}
+			O.pln(java.util.Arrays.toString(coefs));
+			fnc = Funcion.polinomio(grado, coefs);
+		} catch (CustomException e) {}
 		
 		return fnc;
 	}
@@ -143,7 +146,7 @@ public class EditaPolinomioPanel extends JPanel implements ChangeListener {
 	@Override
 	public void stateChanged(ChangeEvent e) {
 		int g = Integer.parseInt(spnrGradoPol.getValue().toString());//(int)spnr.getValue();
-		System.out.println("prevG: "+grado+"; newG: "+g);
+		
 		if(grado<g) {
 			JLabel templbl = new JLabel("<html>A<sub>"+g+"</sub>= </html>", JLabel.RIGHT);
 			lblListCoefs.add(templbl);

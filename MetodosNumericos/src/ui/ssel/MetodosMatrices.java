@@ -7,6 +7,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+import resources.O;
 import vectores.SistemaEcuacionesLineales;
 
 
@@ -77,7 +78,7 @@ public class MetodosMatrices extends javax.swing.JFrame {
         mt = new BigDecimal[rows][cols];
         for (int i = 0; i < matrizTabla.length; i++) {
             for (int j = 0; j < matrizTabla[0].length; j++) {
-                System.out.println("("+i+","+j+")"+matrizTabla[i][j]);
+                O.pln("("+i+","+j+")"+matrizTabla[i][j]);
                 mt[i][j] = matrizTabla[i][j];
             }
         }
@@ -285,13 +286,13 @@ public class MetodosMatrices extends javax.swing.JFrame {
     private void spnrNumEcStateChanged(javax.swing.event.ChangeEvent evt) {
         
         numEc = Integer.parseInt(((javax.swing.JSpinner) evt.getSource()).getValue().toString());
-        System.out.println("Numero de ecuaciones:"+numEc);
+        O.pln("Numero de ecuaciones:"+numEc);
         resetTable(numInc+1, numEc);
     }
 
     private void spnrNumInStateChanged(javax.swing.event.ChangeEvent evt) {
         numInc = Integer.parseInt(((javax.swing.JSpinner) evt.getSource()).getValue().toString());
-        System.out.println("Numero de incognitas:"+numInc);
+        O.pln("Numero de incognitas:"+numInc);
         if(numInc>numEc){
             JOptionPane.showMessageDialog(this, "No hay solución si hay más incognitas que ecuaciones.");
             spnrNumIn.setValue(spnrNumEc.getValue());

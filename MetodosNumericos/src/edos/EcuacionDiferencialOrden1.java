@@ -6,11 +6,9 @@ package edos;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
-import resources.CustomException;
 import resources.math.Big;
 import resources.math.Constantes.Tipo;
 import resources.math.Interval;
-
 import funciones.Funcion;
 import funciones.Termino;
 
@@ -90,7 +88,6 @@ public class EcuacionDiferencialOrden1 {
 			Termino t0 = Px.getTerminos().get(0);
 			boolean Aeq1 = (t0.getA().compareTo(BigDecimal.ONE) == 0);
 			boolean TeqK = (t0.getTipoFuncion() == Tipo.CONSTANTE);
-			System.out.println(Aeq1+":"+TeqK);
 			if(!(Aeq1&&TeqK)){
 				gS += " + "+Px.getGeneric()+"y";
 				sS += " + "+Px.getSpecific()+"y";
@@ -246,34 +243,6 @@ public class EcuacionDiferencialOrden1 {
 		}
 		
 		return yn;
-	}
-	
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args){
-		try {
-			Funcion px = Funcion.polinomio(0,
-					new BigDecimal[]{BigDecimal.ONE});
-			Funcion qx = Funcion.polinomio(1,
-					new BigDecimal[]{BigDecimal.valueOf(0), BigDecimal.valueOf(1)});
-			EcuacionDiferencialOrden1 edo1 = new EcuacionDiferencialOrden1(px, qx);
-			System.out.println(edo1);
-			System.out.println(edo1.getSpecific());
-			Interval X = new Interval(BigDecimal.ZERO, BigDecimal.ONE);
-			BigDecimal y0 = BigDecimal.valueOf(1);
-			BigDecimal res = edo1.metodoEulerSimple(X, y0, 10);
-			BigDecimal resm = edo1.metodoEulerSimpleModificado(X, y0, 10);
-			BigDecimal rst3 = edo1.metodoSeriesTaylorOrden2(X, y0, 10);
-			BigDecimal rrk = edo1.metodoRungeKutta(X, y0, 10);
-			System.out.println("yn="+res);
-			System.out.println("yn="+resm);
-			System.out.println("yn="+rst3);
-			System.out.println("yn="+rrk);
-		} catch (CustomException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 	
 }

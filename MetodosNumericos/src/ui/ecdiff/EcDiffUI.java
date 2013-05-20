@@ -7,6 +7,8 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -23,28 +25,28 @@ import resources.Add;
  * @author Jedabero
  *
  */
-public class EcDiffUI extends JPanel implements ChangeListener, ActionListener {
-
-	/**
-	 * 
-	 */
+public class EcDiffUI extends JPanel implements ChangeListener, ActionListener,
+		ItemListener{
+	
 	private static final long serialVersionUID = 3179335173657009527L;
+	
+	private JPanel pnlEdicion;
 	
 	private static final String strMetodos[] = new String[]{
 		"Euler Simple", "Euler Simple Modificado", "Serie de Taylor de orden 2",
 		"Runge-Kutta"};
 	
-	private JPanel pnlMetodos = new JPanel(new GridBagLayout());
+	private JPanel pnlMetodos;
 	private JButton btnFind[];
 	
-	private JPanel pnlParam = new JPanel(new GridBagLayout());
-	private JTextField txtX0 = new JTextField();
-	private JTextField txtXn = new JTextField();
-	private JTextField txtY0 = new JTextField();
-	private SpinnerNumberModel snmNSubDiv = new SpinnerNumberModel(5, 1, 1000, 1);
-	private JSpinner spnrN = new JSpinner(snmNSubDiv);
+	private JPanel pnlParam;
+	private JTextField txtX0;
+	private JTextField txtXn;
+	private JTextField txtY0;
+	private SpinnerNumberModel snmNSubDiv;
+	private JSpinner spnrN;
 	
-	private JLabel lblRes = new JLabel("sdasdas", JLabel.CENTER);
+	private JLabel lblRes;
 	
 	/**
 	 * 
@@ -53,22 +55,41 @@ public class EcDiffUI extends JPanel implements ChangeListener, ActionListener {
 		super(new GridBagLayout());
 		
 		initComponents();
+		addComponents();
 		
 		setName("EcDiffUI");
 	}
-	
+
 	private void initComponents() {
+		pnlEdicion = new JPanel(new GridBagLayout());
 		
 		
+		
+		pnlMetodos = new JPanel(new GridBagLayout());
 		pnlMetodos.setBorder(javax.swing.BorderFactory.createTitledBorder("Métodos"));
 		
+		pnlParam = new JPanel(new GridBagLayout());
+		txtX0 = new JTextField();
+		txtXn = new JTextField();
+		txtY0 = new JTextField();
+		snmNSubDiv = new SpinnerNumberModel(5, 1, 1000, 1);
+		spnrN = new JSpinner(snmNSubDiv);
+		
+		lblRes = new JLabel("", JLabel.CENTER);
+		
 		btnFind = new JButton[strMetodos.length];
+		
+	}
+	
+	private void addComponents() {
 		for(int i = 0; i<btnFind.length; i++){
 			btnFind[i] = new JButton(strMetodos[i]);
 			btnFind[i].addActionListener(this);
 			Add.componente(pnlMetodos, btnFind[i], i, 0, 1, 1, 1.0, 1.0,
 					GridBagConstraints.BOTH, "");
 		}
+		
+		Add.componente(this, pnlEdicion, 0, 0, 4, 1, 1.0, 1.0, GridBagConstraints.BOTH, "");
 		
 		Add.componente(pnlParam, new JLabel("<html>x<sub>0</sub></html>", JLabel.CENTER),
 				0, 1, 1, 1, 1.0, 1.0, GridBagConstraints.NONE, "");
@@ -93,7 +114,7 @@ public class EcDiffUI extends JPanel implements ChangeListener, ActionListener {
 		//TODO
 		Add.componente(this, pnlMetodos, 0, 3, 4, 1, 1.0, 1.0, GridBagConstraints.BOTH, "");
 	}
-
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
@@ -104,6 +125,12 @@ public class EcDiffUI extends JPanel implements ChangeListener, ActionListener {
 	public void stateChanged(ChangeEvent e) {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public void itemStateChanged(ItemEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

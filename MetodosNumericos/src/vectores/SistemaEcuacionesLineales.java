@@ -6,6 +6,8 @@ import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import resources.O;
+
 /**
  *
  * @author Jedabero
@@ -45,9 +47,9 @@ public class SistemaEcuacionesLineales {
     public SistemaEcuacionesLineales(){
         // Ingresar tamaño del sistema
         Scanner in = new Scanner(System.in);
-        System.out.println("Ecuaciones (Filas): ");
+        O.pln("Ecuaciones (Filas): ");
         this.numEq = in.nextInt();
-        System.out.println("Incognitas: ");
+        O.pln("Incognitas: ");
         this.numIn = in.nextInt();
         // Inicializar las matrices.
         matrizCoef = new Matriz(numEq,numIn, true);
@@ -106,14 +108,13 @@ public class SistemaEcuacionesLineales {
      * @param titulo el titulo.
      */
     public void imprimirMatriz(String titulo){
-        System.out.println("\n\t"+titulo);
+        O.pln("\n\t"+titulo);
         BigDecimal temp[][] = getMatrizAmpliada().getMatriz();
         for (int i = 0; i < numEq; i++) {
             for (int j = 0; j < numIn; j++) {
-                System.out.print("\t"+Float.parseFloat(""+temp[i][j]));
+                O.p("\t"+Float.parseFloat(""+temp[i][j]));
             }
-            System.out.print("\t|\t"+Float.parseFloat(""+temp[i][numIn]));
-            System.out.println();
+            O.p("\t|\t"+Float.parseFloat(""+temp[i][numIn])+"\n");
         }
     }
     

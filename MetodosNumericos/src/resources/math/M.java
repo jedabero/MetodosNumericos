@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import java.util.Random;
 
 import resources.CustomException;
+import resources.O;
 import resources.math.Constantes.FuncionTrig;
 import resources.math.Constantes.Tipo;
 import funciones.Funcion;
@@ -25,7 +26,7 @@ public final class M {
 		int randTerminos = (int)(4*rand.nextDouble())+2;
 		int randTipo = (int)(5*rand.nextDouble());//TODO racional
 		Tipo randTF = Tipo.values()[randTipo];
-		System.out.println(randTipo);
+		O.pln(randTipo);
 		
 		BigDecimal constA[] = new BigDecimal[randTerminos];
 		BigDecimal constB[] = new BigDecimal[randTerminos];

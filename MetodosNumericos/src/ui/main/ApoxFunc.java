@@ -6,6 +6,7 @@ import java.math.RoundingMode;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import resources.O;
 import vectores.Matriz;
 import vectores.SistemaEcuacionesLineales;
 
@@ -39,7 +40,7 @@ public class ApoxFunc {
         SistemaEcuacionesLineales sel = new SistemaEcuacionesLineales(mat);
         Matriz coef;
         try {
-            System.out.println("Determinante!!!!!!"+sel.getMatrizCoef().det());
+            O.pln("Determinante!!!!!!"+sel.getMatrizCoef().det());
             coef = sel.metodoCramer();
             coef.imprimirMatriz("Res");
         } catch (Exception ex) {
@@ -51,7 +52,7 @@ public class ApoxFunc {
         for (int i = 0; i < n; i++) {
             pol += " + "+coef.getMatriz()[i][0].setScale(9, RoundingMode.DOWN).stripTrailingZeros()+"x^"+i;    
         }
-        System.out.println(pol);
+        O.pln(pol);
         
     }
     

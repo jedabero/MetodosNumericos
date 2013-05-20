@@ -24,6 +24,7 @@ import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 
 import resources.Add;
+import resources.O;
 import ui.aproxpol.AproxFunUI;
 import ui.ecdiff.EcDiffUI;
 import ui.numint.NumIntUI;
@@ -60,8 +61,8 @@ public class MetodosUI extends JFrame implements ActionListener{
 			"/ui/img/Integration.png",
 			"/ui/img/ecdiff.png"};
 	
-	private JMenuBar mnbPrincipal = new JMenuBar();
-	private JPanel pnlPrincipal = new JPanel(new GridBagLayout());
+	private JMenuBar mnbPrincipal;
+	private JPanel pnlPrincipal;
 	
 	/**
 	 * 
@@ -81,13 +82,14 @@ public class MetodosUI extends JFrame implements ActionListener{
 			setIconImage(
 					new ImageIcon(getClass().getResource(iconsURL[0])).getImage());
 			}catch(Exception e){
-				System.out.println("FILE NOT FOUND");
+				O.pln("FILE NOT FOUND");
 				setIconImage(null);
 			}//end of try/catch
 		
 	}
 	
 	private void initPanel() {
+		pnlPrincipal = new JPanel(new GridBagLayout());
 		
 		JLabel lblInitalText = new JLabel("<html>" +
 				"<H1><center>Elija el tema que desea realizar</center>.</H1>" +
@@ -118,7 +120,6 @@ public class MetodosUI extends JFrame implements ActionListener{
 			btns[i].setHorizontalTextPosition(0);//CENTER
 			btns[i].setBackground(Color.WHITE);
 			btns[i].addActionListener(this);
-			System.out.println(i);
 			Add.componente(pnlPrincipal, btns[i], i%3, i/3 +1, 1, 1, 0.1, 0.1,
 					GridBagConstraints.NONE, ttt[i]);
 		}
@@ -127,6 +128,8 @@ public class MetodosUI extends JFrame implements ActionListener{
 	}
 
 	private void initBarraMenu() {
+		mnbPrincipal = new JMenuBar();
+		
 		Add.menu(mnbPrincipal, "Acciones", 'A',
 				new int[]{0, 0, 0, 0, 0, 2, 0},
 				actions,
@@ -156,10 +159,6 @@ public class MetodosUI extends JFrame implements ActionListener{
 		setJMenuBar(mnbPrincipal);
 	}
 
-
-
-
-
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		String action = "";
@@ -173,7 +172,6 @@ public class MetodosUI extends JFrame implements ActionListener{
 		if (action.equals(actions[5])) {
 			dispose();
 		} else if (action.equals(actions[0])) {//POLROOTS
-			System.out.println("polinomio");
 			pnlPrincipal.removeAll();
 			pnlPrincipal.revalidate();
 			RaicesUI rui = new RaicesUI();
@@ -218,7 +216,6 @@ public class MetodosUI extends JFrame implements ActionListener{
 		}
 		
 	}
-	
 	
 	/**
 	 * @return the resultScale
