@@ -46,7 +46,6 @@ public class EditaPolinomioPanel extends JPanel implements ChangeListener {
 	private BigDecimal[] coefs;
 	
 	/**
-	 * @param grade
 	 */
 	public EditaPolinomioPanel() {
 		super(new GridBagLayout());
@@ -56,6 +55,18 @@ public class EditaPolinomioPanel extends JPanel implements ChangeListener {
 		
 		setBorder(javax.swing.BorderFactory.createTitledBorder("Edición del "
 				+"polinomio"));
+	}
+	
+	/**
+	 * @param title
+	 */
+	public EditaPolinomioPanel(String title) {
+		super(new GridBagLayout());
+		
+		initComponents();
+		addComponents();
+		
+		setBorder(javax.swing.BorderFactory.createTitledBorder(title));
 	}
 	
 	private void initComponents() {
