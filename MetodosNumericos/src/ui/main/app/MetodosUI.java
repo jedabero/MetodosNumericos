@@ -40,13 +40,9 @@ public class MetodosUI extends JFrame implements ActionListener{
 	private static int resultScale = 5;
 	
 	private static final String actions[] = {
-		"Raíces de Polinomios",
-		"Solución de Sistemas de Ecuaciones Lineales",
-		"Aproximación Polinomial",
-		"Integración Numérica",
-		"Ecuaciones diferenciales",
-		"",
-		"Salir"};
+		"Raíces de Polinomios",	"Solución de Sistemas de Ecuaciones Lineales",
+		"Aproximación Polinomial", "Integración Numérica",
+		"Ecuaciones diferenciales", "", "Salir"};
 	private static final String ttt[] = new String[]{
 		"Grafica y obtén las raíces de polinomios. (Alt + A, R)",
 		"Soluciona sistemas Ax = B. (Alt + A, S)",
@@ -55,11 +51,8 @@ public class MetodosUI extends JFrame implements ActionListener{
 		"Resolución de ecuaciones diferenciales ordinarias de primer orden.",
 		" ","Terminar la aplicación. (Alt + A, L)"};
 	private static final String iconsURL[] = {
-			"/ui/img/Pol.png",
-			"/ui/img/SEL.png",
-			"/ui/img/AproxF.png",
-			"/ui/img/Integration.png",
-			"/ui/img/ecdiff.png"};
+		"/ui/img/Pol.png", "/ui/img/SEL.png", "/ui/img/AproxF.png",
+		"/ui/img/Integration.png", "/ui/img/ecdiff.png"};
 	
 	private JMenuBar mnbPrincipal;
 	private JPanel pnlPrincipal;
@@ -143,18 +136,15 @@ public class MetodosUI extends JFrame implements ActionListener{
 				new ActionListener[]{this}, null, null, null);
 		
 		Add.menu(mnbPrincipal, "Ayuda", 'Y',
-				new int[]{0, 2, 0},
+				new int[]{0, 0},
 				new String[]{
-				"Información",
-				"",
-				"Que hacer?"},
+				"Información", "Contacto"},
 				new String[]{
-				"Información sobre esta aplicación.",
-				"", ""},
-				new ActionListener[]{this,null,this},
+				"Información sobre esta aplicación", "Información de contacto"},
+				new ActionListener[]{this, this},
 				null,
-				new boolean[][]{{},{},{false, true, false, true}},
-				new char[][]{{},{},{' ',' ',' ',' ',' '}});
+				new boolean[][]{},
+				new char[][]{});
 		
 		setJMenuBar(mnbPrincipal);
 	}
@@ -213,6 +203,19 @@ public class MetodosUI extends JFrame implements ActionListener{
 					"Indique el número de decimales a mostrar.",
 					JOptionPane.PLAIN_MESSAGE);
 			setResultScale(Integer.parseInt(jspn.getValue().toString()));
+		}else if(action.equals("Contacto")){
+			JOptionPane.showMessageDialog(this, "<html>"+
+					"Puede encontrar al desarrollador del programa en:<br />" +
+					"<br />Twitter: @Jedabero" +
+					"<br />Facebook: /JEDABERO" +
+					"<br />e-mail: jedabero@hotmail.com" +
+					"</html>Yes, I'm obsessed whi the pseudonym jedabero",
+					"Información de Contacto", JOptionPane.INFORMATION_MESSAGE);
+		}else if(action.equals("Información")){
+			JOptionPane.showMessageDialog(this, "<html>"+
+					"Software dedicado al desarrollo de métodos numéricos." +
+					"</html>",
+					"Información", JOptionPane.INFORMATION_MESSAGE);
 		}
 		
 	}

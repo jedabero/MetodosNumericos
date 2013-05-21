@@ -87,7 +87,7 @@ public class MetodosRaicesPanel extends JPanel implements ItemListener,
 		btnFind = new JButton("Encontrar Raíz");
 		btnFind.addActionListener(this);
 		
-		lblX = new JLabel("X =    ", JLabel.RIGHT);
+		lblX = new JLabel("X =\t", JLabel.RIGHT);
 		txtX = new JTextField();
 		txtX.setEditable(false);
 		
@@ -202,7 +202,7 @@ public class MetodosRaicesPanel extends JPanel implements ItemListener,
 		
 		Add.componente(pnlS, lblIt, 2, 1, 1, 1, 1.0, 1.0,
 				GridBagConstraints.BOTH, "");
-		Add.componente(pnlPF, spnrIt, 3, 1, 1, 1, 1.0, 1.0,
+		Add.componente(pnlS, spnrIt, 3, 1, 1, 1, 1.0, 1.0,
 				GridBagConstraints.BOTH, "Máximo número de iteraciones");
 		
 		//Añadir al panel principal
@@ -304,25 +304,61 @@ public class MetodosRaicesPanel extends JPanel implements ItemListener,
 		}
 		this.revalidate();
 	}
-
+	
+	/**
+	 * @return la tolerancia
+	 */
+	public BigDecimal getTol(){
+		String sTol = txtTol.getText();
+		BigDecimal tol = new BigDecimal(sTol);
+		return tol;
+	}
+	
+	/**
+	 * @return el número de iteraciones
+	 */
+	public int getMaxIt(){
+		String sIt = spnrIt.getValue().toString();
+		int maxIt = Integer.parseInt(sIt); //(int)spnrIt.getValue();
+		return maxIt;
+	}
+	
+	/**
+	 * @return punto inicial o limite inferior
+	 */
+	public BigDecimal getX0(){
+		String sX0A = txtX0A.getText();
+		BigDecimal x0A = new BigDecimal(sX0A);
+		return x0A;
+	}
+	
+	/**
+	 * @return punto secundario o limite superior
+	 */
+	public BigDecimal getX1(){
+		String sX1B = txtX1B.getText();
+		BigDecimal x1B = new BigDecimal(sX1B);
+		return x1B;
+	}
+	
+	/**
+	 * @return el intervalo [A, B]
+	 */
+	public Interval getAB(){
+		Interval ab = new Interval(getX0(), getX1());
+		return ab;
+	}
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(funcion!=null){
-			String sTol = txtTol.getText();
-			BigDecimal tol = new BigDecimal(sTol);
-			int maxIt = Integer.parseInt(spnrIt.getValue().toString());//(int)spnrIt.getValue();
-			String sX0A = txtX0A.getText();
-			String sX1B = txtX1B.getText();
-			BigDecimal x0A = new BigDecimal(sX0A);
-			BigDecimal x1B = new BigDecimal(sX1B);
-			Interval ab = new Interval(x0A, x1B);
 			
 			String xResult = "";
 			
 			switch (currMethod) {
 			case 0:
 				try {
-					xResult += funcion.metodoPuntoFijo(tol, maxIt, x0A);
+					xResult += funcion.metodoPuntoFijo(getTol(), getMaxIt(), getX0());
 				} catch (Exception e1) {
 					e1.printStackTrace();
 					JOptionPane.showMessageDialog(null, e1.getMessage());
@@ -330,7 +366,7 @@ public class MetodosRaicesPanel extends JPanel implements ItemListener,
 				break;
 			case 1:
 				try {
-					xResult += funcion.metodoBiseccion(tol, maxIt, ab);
+					xResult += funcion.metodoBiseccion(getTol(), getMaxIt(), getAB());
 				} catch (Exception e1) {
 					e1.printStackTrace();
 					JOptionPane.showMessageDialog(null, e1.getMessage());
@@ -338,7 +374,7 @@ public class MetodosRaicesPanel extends JPanel implements ItemListener,
 				break;
 			case 2:
 				try {
-					xResult += funcion.metodoNewtonRaphson(tol, maxIt, x0A);
+					xResult += funcion.metodoNewtonRaphson(getTol(), getMaxIt(), getX0());
 				} catch (Exception e1) {
 					e1.printStackTrace();
 					JOptionPane.showMessageDialog(null, e1.getMessage());
@@ -346,7 +382,7 @@ public class MetodosRaicesPanel extends JPanel implements ItemListener,
 				break;
 			case 3:
 				try {
-					xResult += funcion.metodoSecante(tol, maxIt, x0A, x1B);
+					xResult += funcion.metodoSecante(getTol(), getMaxIt(), getX0(), getX1());
 				} catch (Exception e1) {
 					e1.printStackTrace();
 					JOptionPane.showMessageDialog(null, e1.getMessage());
@@ -354,7 +390,7 @@ public class MetodosRaicesPanel extends JPanel implements ItemListener,
 				break;
 			case 4:
 				try {
-					xResult += funcion.metodoRegulaFalsi(tol, maxIt, ab);
+					xResult += funcion.metodoRegulaFalsi(getTol(), getMaxIt(), getAB());
 				} catch (Exception e1) {
 					e1.printStackTrace();
 					JOptionPane.showMessageDialog(null, e1.getMessage());
