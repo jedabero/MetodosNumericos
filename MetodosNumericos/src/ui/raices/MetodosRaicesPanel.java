@@ -74,7 +74,9 @@ public class MetodosRaicesPanel extends JPanel implements ItemListener,
 		pnlRF = new JPanel(new GridBagLayout());
 		
 		lblX0A = new JLabel();
+		lblX0A.setHorizontalAlignment(0);
 		lblX1B = new JLabel();
+		lblX1B.setHorizontalAlignment(0);
 		txtX0A = new JTextField();
 		txtX1B = new JTextField();
 		
@@ -203,7 +205,7 @@ public class MetodosRaicesPanel extends JPanel implements ItemListener,
 		Add.componente(pnlS, lblIt, 2, 1, 1, 1, 1.0, 1.0,
 				GridBagConstraints.BOTH, "");
 		Add.componente(pnlS, spnrIt, 3, 1, 1, 1, 1.0, 1.0,
-				GridBagConstraints.BOTH, "Máximo número de iteraciones");
+				GridBagConstraints.HORIZONTAL, "Máximo número de iteraciones");
 		
 		//Añadir al panel principal
 		Add.componente(this, pnlS, 0, 1, 3, 1, 1.0, 1.0,

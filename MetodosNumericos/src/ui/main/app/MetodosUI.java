@@ -73,7 +73,7 @@ public class MetodosUI extends JFrame implements ActionListener{
 		
 		try{
 			setIconImage(
-					new ImageIcon(getClass().getResource(iconsURL[0])).getImage());
+					new ImageIcon(getClass().getResource("/ui/img/icon.png")).getImage());
 			}catch(Exception e){
 				O.pln("FILE NOT FOUND");
 				setIconImage(null);

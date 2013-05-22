@@ -194,7 +194,7 @@ public class EcDiffUI extends JPanel implements ChangeListener, ActionListener,
 		int scale = MetodosUI.getResultScale();
 		try {
 			res = res.setScale(scale, RoundingMode.HALF_UP);
-			lblRes.setText(res.stripTrailingZeros().toString());
+			lblRes.setText("y("+txtXn.getText()+") = "+res.stripTrailingZeros().toString());
 		} catch (Exception e2) {
 			// TODO: handle exception
 		}

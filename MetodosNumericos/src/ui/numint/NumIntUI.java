@@ -62,8 +62,6 @@ public class NumIntUI extends JPanel implements ActionListener{
 		
 		JSeparator sprtr1 = new JSeparator(JSeparator.HORIZONTAL);
 		
-		//Mostrar Polinomio
-		//funcion = fpnlFuncion.getFnc(); TODO funcion init
 		lblEq = new JLabel("", JLabel.CENTER);
 		lblEq.setBorder(BorderFactory.createEtchedBorder());
 		JButton btnVerGrafica = new JButton("Ver gráfica");

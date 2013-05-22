@@ -653,6 +653,7 @@ public class Funcion {
 		BigDecimal xr = BigDecimal.ZERO;
 		while((!fin)&&(k<=maxIt)){
 			BigDecimal e = xr.subtract(x0).abs();	//Error inicial
+			System.out.println(e);		//TODO DETECT ERROR CHANGE
 			switch (fnzc) {		//xr = g(x0)
 			case 0:
 				Termino t = getTerminos().get(0);
