@@ -42,17 +42,17 @@ public class MetodosUI extends JFrame implements ActionListener{
 	private static final String actions[] = {
 		"Raíces de Polinomios",	"Solución de Sistemas de Ecuaciones Lineales",
 		"Aproximación Polinomial", "Integración Numérica",
-		"Ecuaciones diferenciales", "", "Salir"};
+		"Ecuaciones diferenciales", "Salir", "Salir"};
 	private static final String ttt[] = new String[]{
 		"Grafica y obtén las raíces de polinomios. (Alt + A, R)",
 		"Soluciona sistemas Ax = B. (Alt + A, S)",
 		"Obtén un polinomio que aproxima los puntos una tabla tabulada. (Alt + A, A)",
 		"Métodos de integración numérica. (Alt + A, I)",
-		"Resolución de ecuaciones diferenciales ordinarias de primer orden.",
-		" ","Terminar la aplicación. (Alt + A, L)"};
+		"Resolución de ecuaciones diferenciales ordinarias de primer orden. (Alt + A, I)",
+		"Terminar la aplicación. (Alt + A, L)","Terminar la aplicación. (Alt + A, L)"};
 	private static final String iconsURL[] = {
 		"/ui/img/Pol.png", "/ui/img/SEL.png", "/ui/img/AproxF.png",
-		"/ui/img/Integration.png", "/ui/img/ecdiff.png"};
+		"/ui/img/Integration.png", "/ui/img/ecdiff.png", "/ui/img/x.png"};
 	
 	private JMenuBar mnbPrincipal;
 	private JPanel pnlPrincipal;
@@ -93,28 +93,29 @@ public class MetodosUI extends JFrame implements ActionListener{
 		Add.componente(pnlPrincipal, lblInitalText, 0, 0, 4, 1, 1, 1,
 				GridBagConstraints.BOTH, "");
 		
-		Image icons[] = null;
+		Image icons[] = new Image[actions.length-1];
 		try{
-			icons = new Image[] {
-					ImageIO.read(getClass().getResource(iconsURL[0])),
-					ImageIO.read(getClass().getResource(iconsURL[1])),
-					ImageIO.read(getClass().getResource(iconsURL[2])),
-					ImageIO.read(getClass().getResource(iconsURL[3])),
-					ImageIO.read(getClass().getResource(iconsURL[4])),};
+			for (int i = 0; i < icons.length; i++) {
+				icons[i] = ImageIO.read(getClass().getResource(iconsURL[i]));
+				System.out.println("img"+i+""+icons[i]);
+			}
 		}catch(Exception e){
 			e.printStackTrace();
 		}
 		
-		JButton btns[] = new JButton[actions.length];
+		JButton btns[] = new JButton[actions.length-1];
 		
-		for (int i = 0; i < 5; i++) {
+		for (int i = 0; i < btns.length; i++) {
 			btns[i] = new JButton(actions[i], new ImageIcon(icons[i]));
+			if(i>=actions.length-2){
+				btns[i].setText(" ");
+			}
 			btns[i].setVerticalTextPosition(3);//BOTTOM
 			btns[i].setHorizontalTextPosition(0);//CENTER
 			btns[i].setBackground(Color.WHITE);
 			btns[i].addActionListener(this);
 			Add.componente(pnlPrincipal, btns[i], i%3, i/3 +1, 1, 1, 0.1, 0.1,
-					GridBagConstraints.NONE, ttt[i]);
+					GridBagConstraints.BOTH, ttt[i]);
 		}
 		
 		add(pnlPrincipal);
