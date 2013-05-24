@@ -62,6 +62,9 @@ public class Termino {
 	
 	private int grado;
 	
+	private Termino termino;
+	private Funcion funcion;
+	
 	private String generic;
 	private String specific;
 	private String toString;
@@ -373,6 +376,18 @@ public class Termino {
 	
 	public String toString(){
 		return toString;
+	}
+	
+	/**
+	 * Crea un término con unos parámetros predefinidos: f(x) = x
+	 */
+	public Termino(){
+		A = BigDecimal.ONE;
+		B = BigDecimal.ZERO;
+		grado = 1;
+		tipoFuncion = Tipo.POLINOMICA;
+		funTrig = null;
+		initGenEsp();
 	}
 	
 	/**

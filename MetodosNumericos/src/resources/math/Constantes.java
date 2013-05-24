@@ -29,7 +29,9 @@ public interface Constantes {
 		/** Constante para determinar la función como Logarítmica. */
 		LOGARITMICA,
 		/** Constante para determinar la función como Racional. */
-		RACIONAL
+		RACIONAL,
+		/** Constante para determinar la función como compuesta por otra. */
+		COMPUESTO
 	}
 	
 	/**
