@@ -4,6 +4,7 @@
 package ui.main.app;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Image;
@@ -34,7 +35,7 @@ import ui.ssel.JPanelSSEL;
  * @author Jedabero
  *
  */
-public class MetodosUI extends JFrame implements ActionListener{
+public class MetodosUI extends JFrame implements ActionListener {
 	
 	private static final long serialVersionUID = 6637458677520322115L;
 	private static int resultScale = 5;
@@ -56,13 +57,18 @@ public class MetodosUI extends JFrame implements ActionListener{
 	
 	private JMenuBar mnbPrincipal;
 	private JPanel pnlPrincipal;
+	private JLabel lblInitalText;
+	private Image icons[];
+	private JButton btns[];
+	
 	
 	/**
 	 * 
 	 */
 	public MetodosUI(){
 		super("Métodos Numéricos");
-		setSize(1000, 700);
+		setSize(950, 650);
+		setMinimumSize(new Dimension(950, 650));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		initBarraMenu();
@@ -84,26 +90,26 @@ public class MetodosUI extends JFrame implements ActionListener{
 	private void initPanel() {
 		pnlPrincipal = new JPanel(new GridBagLayout());
 		
-		JLabel lblInitalText = new JLabel("<html>" +
-				"<H1><center>Elija el tema que desea realizar</center>.</H1>" +
+		lblInitalText = new JLabel("<html>" +
+				"<H1><center>Elija el tema que desea realizar</center></H1>" +
 				"<center>Puede hacerlo presionando alguno de los botones abajo</center>" +
 				"<center>También puede hacerlo en el menú de Acciones. (Alt + A)</center>" +
 				"</html>", JLabel.CENTER);
 		lblInitalText.setBorder(BorderFactory.createEtchedBorder());
+		lblInitalText.setMinimumSize(new Dimension(500,160));
 		Add.componente(pnlPrincipal, lblInitalText, 0, 0, 4, 1, 1, 1,
 				GridBagConstraints.BOTH, "");
 		
-		Image icons[] = new Image[actions.length-1];
+		icons = new Image[actions.length-1];
 		try{
 			for (int i = 0; i < icons.length; i++) {
 				icons[i] = ImageIO.read(getClass().getResource(iconsURL[i]));
-				System.out.println("img"+i+""+icons[i]);
 			}
 		}catch(Exception e){
 			e.printStackTrace();
 		}
 		
-		JButton btns[] = new JButton[actions.length-1];
+		btns = new JButton[actions.length-1];
 		
 		for (int i = 0; i < btns.length; i++) {
 			btns[i] = new JButton(actions[i], new ImageIcon(icons[i]));

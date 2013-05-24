@@ -639,15 +639,15 @@ public class Funcion {
 	 * @param tol tolerancia del error
 	 * @param maxIt máximo número de iteraciones
 	 * @param x0 punto inicial
-	 * @return la raíz más cercana a x0
+	 * @return la raíz más cercana a x0 y el error
 	 * @throws Exception 
 	 */
-	public BigDecimal metodoPuntoFijo(BigDecimal tol, int maxIt, BigDecimal x0)
+	public BigDecimal[] metodoPuntoFijo(BigDecimal tol, int maxIt, BigDecimal x0)
 			throws Exception{
 		//Obtener g(x)
 		int fnzc = firstNonZeroCoef();	//Se localiza el la posición del primer coeficiente diferente de 0
 		Funcion gx = gx(fnzc);
-		
+		BigDecimal err = null;
 		boolean fin = false;	//Switch
 		int k = 0;				//Índice de la iteración
 		BigDecimal xr = BigDecimal.ZERO;
@@ -676,11 +676,12 @@ public class Funcion {
 			BigDecimal temp = x0;
 			x0 = xr;
 			xr = temp;
+			err = e;
 		}
 		
 		if (fin) {
 			O.pln("x = "+x0);
-			return x0;
+			return new BigDecimal[]{x0, err};
 		} else {
 			throw new Exception("No converge dentro del valor máximo de iteración");
 		}
@@ -704,12 +705,13 @@ public class Funcion {
 	 * @param tol tolerancia del error
 	 * @param maxIt máximo número de iteraciones
 	 * @param ab intervalo a evaluar
-	 * @return la raíz dentro del intervalo [a,b]
+	 * @return la raíz dentro del intervalo [a,b] y el error
 	 * @throws Exception
 	 */
-	public BigDecimal metodoBiseccion(BigDecimal tol, int maxIt, Interval ab)
+	public BigDecimal[] metodoBiseccion(BigDecimal tol, int maxIt, Interval ab)
 			throws Exception {
 		if (rootExistentialityCriterion(ab)) {
+			BigDecimal err = null;
 			boolean fin = false;	//Switch
 			int k = 0;				//Índice de la iteración
 			BigDecimal xa = BigDecimal.ZERO;
@@ -732,11 +734,12 @@ public class Funcion {
 				}
 				xa = xm;
 				k++;
+				err = e;
 			}
 			
 			if (fin) {
 				O.pln("x = "+xa);
-				return xa;
+				return new BigDecimal[]{xa, err};
 			} else {
 				throw new Exception("No converge dentro del valor máximo de iteración");
 			}
@@ -750,11 +753,12 @@ public class Funcion {
 	 * @param tol tolerancia del error
 	 * @param maxIt máximo número de iteraciones
 	 * @param x0 punto inicial
-	 * @return la raíz más cercana a x0
+	 * @return la raíz más cercana a x0 y el error
 	 * @throws Exception
 	 */
-	public BigDecimal metodoNewtonRaphson(BigDecimal tol, int maxIt,
+	public BigDecimal[] metodoNewtonRaphson(BigDecimal tol, int maxIt,
 			BigDecimal x0) throws Exception {
+		BigDecimal err = null;
 		boolean fin = false;	//Switch
 		int k = 0;				//Índice de la iteración
 		while((!fin)&&(k<=maxIt)){
@@ -770,11 +774,12 @@ public class Funcion {
 			x0 = xr;
 			xr = temp;
 			k++;
+			err = e;
 		}
 		
 		if (fin) {
 			O.pln("x = "+x0);
-			return x0;
+			return new BigDecimal[]{x0, err};
 		} else {
 			throw new Exception("No converge dentro del valor máximo de iteración");
 		}
@@ -785,11 +790,12 @@ public class Funcion {
 	 * @param maxIt máximo número de iteraciones
 	 * @param x0 punto inicial
 	 * @param x1 punto secundario
-	 * @return la raíz más cercana a x0 y x1
+	 * @return la raíz más cercana a x0 y x1 y el error
 	 * @throws Exception
 	 */
-	public BigDecimal metodoSecante(BigDecimal tol, int maxIt, BigDecimal x0,
+	public BigDecimal[] metodoSecante(BigDecimal tol, int maxIt, BigDecimal x0,
 			BigDecimal x1) throws Exception {
+		BigDecimal err = null;
 		boolean fin = false;	//Switch
 		int k = 0;				//Índice de la iteración
 		while((!fin)&&(k<=maxIt)){
@@ -807,12 +813,12 @@ public class Funcion {
 				x1 = xr;
 				k++;
 			}
-			
+			err = e;
 		}
 		
 		if (fin) {
 			O.pln("x = "+x0);
-			return x0;
+			return new BigDecimal[]{x0, err};
 		} else {
 			throw new Exception("No converge dentro del valor máximo de iteración");
 		}
@@ -822,12 +828,13 @@ public class Funcion {
 	 * @param tol tolerancia del error
 	 * @param maxIt máximo número de iteraciones
 	 * @param ab intervalo a evaluar
-	 * @return la raíz dentro del intervalo [a,b]
+	 * @return la raíz dentro del intervalo [a,b] y el error
 	 * @throws Exception
 	 */
-	public BigDecimal metodoRegulaFalsi(BigDecimal tol, int maxIt, Interval ab)
+	public BigDecimal[] metodoRegulaFalsi(BigDecimal tol, int maxIt, Interval ab)
 			throws Exception {
 		if (rootExistentialityCriterion(ab)) {
+			BigDecimal err = null;
 			boolean fin = false;	//Switch
 			int k = 0;				//Índice de la iteración
 			BigDecimal xa = BigDecimal.ZERO;
@@ -850,12 +857,12 @@ public class Funcion {
 					xa = xr;
 					k++;
 				}
-				
+				err = e;
 			}
 			
 			if (fin) {
 				O.pln("x = "+xa);
-				return xa;
+				return new BigDecimal[]{xa, err};
 			} else {
 				throw new Exception("No converge dentro del valor máximo de iteración");
 			}

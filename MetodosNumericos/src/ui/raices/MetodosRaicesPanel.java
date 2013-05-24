@@ -3,6 +3,7 @@
  */
 package ui.raices;
 
+import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
@@ -17,6 +18,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 
@@ -44,7 +46,7 @@ public class MetodosRaicesPanel extends JPanel implements ItemListener,
 	private JLabel lblX1B;
 	private JLabel lblTol;
 	private JLabel lblIt;
-	private JLabel lblX;
+	private JLabel lblRes;
 	private JPanel pnlPF;
 	private JPanel pnlB;
 	private JPanel pnlNR;
@@ -54,7 +56,7 @@ public class MetodosRaicesPanel extends JPanel implements ItemListener,
 	private JTextField txtX0A;
 	private JTextField txtX1B;
 	private JTextField txtTol;
-	private JTextField txtX;
+	private JTextArea txtRes;
 	
 	private Funcion funcion;
 	
@@ -89,9 +91,12 @@ public class MetodosRaicesPanel extends JPanel implements ItemListener,
 		btnFind = new JButton("Encontrar Raíz");
 		btnFind.addActionListener(this);
 		
-		lblX = new JLabel("X =\t", JLabel.RIGHT);
-		txtX = new JTextField();
-		txtX.setEditable(false);
+		lblRes = new JLabel("<html><p style=\"text-align:right\">X\t =<br />Error =</p></html>",
+				JLabel.RIGHT);
+		txtRes = new JTextArea();
+		txtRes.setEditable(false);
+		txtRes.setBackground(new Color(238,238,238));
+		txtRes.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 		
 		initComponents();
 		setBorder(javax.swing.BorderFactory.createTitledBorder("Métodos Iterativos"));
@@ -104,9 +109,9 @@ public class MetodosRaicesPanel extends JPanel implements ItemListener,
 		//1 - Panel con el método seleccionado
 		initPanelPF();
 		//2 - Sección para mostrar el resultado.
-		Add.componente(this, lblX, 0, 2, 1, 1, 1.0, 1.0,
+		Add.componente(this, lblRes, 0, 2, 1, 1, 1.0, 1.0,
 				GridBagConstraints.BOTH, "");
-		Add.componente(this, txtX, 1, 2, 1, 1, 1.0, 1.0,
+		Add.componente(this, txtRes, 1, 2, 1, 1, 1.0, 1.0,
 				GridBagConstraints.HORIZONTAL, "");
 		Add.componente(this, btnFind, 2, 2, 1, 1, 1.0, 1.0,
 				GridBagConstraints.BOTH, "Encuetre la raíz por el método seleccionado.");
@@ -355,12 +360,12 @@ public class MetodosRaicesPanel extends JPanel implements ItemListener,
 	public void actionPerformed(ActionEvent e) {
 		if(funcion!=null){
 			
-			String xResult = "";
+			BigDecimal res[] = null;
 			
 			switch (currMethod) {
 			case 0:
 				try {
-					xResult += funcion.metodoPuntoFijo(getTol(), getMaxIt(), getX0());
+					res = funcion.metodoPuntoFijo(getTol(), getMaxIt(), getX0());
 				} catch (Exception e1) {
 					e1.printStackTrace();
 					JOptionPane.showMessageDialog(null, e1.getMessage());
@@ -368,7 +373,7 @@ public class MetodosRaicesPanel extends JPanel implements ItemListener,
 				break;
 			case 1:
 				try {
-					xResult += funcion.metodoBiseccion(getTol(), getMaxIt(), getAB());
+					res = funcion.metodoBiseccion(getTol(), getMaxIt(), getAB());
 				} catch (Exception e1) {
 					e1.printStackTrace();
 					JOptionPane.showMessageDialog(null, e1.getMessage());
@@ -376,7 +381,7 @@ public class MetodosRaicesPanel extends JPanel implements ItemListener,
 				break;
 			case 2:
 				try {
-					xResult += funcion.metodoNewtonRaphson(getTol(), getMaxIt(), getX0());
+					res = funcion.metodoNewtonRaphson(getTol(), getMaxIt(), getX0());
 				} catch (Exception e1) {
 					e1.printStackTrace();
 					JOptionPane.showMessageDialog(null, e1.getMessage());
@@ -384,7 +389,7 @@ public class MetodosRaicesPanel extends JPanel implements ItemListener,
 				break;
 			case 3:
 				try {
-					xResult += funcion.metodoSecante(getTol(), getMaxIt(), getX0(), getX1());
+					res = funcion.metodoSecante(getTol(), getMaxIt(), getX0(), getX1());
 				} catch (Exception e1) {
 					e1.printStackTrace();
 					JOptionPane.showMessageDialog(null, e1.getMessage());
@@ -392,7 +397,7 @@ public class MetodosRaicesPanel extends JPanel implements ItemListener,
 				break;
 			case 4:
 				try {
-					xResult += funcion.metodoRegulaFalsi(getTol(), getMaxIt(), getAB());
+					res = funcion.metodoRegulaFalsi(getTol(), getMaxIt(), getAB());
 				} catch (Exception e1) {
 					e1.printStackTrace();
 					JOptionPane.showMessageDialog(null, e1.getMessage());
@@ -403,7 +408,12 @@ public class MetodosRaicesPanel extends JPanel implements ItemListener,
 				break;
 			}
 			
-			txtX.setText(xResult);
+			String sp = (res[0].signum()==-1)?" ":"";
+			int integ = res[0].precision()-res[0].scale();
+			if(integ>1){
+				for(int i=0; i<integ-1;sp+=" ",i++);
+			}
+			txtRes.setText(res[0].toPlainString()+"\n"+sp+res[1].toPlainString());
 		} else {
 			JOptionPane.showMessageDialog(null, "Crea la función primero.");
 		}
