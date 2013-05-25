@@ -18,6 +18,8 @@ public interface Constantes {
 	 *
 	 */
 	public enum Tipo{
+		/** Constante para determinar x como término interno. */
+		MONO,
 		/** Constante para determinar la función como una constante. */
 		CONSTANTE,
 		/** Constante para determinar la función como Polinómica. */
@@ -31,7 +33,7 @@ public interface Constantes {
 		/** Constante para determinar la función como Racional. */
 		RACIONAL,
 		/** Constante para determinar la función como compuesta por otra. */
-		COMPUESTO
+		COMPUESTA
 	}
 	
 	/**
