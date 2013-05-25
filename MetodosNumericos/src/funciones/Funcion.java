@@ -166,7 +166,7 @@ public class Funcion {
 		for(int i=1;i<=n;i++){
 			if(coefs[i]==null) throw new CustomException("A<sub>"+i+"</sub> = null");
 			if(coefs[i].signum() != 0){
-				alT.add(Termino.monomio(i, coefs[i]));	
+				alT.add(Termino.monomio(i, coefs[i], null));	
 			}
 		}
 		return new Funcion(alT);
@@ -613,7 +613,7 @@ public class Funcion {
 				if (t.getGrado()<=1) {
 					alT.add(Termino.constante(t.getA()));
 				} else {
-					alT.add(Termino.monomio(t.getGrado()-1, t.getA()));
+					alT.add(Termino.monomio(t.getGrado()-1, t.getA(), null));
 				}
 			}
 			return new Funcion(alT);

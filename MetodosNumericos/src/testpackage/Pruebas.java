@@ -21,12 +21,12 @@ public class Pruebas {
      */
     public static void main(String[] args) throws Exception {
         
-    	BigDecimal a = BigDecimal.valueOf(2.1);
-    	BigDecimal b = BigDecimal.valueOf(0.5).negate();
-    	BigDecimal x = BigDecimal.valueOf(-1);
+    	BigDecimal a = BigDecimal.valueOf(0.1);
+    	BigDecimal b = BigDecimal.valueOf(0.1);
+    	BigDecimal x = BigDecimal.valueOf(1);
     	
     	Termino lista[] = new Termino[]{new Termino(), Termino.constante(a),
-    			Termino.monomio(1, b), Termino.monomio(3, a),
+    			Termino.monomio(1, b, null), Termino.monomio(3, a, null),
     			Termino.trigonometrico(FuncionTrig.SIN, a, b),
     			Termino.trigonometrico(FuncionTrig.COS, a, b),
     			Termino.trigonometrico(FuncionTrig.TAN, a, b),

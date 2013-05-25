@@ -330,14 +330,17 @@ public class Termino {
 					switch(ft){
 					case SIN:
 					case TAN:
+						sS += "*0";
 						break;
 					case COS:
 					case SEC:
 						break;
 					case CSC:
 					case COT:
+						sS += "*"+((signB==-1)?"-":"")+"Inf";
 						break;
 					default:
+						break;
 					}
 				}
 			case EXPONENCIAL:
@@ -460,7 +463,7 @@ public class Termino {
 			case CSC:
 			case COT:
 				if(b.signum()==0){
-					throw CustomException.coeficienteIgualA0(ft+"(0) = NaN");
+					throw CustomException.coeficienteIgual0(ft+"(0) = NaN");
 				}
 				break;
 			default:
@@ -470,7 +473,7 @@ public class Termino {
 			break;
 		case LOGARITMICA:
 			if(b.signum()==0){
-				throw CustomException.coeficienteIgualA0("ln(0) = NaN");
+				throw CustomException.coeficienteIgual0("ln(0) = NaN");
 			}
 			break;
 		case RACIONAL:
@@ -479,7 +482,7 @@ public class Termino {
 			if(interna != null){
 				funcInterna = interna;
 			} else {
-				tipoFuncion = Tipo.CONSTANTE;
+				throw CustomException.tipoIncorrecto();
 			}
 			break;
 		default:
@@ -508,14 +511,25 @@ public class Termino {
 	 * Crea un termino de tipo monomio
 	 * @param grado	el grado del monomio
 	 * @param coef	el coeficiente del término
+	 * @param interna 
 	 * @return un termino de tipo polinómico de grado {@code grado}
 	 */
-	public static Termino monomio(int grado, BigDecimal coef){
+	public static Termino monomio(int grado, BigDecimal coef, Funcion interna){
 		try{
-			return new Termino(coef, BigDecimal.ZERO, Tipo.POLINOMICA, grado, null, null);
+			if(interna != null){
+				if (interna.getTipoFuncion().equals(Tipo.POLINOMICA)){
+					throw CustomException.tipoIncorrecto();
+				} else {
+					return new Termino(coef, BigDecimal.ZERO, Tipo.POLINOMICA, grado, null, interna);
+				}
+			} else {
+				Funcion mono = new Funcion(new Termino());
+				return new Termino(coef, BigDecimal.ZERO, Tipo.POLINOMICA, grado, null, mono);
+			}
 		}catch(CustomException et){
 			et.printStackTrace();
-			return constante(coef);
+			O.pln(et.getMessage());
+			return null;
 		}
 	}
 	
@@ -531,7 +545,7 @@ public class Termino {
 			return new Termino(coefA, coefB, Tipo.TRIGONOMETRICA, 0, ft, null);
 		}catch(CustomException et){
 			et.printStackTrace();
-			return trigonometrico(ft, BigDecimal.ONE, coefB);
+			return trigonometrico(ft, coefA, BigDecimal.ONE);
 		}
 	}
 	
@@ -746,7 +760,7 @@ public class Termino {
 				return constante(ap);
 			default:
 				try {
-					return monomio(g, ap);
+					return monomio(g, ap, null);
 				} catch (Exception e) {
 					O.pln(e);
 					return null;
@@ -786,13 +800,13 @@ public class Termino {
 	public Termino integralIndef(){
 		switch (getTipoFuncion()) {
 		case CONSTANTE:
-			return monomio(1, getA());
+			return monomio(1, getA(), null);
 		case POLINOMICA:
 			int g = getGrado() + 1;
 			BigDecimal a = getA().divide(BigDecimal.valueOf(g), 15, RoundingMode.UP);
 			a = a.stripTrailingZeros();
 			try {
-				return monomio(g, a);
+				return monomio(g, a, null);
 			} catch (Exception e) {
 				O.pln(e);
 				return null;
