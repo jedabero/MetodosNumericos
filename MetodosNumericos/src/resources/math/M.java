@@ -57,10 +57,10 @@ public final class M {
 			p = Funcion.trigonometrica(tp[0], constA[0], constB[0]);
 			return p;
 		case EXPONENCIAL:
-			p = new Funcion(Termino.exponencial(constA[0], constB[0]));
+			p = new Funcion(Termino.exponencial(constA[0], constB[0], null));
 			return p;
 		case LOGARITMICA:
-			p = new Funcion(Termino.logaritmo(constA[0], constB[0]));
+			p = new Funcion(Termino.logaritmo(constA[0], constB[0], null));
 			return p;
 		case RACIONAL:
 		default:

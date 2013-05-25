@@ -182,7 +182,7 @@ public class Funcion {
 	public static Funcion trigonometrica(FuncionTrig ft, BigDecimal coefA,
 			BigDecimal coefB){
 		ArrayList<Termino> alT = new ArrayList<Termino>();
-		alT.add(Termino.trigonometrico(ft, coefA, coefB));
+		alT.add(Termino.trigonometrico(ft, coefA, coefB, null));
 		return new Funcion(alT);
 	}
 	

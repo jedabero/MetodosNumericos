@@ -63,6 +63,9 @@ public class Termino {
 	private int grado;
 	
 	private Funcion funcInterna;
+	private boolean hasIntern; 
+	private boolean isInternMono; 
+	
 	
 	private String generic;
 	private String specific;
@@ -203,14 +206,15 @@ public class Termino {
 		case CONSTANTE:
 			return getA();
 		case POLINOMICA:
-			return getA().multiply(x.pow(getGrado()));
+			return getA().multiply(getFuncInterna().valorImagen(x).pow(getGrado()));
 		case TRIGONOMETRICA:
 			return getA().multiply(M.calculaTrig(getFunTrig(),
-					x.multiply(getB()), isXinRadians(), isXinDegrees()));
+					getFuncInterna().valorImagen(x).multiply(getB()),
+					isXinRadians(), isXinDegrees()));
 		case EXPONENCIAL:
-			return getA().multiply(Big.exp(x.multiply(getB())));
+			return getA().multiply(Big.exp(getFuncInterna().valorImagen(x).multiply(getB())));
 		case LOGARITMICA:
-			return getA().multiply(Big.ln(x.multiply(getB())));
+			return getA().multiply(Big.ln(getFuncInterna().valorImagen(x).multiply(getB())));
 		case RACIONAL:
 			break;
 		default: 
@@ -238,6 +242,9 @@ public class Termino {
 	/** Inicializa la representación general del término. */
 	private void initGenericString(){
 		String gS = "";
+		Funcion fi = getFuncInterna();
+		String fint = (hasIntern)?(isInternMono?"x":"("+fi.getGeneric()+")"):"null";
+		
 		switch(getTipoFuncion()){
 		case MONO:
 			gS += "x";
@@ -249,24 +256,24 @@ public class Termino {
 			int g = getGrado();
 			switch(g){
 			case 0: gS += "A"; break;
-			case 1: gS += "Ax"; break;
-			default: gS += "Ax<sup>"+g+"</sup>"; break;
+			case 1: gS += "A"+fint; break;
+			default: gS += "A"+fint+"<sup>"+g+"</sup>"; break;
 			}
 			break;
 		case TRIGONOMETRICA:
 			FuncionTrig ft = getFunTrig();
 			switch(ft){
-			case SIN: gS += "Asin(Bx)"; break;
-			case COS: gS += "Acos(Bx)"; break;
-			case TAN: gS += "Atan(Bx)"; break;
-			case SEC: gS += "Asec(Bx)"; break;
-			case CSC: gS += "Acsc(Bx)"; break;
-			case COT: gS += "Acot(Bx)"; break;
+			case SIN: gS += "Asin(B"+fint+")"; break;
+			case COS: gS += "Acos(B"+fint+")"; break;
+			case TAN: gS += "Atan(B"+fint+")"; break;
+			case SEC: gS += "Asec(B"+fint+")"; break;
+			case CSC: gS += "Acsc(B"+fint+")"; break;
+			case COT: gS += "Acot(B"+fint+")"; break;
 			default: gS += ""; break;
 			}
 			break;
-		case EXPONENCIAL: gS += "Ae<sup>Bx</sup>"; break;
-		case LOGARITMICA: gS += "Aln(Bx)"; break;
+		case EXPONENCIAL: gS += "Ae<sup>B"+fint+"</sup>"; break;
+		case LOGARITMICA: gS += "Aln(B"+fint+")"; break;
 		case RACIONAL: /* TODO RACIONAL */ break;
 		default: break;
 		}
@@ -288,6 +295,9 @@ public class Termino {
 		boolean TermEq1 = false;
 		boolean TermEqInf = false;
 		
+		Funcion fi = getFuncInterna();
+		String fint = (hasIntern)?(isInternMono?"x":"("+fi.getSpecific()+")"):"null";
+		
 		if(!TermEq0||!TermEq1||!TermEqInf){
 			if(signA==-1) sS +="- ";
 			
@@ -306,11 +316,11 @@ public class Termino {
 					break;
 				case 1:
 					if(!Aeq1) sS += a.abs();
-					sS += "x";
+					sS += fint;
 					break;
 				default:
 					if(!Aeq1) sS += a.abs();
-					sS += "x<sup>"+g+"</sup>";
+					sS += fint+"<sup>"+g+"</sup>";
 					break;
 				}
 				break;
@@ -324,7 +334,7 @@ public class Termino {
 					
 					if(signB==-1) sS +="-";
 					if(!Beq1) sS += b.abs();
-					sS += "x)";
+					sS += fint+")";
 					break;
 				} else {
 					switch(ft){
@@ -348,7 +358,7 @@ public class Termino {
 				sS += "e<sup>";
 				if(signB==-1) sS +="-";
 				if(!Beq1) sS += b.abs();
-				sS += "x</sup>";
+				sS += fint+"</sup>";
 				break;
 				
 			case LOGARITMICA:
@@ -356,7 +366,7 @@ public class Termino {
 				sS += "ln(";
 				if(signB==-1) sS +="-";
 				if(!Beq1) sS += b.abs();
-				sS += "x)";
+				sS += fint+")";
 				break;
 				
 			case RACIONAL:
@@ -385,6 +395,9 @@ public class Termino {
 		BigDecimal a = getA();
 		BigDecimal b = getB();
 		
+		Funcion fi = getFuncInterna();
+		String fint = (hasIntern)?(isInternMono?"x":"("+fi+")"):"null";
+		
 		switch(getTipoFuncion()){
 		case MONO:
 			tS = "x";
@@ -393,17 +406,17 @@ public class Termino {
 			tS = ""+a;
 			break;
 		case POLINOMICA:
-			tS = a+"*x^"+getGrado();
+			tS = a+"*"+fint+"^"+getGrado();
 			break;
 		case TRIGONOMETRICA:
-			tS = a+"*"+getFunTrig().toString().toLowerCase()+"("+b+"*x)";
+			tS = a+"*"+getFunTrig().toString().toLowerCase()+"("+b+"*"+fint+")";
 			break;
 		case EXPONENCIAL:
-			tS = a+"*e^("+b+"*x)";
+			tS = a+"*e^("+b+"*"+fint+")";
 			break;
 			
 		case LOGARITMICA:
-			tS = a+"*ln("+b+"*x)";
+			tS = a+"*ln("+b+"*"+fint+")";
 			break;
 			
 		case RACIONAL:
@@ -443,6 +456,11 @@ public class Termino {
 		tipoFuncion = f;
 		grado = g;
 		funTrig = ft;
+		funcInterna = interna;
+		
+		hasIntern = funcInterna != null;
+		isInternMono = (hasIntern)?(funcInterna.toString().compareTo("x") == 0):false;
+		
 		switch (tipoFuncion) {
 		case MONO:
 			
@@ -479,11 +497,6 @@ public class Termino {
 		case RACIONAL:
 			break;
 		case COMPUESTA:
-			if(interna != null){
-				funcInterna = interna;
-			} else {
-				throw CustomException.tipoIncorrecto();
-			}
 			break;
 		default:
 			
@@ -537,26 +550,43 @@ public class Termino {
 	 * @param ft	el tipo de función trigonométrica
 	 * @param coefA	el coeficiente del término
 	 * @param coefB	el coeficiente que acompaña a x
+	 * @param interna 
 	 * @return un termino de tipo trigonométrico tipo {@code ft}
 	 */
 	public static Termino trigonometrico(FuncionTrig ft, BigDecimal coefA,
-			BigDecimal coefB){
+			BigDecimal coefB, Funcion interna){
 		try{
-			return new Termino(coefA, coefB, Tipo.TRIGONOMETRICA, 0, ft, null);
+			if(interna != null){
+				return new Termino(coefA, coefB, Tipo.TRIGONOMETRICA, 0, ft, interna);
+			} else {
+				Funcion mono = new Funcion(new Termino());
+				return new Termino(coefA, coefB, Tipo.TRIGONOMETRICA, 0, ft, mono);
+			}
 		}catch(CustomException et){
 			et.printStackTrace();
-			return trigonometrico(ft, coefA, BigDecimal.ONE);
+			return null;
 		}
 	}
 	
 	/**
 	 * @param coefA el coeficiente del término
 	 * @param coefB el coeficiente que acompaña a x
+	 * @param interna 
 	 * @return un termino de tipo exponencial
 	 */
-	public static Termino exponencial(BigDecimal coefA, BigDecimal coefB){
+	public static Termino exponencial(BigDecimal coefA, BigDecimal coefB,
+			Funcion interna){
 		try{
-			return new Termino(coefA, coefB, Tipo.EXPONENCIAL, 0, null, null);
+			if(interna != null){
+				if (interna.getTipoFuncion().equals(Tipo.EXPONENCIAL)){
+					throw CustomException.tipoIncorrecto();
+				} else {
+					return new Termino(coefA, coefB, Tipo.EXPONENCIAL, 0, null, interna);
+				}
+			} else {
+				Funcion mono = new Funcion(new Termino());
+				return new Termino(coefA, coefB, Tipo.EXPONENCIAL, 0, null, mono);
+			}
 		}catch(CustomException et){
 			et.printStackTrace();
 			return null;
@@ -567,15 +597,26 @@ public class Termino {
 	 * Crea un término de tipo logarítmico con los parámetros dados.
 	 * @param coefA el coeficiente del término
 	 * @param coefB el coeficiente que acompaña a x
+	 * @param interna 
 	 * @return un termino de tipo logarítmico
 	 */
-	public static Termino logaritmo(BigDecimal coefA, BigDecimal coefB){
+	public static Termino logaritmo(BigDecimal coefA, BigDecimal coefB,
+			Funcion interna){
 		try{
-			return new Termino(coefA, coefB, Tipo.LOGARITMICA, 0, null, null);
+			if(interna != null){
+				if (interna.getTipoFuncion().equals(Tipo.LOGARITMICA)){
+					throw CustomException.tipoIncorrecto();
+				} else {
+					return new Termino(coefA, coefB, Tipo.LOGARITMICA, 0, null, interna);
+				}
+			} else {
+				Funcion mono = new Funcion(new Termino());
+				return new Termino(coefA, coefB, Tipo.LOGARITMICA, 0, null, mono);
+			}
 		}catch(CustomException et){
 			String etm = et.getMessage();
 			O.pln("Error al crear función logarítmica: "+etm);
-			return logaritmo(coefA, BigDecimal.ONE);
+			return null;
 		}
 	}
 	
@@ -783,10 +824,10 @@ public class Termino {
 			default:
 				break;
 			}
-			return trigonometrico(ft, at, getB());
+			return trigonometrico(ft, at, getB(), null);
 		case EXPONENCIAL:
 			BigDecimal ae = getA().multiply(getB());
-			return exponencial(ae, getB());
+			return exponencial(ae, getB(), null);
 		case LOGARITMICA:
 		case RACIONAL:
 		default: 
@@ -830,11 +871,11 @@ public class Termino {
 			default:
 				break;
 			}
-			return trigonometrico(ft, at, getB());
+			return trigonometrico(ft, at, getB(), null);
 		case EXPONENCIAL:
 			BigDecimal ae = getA().divide(getB(), 15, RoundingMode.UP);
 			ae = ae.stripTrailingZeros();
-			return exponencial(ae, getB());
+			return exponencial(ae, getB(), null);
 		case LOGARITMICA:
 		case RACIONAL:
 		default: 
