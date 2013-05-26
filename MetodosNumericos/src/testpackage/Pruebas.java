@@ -21,35 +21,41 @@ public class Pruebas {
      */
     public static void main(String[] args) throws Exception {
         
-    	BigDecimal a = BigDecimal.valueOf(0.1);
-    	BigDecimal b = BigDecimal.valueOf(0.1);
+    	BigDecimal a = BigDecimal.valueOf(1);
+    	BigDecimal b = BigDecimal.valueOf(2);
     	BigDecimal x = BigDecimal.valueOf(1);
     	
-    	Funcion fi = new Funcion(Termino.trigonometrico(FuncionTrig.SIN, a, b, null));
-    	O.pln("test func int= "+fi);
+    	Funcion fint = Funcion.binomionN(2, a);
+    	Funcion fint2 = Funcion.trigonometrica(FuncionTrig.SIN, a, a);
+    	O.pln("test func int= "+fint);
     	Termino lista[] = new Termino[]{new Termino(), Termino.constante(a),
-    			Termino.monomio(1, b, null), Termino.monomio(2, a, fi),
-    			Termino.trigonometrico(FuncionTrig.SIN, a, b, fi),
-    			Termino.trigonometrico(FuncionTrig.COS, a, b, null),
-    			Termino.trigonometrico(FuncionTrig.TAN, a, b, null),
-    			Termino.trigonometrico(FuncionTrig.SEC, a, b, null),
-    			Termino.trigonometrico(FuncionTrig.CSC, a, b, null),
-    			Termino.trigonometrico(FuncionTrig.COT, a, b, null),
-    			Termino.exponencial(a, b, null),
-    			Termino.logaritmo(a, b, null)};
-    	O.pln(lista[0]);
-    	O.pln(lista[0].getGeneric());
-    	O.pln(lista[0].getSpecific());
-    	O.pln(lista[3]);
-    	O.pln(lista[3].getGeneric());
-    	O.pln(lista[3].getSpecific());
-    	Funcion f = new Funcion(new java.util.ArrayList<Termino>(java.util.Arrays.asList(lista)));
-    	O.pln(f);
+    			Termino.monomio(1, b, null), Termino.monomio(2, a, null),
+    			Termino.trigonometrico(FuncionTrig.SIN, a, b, fint),
+    			Termino.trigonometrico(FuncionTrig.COS, a, b, fint2),
+    			Termino.trigonometrico(FuncionTrig.TAN, a, b, fint),
+    			Termino.trigonometrico(FuncionTrig.SEC, a, b, fint2),
+    			Termino.trigonometrico(FuncionTrig.CSC, a, b, fint),
+    			Termino.trigonometrico(FuncionTrig.COT, a, b, fint2),
+    			Termino.exponencial(a, b, fint),
+    			Termino.logaritmo(a, b, fint)};
     	
     	for (int i = 0; i < lista.length; i++) {
 			Termino t = lista[i];
 			O.pln(x+"|\t|"+t.valorImagen(x)+"|\t|"+t.getGeneric()+"|\t|"+t+"|\t"+t.getSpecific());
 		}
+    	
+    	javax.swing.JFrame jf = new javax.swing.JFrame("tests");
+    	jf.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
+    	jf.setSize(400, 400);
+    	
+    	String lblS = "<html>f1(x) = "+fint.getSpecific()+"<br />";
+    	lblS += "f2(x) = "+fint2.getSpecific()+"<br />";
+    	for (int i = 0; i < lista.length; i++) {
+			lblS += "F<sub>"+i+"</sub> : "+lista[i].getSpecific()+"<br />";
+		}
+    	lblS += "</html>";
+    	jf.add(new javax.swing.JLabel(lblS, 0));
+    	jf.setVisible(true);
     	
     }
 }

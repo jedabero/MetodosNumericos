@@ -66,6 +66,8 @@ public class Termino {
 	private boolean hasIntern; 
 	private boolean isInternMono; 
 	
+	private Termino multip;
+	private boolean isMultip;
 	
 	private String generic;
 	private String specific;
@@ -192,6 +194,27 @@ public class Termino {
 	 */
 	public void setFuncInterna(Funcion funcInterna) {
 		this.funcInterna = funcInterna;
+	}
+
+	/**
+	 * @return the multip
+	 */
+	public Termino getMultip() {
+		return multip;
+	}
+
+	/**
+	 * @return the isMultip
+	 */
+	public boolean isMultip() {
+		return isMultip;
+	}
+
+	/**
+	 * @param multip the multip to set
+	 */
+	public void setMultip(Termino multip) {
+		this.multip = multip;
 	}
 
 	/**
@@ -447,17 +470,21 @@ public class Termino {
 	 * @param	g el grado del término
 	 * @param	ft el tipo de función trigonométrica
 	 * @param	interna funcíon interna (f(g(x)) 
+	 * @param 	mult término que multiplica este término 
 	 * @throws CustomException 
 	 */
 	public Termino(BigDecimal a, BigDecimal b, Tipo f, int g,
-			FuncionTrig ft, Funcion interna) throws CustomException{
+			FuncionTrig ft, Funcion interna, Termino mult) throws CustomException{
 		A = a;
 		B = b;
 		tipoFuncion = f;
 		grado = g;
 		funTrig = ft;
 		funcInterna = interna;
-		
+		multip = mult;
+		if(mult != null){
+			multip.isMultip = true;
+		}
 		hasIntern = funcInterna != null;
 		isInternMono = (hasIntern)?(funcInterna.toString().compareTo("x") == 0):false;
 		
@@ -513,7 +540,7 @@ public class Termino {
 	 */
 	public static Termino constante(BigDecimal coef){
 		try{
-			return new Termino(coef, BigDecimal.ZERO, Tipo.CONSTANTE, 0, null, null);
+			return new Termino(coef, BigDecimal.ZERO, Tipo.CONSTANTE, 0, null, null, null);
 		}catch(CustomException ce){
 			ce.printStackTrace();
 			return null;
@@ -533,11 +560,13 @@ public class Termino {
 				if (interna.getTipoFuncion().equals(Tipo.POLINOMICA)){
 					throw CustomException.tipoIncorrecto();
 				} else {
-					return new Termino(coef, BigDecimal.ZERO, Tipo.POLINOMICA, grado, null, interna);
+					return new Termino(coef, BigDecimal.ZERO, Tipo.POLINOMICA,
+							grado, null, interna, null);
 				}
 			} else {
 				Funcion mono = new Funcion(new Termino());
-				return new Termino(coef, BigDecimal.ZERO, Tipo.POLINOMICA, grado, null, mono);
+				return new Termino(coef, BigDecimal.ZERO, Tipo.POLINOMICA,
+						grado, null, mono, null);
 			}
 		}catch(CustomException et){
 			et.printStackTrace();
@@ -557,10 +586,12 @@ public class Termino {
 			BigDecimal coefB, Funcion interna){
 		try{
 			if(interna != null){
-				return new Termino(coefA, coefB, Tipo.TRIGONOMETRICA, 0, ft, interna);
+				return new Termino(coefA, coefB, Tipo.TRIGONOMETRICA,
+						0, ft, interna, null);
 			} else {
 				Funcion mono = new Funcion(new Termino());
-				return new Termino(coefA, coefB, Tipo.TRIGONOMETRICA, 0, ft, mono);
+				return new Termino(coefA, coefB, Tipo.TRIGONOMETRICA, 0, ft,
+						mono, null);
 			}
 		}catch(CustomException et){
 			et.printStackTrace();
@@ -578,14 +609,12 @@ public class Termino {
 			Funcion interna){
 		try{
 			if(interna != null){
-				if (interna.getTipoFuncion().equals(Tipo.EXPONENCIAL)){
-					throw CustomException.tipoIncorrecto();
-				} else {
-					return new Termino(coefA, coefB, Tipo.EXPONENCIAL, 0, null, interna);
-				}
+				return new Termino(coefA, coefB, Tipo.EXPONENCIAL, 0,
+						null, interna, null);
 			} else {
 				Funcion mono = new Funcion(new Termino());
-				return new Termino(coefA, coefB, Tipo.EXPONENCIAL, 0, null, mono);
+				return new Termino(coefA, coefB, Tipo.EXPONENCIAL, 0, null,
+						mono, null);
 			}
 		}catch(CustomException et){
 			et.printStackTrace();
@@ -604,14 +633,11 @@ public class Termino {
 			Funcion interna){
 		try{
 			if(interna != null){
-				if (interna.getTipoFuncion().equals(Tipo.LOGARITMICA)){
-					throw CustomException.tipoIncorrecto();
-				} else {
-					return new Termino(coefA, coefB, Tipo.LOGARITMICA, 0, null, interna);
-				}
+				return new Termino(coefA, coefB, Tipo.LOGARITMICA, 0,
+						null, interna, null);
 			} else {
 				Funcion mono = new Funcion(new Termino());
-				return new Termino(coefA, coefB, Tipo.LOGARITMICA, 0, null, mono);
+				return new Termino(coefA, coefB, Tipo.LOGARITMICA, 0, null, mono, null);
 			}
 		}catch(CustomException et){
 			String etm = et.getMessage();
@@ -694,7 +720,7 @@ public class Termino {
 		Termino t = null;
 		try {
 			t = new Termino(getA(), getB(), getTipoFuncion(), getGrado(),
-					getFunTrig(), getFuncInterna());
+					getFunTrig(), getFuncInterna(), getMultip());
 		} catch (CustomException e) {
 			e.printStackTrace();
 		}

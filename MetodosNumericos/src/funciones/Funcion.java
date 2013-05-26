@@ -169,7 +169,10 @@ public class Funcion {
 				alT.add(Termino.monomio(i, coefs[i], null));	
 			}
 		}
-		return new Funcion(alT);
+		
+		Funcion f = new Funcion(alT);
+		f.setTipoFuncion(Tipo.POLINOMICA);
+		return f;
 	}
 	
 	/**
