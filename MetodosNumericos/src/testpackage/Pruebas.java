@@ -53,8 +53,8 @@ public class Pruebas {
     	for (int i = 0; i < lista.length; i++) {
 			lblS += "F<sub>"+i+"</sub> : "+lista[i].getSpecific()+"<br />";
 		}
-    	lblS += "</html>";
-    	jf.add(new javax.swing.JLabel(lblS, 0));
+    	lblS += "<sub>1<sup>2<sub>3<sup>4</sup>3</sub>2</sup>1</sub>";
+    	jf.add(new javax.swing.JLabel(lblS + "</html>", 0));
     	jf.setVisible(true);
     	
     }

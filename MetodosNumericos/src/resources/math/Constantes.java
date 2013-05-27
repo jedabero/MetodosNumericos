@@ -33,7 +33,9 @@ public interface Constantes {
 		/** Constante para determinar la función como Racional. */
 		RACIONAL,
 		/** Constante para determinar la función como compuesta por otra. */
-		COMPUESTA
+		COMPUESTA,
+		/** */
+		
 	}
 	
 	/**
