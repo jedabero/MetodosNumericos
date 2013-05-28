@@ -186,7 +186,9 @@ public class Funcion {
 			BigDecimal coefB){
 		ArrayList<Termino> alT = new ArrayList<Termino>();
 		alT.add(Termino.trigonometrico(ft, coefA, coefB, null));
-		return new Funcion(alT);
+		Funcion f = new Funcion(alT);
+		f.setTipoFuncion(Tipo.TRIGONOMETRICA);
+		return f;
 	}
 	
 	//suma
@@ -598,44 +600,23 @@ public class Funcion {
 		return res.stripTrailingZeros();
 	}
 	
-	private int firstNonZeroCoef(){
-		for (int i = 0; i < getTerminos().size(); i++) {
-			if (getTerminos().get(i).getA().signum()!=0) {
-				return i;
+	private Funcion mpfQx(){
+		Termino t0 = getTerminos().get(0);
+		System.out.println("T0: "+t0);
+		int t0g = t0.getGrado();
+		ArrayList<Termino> alF = new ArrayList<Termino>();
+		for (int i = 1; i < getTerminos().size(); i++) {
+			Termino ti = getTerminos().get(i).copia();
+			int tempg = ti.getGrado();
+			if(tempg<t0g+2) {
+				alF.add(Termino.constante(ti.getA()));
+			} else {
+				alF.add(Termino.monomio(ti.getGrado()-t0g-1, ti.getA(), ti.getFuncInterna()));
 			}
 		}
-		return -1;
-	}
-	
-	private Funcion gx(int fnzc){
-		ArrayList<Termino> alT = new ArrayList<Termino>(getTerminos().size()-1);
-		switch (fnzc) {
-		case 0:		//Si A0 es != 0, ent g(x) = -A0/h(x), h(x)=:
-			for (int i = 1; i < getTerminos().size(); i++) {
-				Termino t = getTerminos().get(i);
-				if (t.getGrado()<=1) {
-					alT.add(Termino.constante(t.getA()));
-				} else {
-					alT.add(Termino.monomio(t.getGrado()-1, t.getA(), null));
-				}
-			}
-			return new Funcion(alT);
-			
-		case -1:	//Esto indica que todos los coeficientes son 0, lo cual nunca debe suceder
-			O.pln(-1+" <- wat?");
-			return null;
-		default:	//Si Ai != 0, ent g(x) =:
-			Termino x1 = getTerminos().get(1);
-			for (int i = 0; i < getTerminos().size(); i++) {
-				if(i!=1){
-					Termino t = getTerminos().get(i);
-					t.setA(t.getA().divide(x1.getA(), RoundingMode.HALF_UP).negate());
-					alT.add(t);
-				}
-			}
-			return new Funcion(alT);
-			
-		}
+
+		Funcion gx = new Funcion(alF);
+		return gx;
 	}
 	
 	/**
@@ -648,29 +629,21 @@ public class Funcion {
 	public BigDecimal[] metodoPuntoFijo(BigDecimal tol, int maxIt, BigDecimal x0)
 			throws Exception{
 		//Obtener g(x)
-		int fnzc = firstNonZeroCoef();	//Se localiza el la posición del primer coeficiente diferente de 0
-		Funcion gx = gx(fnzc);
+		Funcion qx = mpfQx();
+		System.out.println("gx: "+qx);
+		Termino t0 = getTerminos().get(0);
 		BigDecimal err = null;
 		boolean fin = false;	//Switch
 		int k = 0;				//Índice de la iteración
 		BigDecimal xr = BigDecimal.ZERO;
 		while((!fin)&&(k<=maxIt)){
+			System.out.println("x0 = "+x0);
 			BigDecimal e = xr.subtract(x0).abs();	//Error inicial
-			System.out.println(e);		//TODO DETECT ERROR CHANGE
-			switch (fnzc) {		//xr = g(x0)
-			case 0:
-				Termino t = getTerminos().get(0);
-				xr = t.getA().negate().divide(gx.valorImagen(x0),
-						tol.scale()+3, RoundingMode.HALF_UP);
-				break;
-			case -1:
-				O.pln(-1+" <- again wat?");
-				break;
-			default:
-				xr = gx.valorImagen(x0);
-				break;
-			}
+			System.out.println("mpf err: "+e);		//TODO DETECT ERROR CHANGE
 			
+			xr = t0.getA().negate().divide(qx.valorImagen(x0),
+					tol.scale()+3, RoundingMode.HALF_UP);
+			System.out.println("xr = "+xr+"\n");
 			if (e.compareTo(tol)<1) {	//Error igual o por debajo de la tolerancia?
 				fin = true;
 			}

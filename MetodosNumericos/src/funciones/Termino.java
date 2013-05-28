@@ -702,6 +702,14 @@ public class Termino {
 		t.actualiza(getA().multiply(m).stripTrailingZeros());
 		return t;
 	}
+
+	/*
+	public Termino multiplicar(BigDecimal multiplicando){
+		BigDecimal newA = getA().multiply(multiplicando);
+		Termino multiplicado;
+		return null;
+	}
+	*/
 	
 	/**
 	 * @param m
@@ -789,13 +797,6 @@ public class Termino {
 	public void actualiza(BigDecimal a, BigDecimal b){
 		actualiza(a, b, getTipoFuncion(), getGrado(), getFunTrig());
 	}
-	/*
-	public Termino multiplicar(BigDecimal multiplicando){
-		BigDecimal newA = getA().multiply(multiplicando);
-		Termino multiplicado;
-		return null;
-	}
-	*/
 
 	/**
 	 * @param ab
@@ -843,6 +844,7 @@ public class Termino {
 			case COS:
 				at = at.negate();
 				ft = FuncionTrig.SIN;
+				break;
 			case TAN:
 			case SEC:
 			case CSC:

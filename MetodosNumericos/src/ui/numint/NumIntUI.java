@@ -141,7 +141,7 @@ public class NumIntUI extends JPanel implements ActionListener{
 				new Interval(BigDecimal.ONE.negate(), BigDecimal.ONE));
 		jg.setBackground(Color.WHITE);
 		jg.setMostrarAreaIntegral(true);
-		jg.setRangeY(true);
+		jg.setRangeY(false);
 		Interval ab = mpnl.getAb();
 		if(ab != null){
 			jg.setIntegralX(ab);
