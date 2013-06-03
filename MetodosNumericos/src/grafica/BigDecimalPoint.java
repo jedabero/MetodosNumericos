@@ -24,7 +24,7 @@ public class BigDecimalPoint{
 	}
 	
 	/**
-	 * Crea un punto en formato BigDecimal según un punto en formato int.
+	 * Crea un punto en formato BigDecimal según un punto en formato entero.
 	 * @param p el punto a convertir
 	 */
 	public BigDecimalPoint(Point p){
