@@ -369,6 +369,12 @@ public class JPanelSSEL extends javax.swing.JPanel {
     private void btnJacobiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnJacobiActionPerformed
         creaMatriz();
         checkIterErrors();
+        if(!mainSel.getMatrizCoef().esEstrictamenteDiagonalDominante()){
+        	JOptionPane.showMessageDialog(this.getParent(), "El método " +
+        			"posiblemente no convergerá porque la matriz no es " +
+        			"estrictamente diagonal dominante.",
+                    "Advertencia", JOptionPane.WARNING_MESSAGE);
+        }
         try {
             dtmIter.setDataVector(mainSel.metodoJacobi(it, tol).getMatriz(),
                     tblIterHeaders);
@@ -382,6 +388,12 @@ public class JPanelSSEL extends javax.swing.JPanel {
     private void btnSeidelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeidelActionPerformed
         creaMatriz();
         checkIterErrors();
+        if(!mainSel.getMatrizCoef().esEstrictamenteDiagonalDominante()){
+        	JOptionPane.showMessageDialog(this.getParent(), "El método " +
+        			"posiblemente no convergerá porque la matriz no es " +
+        			"estrictamente diagonal dominante.",
+                    "Advertencia", JOptionPane.WARNING_MESSAGE);
+        }
         try {
             dtmIter.setDataVector(mainSel.metodoSeidel(it, tol).getMatriz(),
                     tblIterHeaders);

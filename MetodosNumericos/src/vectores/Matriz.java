@@ -486,6 +486,27 @@ public class Matriz {
         }
     }
     
+    public boolean esEstrictamenteDiagonalDominante(){
+    	if(esCuadrada()){
+    		boolean isRowDiagDom = false;
+        	for (int i = 0; i < n; i++) {
+        		BigDecimal sum = BigDecimal.ZERO;
+    			for (int j = 0; j < m; j++) {
+    				if(i!=j){
+    					sum = sum.add(getMatriz()[i][j].abs());
+    				}
+    			}
+        		isRowDiagDom = getMatriz()[i][i].compareTo(sum) > 0;
+        		if(!isRowDiagDom){
+        			return false;
+        		}
+    		}
+        	
+        	return isRowDiagDom;
+    	}
+    	return false;
+    }
+    
     public boolean detEquals0() throws Exception {
         boolean det0 = det().compareTo(BigDecimal.ZERO)==0;
         return det0;
