@@ -25,7 +25,7 @@ import javax.swing.SpinnerNumberModel;
 import resources.Add;
 import resources.O;
 import resources.math.Interval;
-import funciones.Funcion;
+import resources.math.funciones.Funcion;
 
 /**
  * @author Jedabero
@@ -36,7 +36,7 @@ public class MetodosRaicesPanel extends JPanel implements ItemListener,
 	
 	private static final long serialVersionUID = 6392349745120763796L;
 	
-	private static final String strMetodos[] = {"Punto Fijo", "Bissección",
+	private static final String strMetodos[] = {"Punto Fijo", "Bissecciï¿½n",
 		"Newton-Raphson", "Secante", "Regula-Falsi"};
 	private int currMethod = 0;
 	
@@ -88,7 +88,7 @@ public class MetodosRaicesPanel extends JPanel implements ItemListener,
 		SpinnerNumberModel snmIt = new SpinnerNumberModel(15, 1, 25, 1);
 		spnrIt = new JSpinner(snmIt);
 		
-		btnFind = new JButton("Encontrar Raíz");
+		btnFind = new JButton("Encontrar Raï¿½z");
 		btnFind.addActionListener(this);
 		
 		lblRes = new JLabel("<html><p style=\"text-align:right\">X\t =<br />Error =</p></html>",
@@ -99,22 +99,22 @@ public class MetodosRaicesPanel extends JPanel implements ItemListener,
 		txtRes.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 		
 		initComponents();
-		setBorder(javax.swing.BorderFactory.createTitledBorder("Métodos Iterativos"));
+		setBorder(javax.swing.BorderFactory.createTitledBorder("Mï¿½todos Iterativos"));
 	}
 
 	private void initComponents() {
-		//0 - Lista para escoger lo que se verá.
+		//0 - Lista para escoger lo que se verï¿½.
 		Add.componente(this, listaMetodos, 0, 0, 3, 1, 1.0, 1.0,
-				GridBagConstraints.BOTH, "Selecciona un método.");
-		//1 - Panel con el método seleccionado
+				GridBagConstraints.BOTH, "Selecciona un mï¿½todo.");
+		//1 - Panel con el mï¿½todo seleccionado
 		initPanelPF();
-		//2 - Sección para mostrar el resultado.
+		//2 - Secciï¿½n para mostrar el resultado.
 		Add.componente(this, lblRes, 0, 2, 1, 1, 1.0, 1.0,
 				GridBagConstraints.BOTH, "");
 		Add.componente(this, txtRes, 1, 2, 1, 1, 1.0, 1.0,
 				GridBagConstraints.HORIZONTAL, "");
 		Add.componente(this, btnFind, 2, 2, 1, 1, 1.0, 1.0,
-				GridBagConstraints.BOTH, "Encuetre la raíz por el método seleccionado.");
+				GridBagConstraints.BOTH, "Encuetre la raï¿½z por el mï¿½todo seleccionado.");
 	}
 	
 	private void initPanelPF(){
@@ -133,9 +133,9 @@ public class MetodosRaicesPanel extends JPanel implements ItemListener,
 		Add.componente(pnlPF, lblIt, 4, 0, 1, 1, 1.0, 1.0,
 				GridBagConstraints.BOTH, "");
 		Add.componente(pnlPF, spnrIt, 5, 0, 1, 1, 1.0, 1.0,
-				GridBagConstraints.HORIZONTAL, "Máximo número de iteraciones");
+				GridBagConstraints.HORIZONTAL, "Mï¿½ximo nï¿½mero de iteraciones");
 		
-		//Añadir al panel principal
+		//Aï¿½adir al panel principal
 		Add.componente(this, pnlPF, 0, 1, 3, 1, 1.0, 1.0,
 				GridBagConstraints.BOTH, "");
 	}
@@ -161,9 +161,9 @@ public class MetodosRaicesPanel extends JPanel implements ItemListener,
 		Add.componente(pnlB, lblIt, 2, 1, 1, 1, 1.0, 1.0,
 				GridBagConstraints.BOTH, "");
 		Add.componente(pnlB, spnrIt, 3, 1, 1, 1, 1.0, 1.0,
-				GridBagConstraints.HORIZONTAL, "Máximo número de iteraciones");
+				GridBagConstraints.HORIZONTAL, "Mï¿½ximo nï¿½mero de iteraciones");
 		
-		//Añadir al panel principal
+		//Aï¿½adir al panel principal
 		Add.componente(this, pnlB, 0, 1, 3, 1, 1.0, 1.0,
 				GridBagConstraints.BOTH, "");
 	}
@@ -183,9 +183,9 @@ public class MetodosRaicesPanel extends JPanel implements ItemListener,
 		Add.componente(pnlNR, lblIt, 4, 0, 1, 1, 1.0, 1.0,
 				GridBagConstraints.BOTH, "");
 		Add.componente(pnlNR, spnrIt, 5, 0, 1, 1, 1.0, 1.0,
-				GridBagConstraints.HORIZONTAL, "Máximo número de iteraciones");
+				GridBagConstraints.HORIZONTAL, "Mï¿½ximo nï¿½mero de iteraciones");
 		
-		//Añadir al panel principal
+		//Aï¿½adir al panel principal
 		Add.componente(this, pnlNR, 0, 1, 3, 1, 1.0, 1.0,
 				GridBagConstraints.BOTH, "");
 	}
@@ -210,9 +210,9 @@ public class MetodosRaicesPanel extends JPanel implements ItemListener,
 		Add.componente(pnlS, lblIt, 2, 1, 1, 1, 1.0, 1.0,
 				GridBagConstraints.BOTH, "");
 		Add.componente(pnlS, spnrIt, 3, 1, 1, 1, 1.0, 1.0,
-				GridBagConstraints.HORIZONTAL, "Máximo número de iteraciones");
+				GridBagConstraints.HORIZONTAL, "Mï¿½ximo nï¿½mero de iteraciones");
 		
-		//Añadir al panel principal
+		//Aï¿½adir al panel principal
 		Add.componente(this, pnlS, 0, 1, 3, 1, 1.0, 1.0,
 				GridBagConstraints.BOTH, "");
 	}
@@ -237,15 +237,15 @@ public class MetodosRaicesPanel extends JPanel implements ItemListener,
 		Add.componente(pnlRF, lblIt, 2, 1, 1, 1, 1.0, 1.0,
 				GridBagConstraints.BOTH, "");
 		Add.componente(pnlRF, spnrIt, 3, 1, 1, 1, 1.0, 1.0,
-				GridBagConstraints.HORIZONTAL, "Máximo número de iteraciones");
+				GridBagConstraints.HORIZONTAL, "Mï¿½ximo nï¿½mero de iteraciones");
 		
-		//Añadir al panel principal
+		//Aï¿½adir al panel principal
 		Add.componente(this, pnlRF, 0, 1, 3, 1, 1.0, 1.0,
 				GridBagConstraints.BOTH, "");
 	}
 	
 	/**
-	 * @param funcion la función
+	 * @param funcion la funciï¿½n
 	 */
 	public void setFuncion(Funcion funcion) {
 		this.funcion = funcion;
@@ -322,7 +322,7 @@ public class MetodosRaicesPanel extends JPanel implements ItemListener,
 	}
 	
 	/**
-	 * @return el número de iteraciones
+	 * @return el nï¿½mero de iteraciones
 	 */
 	public int getMaxIt(){
 		String sIt = spnrIt.getValue().toString();
@@ -415,7 +415,7 @@ public class MetodosRaicesPanel extends JPanel implements ItemListener,
 			}
 			txtRes.setText(res[0].toPlainString()+"\n"+sp+res[1].toPlainString());
 		} else {
-			JOptionPane.showMessageDialog(null, "Crea la función primero.");
+			JOptionPane.showMessageDialog(null, "Crea la funciï¿½n primero.");
 		}
 		
 		

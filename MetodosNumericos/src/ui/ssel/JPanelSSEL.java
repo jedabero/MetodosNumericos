@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 
 import javax.swing.JOptionPane;
 
-import vectores.SistemaEcuacionesLineales;
+import resources.math.vectores.SistemaEcuacionesLineales;
 
 /**
  *
@@ -96,7 +96,7 @@ public class JPanelSSEL extends javax.swing.JPanel {
         scpItr = new javax.swing.JScrollPane();
         tblIterat = new javax.swing.JTable();
 
-        pnlAnalitico.setBorder(javax.swing.BorderFactory.createTitledBorder("Métodos Analíticos"));
+        pnlAnalitico.setBorder(javax.swing.BorderFactory.createTitledBorder("Mï¿½todos Analï¿½ticos"));
 
         btnGauss.setText("Gauss");
         btnGauss.addActionListener(new java.awt.event.ActionListener() {
@@ -161,7 +161,7 @@ public class JPanelSSEL extends javax.swing.JPanel {
 
         jLabel2.setText("Sistema de ecuaciones");
 
-        jLabel1.setText("Número de ecuaciones:");
+        jLabel1.setText("Nï¿½mero de ecuaciones:");
 
         spnNumEc.setModel(new javax.swing.SpinnerNumberModel(3, 2, 25, 1));
         spnNumEc.addChangeListener(new javax.swing.event.ChangeListener() {
@@ -202,7 +202,7 @@ public class JPanelSSEL extends javax.swing.JPanel {
                 .addContainerGap())
         );
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Métodos Iterativos"));
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Mï¿½todos Iterativos"));
 
         jLabel4.setText("Iteraciones:");
 
@@ -368,8 +368,8 @@ public class JPanelSSEL extends javax.swing.JPanel {
         creaMatriz();
         checkIterErrors();
         if(!mainSel.getMatrizCoef().esEstrictamenteDiagonalDominante()){
-        	JOptionPane.showMessageDialog(this.getParent(), "El método " +
-        			"posiblemente no convergerá porque la matriz no es " +
+        	JOptionPane.showMessageDialog(this.getParent(), "El mï¿½todo " +
+        			"posiblemente no convergerï¿½ porque la matriz no es " +
         			"estrictamente diagonal dominante.",
                     "Advertencia", JOptionPane.WARNING_MESSAGE);
         }
@@ -387,8 +387,8 @@ public class JPanelSSEL extends javax.swing.JPanel {
         creaMatriz();
         checkIterErrors();
         if(!mainSel.getMatrizCoef().esEstrictamenteDiagonalDominante()){
-        	JOptionPane.showMessageDialog(this.getParent(), "El método " +
-        			"posiblemente no convergerá porque la matriz no es " +
+        	JOptionPane.showMessageDialog(this.getParent(), "El mï¿½todo " +
+        			"posiblemente no convergerï¿½ porque la matriz no es " +
         			"estrictamente diagonal dominante.",
                     "Advertencia", JOptionPane.WARNING_MESSAGE);
         }
@@ -415,7 +415,7 @@ public class JPanelSSEL extends javax.swing.JPanel {
                     wasThereAnError = true;
                     String varerr = ((j<numEc)? "x<sub>"+(j+1)+"</sub>":"b");
                     JOptionPane.showMessageDialog(this,
-                            "<html>Ecuación "+(i+1)+", "+varerr+" : "+v+"</html>",
+                            "<html>Ecuaciï¿½n "+(i+1)+", "+varerr+" : "+v+"</html>",
                             "Error en ", JOptionPane.ERROR_MESSAGE);
                 }
                 
@@ -433,9 +433,9 @@ public class JPanelSSEL extends javax.swing.JPanel {
         try {
             tol = new BigDecimal(toltext);
         } catch (Exception e) {
-            toltext += (toltext.isEmpty())? "Vacío":"";
+            toltext += (toltext.isEmpty())? "Vacï¿½o":"";
             JOptionPane.showMessageDialog(this.getParent(),
-                    toltext + " es inválido.",
+                    toltext + " es invï¿½lido.",
                     "Error en el valor de la Toleracia",
                     JOptionPane.ERROR_MESSAGE);
         }

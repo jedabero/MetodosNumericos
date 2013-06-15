@@ -1,7 +1,7 @@
 /**
  * 
  */
-package edos;
+package resources.math.edos;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -9,8 +9,8 @@ import java.math.RoundingMode;
 import resources.math.Big;
 import resources.math.Constantes.Tipo;
 import resources.math.Interval;
-import funciones.Funcion;
-import funciones.Termino;
+import resources.math.funciones.Funcion;
+import resources.math.funciones.Termino;
 
 /**
  * @author Jedabero
@@ -158,7 +158,7 @@ public class EcuacionDiferencialOrden1 {
 	 * @param X
 	 * @param y0
 	 * @param n
-	 * @return el valor de y(X.max()) por el método de Euler Simple
+	 * @return el valor de y(X.max()) por el mï¿½todo de Euler Simple
 	 */
 	public BigDecimal metodoEulerSimple(Interval X, BigDecimal y0, int n) {
 		BigDecimal h = X.step(n);
@@ -178,7 +178,7 @@ public class EcuacionDiferencialOrden1 {
 	 * @param X
 	 * @param y0
 	 * @param n
-	 * @return el valor de y(X.max()) por el método de Euler Simple Modificado
+	 * @return el valor de y(X.max()) por el mï¿½todo de Euler Simple Modificado
 	 */
 	public BigDecimal metodoEulerSimpleModificado(Interval X, BigDecimal y0, int n) {
 		BigDecimal h = X.step(n);
@@ -200,8 +200,8 @@ public class EcuacionDiferencialOrden1 {
 	 * @param X
 	 * @param y0
 	 * @param n
-	 * @return el valor de y(X.max()) por el método con las Serie de Taylor
-	 * hasta el tercer término.
+	 * @return el valor de y(X.max()) por el mï¿½todo con las Serie de Taylor
+	 * hasta el tercer tï¿½rmino.
 	 */
 	public BigDecimal metodoSeriesTaylorOrden2(Interval X, BigDecimal y0, int n) {
 		BigDecimal h = X.step(n);
@@ -224,7 +224,7 @@ public class EcuacionDiferencialOrden1 {
 	 * @param X
 	 * @param y0
 	 * @param n
-	 * @return el valor de y(X.max()) por el método de Runge-Kutta
+	 * @return el valor de y(X.max()) por el mï¿½todo de Runge-Kutta
 	 */
 	public BigDecimal metodoRungeKutta(Interval X, BigDecimal y0, int n) {
 		BigDecimal h = X.step(n);

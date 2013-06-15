@@ -21,7 +21,7 @@ import resources.Add;
 import resources.O;
 import resources.math.Interval;
 import ui.main.app.MetodosUI;
-import funciones.Funcion;
+import resources.math.funciones.Funcion;
 
 /**
  * @author Jedabero
@@ -80,7 +80,7 @@ public class MetodosIntegracionPanel extends JPanel implements ActionListener,
 		txtRes.setEditable(false);
 		
 		Add.componente(this, listaMetodos, 0, 0, 8, 1, 1.0, 1.0,
-				GridBagConstraints.BOTH, "Selecciona un método.");
+				GridBagConstraints.BOTH, "Selecciona un mï¿½todo.");
 		Add.componente(this, lblA, 0, 1, 1, 1, 1.0, 1.0,
 				GridBagConstraints.NONE, "");
 		Add.componente(this, txtA, 1, 1, 2, 1, 1.0, 1.0,
@@ -92,7 +92,7 @@ public class MetodosIntegracionPanel extends JPanel implements ActionListener,
 		Add.componente(this, lblN, 6, 1, 1, 1, 1.0, 1.0,
 				GridBagConstraints.NONE, "");
 		Add.componente(this, spnrN, 7, 1, 1, 1, 1.0, 1.0,
-				GridBagConstraints.HORIZONTAL, "Número de subintervalos.");
+				GridBagConstraints.HORIZONTAL, "Nï¿½mero de subintervalos.");
 		Add.componente(this, lblRes, 0, 2, 2, 1, 1.0, 1.0,
 				GridBagConstraints.NONE, "");
 		Add.componente(this, txtRes, 2, 2, 4, 1, 1.0, 1.0,
@@ -100,11 +100,11 @@ public class MetodosIntegracionPanel extends JPanel implements ActionListener,
 		Add.componente(this, btnIntegrar, 6, 2, 2, 1, 1.0, 1.0,
 				GridBagConstraints.BOTH, "Integra");
 		
-		setBorder(javax.swing.BorderFactory.createTitledBorder("Métodos de Integración"));
+		setBorder(javax.swing.BorderFactory.createTitledBorder("Mï¿½todos de Integraciï¿½n"));
 	}
 	
 	/**
-	 * @param funcion la función
+	 * @param funcion la funciï¿½n
 	 */
 	public void setFuncion(Funcion funcion) {
 		this.funcion = funcion;

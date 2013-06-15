@@ -23,7 +23,7 @@ import resources.Add;
 import resources.O;
 import resources.math.Interval;
 import ui.EditaPolinomioPanel;
-import funciones.Funcion;
+import resources.math.funciones.Funcion;
 import grafica.JGrafica;
 
 /**
@@ -64,32 +64,32 @@ public class RaicesUI extends JPanel  implements ActionListener {
 		//Mostrar Polinomio
 		lblEq = new JLabel("", JLabel.CENTER);
 		lblEq.setBorder(BorderFactory.createEtchedBorder());
-		JButton btnVerGrafica = new JButton("Ver gráfica");
+		JButton btnVerGrafica = new JButton("Ver grï¿½fica");
 		
 		JSeparator sprtr2 = new JSeparator(JSeparator.HORIZONTAL);
 		
-		//Métodos
+		//Mï¿½todos
 		mpnlMetodos = new MetodosRaicesPanel();
 		
-		//0 - Tamaño Polinomio
+		//0 - Tamaï¿½o Polinomio
 		Add.componente(this, btnCreaPol, 			3, 0, 2, 1, 1.0, 1.0,
 				GridBagConstraints.BOTH, "");
 		Add.componente(this, fpnlFuncion, 			0, 1, 5, 2, 1.0, 1.0,
-				GridBagConstraints.BOTH, "Edita los coeficientes de la función");
+				GridBagConstraints.BOTH, "Edita los coeficientes de la funciï¿½n");
 		//3 - Separator
 		Add.componente(this, sprtr1, 				0, 3, 5, 1, 1.0, 1.0,
 				GridBagConstraints.HORIZONTAL, "");
 		
 		//4 - Mostrar Polinomio
 		Add.componente(this, lblEq, 				0, 4, 4, 2, 1.0, 1.0,
-				GridBagConstraints.BOTH, "Función");
+				GridBagConstraints.BOTH, "Funciï¿½n");
 		Add.componente(this, btnVerGrafica, 		4, 4, 1, 2, 1.0, 1.0,
-				GridBagConstraints.BOTH, "Vea la gráfica de está función en " +
+				GridBagConstraints.BOTH, "Vea la grï¿½fica de estï¿½ funciï¿½n en " +
 						"una nueva ventana");
 		//6 - Separator
 		Add.componente(this, sprtr2, 				0, 6, 5, 1, 1.0, 1.0,
 				GridBagConstraints.HORIZONTAL, "");
-		//7 - MétodosPanel
+		//7 - Mï¿½todosPanel
 		Add.componente(this, mpnlMetodos, 			0, 7, 5, 1, 1.0, 1.0,
 				GridBagConstraints.BOTH, "");
 		
@@ -109,12 +109,12 @@ public class RaicesUI extends JPanel  implements ActionListener {
 			if(funcion!=null){
 				lblEq.setText("<html>"+funcion.getSpecific()+"</html>");
 				mpnlMetodos.setFuncion(funcion);
-				JOptionPane.showMessageDialog(this, "Función creada");//TODO función creada
+				JOptionPane.showMessageDialog(this, "Funciï¿½n creada");//TODO funciï¿½n creada
 			} else {
-				JOptionPane.showMessageDialog(this, "No se pudo crear la función");
+				JOptionPane.showMessageDialog(this, "No se pudo crear la funciï¿½n");
 			}
 			break;
-		case 'V'://TODO "Ver gráfica":
+		case 'V'://TODO "Ver grï¿½fica":
 			if(funcion!=null){
 				ArrayList<Color> alc = new ArrayList<Color>(1);
 				alc.add(Color.BLUE);
@@ -125,7 +125,7 @@ public class RaicesUI extends JPanel  implements ActionListener {
 				}
 				grafic(alf, alc);
 			}else{
-				JOptionPane.showMessageDialog(null, "Crea la función primero.");
+				JOptionPane.showMessageDialog(null, "Crea la funciï¿½n primero.");
 			}
 			break;
 		default:

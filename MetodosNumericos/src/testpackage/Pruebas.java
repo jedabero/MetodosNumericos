@@ -3,8 +3,8 @@ package testpackage;
 
 import java.math.BigDecimal;
 
-import funciones.Funcion;
-import funciones.Termino;
+import resources.math.funciones.Funcion;
+import resources.math.funciones.Termino;
 
 import resources.O;
 import resources.math.Constantes.FuncionTrig;

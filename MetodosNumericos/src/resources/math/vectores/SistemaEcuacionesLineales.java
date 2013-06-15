@@ -1,4 +1,4 @@
-package vectores;
+package resources.math.vectores;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -19,8 +19,8 @@ public class SistemaEcuacionesLineales {
     private Matriz vectorB;
     private Matriz matrizAmpliada;
     
-    private int numEq;  //N�mero de ecuaciones.
-    private int numIn;  //N�mero de inc�gnitas.
+    private int numEq;  //Numero de ecuaciones.
+    private int numIn;  //Numero de incognitas.
     
     public Matriz getMatrizCoef() {
         return matrizCoef;
@@ -39,13 +39,13 @@ public class SistemaEcuacionesLineales {
     }
     
     /**
-     * Constructor sin par�metros de matriz.
-     * Por obligaci�n se le pedir� al usuario por consola que ingrese el n�mero
-     * de ecuaciones y el n�mero de inc�gnitas.
-     * Luego se le pedir� que ingrese cada uno de los coeficientes.
+     * Constructor sin parametros de matriz.
+     * Por obligacian se le pedira al usuario por consola que ingrese el numero
+     * de ecuaciones y el numero de incognitas.
+     * Luego se le pedira que ingrese cada uno de los coeficientes.
      */
     public SistemaEcuacionesLineales(){
-        // Ingresar tama�o del sistema
+        // Ingresar tamano del sistema
         Scanner in = new Scanner(System.in);
         O.pln("Ecuaciones (Filas): ");
         this.numEq = in.nextInt();
@@ -67,8 +67,8 @@ public class SistemaEcuacionesLineales {
     /**
      * Constructor que crea una matriz de nxm.
      * El usuario debe ingresar cada uno de los coeficientes.
-     * @param n El n�mero de ecuaciones.
-     * @param m El n�mero de inc�gnitas.
+     * @param n El numero de ecuaciones.
+     * @param m El numero de incognitas.
      */
     public SistemaEcuacionesLineales(int n, int m){
         this.numEq=n;
@@ -128,9 +128,9 @@ public class SistemaEcuacionesLineales {
     }
     
     /**
-     * Se usa en los m�todos de Gauss y Jordan para simplificar la ecuaci�n en
+     * Se usa en los metodos de Gauss y Jordan para simplificar la ecuacion en
      * la fila i entre el coeficiente A[i][i]
-     * @param i el �ndice de la ecuaci�n.
+     * @param i el indice de la ecuacion.
      */
     private void simpFila(int i, BigDecimal[][] mt){
         BigDecimal divisor = mt[i][i];
@@ -140,7 +140,7 @@ public class SistemaEcuacionesLineales {
     }
     
     /**
-     * Se utiliza en los m�todos de Gauss y Jordan para reducir a cero la
+     * Se utiliza en los metodos de Gauss y Jordan para reducir a cero la
      * variable A[k][i].
      * @param k 
      * @param i 
@@ -157,7 +157,7 @@ public class SistemaEcuacionesLineales {
     }
     
     /**
-     * M�todo de Gauss. Vuelve la matriz de coeficientes en una matriz triangular
+     * Metodo de Gauss. Vuelve la matriz de coeficientes en una matriz triangular
      * superior.
      */
     public Matriz metodoGauss(){
@@ -175,7 +175,7 @@ public class SistemaEcuacionesLineales {
     }
     
     /**
-     * M�todo de Jordan. Reduce la matriz de coeficientes a la matriz identidad.
+     * Metodo de Jordan. Reduce la matriz de coeficientes a la matriz identidad.
      */
     public Matriz metodoJordan(){
         BigDecimal mTemp[][] = getMatrizAmpliada().getMatriz();
@@ -304,8 +304,8 @@ public class SistemaEcuacionesLineales {
     }
     
     /*
-     * para que los m�todos anteriores funcionen correctamente es necesario
-     * que la diagonal no tenga ning�n cero, los m�todos a continuaci�n son para
+     * para que los metodos anteriores funcionen correctamente es necesario
+     * que la diagonal no tenga ningun cero, los metodos a continuacion son para
      * resolver tal caso. BUT THEY FAIL :(
     public double[][] changeRows(double[][] mt, int pos1, int pos2){
         double row[] = new double[mt[0].length];

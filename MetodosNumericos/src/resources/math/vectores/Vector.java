@@ -1,5 +1,5 @@
 
-package vectores;
+package resources.math.vectores;
 
 import java.math.BigDecimal;
 import java.util.Scanner;

@@ -29,7 +29,7 @@ import javax.swing.event.ChangeListener;
 import javax.swing.table.DefaultTableModel;
 
 import resources.RowNumberTable;
-import vectores.Matriz;
+import resources.math.vectores.Matriz;
 
 /**
  *

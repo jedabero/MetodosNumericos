@@ -1,7 +1,7 @@
 /**
  * 
  */
-package funciones;
+package resources.math.funciones;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -14,23 +14,23 @@ import resources.math.Big;
 import resources.math.Constantes.FuncionTrig;
 import resources.math.Constantes.Tipo;
 import resources.math.Interval;
-import vectores.Matriz;
-import vectores.SistemaEcuacionesLineales;
+import resources.math.vectores.Matriz;
+import resources.math.vectores.SistemaEcuacionesLineales;
 
 /**
- * La clase {@code Funcion} define una función explícita de la forma
+ * La clase {@code Funcion} define una funciï¿½n explï¿½cita de la forma
  * {@code y = F(x)}. 
- * Todas las propiedades de esta función dependen de las propiedades de los
- * {@code términos}. Por lo tanto es posible obtener una función polinómica de
- * grado n, o una simple función trigonométrica, exponencial o logarítmica, o
- * una función con términos combinados.
+ * Todas las propiedades de esta funciï¿½n dependen de las propiedades de los
+ * {@code tï¿½rminos}. Por lo tanto es posible obtener una funciï¿½n polinï¿½mica de
+ * grado n, o una simple funciï¿½n trigonomï¿½trica, exponencial o logarï¿½tmica, o
+ * una funciï¿½n con tï¿½rminos combinados.
  * @author Jedabero
  *
  */
 public class Funcion {
 	
 	/**
-	 * Función que representa el cero
+	 * Funciï¿½n que representa el cero
 	 */
 	public static Funcion ZERO = new Funcion(Termino.ZERO);
 	
@@ -56,37 +56,37 @@ public class Funcion {
 	}
 
 	/**
-	 * Regresa la representación general del término.
-	 * @return la representación general
+	 * Regresa la representaciï¿½n general del tï¿½rmino.
+	 * @return la representaciï¿½n general
 	 */
 	public String getGeneric() {
 		return generic;
 	}
 
 	/**
-	 * Regresa la representación específica del término.
-	 * @return la representación específica
+	 * Regresa la representaciï¿½n especï¿½fica del tï¿½rmino.
+	 * @return la representaciï¿½n especï¿½fica
 	 */
 	public String getSpecific() {
 		return specific;
 	}
 
 	/**
-	 * @return lista de términos
+	 * @return lista de tï¿½rminos
 	 */
 	public ArrayList<Termino> getTerminos() {
 		return terminos;
 	}
 
 	/**
-	 * @param terminos la lista de términos
+	 * @param terminos la lista de tï¿½rminos
 	 */
 	public void setTerminos(ArrayList<Termino> terminos) {
 		this.terminos = terminos;
 	}
 	
 	/**
-	 * Evalúa y regresa el valor de la función.
+	 * Evalï¿½a y regresa el valor de la funciï¿½n.
 	 * @param x el valor de la variable independiente
 	 * @return el valor evaluado
 	 */
@@ -101,7 +101,7 @@ public class Funcion {
 		return y;
 	}
 	
-	/** Inicializa la representación específica y general del término. */
+	/** Inicializa la representaciï¿½n especï¿½fica y general del tï¿½rmino. */
 	public void initGenEsp(){
 		ListIterator<Termino> iterator;
 		String g = "";
@@ -126,7 +126,7 @@ public class Funcion {
 	}
 	
 	/**
-	 * @param lt la lista de términos que crea la función
+	 * @param lt la lista de tï¿½rminos que crea la funciï¿½n
 	 * 
 	 */
 	public Funcion(ArrayList<Termino> lt){
@@ -135,7 +135,7 @@ public class Funcion {
 	}
 	
 	/**
-	 * @param t el término que crea la función singular
+	 * @param t el tï¿½rmino que crea la funciï¿½n singular
 	 * 
 	 */
 	public Funcion(Termino t){
@@ -147,12 +147,12 @@ public class Funcion {
 	}
 	
 	/**
-	 * Crea un función polinómica de grado {@code grado} con todos los términos
+	 * Crea un funciï¿½n polinï¿½mica de grado {@code grado} con todos los tï¿½rminos
 	 * 
-	 * @param n el {@code grado} de la función
+	 * @param n el {@code grado} de la funciï¿½n
 	 * @param coefs el array con los coeficientes
-	 * @return una función polinómica de grado {@code n} con todos los
-	 * términos
+	 * @return una funciï¿½n polinï¿½mica de grado {@code n} con todos los
+	 * tï¿½rminos
 	 * @throws CustomException 
 	 */
 	public static Funcion polinomio(int n, BigDecimal[] coefs)
@@ -176,11 +176,11 @@ public class Funcion {
 	}
 	
 	/**
-	 * Crea un función trigonométrica de tipo {@code ft}
+	 * Crea un funciï¿½n trigonomï¿½trica de tipo {@code ft}
 	 * @param ft 
 	 * @param coefA 
 	 * @param coefB 
-	 * @return una función trigonométrica de tipo {@code ft}
+	 * @return una funciï¿½n trigonomï¿½trica de tipo {@code ft}
 	 */
 	public static Funcion trigonometrica(FuncionTrig ft, BigDecimal coefA,
 			BigDecimal coefB){
@@ -194,7 +194,7 @@ public class Funcion {
 	//suma
 	/**
 	 * @param t
-	 * @return la suma de esta función y el término t
+	 * @return la suma de esta funciï¿½n y el tï¿½rmino t
 	 * @throws CustomException
 	 */
 	public Funcion sumar(Termino t)throws CustomException {
@@ -218,8 +218,8 @@ public class Funcion {
 			break;
 
 		default:
-			//TODO soportar sumas de términos de tipos que no sean POLINOMIO
-			throw new CustomException("tipo de suma no soportado todavía");
+			//TODO soportar sumas de tï¿½rminos de tipos que no sean POLINOMIO
+			throw new CustomException("tipo de suma no soportado todavï¿½a");
 		}
 		tempF.initGenEsp();
 		return tempF;
@@ -244,7 +244,7 @@ public class Funcion {
 	
 	/**
 	 * @param vF
-	 * @return la función resultante de la suma de las funciones en el vector vF
+	 * @return la funciï¿½n resultante de la suma de las funciones en el vector vF
 	 */
 	public static Funcion sumar(Funcion vF[]){
 		Funcion sum = ZERO;
@@ -255,10 +255,10 @@ public class Funcion {
 	}
 	
 	//resta
-	//multiplicación
+	//multiplicaciï¿½n
 	/**
 	 * @param multiplicando
-	 * @return la función multiplicada por multiplicando
+	 * @return la funciï¿½n multiplicada por multiplicando
 	 */
 	public Funcion multiplica(BigDecimal multiplicando){
 		ArrayList<Termino> alt = new ArrayList<Termino>();
@@ -269,9 +269,9 @@ public class Funcion {
 		return tempF;
 	}
 
-	//división?
+	//divisiï¿½n?
 	/**
-	 * @return una copia de esta función
+	 * @return una copia de esta funciï¿½n
 	 */
 	public Funcion copia(){
 		ArrayList<Termino> alT = new ArrayList<Termino>();
@@ -282,7 +282,7 @@ public class Funcion {
 	}
 	
 	/**
-	 * Crea una función que representa (x + a)^n
+	 * Crea una funciï¿½n que representa (x + a)^n
 	 * @param n el grado
 	 * @param a la constante a 
 	 * @param sign el signo del binomio
@@ -314,7 +314,7 @@ public class Funcion {
 	
 	/**
 	 * @param ai el array con las constantes
-	 * @return La función (x + a0)(x + a1)...(x + ai)...(x + an) desarrollada. 
+	 * @return La funciï¿½n (x + a0)(x + a1)...(x + ai)...(x + an) desarrollada. 
 	 * @throws CustomException
 	 */
 	public static Funcion polinomioProductorio(BigDecimal ai[]) throws CustomException {
@@ -335,26 +335,26 @@ public class Funcion {
 	}
 	
 	/**
-	 * Crea una función a partir de un conjunto de puntos
+	 * Crea una funciï¿½n a partir de un conjunto de puntos
 	 * @param x puntos
-	 * @param fx valor de la función en los puntos x
-	 * @return una función polinómica aproximada a los puntos dados
+	 * @param fx valor de la funciï¿½n en los puntos x
+	 * @return una funciï¿½n polinï¿½mica aproximada a los puntos dados
 	 * @throws Exception 
 	 */
 	public static Funcion aproximacionPolinomialLangrange(BigDecimal x[],
 			BigDecimal fx[]) throws Exception {
 		int numPuntos = x.length;
-		if(numPuntos!=fx.length){	//Se verifica que los puntos estén completos
+		if(numPuntos!=fx.length){	//Se verifica que los puntos estï¿½n completos
 			throw CustomException.arrayIncompleto();
 		}else{
 			//Este vector corresponde a los polinomios formados 
-			//por cada término de la sumatoria.
+			//por cada tï¿½rmino de la sumatoria.
 			Funcion polsLagr[] = new Funcion[numPuntos];
 			for (int i = 0; i < numPuntos; i++) {
 				//divisor = Productoria(Xi - Xj)
 				BigDecimal divisor = Big.productoDiferencias(i, x);
-				//F(Xi) y cada divisor no dependen de X, por lo tanto su división
-				//es una constante que luego será multiplicada a cada polinomio
+				//F(Xi) y cada divisor no dependen de X, por lo tanto su divisiï¿½n
+				//es una constante que luego serï¿½ multiplicada a cada polinomio
 				BigDecimal fxi_PIdxi = fx[i].divide(divisor, 10, RoundingMode.HALF_UP);
 				//(x-x0)(x-x1)...(x-xn)
 				BigDecimal negativeXs[] = new BigDecimal[numPuntos];
@@ -375,13 +375,13 @@ public class Funcion {
 	/**
 	 * @param x
 	 * @param fx
-	 * @return una función polinómica aproximada a los puntos dados
+	 * @return una funciï¿½n polinï¿½mica aproximada a los puntos dados
 	 * @throws Exception
 	 */
 	public static Funcion aproximacionPolinomialNewton(BigDecimal x[],
 			BigDecimal fx[]) throws Exception {
 		int numPuntos = x.length;
-		if(numPuntos!=fx.length){	//Se verifica que los puntos estén completos
+		if(numPuntos!=fx.length){	//Se verifica que los puntos estï¿½n completos
 			throw CustomException.arrayIncompleto();
 		}else{
 			//Se calculan todas las diferencias divididas
@@ -400,19 +400,19 @@ public class Funcion {
 	}
 	
 	/**
-	 * Crea una función a partir de un conjunto de puntos
+	 * Crea una funciï¿½n a partir de un conjunto de puntos
 	 * @param x puntos
-	 * @param fx valor de la función en los puntos x
-	 * @return una función polinómica aproximada a los puntos dados
+	 * @param fx valor de la funciï¿½n en los puntos x
+	 * @return una funciï¿½n polinï¿½mica aproximada a los puntos dados
 	 * @throws Exception 
 	 */
 	public static Funcion aproximacionPolinomialSimple(BigDecimal x[],
 			BigDecimal fx[]) throws Exception {
 		int numPuntos = x.length;
-		if(numPuntos!=fx.length){	//Se verifica que los puntos estén completos
+		if(numPuntos!=fx.length){	//Se verifica que los puntos estï¿½n completos
 			throw CustomException.arrayIncompleto();
 		}else{
-			//Inicialización del SEL
+			//Inicializaciï¿½n del SEL
 			BigDecimal matriz[][] = new BigDecimal[numPuntos][numPuntos+1];
 			for (int i = 0; i < numPuntos; i++) {
 				for (int j = 0; j < numPuntos; j++) {
@@ -422,10 +422,10 @@ public class Funcion {
 			}
 			SistemaEcuacionesLineales sel = new SistemaEcuacionesLineales(matriz);
 			
-			//Se resuelve el sistema por el método de Cramer
+			//Se resuelve el sistema por el mï¿½todo de Cramer
 			Matriz coef = sel.metodoCramer();
 			
-			//Por último se pasa la matriz 1xn a un vector n
+			//Por ï¿½ltimo se pasa la matriz 1xn a un vector n
 			BigDecimal coefs[] = new BigDecimal[numPuntos];
 			for (int i = 0; i < coefs.length; i++) {
 				coefs[i] = coef.getMatriz()[i][0].stripTrailingZeros();
@@ -439,8 +439,8 @@ public class Funcion {
 	
 	/**
 	 * @param ab
-	 * @return un intervalo cuyo mínimo corresponde al valor de la función en ab.min
-	 * y cuyo máximo corresponde al valor de la función en ab.máx
+	 * @return un intervalo cuyo mï¿½nimo corresponde al valor de la funciï¿½n en ab.min
+	 * y cuyo mï¿½ximo corresponde al valor de la funciï¿½n en ab.mï¿½x
 	 */
 	public Interval valoresExtremos(Interval ab){
 		BigDecimal fa = valorImagen(ab.min());
@@ -450,7 +450,7 @@ public class Funcion {
 	}
 	
 	/**
-	 * @return la derivada de esta función
+	 * @return la derivada de esta funciï¿½n
 	 */
 	public Funcion derivada(){
 		ArrayList<Termino> alT = new ArrayList<Termino>();
@@ -462,7 +462,7 @@ public class Funcion {
 	}
 
 	/**
-	 * @return la integral indefinida de esta función
+	 * @return la integral indefinida de esta funciï¿½n
 	 */
 	public Funcion integralIndef(){
 		ArrayList<Termino> alT = new ArrayList<Termino>();
@@ -474,11 +474,11 @@ public class Funcion {
 	}
 	
 	/**
-	 * Calcula el valor de la integral de la función desde a hasta b por el
-	 * método trapezoidal simple.
-	 * @param ab intervalo de integración
+	 * Calcula el valor de la integral de la funciï¿½n desde a hasta b por el
+	 * mï¿½todo trapezoidal simple.
+	 * @param ab intervalo de integraciï¿½n
 	 * @param scale 
-	 * @return el valor de la integral de la función desde a hasta b.
+	 * @return el valor de la integral de la funciï¿½n desde a hasta b.
 	 */
 	public BigDecimal integracionTrapecioSimple(Interval ab){
 		Interval fafb = valoresExtremos(ab);//Se obtiene fa y fb
@@ -486,19 +486,19 @@ public class Funcion {
 	}
 	
 	/**
-	 * Calcula el valor de la integral de la función desde a hasta b por el
-	 * método trapezoidal compuesto.
-	 * @param ab intervalo de integración
+	 * Calcula el valor de la integral de la funciï¿½n desde a hasta b por el
+	 * mï¿½todo trapezoidal compuesto.
+	 * @param ab intervalo de integraciï¿½n
 	 * @param n subintervals
 	 * @param scale 
-	 * @return el valor de la integral de la función desde a hasta b.
+	 * @return el valor de la integral de la funciï¿½n desde a hasta b.
 	 */
 	public BigDecimal integracionTrapecioCompuesto(Interval ab, int n){
 		Interval fab = valoresExtremos(ab);//Se obtiene fa y fb
 		//Se halla la distancia entre puntos
 		BigDecimal h = ab.length().divide(BigDecimal.valueOf(n), 15, RoundingMode.HALF_UP);
 		h = h.stripTrailingZeros();
-		//Luego se hallan los puntos entre a y b y los valores de la función en estos
+		//Luego se hallan los puntos entre a y b y los valores de la funciï¿½n en estos
 		BigDecimal x[] = new BigDecimal[n-1];
 		BigDecimal fx[] = new BigDecimal[n-1];
 		for (int i = 0; i < x.length; i++) {
@@ -507,7 +507,7 @@ public class Funcion {
 		}
 		//Se suman cada uno
 		BigDecimal sumatfx = Big.suma(fx);
-		//Luego se multiplica la suma por 2 y se añaden fa y fb 
+		//Luego se multiplica la suma por 2 y se aï¿½aden fa y fb 
 		sumatfx = sumatfx.multiply(BigDecimal.valueOf(2)).add(fab.min()).add(fab.max());
 		//El resultado se multiplica por h/2
 		BigDecimal res = h.divide(BigDecimal.valueOf(2)).multiply(sumatfx);
@@ -516,11 +516,11 @@ public class Funcion {
 	}
 	
 	/**
-	 * Calcula el valor de la integral de la función desde a hasta b por el
-	 * método Simpson simple 1/3.
-	 * @param ab intervalo de integración
+	 * Calcula el valor de la integral de la funciï¿½n desde a hasta b por el
+	 * mï¿½todo Simpson simple 1/3.
+	 * @param ab intervalo de integraciï¿½n
 	 * @param scale 
-	 * @return el valor de la integral de la función desde a hasta b.
+	 * @return el valor de la integral de la funciï¿½n desde a hasta b.
 	 */
 	public BigDecimal integracionSimpsonSimple1_3(Interval ab){
 		Interval fab = valoresExtremos(ab);//Se obtiene fa y fb
@@ -539,25 +539,25 @@ public class Funcion {
 	}
 	
 	/**
-	 * Calcula el valor de la integral de la función desde a hasta b por el
-	 * método Simpson simple 3/8.
-	 * @param ab intervalo de integración
+	 * Calcula el valor de la integral de la funciï¿½n desde a hasta b por el
+	 * mï¿½todo Simpson simple 3/8.
+	 * @param ab intervalo de integraciï¿½n
 	 * @param scale 
-	 * @return el valor de la integral de la función desde a hasta b.
+	 * @return el valor de la integral de la funciï¿½n desde a hasta b.
 	 */
 	public BigDecimal integracionSimpsonSimple3_8(Interval ab){
 		Interval fab = valoresExtremos(ab);//Se obtiene fa y fb
 		//Se halla la distancia entre puntos
 		BigDecimal h = ab.length().divide(BigDecimal.valueOf(3), 15, RoundingMode.HALF_UP);
 		h = h.stripTrailingZeros();
-		//Luego se hallan los puntos entre a y b y los valores de la función en estos
+		//Luego se hallan los puntos entre a y b y los valores de la funciï¿½n en estos
 		BigDecimal x1 = ab.min().add(h);
 		BigDecimal x2 = ab.max().subtract(h);
 		BigDecimal fx1 = valorImagen(x1);
 		BigDecimal fx2 = valorImagen(x2);
 		//Se suman cada uno
 		BigDecimal sumatfx = fx1.add(fx2);
-		//Luego se multiplica la suma por 2 y se añaden fa y fb 
+		//Luego se multiplica la suma por 2 y se aï¿½aden fa y fb 
 		sumatfx = sumatfx.multiply(BigDecimal.valueOf(3)).add(fab.min()).add(fab.max());
 		//El resultado se multiplica por h/2
 		BigDecimal res = h.multiply(BigDecimal.valueOf(0.375)).multiply(sumatfx);
@@ -565,12 +565,12 @@ public class Funcion {
 	}
 	
 	/**
-	 * Calcula el valor de la integral de la función desde a hasta b por el
-	 * método Simpson compuesto.
-	 * @param ab intervalo de integración
+	 * Calcula el valor de la integral de la funciï¿½n desde a hasta b por el
+	 * mï¿½todo Simpson compuesto.
+	 * @param ab intervalo de integraciï¿½n
 	 * @param n subintervals
 	 * @param scale 
-	 * @return el valor de la integral de la función desde a hasta b.
+	 * @return el valor de la integral de la funciï¿½n desde a hasta b.
 	 */
 	public BigDecimal integracionSimpsonCompuesto(Interval ab, int n){
 		n = (n%2==0)? n : n+1; //Se fuerza n como par
@@ -578,7 +578,7 @@ public class Funcion {
 		//Se halla la distancia entre puntos
 		BigDecimal h = ab.length().divide(BigDecimal.valueOf(n), 15, RoundingMode.HALF_UP);
 		h = h.stripTrailingZeros();
-		//Luego se hallan los puntos entre a y b y los valores de la función en estos
+		//Luego se hallan los puntos entre a y b y los valores de la funciï¿½n en estos
 		BigDecimal x[] = new BigDecimal[n-1];
 		BigDecimal fx[] = new BigDecimal[n-1];
 		for (int i = 0; i < x.length; i++) {
@@ -590,9 +590,9 @@ public class Funcion {
 		BigDecimal sumapar = Big.sumaPosImpares(fx);//Se suman los pares
 		//Se multiplica sumaimp por 4
 		BigDecimal sumatfx = sumaimp.multiply(BigDecimal.valueOf(4));
-		//Se multiplica sumapar por 2 y se añade al acumulado
+		//Se multiplica sumapar por 2 y se aï¿½ade al acumulado
 		sumatfx = sumatfx.add(sumapar.multiply(BigDecimal.valueOf(2)));
-		//Luego se añaden fa y fb 
+		//Luego se aï¿½aden fa y fb 
 		sumatfx = sumatfx.add(fab.min()).add(fab.max());
 		//El resultado se multiplica por h/2
 		BigDecimal res = h.divide(BigDecimal.valueOf(3), 15, RoundingMode.HALF_UP);
@@ -621,9 +621,9 @@ public class Funcion {
 	
 	/**
 	 * @param tol tolerancia del error
-	 * @param maxIt máximo número de iteraciones
+	 * @param maxIt mï¿½ximo nï¿½mero de iteraciones
 	 * @param x0 punto inicial
-	 * @return la raíz más cercana a x0 y el error
+	 * @return la raï¿½z mï¿½s cercana a x0 y el error
 	 * @throws Exception 
 	 */
 	public BigDecimal[] metodoPuntoFijo(BigDecimal tol, int maxIt, BigDecimal x0)
@@ -634,7 +634,7 @@ public class Funcion {
 		Termino t0 = getTerminos().get(0);
 		BigDecimal err = null;
 		boolean fin = false;	//Switch
-		int k = 0;				//Índice de la iteración
+		int k = 0;				//ï¿½ndice de la iteraciï¿½n
 		BigDecimal xr = BigDecimal.ZERO;
 		while((!fin)&&(k<=maxIt)){
 			System.out.println("x0 = "+x0);
@@ -647,8 +647,8 @@ public class Funcion {
 			if (e.compareTo(tol)<1) {	//Error igual o por debajo de la tolerancia?
 				fin = true;
 			}
-			k++;	//Siguiente iteración
-			//Asignación de variables para siguiente iteración
+			k++;	//Siguiente iteraciï¿½n
+			//Asignaciï¿½n de variables para siguiente iteraciï¿½n
 			BigDecimal temp = x0;
 			x0 = xr;
 			xr = temp;
@@ -659,7 +659,7 @@ public class Funcion {
 			O.pln("x = "+x0);
 			return new BigDecimal[]{x0, err};
 		} else {
-			throw new Exception("No converge dentro del valor máximo de iteración");
+			throw new Exception("No converge dentro del valor mï¿½ximo de iteraciï¿½n");
 		}
 		
 	}
@@ -679,9 +679,9 @@ public class Funcion {
 	
 	/**
 	 * @param tol tolerancia del error
-	 * @param maxIt máximo número de iteraciones
+	 * @param maxIt mï¿½ximo nï¿½mero de iteraciones
 	 * @param ab intervalo a evaluar
-	 * @return la raíz dentro del intervalo [a,b] y el error
+	 * @return la raï¿½z dentro del intervalo [a,b] y el error
 	 * @throws Exception
 	 */
 	public BigDecimal[] metodoBiseccion(BigDecimal tol, int maxIt, Interval ab)
@@ -689,7 +689,7 @@ public class Funcion {
 		if (rootExistentialityCriterion(ab)) {
 			BigDecimal err = null;
 			boolean fin = false;	//Switch
-			int k = 0;				//Índice de la iteración
+			int k = 0;				//ï¿½ndice de la iteraciï¿½n
 			BigDecimal xa = BigDecimal.ZERO;
 			while((!fin)&&(k<=maxIt)){
 				BigDecimal xm = ab.centre(tol.scale()+3);	//valor medio
@@ -717,26 +717,26 @@ public class Funcion {
 				O.pln("x = "+xa);
 				return new BigDecimal[]{xa, err};
 			} else {
-				throw new Exception("No converge dentro del valor máximo de iteración");
+				throw new Exception("No converge dentro del valor mï¿½ximo de iteraciï¿½n");
 			}
 			
 		} else {
-			throw new Exception("No existe la raíz dentro del intervalo.");
+			throw new Exception("No existe la raï¿½z dentro del intervalo.");
 		}
 	}
 	
 	/**
 	 * @param tol tolerancia del error
-	 * @param maxIt máximo número de iteraciones
+	 * @param maxIt mï¿½ximo nï¿½mero de iteraciones
 	 * @param x0 punto inicial
-	 * @return la raíz más cercana a x0 y el error
+	 * @return la raï¿½z mï¿½s cercana a x0 y el error
 	 * @throws Exception
 	 */
 	public BigDecimal[] metodoNewtonRaphson(BigDecimal tol, int maxIt,
 			BigDecimal x0) throws Exception {
 		BigDecimal err = null;
 		boolean fin = false;	//Switch
-		int k = 0;				//Índice de la iteración
+		int k = 0;				//ï¿½ndice de la iteraciï¿½n
 		while((!fin)&&(k<=maxIt)){
 			BigDecimal fx = valorImagen(x0);
 			BigDecimal fpx = derivada().valorImagen(x0);
@@ -757,23 +757,23 @@ public class Funcion {
 			O.pln("x = "+x0);
 			return new BigDecimal[]{x0, err};
 		} else {
-			throw new Exception("No converge dentro del valor máximo de iteración");
+			throw new Exception("No converge dentro del valor mï¿½ximo de iteraciï¿½n");
 		}
 	}
 	
 	/**
 	 * @param tol tolerancia del error
-	 * @param maxIt máximo número de iteraciones
+	 * @param maxIt mï¿½ximo nï¿½mero de iteraciones
 	 * @param x0 punto inicial
 	 * @param x1 punto secundario
-	 * @return la raíz más cercana a x0 y x1 y el error
+	 * @return la raï¿½z mï¿½s cercana a x0 y x1 y el error
 	 * @throws Exception
 	 */
 	public BigDecimal[] metodoSecante(BigDecimal tol, int maxIt, BigDecimal x0,
 			BigDecimal x1) throws Exception {
 		BigDecimal err = null;
 		boolean fin = false;	//Switch
-		int k = 0;				//Índice de la iteración
+		int k = 0;				//ï¿½ndice de la iteraciï¿½n
 		while((!fin)&&(k<=maxIt)){
 			BigDecimal fx0 = valorImagen(x0);
 			BigDecimal fx1 = valorImagen(x1);
@@ -796,15 +796,15 @@ public class Funcion {
 			O.pln("x = "+x0);
 			return new BigDecimal[]{x0, err};
 		} else {
-			throw new Exception("No converge dentro del valor máximo de iteración");
+			throw new Exception("No converge dentro del valor mï¿½ximo de iteraciï¿½n");
 		}
 	}
 	
 	/**
 	 * @param tol tolerancia del error
-	 * @param maxIt máximo número de iteraciones
+	 * @param maxIt mï¿½ximo nï¿½mero de iteraciones
 	 * @param ab intervalo a evaluar
-	 * @return la raíz dentro del intervalo [a,b] y el error
+	 * @return la raï¿½z dentro del intervalo [a,b] y el error
 	 * @throws Exception
 	 */
 	public BigDecimal[] metodoRegulaFalsi(BigDecimal tol, int maxIt, Interval ab)
@@ -812,7 +812,7 @@ public class Funcion {
 		if (rootExistentialityCriterion(ab)) {
 			BigDecimal err = null;
 			boolean fin = false;	//Switch
-			int k = 0;				//Índice de la iteración
+			int k = 0;				//ï¿½ndice de la iteraciï¿½n
 			BigDecimal xa = BigDecimal.ZERO;
 			while((!fin)&&(k<=maxIt)){
 				BigDecimal fa = valorImagen(ab.min());
@@ -840,11 +840,11 @@ public class Funcion {
 				O.pln("x = "+xa);
 				return new BigDecimal[]{xa, err};
 			} else {
-				throw new Exception("No converge dentro del valor máximo de iteración");
+				throw new Exception("No converge dentro del valor mï¿½ximo de iteraciï¿½n");
 			}
 			
 		} else {
-			throw new Exception("No existe la raíz dentro del intervalo.");
+			throw new Exception("No existe la raï¿½z dentro del intervalo.");
 		}
 		
 	}

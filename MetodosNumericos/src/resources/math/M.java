@@ -8,8 +8,8 @@ import resources.CustomException;
 import resources.O;
 import resources.math.Constantes.FuncionTrig;
 import resources.math.Constantes.Tipo;
-import funciones.Funcion;
-import funciones.Termino;
+import resources.math.funciones.Funcion;
+import resources.math.funciones.Termino;
 
 /**
  * @author <a href="https://twitter.com/Jedabero" target="_blank">Jedabero</a>
@@ -18,8 +18,8 @@ import funciones.Termino;
 public final class M {
 	
 	/**
-	 * Crea una función al azar con parámetros aleatorios
-	 * @return	la función aleatoria.
+	 * Crea una funciï¿½n al azar con parï¿½metros aleatorios
+	 * @return	la funciï¿½n aleatoria.
 	 */
 	public static Funcion funcionRandom(){
 		Random rand = new Random();
@@ -70,10 +70,10 @@ public final class M {
 	
 	/**
 	 * Calcula
-	 * @param	ft función trigonométrica
-	 * @param	bd ángulo
-	 * @param	rad está en radianes?
-	 * @param	deg está en grados?
+	 * @param	ft funciï¿½n trigonomï¿½trica
+	 * @param	bd ï¿½ngulo
+	 * @param	rad estï¿½ en radianes?
+	 * @param	deg estï¿½ en grados?
 	 * @return	el resultado
 	 */
 	public static BigDecimal calculaTrig(FuncionTrig ft, BigDecimal bd,

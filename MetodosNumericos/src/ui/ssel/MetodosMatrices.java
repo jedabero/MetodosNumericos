@@ -8,7 +8,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import resources.O;
-import vectores.SistemaEcuacionesLineales;
+import resources.math.vectores.SistemaEcuacionesLineales;
 
 
 /**
@@ -294,7 +294,7 @@ public class MetodosMatrices extends javax.swing.JFrame {
         numInc = Integer.parseInt(((javax.swing.JSpinner) evt.getSource()).getValue().toString());
         O.pln("Numero de incognitas:"+numInc);
         if(numInc>numEc){
-            JOptionPane.showMessageDialog(this, "No hay solución si hay más incognitas que ecuaciones.");
+            JOptionPane.showMessageDialog(this, "No hay soluciï¿½n si hay mï¿½s incognitas que ecuaciones.");
             spnrNumIn.setValue(spnrNumEc.getValue());
         }
         resetTable(numInc+1, numEc);

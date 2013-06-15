@@ -22,7 +22,7 @@ import javax.swing.event.ChangeListener;
 import javax.swing.table.DefaultTableModel;
 
 import resources.Add;
-import funciones.Funcion;
+import resources.math.funciones.Funcion;
 
 /**
  * @author Jedabero
@@ -58,7 +58,7 @@ public class AproxFunUI extends JPanel implements ActionListener, ChangeListener
 
 	private void initComponents() {
 		//Table settings
-		JLabel lblNumPuntos = new JLabel("Número de puntos:");
+		JLabel lblNumPuntos = new JLabel("Nï¿½mero de puntos:");
 		
 		SpinnerNumberModel snmNumPun = new SpinnerNumberModel(2, 2, 25, 1);
 		spnrNumPuntos = new JSpinner(snmNumPun);
@@ -72,7 +72,7 @@ public class AproxFunUI extends JPanel implements ActionListener, ChangeListener
 		scpTable.setBorder(javax.swing.BorderFactory.createTitledBorder("Tabla Tabulada"));
 		
 		pnlMetodos = new JPanel(new GridBagLayout());
-		pnlMetodos.setBorder(javax.swing.BorderFactory.createTitledBorder("Métodos de aproximación"));
+		pnlMetodos.setBorder(javax.swing.BorderFactory.createTitledBorder("Mï¿½todos de aproximaciï¿½n"));
 		
 		btnObtenPol = new JButton[strMetodos.length];
 		for(int i = 0; i<btnObtenPol.length; i++){
@@ -86,13 +86,13 @@ public class AproxFunUI extends JPanel implements ActionListener, ChangeListener
 		Add.componente(this, lblNumPuntos, 0, 0, 1, 1, 1.0, 1.0,
 				GridBagConstraints.NONE, "");
 		Add.componente(this, spnrNumPuntos, 1, 0, 1, 1, 1.0, 1.0,
-				GridBagConstraints.HORIZONTAL, "Número de puntos");
+				GridBagConstraints.HORIZONTAL, "Nï¿½mero de puntos");
 		
 		//1 - Tabla
 		Add.componente(this, scpTable, 0, 1, 3, 4, 1.0, 1.0,
 				GridBagConstraints.BOTH, "");
 		
-		//5 - 0 - Botón obtenPol
+		//5 - 0 - Botï¿½n obtenPol
 		for (int i = 0; i < btnObtenPol.length; i++) {
 			Add.componente(pnlMetodos, btnObtenPol[i], i, 0, 1, 1, 1.0, 1.0,
 					GridBagConstraints.BOTH, "");
@@ -102,7 +102,7 @@ public class AproxFunUI extends JPanel implements ActionListener, ChangeListener
 		Add.componente(pnlMetodos, lblPolinomio, 0, 1, 3, 3, 1.0, 1.0,
 				GridBagConstraints.BOTH, "");
 		
-		//5 - Panel de métodos
+		//5 - Panel de mï¿½todos
 		Add.componente(this, pnlMetodos, 0, 5, 3, 4, 1.0, 1.0,
 				GridBagConstraints.BOTH, "");
 		

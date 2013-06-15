@@ -1,4 +1,4 @@
-package vectores;
+package resources.math.vectores;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -26,8 +26,8 @@ public class Matriz {
         this.matriz = matriz;
     }
     
-    private int n;  //Número de filas
-    private int m;  //Número de columnas
+    private int n;  //Numero de filas
+    private int m;  //Numero de columnas
     
     public int getN() {
         return n;
@@ -277,7 +277,7 @@ public class Matriz {
             mT = a.getM()+b.getM();
             AB = new Matriz(nT, mT);
         }else{
-            throw new Exception("Diferentes tama�os de filas");
+            throw new Exception("Diferentes tamanos de filas");
         }
         BigDecimal temp[][] = AB.getMatriz();
         for (int i = 0; i < nT; i++) {
@@ -419,7 +419,7 @@ public class Matriz {
             O.pln(mtrz.imprimirMatriz("Matriz resultante suma"));
             return mtrz;
         }else{
-            throw new Exception("Tama�o(s) diferente(s): n:"+n+"!="+sumando.n
+            throw new Exception("Tamano(s) diferente(s): n:"+n+"!="+sumando.n
                     +" & m:"+m+"!="+sumando.m);
         }
     }

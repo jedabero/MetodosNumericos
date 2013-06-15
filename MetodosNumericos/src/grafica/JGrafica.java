@@ -23,10 +23,10 @@ import javax.swing.JPanel;
 import resources.O;
 import resources.math.Big;
 import resources.math.Interval;
-import funciones.Funcion;
+import resources.math.funciones.Funcion;
 
 /**
- * Cualquier instancia de esta clase dibujará todas las funciones que le sean
+ * Cualquier instancia de esta clase dibujarï¿½ todas las funciones que le sean
  * pasadas.
  * @author Jedabero
  * @since 0.4
@@ -65,19 +65,19 @@ public class JGrafica extends JPanel {
 	private boolean mostrarAreaIntegral = false;
 	
 	/**
-	 * @return regresa si las divisiones principales están dibujadas
+	 * @return regresa si las divisiones principales estï¿½n dibujadas
 	 */
 	public boolean isDivPrin(){return divPrin;}
 	/**
-	 * @return regresa si las divisiones secundarias están dibujadas
+	 * @return regresa si las divisiones secundarias estï¿½n dibujadas
 	 */
 	public boolean isDivSec(){return divSec;}
 	/**
-	 * @return regresa si está dibujado en un rango especifico
+	 * @return regresa si estï¿½ dibujado en un rango especifico
 	 */
 	public boolean isYranged(){return rangeY;}
 	/**
-	 * @return regresa si las etiquetas de eje están dibujadas
+	 * @return regresa si las etiquetas de eje estï¿½n dibujadas
 	 */
 	public boolean isEtiquetas(){return etiquetas;}
 	
@@ -214,7 +214,7 @@ public class JGrafica extends JPanel {
 	
 	/**
 	 * 
-	 * @param g el contexto gráfico del componente en el que se dibuja
+	 * @param g el contexto grï¿½fico del componente en el que se dibuja
 	 */
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
@@ -419,7 +419,7 @@ public class JGrafica extends JPanel {
 	}
 	
 	/**
-	 * Actualiza las dimensiones de la gráfica
+	 * Actualiza las dimensiones de la grï¿½fica
 	 */
 	public void updateCoordsDim(){
 		int w = this.getWidth();
@@ -450,7 +450,7 @@ public class JGrafica extends JPanel {
 	}
 	
 	/**
-	 * Método que determina si las divisiones principales se dibujan o no.
+	 * Mï¿½todo que determina si las divisiones principales se dibujan o no.
 	 * @param pg
 	 */
 	public void dibujaDivPrin(boolean pg){
@@ -459,7 +459,7 @@ public class JGrafica extends JPanel {
 	}
 	
 	/**
-	 * Método que determina si las divisiones secundarias se dibujan o no.
+	 * Mï¿½todo que determina si las divisiones secundarias se dibujan o no.
 	 * @param sg
 	 */
 	public void dibujaDivSec(boolean sg){
@@ -468,7 +468,7 @@ public class JGrafica extends JPanel {
 	}
 	
 	/**
-	 * Método que determina si las etiquetas de eje se dibujan o no.
+	 * Mï¿½todo que determina si las etiquetas de eje se dibujan o no.
 	 * @param et
 	 */
 	public void dibujaEtiquetas(boolean et){
@@ -477,7 +477,7 @@ public class JGrafica extends JPanel {
 	}
 	
 	/**
-	 * Método que actualiza las funciones o los colores respectivos.
+	 * Mï¿½todo que actualiza las funciones o los colores respectivos.
 	 * @param alf 
 	 * @param alc 
 	 */
@@ -487,9 +487,9 @@ public class JGrafica extends JPanel {
 	}
 	
 	/**
-	 * Crea una Gráfica
+	 * Crea una Grï¿½fica
 	 * @param funcionList lista de funciones
-	 * @param dim Dimensión de la gráfica
+	 * @param dim Dimensiï¿½n de la grï¿½fica
 	 * @param colorList lista de colores
 	 * @param xInterval Intervalo de los valores de x
 	 * @param yInterval Intervalo de los valores de y iniciales

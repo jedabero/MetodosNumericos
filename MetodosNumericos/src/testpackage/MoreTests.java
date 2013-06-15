@@ -4,7 +4,7 @@ package testpackage;
 import java.math.BigDecimal;
 
 import resources.O;
-import vectores.Matriz;
+import resources.math.vectores.Matriz;
 
 /**
  *

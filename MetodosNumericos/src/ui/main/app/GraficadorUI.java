@@ -45,7 +45,7 @@ import resources.math.M;
 import ui.EditaDimensionesDialog;
 import ui.EditaFuncionDialog;
 import ui.EditaIntervaloDialog;
-import funciones.Funcion;
+import resources.math.funciones.Funcion;
 import grafica.JGrafica;
 
 /**
@@ -58,7 +58,7 @@ public class GraficadorUI{
 	
 	private static final int HEIGHT=700;
 	private static final int WIDTH=1000;
-	private static final String ver= "InDev.0.4";//VER Versi�n
+	private static final String ver= "InDev.0.4";//VER Version
 	
 	private JFrame mainWindow;
 	private ItemListener il;
@@ -84,7 +84,7 @@ public class GraficadorUI{
 	LangResource l;
 	
 	/**
-	 * @param rs El resource bundle que proveer� de lenguaje al programa
+	 * @param rs El resource bundle que provee de lenguaje al programa
 	 * 
 	 */
 	public GraficadorUI(ResourceBundle rs){
@@ -161,7 +161,7 @@ public class GraficadorUI{
 				cambiaColorAL, 'C');
 		barraMenu.add(menuEditar);
 		
-		//Gr�fica
+		//Grafica
 		JMenu menuGrafica = new JMenu(l.s("mGraf"));
 		menuGrafica.setMnemonic('G');
 		Add.menuItem(menuGrafica, l.s("mGrafInt"), l.s("mGrafIntTTT"),

@@ -1,6 +1,6 @@
 package ui;
 
-import funciones.Funcion;
+import resources.math.funciones.Funcion;
 import grafica.JGrafica;
 
 import java.awt.Color;
@@ -36,8 +36,8 @@ import resources.math.Constantes.FuncionTrig;
 import resources.math.Constantes.Tipo;
 
 /**
- * Esta clase crea una ventana de dialogo en la que se mostrarán los
- * parámetros de la función a crear o editar.
+ * Esta clase crea una ventana de dialogo en la que se mostrarï¿½n los
+ * parï¿½metros de la funciï¿½n a crear o editar.
  * @author <a href="https://twitter.com/Jedabero" target="_blank">Jedabero</a>
  *
  */
@@ -103,14 +103,14 @@ public final class EditaFuncionDialog extends JDialog{
 	/**
 	 * @param ventana	Parent
 	 * @param jpJCB		toolbar
-	 * @param grafica			gráfica
-	 * @param posicion	posición de la función
-	 * @param tempF		Función actual
+	 * @param grafica			grï¿½fica
+	 * @param posicion	posiciï¿½n de la funciï¿½n
+	 * @param tempF		Funciï¿½n actual
 	 * @param listaFunciones		lista de funciones
 	 * @param alJRB		lista de check boxes
 	 * @param alColor	lista de colores
 	 * @param iL		item listener
-	 * @param ACCION	acción correspondiente
+	 * @param ACCION	acciï¿½n correspondiente
 	 * @param rs 		lenguaje
 	 */
 	public EditaFuncionDialog(JFrame ventana,

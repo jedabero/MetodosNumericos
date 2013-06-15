@@ -20,7 +20,7 @@ import javax.swing.event.ChangeListener;
 import resources.Add;
 import resources.CustomException;
 import resources.O;
-import funciones.Funcion;
+import resources.math.funciones.Funcion;
 
 /**
  * @author Jedabero
@@ -53,7 +53,7 @@ public class EditaPolinomioPanel extends JPanel implements ChangeListener {
 		initComponents();
 		addComponents();
 		
-		setBorder(javax.swing.BorderFactory.createTitledBorder("Edición del "
+		setBorder(javax.swing.BorderFactory.createTitledBorder("Ediciï¿½n del "
 				+"polinomio"));
 	}
 	
@@ -127,7 +127,7 @@ public class EditaPolinomioPanel extends JPanel implements ChangeListener {
 	}
 	
 	/**
-	 * @return la función
+	 * @return la funciï¿½n
 	 */
 	public Funcion getPol() {
 		coefs = new BigDecimal[grado+1];
@@ -140,7 +140,7 @@ public class EditaPolinomioPanel extends JPanel implements ChangeListener {
 				tempBD = new BigDecimal(text);
 			} catch (Exception e) {
 				JOptionPane.showMessageDialog(pnlCoefs,
-						"<html>Coeficiente A<sub>"+i+"</sub>: "+(text.isEmpty()?"vacío":text)+"</html>",
+						"<html>Coeficiente A<sub>"+i+"</sub>: "+(text.isEmpty()?"vacï¿½o":text)+"</html>",
 						"Error", JOptionPane.WARNING_MESSAGE);
 			}
 			coefs[i] = tempBD;

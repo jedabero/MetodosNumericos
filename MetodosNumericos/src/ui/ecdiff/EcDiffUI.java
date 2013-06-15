@@ -22,8 +22,8 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import edos.EcuacionDiferencialOrden1;
-import funciones.Funcion;
+import resources.math.edos.EcuacionDiferencialOrden1;
+import resources.math.funciones.Funcion;
 
 import resources.Add;
 import resources.math.Interval;
@@ -78,15 +78,15 @@ public class EcDiffUI extends JPanel implements ChangeListener, ActionListener,
 
 	private void initComponents() {
 		pnlEdicion = new JPanel(new GridBagLayout());
-		eppQx = new EditaPolinomioPanel("Edición de Q(x)");
-		eppPx = new EditaPolinomioPanel("Edición de P(x)");
+		eppQx = new EditaPolinomioPanel("Ediciï¿½n de Q(x)");
+		eppPx = new EditaPolinomioPanel("Ediciï¿½n de P(x)");
 		
-		btnCreaEc = new JButton("Crea la ecuación");
+		btnCreaEc = new JButton("Crea la ecuaciï¿½n");
 		btnCreaEc.addActionListener(this);
 		lblEc = new JLabel();
 		
 		pnlMetodos = new JPanel(new GridBagLayout());
-		pnlMetodos.setBorder(javax.swing.BorderFactory.createTitledBorder("Métodos"));
+		pnlMetodos.setBorder(javax.swing.BorderFactory.createTitledBorder("Mï¿½todos"));
 		
 		pnlParam = new JPanel(new GridBagLayout());
 		txtX0 = new JTextField();
@@ -103,9 +103,9 @@ public class EcDiffUI extends JPanel implements ChangeListener, ActionListener,
 	
 	private void addComponents() {
 		
-		//0 - 0 - Etiqueta de ecuación general de las edos
+		//0 - 0 - Etiqueta de ecuaciï¿½n general de las edos
 		Add.componente(pnlEdicion, new JLabel("<html><center>" +
-				"Resolución de ecuaciones ordinarias de primer orden" +
+				"Resoluciï¿½n de ecuaciones ordinarias de primer orden" +
 				"<table border=0 cellspacing=0 cellpadding=0 width=\"40%\" align=\"center\" class=\"equation\"><tr>"
 				+"<td nowrap align=center><i>dy</i><hr noshade size=1><i>dx</i></td>"
 				+"<td nowrap> &nbsp; &nbsp;=&nbsp; &nbsp; <i>Q(x) + P(x)y</i></td>"
@@ -118,13 +118,13 @@ public class EcDiffUI extends JPanel implements ChangeListener, ActionListener,
 				GridBagConstraints.BOTH, "");
 		Add.componente(pnlEdicion, eppPx, 2, 1, 2, 1, 1.0, 1.0,
 				GridBagConstraints.BOTH, "");
-		//0 - Panel Edición
+		//0 - Panel Ediciï¿½n
 		Add.componente(this, pnlEdicion, 0, 0, 4, 1, 1.0, 1.0,
 				GridBagConstraints.BOTH, "");
 		
-		//1 - label y botón ecuación
+		//1 - label y botï¿½n ecuaciï¿½n
 		Add.componente(this, lblEc, 0, 1, 3, 1, 1.0, 1.0,
-				GridBagConstraints.BOTH, "Ecuación diferencial");
+				GridBagConstraints.BOTH, "Ecuaciï¿½n diferencial");
 		Add.componente(this, btnCreaEc, 3, 1, 1, 1, 1.0, 1.0,
 				GridBagConstraints.BOTH, "");
 		
@@ -132,7 +132,7 @@ public class EcDiffUI extends JPanel implements ChangeListener, ActionListener,
 		Add.componente(this, new JSeparator(JSeparator.HORIZONTAL),
 				0, 2, 4, 1, 1.0, 1.0, GridBagConstraints.HORIZONTAL, "");
 		
-		//3 - 0 - Botones métodos
+		//3 - 0 - Botones mï¿½todos
 		for(int i = 0; i<btnFind.length; i++){
 			btnFind[i] = new JButton(strMetodos[i]);
 			btnFind[i].addActionListener(this);
@@ -158,11 +158,11 @@ public class EcDiffUI extends JPanel implements ChangeListener, ActionListener,
 				2, 1, 1, 1, 1, 1, GridBagConstraints.NONE, "");
 		Add.componente(pnlParam, spnrN, 3, 1, 1, 1, 1.0, 1.0,
 				GridBagConstraints.BOTH, "");
-		//3 - 1 - Panel de parámetros
+		//3 - 1 - Panel de parï¿½metros
 		Add.componente(pnlMetodos, pnlParam, 0, 1, 4, 2, 1.0, 1.0, GridBagConstraints.BOTH, "");
 		//3 - 3 - etiqueta resultado
 		Add.componente(pnlMetodos, lblRes, 0, 3, 4, 1, 1.0, 1.0, GridBagConstraints.BOTH, "");
-		//3 - panel métodos
+		//3 - panel mï¿½todos
 		Add.componente(this, pnlMetodos, 0, 3, 4, 1, 1.0, 1.0, GridBagConstraints.BOTH, "");
 	}
 	
