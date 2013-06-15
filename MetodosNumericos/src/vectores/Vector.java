@@ -56,6 +56,7 @@ public class Vector {
             O.p("Ingrese V("+(i+1)+") ");
             tempV[i] = new BigDecimal(in.nextDouble());
         }
+        in.close();
         setVector(tempV);
     }
     

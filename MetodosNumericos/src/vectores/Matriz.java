@@ -26,8 +26,8 @@ public class Matriz {
         this.matriz = matriz;
     }
     
-    private int n;  //Número de filas
-    private int m;  //Número de columnas
+    private int n;  //NÃºmero de filas
+    private int m;  //NÃºmero de columnas
     
     public int getN() {
         return n;
@@ -49,6 +49,7 @@ public class Matriz {
             O.pln("Columnas: ");
             this.m = in.nextInt();
             matriz = new BigDecimal[n][m];
+            in.close();
             ingresarMatriz();
         } else {
             n = 3;
@@ -108,6 +109,7 @@ public class Matriz {
                 tempM[i][j] = new BigDecimal(in.nextDouble());
             }
         }
+        in.close();
         setMatriz(tempM);
     }
     
@@ -275,7 +277,7 @@ public class Matriz {
             mT = a.getM()+b.getM();
             AB = new Matriz(nT, mT);
         }else{
-            throw new Exception("Diferentes tamaños de filas");
+            throw new Exception("Diferentes tamaï¿½os de filas");
         }
         BigDecimal temp[][] = AB.getMatriz();
         for (int i = 0; i < nT; i++) {
@@ -417,7 +419,7 @@ public class Matriz {
             O.pln(mtrz.imprimirMatriz("Matriz resultante suma"));
             return mtrz;
         }else{
-            throw new Exception("Tamaño(s) diferente(s): n:"+n+"!="+sumando.n
+            throw new Exception("Tamaï¿½o(s) diferente(s): n:"+n+"!="+sumando.n
                     +" & m:"+m+"!="+sumando.m);
         }
     }

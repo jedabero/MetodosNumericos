@@ -58,11 +58,11 @@ public class GraficadorUI{
 	
 	private static final int HEIGHT=700;
 	private static final int WIDTH=1000;
-	private static final String ver= "InDev.0.4";//VER Versión
+	private static final String ver= "InDev.0.4";//VER Versiï¿½n
 	
 	private JFrame mainWindow;
 	private ItemListener il;
-	private ActionListener añadirFuncionAL, editarFuncionAL, quitarFuncionAL,
+	private ActionListener anadirFuncionAL, editarFuncionAL, quitarFuncionAL,
 	graficaAL, guardarAL, salirAL, menuAyudaAL, cambiaColorAL;
 	
 	private ComponentAdapter ca;
@@ -84,7 +84,7 @@ public class GraficadorUI{
 	LangResource l;
 	
 	/**
-	 * @param rs El resource bundle que proveerá de lenguaje al programa
+	 * @param rs El resource bundle que proveerï¿½ de lenguaje al programa
 	 * 
 	 */
 	public GraficadorUI(ResourceBundle rs){
@@ -151,7 +151,7 @@ public class GraficadorUI{
 		JMenu menuEditar = new JMenu(l.s("mEdit"));
 		menuEditar.setMnemonic('E');
 		Add.menuItem(menuEditar, l.s("mEditAdd"), l.s("mEditAddTTT"),
-				añadirFuncionAL, 'A');
+				anadirFuncionAL, 'A');
 		Add.menuItem(menuEditar, l.s("mEditEdit"), l.s("mEditEditTTT"),
 				editarFuncionAL, 'E');
 		Add.menuItem(menuEditar, l.s("mEditRem"), l.s("mEditRemTTT"),
@@ -161,7 +161,7 @@ public class GraficadorUI{
 				cambiaColorAL, 'C');
 		barraMenu.add(menuEditar);
 		
-		//Gráfica
+		//Grï¿½fica
 		JMenu menuGrafica = new JMenu(l.s("mGraf"));
 		menuGrafica.setMnemonic('G');
 		Add.menuItem(menuGrafica, l.s("mGrafInt"), l.s("mGrafIntTTT"),
@@ -234,7 +234,7 @@ public class GraficadorUI{
 			}
 		};
 		
-		añadirFuncionAL = new ActionListener(){
+		anadirFuncionAL = new ActionListener(){
 			public void actionPerformed(ActionEvent ae) {
 				if(listaFunciones.size()<5){
 					Funcion tempF = M.funcionRandom();
