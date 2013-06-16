@@ -21,7 +21,6 @@ public class GrupoPuntosFuncion {
 	private BigInterval Y;
 	private BigPoint[] puntos;
 	
-	
 	public GrupoPuntosFuncion(Funcion f, BigInterval x, int n){
 		this.funcion = f;
 		this.X = x;
@@ -46,4 +45,8 @@ public class GrupoPuntosFuncion {
 		return Y;
 	}
 
+	public BigPoint[] getPuntos() {
+		return puntos;
+	}
+	
 }

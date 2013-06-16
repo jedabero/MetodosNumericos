@@ -51,7 +51,7 @@ public class JGrafica extends JPanel {
 	private BigInterval integralX;//TODO The x interval of integration
 	
 	//The ArrayList that contains the arrays of coordinates of the functions.
-	private ArrayList<BigPoint[]> alfCoords;
+	private ArrayList<GrupoPuntosFuncion> alfCoords;
 	
 	private ArrayList<Funcion> funcionList;	//The list of functions
 	
@@ -145,7 +145,7 @@ public class JGrafica extends JPanel {
 	}
 	
 	private void calculos(){
-		alfCoords = new ArrayList<BigPoint[]>();
+		alfCoords = new ArrayList<GrupoPuntosFuncion>();
 		
 		BigDecimal numP = new BigDecimal(Integer.toString(numeroPuntos-1));
 		step = X.length().divide(numP, 10, RoundingMode.HALF_UP).stripTrailingZeros();
@@ -159,20 +159,11 @@ public class JGrafica extends JPanel {
 		for (lif = funcionList.listIterator(); lif.hasNext();) {
 			Funcion f = lif.next();//current function
 			int index = lif.previousIndex();
-			BigDecimal x;//the x and y bdpoints to set
-			BigDecimal[] y = new BigDecimal[numeroPuntos];
-			BigPoint[] fCoords = new BigPoint[numeroPuntos];//the bdcoords to set
-			for(int i=0;i<fCoords.length;i++){
-				x = X.min().add(step.multiply(BigDecimal.valueOf(i)));//x value
-				if(x.compareTo(X.max())==1) x = X.max();
-				y[i] = f.valorImagen(x);// y value
-				fCoords[i] = new BigPoint(x, y[i]);//setting bdcoords O.pln(fCoords[i]);
-			}
+			GrupoPuntosFuncion gpf = new GrupoPuntosFuncion(f, X, numeroPuntos-1);
+			alfCoords.add(index, gpf);
 			
-			alfCoords.add(index, fCoords);
-			
-			maxy[index] = Big.max(y);
-			miny[index] = Big.min(y);
+			maxy[index] = gpf.getY().max();
+			miny[index] = gpf.getY().min();
 		}
 		BigDecimal maxY = Big.max(maxy);
 		BigDecimal minY = Big.min(miny);
@@ -219,9 +210,9 @@ public class JGrafica extends JPanel {
 		
 		//Draw the functions
 		g2d.setStroke(new BasicStroke(2));
-		ListIterator<BigPoint[]> libdc;//Coordinates iterator
+		ListIterator<GrupoPuntosFuncion> libdc;//Coordinates iterator
 		for (libdc = alfCoords.listIterator(); libdc.hasNext();) {
-			BigPoint[] bdcArr = libdc.next();//current bdCoord array
+			BigPoint[] bdcArr = libdc.next().getPuntos();//current bdCoord array
 			int index = libdc.previousIndex();
 			g2d.setColor(colorList.get(index));
 			ArrayList<Point> alp = changeCoordToPoint(bdcArr);
