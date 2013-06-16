@@ -727,16 +727,16 @@ public class Funcion {
 	
 	/**
 	 * @param tol tolerancia del error
-	 * @param maxIt m�ximo n�mero de iteraciones
+	 * @param maxIt maximo numero de iteraciones
 	 * @param x0 punto inicial
-	 * @return la ra�z m�s cercana a x0 y el error
+	 * @return la raiz mas cercana a x0 y el error
 	 * @throws Exception
 	 */
 	public BigDecimal[] metodoNewtonRaphson(BigDecimal tol, int maxIt,
 			BigDecimal x0) throws Exception {
 		BigDecimal err = null;
 		boolean fin = false;	//Switch
-		int k = 0;				//�ndice de la iteraci�n
+		int k = 0;				//indice de la iteracipn
 		while((!fin)&&(k<=maxIt)){
 			BigDecimal fx = valorImagen(x0);
 			BigDecimal fpx = derivada().valorImagen(x0);
@@ -757,7 +757,7 @@ public class Funcion {
 			O.pln("x = "+x0);
 			return new BigDecimal[]{x0.stripTrailingZeros(), err.stripTrailingZeros()};
 		} else {
-			throw new Exception("No converge dentro del valor m�ximo de iteraci�n");
+			throw new Exception("No converge dentro del valor maximo de iteracipn");
 		}
 	}
 	
