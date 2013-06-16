@@ -657,7 +657,7 @@ public class Funcion {
 		
 		if (fin) {
 			O.pln("x = "+x0);
-			return new BigDecimal[]{x0, err};
+			return new BigDecimal[]{x0.stripTrailingZeros(), err.stripTrailingZeros()};
 		} else {
 			throw new Exception("No converge dentro del valor m�ximo de iteraci�n");
 		}
@@ -715,7 +715,7 @@ public class Funcion {
 			
 			if (fin) {
 				O.pln("x = "+xa);
-				return new BigDecimal[]{xa, err};
+				return new BigDecimal[]{xa.stripTrailingZeros(), err.stripTrailingZeros()};
 			} else {
 				throw new Exception("No converge dentro del valor m�ximo de iteraci�n");
 			}
@@ -755,7 +755,7 @@ public class Funcion {
 		
 		if (fin) {
 			O.pln("x = "+x0);
-			return new BigDecimal[]{x0, err};
+			return new BigDecimal[]{x0.stripTrailingZeros(), err.stripTrailingZeros()};
 		} else {
 			throw new Exception("No converge dentro del valor m�ximo de iteraci�n");
 		}
@@ -794,7 +794,7 @@ public class Funcion {
 		
 		if (fin) {
 			O.pln("x = "+x0);
-			return new BigDecimal[]{x0, err};
+			return new BigDecimal[]{x0.stripTrailingZeros(), err.stripTrailingZeros()};
 		} else {
 			throw new Exception("No converge dentro del valor m�ximo de iteraci�n");
 		}
@@ -838,7 +838,7 @@ public class Funcion {
 			
 			if (fin) {
 				O.pln("x = "+xa);
-				return new BigDecimal[]{xa, err};
+				return new BigDecimal[]{xa.stripTrailingZeros(), err.stripTrailingZeros()};
 			} else {
 				throw new Exception("No converge dentro del valor m�ximo de iteraci�n");
 			}

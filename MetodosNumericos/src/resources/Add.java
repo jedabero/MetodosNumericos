@@ -23,15 +23,15 @@ import javax.swing.JRadioButtonMenuItem;
 public final class Add {
 	
 	/**
-	 * Añade componentes al panel con un {@code GridBagLayout}.
+	 * Anade componentes al panel con un {@code GridBagLayout}.
 	 * @param gbl	El componente con el GridBagLayout.
-	 * @param jc	El componente a ser añadido.
-	 * @param x		La posición en columnas del componente. La primera es 0.
-	 * @param y 	La posición en filas del componente. La primera es 0.
-	 * @param w		El número de columnas que ocupa el componente.
-	 * @param h 	El número de filas que ocupa el componente,
-	 * @param wx	La proporción de ancho del componente.
-	 * @param wy	La proporción de alto del componente.
+	 * @param jc	El componente a ser anadido.
+	 * @param x		La posicion en columnas del componente. La primera es 0.
+	 * @param y 	La posicion en filas del componente. La primera es 0.
+	 * @param w		El numero de columnas que ocupa el componente.
+	 * @param h 	El numero de filas que ocupa el componente,
+	 * @param wx	La proporcion de ancho del componente.
+	 * @param wy	La proporcion de alto del componente.
 	 * @param f 	Valor que determina como redimensionar el componente.
 	 * @param toolTip Texto a mostrar en el ToolTip del componente.
 	 */
@@ -116,12 +116,12 @@ public final class Add {
 	}
 	
 	/**
-	 * Agrega un item de menú al menú especificado.
+	 * Agrega un item de menu al menu especificado.
 	 * @param menu	menu al que se va a agregar el item.
-	 * @param texto	texto que llevará el item.
+	 * @param texto	texto que lleva el item.
 	 * @param ttt 	ToolTipText
-	 * @param al	listener que se ejecutará al seleccionar el item.
-	 * @param mn	letra mnemotécnica
+	 * @param al	listener que se ejecuta al seleccionar el item.
+	 * @param mn	letra mnemotecnica
 	 */
 	public static void menuItem(JMenu menu, String texto, String ttt,
 			ActionListener al, char mn){
@@ -133,12 +133,12 @@ public final class Add {
 	}
 	
 	/**
-	 * Agrega un item de menú al menú especificado con un conjunto de submenús.
+	 * Agrega un item de menu al menu especificado con un conjunto de submenus.
 	 * @param menu		menu al que se va a agregar el item.
-	 * @param texto		texto que llevará el item.
+	 * @param texto		texto que lleva el item.
 	 * @param ttt		ToolTipText
-	 * @param al 		listener que se ejecutará al seleccionar el item.
-	 * @param mn		letra mnemotécnica
+	 * @param al 		listener que se ejecuta al seleccionar el item.
+	 * @param mn		letra mnemotecnica
 	 * @param subItems	array con los nombres de cada item
 	 * @param states	array con los estados de cada item
 	 * @param types		array con los tipo de cada item
@@ -185,14 +185,14 @@ public final class Add {
 	}
 	
 	/**
-	 * Añade componentes a un {@code DesktopPane}, con una ubicación y tamaños
-	 * específicos. 
-	 * @param jdp	el DesktopPane al que se añadirán componentes.
-	 * @param jc	el componente a ser añadido.
-	 * @param x		ubicación en pixeles de derecha a izquierda.
-	 * @param y 	ubicación en pixeles de arriba a abajo.
-	 * @param w 	ancho que ocupará el componente.
-	 * @param h 	alto que ocupará el componente.
+	 * Anade componentes a un {@code DesktopPane}, con una ubicacion y tamanos
+	 * especificos. 
+	 * @param jdp	el DesktopPane al que se anadiran componentes.
+	 * @param jc	el componente a ser anadido.
+	 * @param x		ubicacion en pixeles de derecha a izquierda.
+	 * @param y 	ubicacion en pixeles de arriba a abajo.
+	 * @param w 	ancho que ocupa el componente.
+	 * @param h 	alto que ocupa el componente.
 	 */
 	public static void aDeskPane(JDesktopPane jdp, JComponent jc,
 			int x, int y, int w, int h){

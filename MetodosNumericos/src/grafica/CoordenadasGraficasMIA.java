@@ -170,7 +170,7 @@ public class CoordenadasGraficasMIA extends MouseInputAdapter{
 			y1 = y1.setScale(3, RoundingMode.HALF_UP);
 			
 			
-			BigDecimalPoint coords = new BigDecimalPoint(x1, y1);
+			BigPoint coords = new BigPoint(x1, y1);
 			
 			jGra.setToolTipText(""+coords);
 		}
