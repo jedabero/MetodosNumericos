@@ -6,6 +6,8 @@ package grafica;
 import java.awt.Point;
 import java.math.BigDecimal;
 
+import resources.math.Big;
+
 /**
  * @author Jedabero
  *
@@ -67,23 +69,32 @@ public class BigPoint{
 	}
 	
 	public BigDecimal distanceSq(BigDecimal x2, BigDecimal y2){
-		
-		return null;
+		BigDecimal dx = x2.subtract(x());
+		BigDecimal dy = y2.subtract(y());
+		BigDecimal dSq = dx.pow(2).add(dy.pow(2));
+		return dSq;
 	}
 	
 	public BigDecimal distanceSq(BigPoint bp2){
-		return null;
+		BigDecimal dSq = distanceSq(bp2.x, bp2.y);
+		return dSq;
 	}
 	
 	public BigDecimal distance(BigDecimal x2, BigDecimal y2){
-		
-		return null;
+		BigDecimal dSq = distanceSq(x2, y2);
+		BigDecimal d;
+		try {
+			d = Big.sqrt(dSq);
+		} catch (Exception e) {
+			e.printStackTrace();
+			d = BigDecimal.ZERO;
+		}
+		return d;
 	}
 	
 	public BigDecimal distance(BigPoint bp2){
-		BigDecimal dSq = distanceSq(bp2);
-		BigDecimal decimal;
-		return null;
+		BigDecimal d = distance(bp2.x, bp2.y);;
+		return d;
 	}
 	
 	public String toString(){
