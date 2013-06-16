@@ -13,7 +13,7 @@ import java.math.RoundingMode;
 import javax.swing.event.MouseInputAdapter;
 
 import resources.O;
-import resources.math.Interval;
+import resources.math.BigInterval;
 
 /**
  * @author Jedabero
@@ -22,8 +22,8 @@ import resources.math.Interval;
 public class CoordenadasGraficasMIA extends MouseInputAdapter{
 	
 	private JGrafica jGra;
-	private Interval X;
-	private	Interval Y;
+	private BigInterval X;
+	private	BigInterval Y;
 	
 	private BigDecimal dx;
 	private BigDecimal dy;
@@ -40,7 +40,7 @@ public class CoordenadasGraficasMIA extends MouseInputAdapter{
 	 * @param y 
 	 * 
 	 */
-	public CoordenadasGraficasMIA(JGrafica jg, Interval x, Interval y) {
+	public CoordenadasGraficasMIA(JGrafica jg, BigInterval x, BigInterval y) {
 		this.jGra = jg;
 		this.X = x;
 		this.Y = y;
@@ -50,7 +50,7 @@ public class CoordenadasGraficasMIA extends MouseInputAdapter{
 	 * @param x
 	 * @param y
 	 */
-	public void updateIntervals(Interval x, Interval y){
+	public void updateIntervals(BigInterval x, BigInterval y){
 		this.X = x;
 		this.Y = y;
 	}

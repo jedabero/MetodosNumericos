@@ -24,7 +24,7 @@ import javax.swing.SpinnerNumberModel;
 
 import resources.Add;
 import resources.O;
-import resources.math.Interval;
+import resources.math.BigInterval;
 import resources.math.funciones.Funcion;
 
 /**
@@ -351,8 +351,8 @@ public class MetodosRaicesPanel extends JPanel implements ItemListener,
 	/**
 	 * @return el intervalo [A, B]
 	 */
-	public Interval getAB(){
-		Interval ab = new Interval(getX0(), getX1());
+	public BigInterval getAB(){
+		BigInterval ab = new BigInterval(getX0(), getX1());
 		return ab;
 	}
 	

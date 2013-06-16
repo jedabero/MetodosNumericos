@@ -40,7 +40,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import resources.Add;
 import resources.LangResource;
 import resources.O;
-import resources.math.Interval;
+import resources.math.BigInterval;
 import resources.math.M;
 import ui.EditaDimensionesDialog;
 import ui.EditaFuncionDialog;
@@ -71,8 +71,8 @@ public class GraficadorUI{
 	
 	private ArrayList<Funcion> listaFunciones;
 	private JGrafica grafica;
-	private Interval xInterval;
-	private Interval yInterval;
+	private BigInterval xInterval;
+	private BigInterval yInterval;
 	private ArrayList<Color> colores;
 	
 	private ArrayList<JCheckBox> funcionJRB;
@@ -97,7 +97,7 @@ public class GraficadorUI{
 		initListeners();
 		
 		listaFunciones = new ArrayList<Funcion>();
-		xInterval = new Interval(BigDecimal.valueOf(-1), BigDecimal.valueOf(1));
+		xInterval = new BigInterval(BigDecimal.valueOf(-1), BigDecimal.valueOf(1));
 		//TODO PASO GLOBAL INIT
 		
 		Funcion f = M.funcionRandom();
@@ -116,7 +116,7 @@ public class GraficadorUI{
 		funcionJRB.add(jrb);
 		
 		
-		yInterval = new Interval(BigDecimal.ONE.negate(), BigDecimal.ONE);
+		yInterval = new BigInterval(BigDecimal.ONE.negate(), BigDecimal.ONE);
 		grafica = new JGrafica(listaFunciones, colores, new Dimension(500, 500),
 				xInterval, yInterval);
 		
@@ -308,7 +308,7 @@ public class GraficadorUI{
 			public void actionPerformed(ActionEvent e){
 				AbstractButton ab = (AbstractButton) e.getSource();
 				String strObj = ab.getText();
-				Interval Yinterv = grafica.getYinterval();
+				BigInterval Yinterv = grafica.getYinterval();
 				Yinterv.hashCode();//TODO Yinterv
 				if(strObj.equals(l.s("mGrafRange1"))){
 					//TODO RANGE THING

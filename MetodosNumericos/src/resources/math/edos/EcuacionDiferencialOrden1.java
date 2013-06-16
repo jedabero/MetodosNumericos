@@ -8,7 +8,7 @@ import java.math.RoundingMode;
 
 import resources.math.Big;
 import resources.math.Constantes.Tipo;
-import resources.math.Interval;
+import resources.math.BigInterval;
 import resources.math.funciones.Funcion;
 import resources.math.funciones.Termino;
 
@@ -158,9 +158,9 @@ public class EcuacionDiferencialOrden1 {
 	 * @param X
 	 * @param y0
 	 * @param n
-	 * @return el valor de y(X.max()) por el m�todo de Euler Simple
+	 * @return el valor de y(X.max()) por el metodo de Euler Simple
 	 */
-	public BigDecimal metodoEulerSimple(Interval X, BigDecimal y0, int n) {
+	public BigDecimal metodoEulerSimple(BigInterval X, BigDecimal y0, int n) {
 		BigDecimal h = X.step(n);
 		BigDecimal xn[] = X.conjuntoPuntos(n);
 		BigDecimal yn = y0;
@@ -178,9 +178,9 @@ public class EcuacionDiferencialOrden1 {
 	 * @param X
 	 * @param y0
 	 * @param n
-	 * @return el valor de y(X.max()) por el m�todo de Euler Simple Modificado
+	 * @return el valor de y(X.max()) por el metodo de Euler Simple Modificado
 	 */
-	public BigDecimal metodoEulerSimpleModificado(Interval X, BigDecimal y0, int n) {
+	public BigDecimal metodoEulerSimpleModificado(BigInterval X, BigDecimal y0, int n) {
 		BigDecimal h = X.step(n);
 		BigDecimal xn[] = X.conjuntoPuntos(n);
 		BigDecimal yn = y0;
@@ -200,10 +200,10 @@ public class EcuacionDiferencialOrden1 {
 	 * @param X
 	 * @param y0
 	 * @param n
-	 * @return el valor de y(X.max()) por el m�todo con las Serie de Taylor
-	 * hasta el tercer t�rmino.
+	 * @return el valor de y(X.max()) por el metodo con las Serie de Taylor
+	 * hasta el tercer termino.
 	 */
-	public BigDecimal metodoSeriesTaylorOrden2(Interval X, BigDecimal y0, int n) {
+	public BigDecimal metodoSeriesTaylorOrden2(BigInterval X, BigDecimal y0, int n) {
 		BigDecimal h = X.step(n);
 		BigDecimal xn[] = X.conjuntoPuntos(n);
 		BigDecimal yn = y0;
@@ -224,9 +224,9 @@ public class EcuacionDiferencialOrden1 {
 	 * @param X
 	 * @param y0
 	 * @param n
-	 * @return el valor de y(X.max()) por el m�todo de Runge-Kutta
+	 * @return el valor de y(X.max()) por el metodo de Runge-Kutta
 	 */
-	public BigDecimal metodoRungeKutta(Interval X, BigDecimal y0, int n) {
+	public BigDecimal metodoRungeKutta(BigInterval X, BigDecimal y0, int n) {
 		BigDecimal h = X.step(n);
 		BigDecimal h_2 = h.divide(Big.TWO);
 		BigDecimal h_6 = h.divide(BigDecimal.valueOf(6), 15, RoundingMode.HALF_UP);

@@ -21,7 +21,7 @@ import javax.swing.JSeparator;
 
 import resources.Add;
 import resources.O;
-import resources.math.Interval;
+import resources.math.BigInterval;
 import ui.EditaPolinomioPanel;
 import resources.math.funciones.Funcion;
 import grafica.JGrafica;
@@ -137,12 +137,12 @@ public class NumIntUI extends JPanel implements ActionListener{
 		frmGrafica = new JFrame(""+funcion);
 		frmGrafica.setSize(800, 600);
 		JGrafica jg = new JGrafica(alf, alc, frmGrafica.getSize(),
-				new Interval(BigDecimal.ONE.negate(), BigDecimal.ONE),
-				new Interval(BigDecimal.ONE.negate(), BigDecimal.ONE));
+				new BigInterval(BigDecimal.ONE.negate(), BigDecimal.ONE),
+				new BigInterval(BigDecimal.ONE.negate(), BigDecimal.ONE));
 		jg.setBackground(Color.WHITE);
 		jg.setMostrarAreaIntegral(true);
 		jg.setRangeY(false);
-		Interval ab = mpnl.getAb();
+		BigInterval ab = mpnl.getAb();
 		if(ab != null){
 			jg.setIntegralX(ab);
 		}

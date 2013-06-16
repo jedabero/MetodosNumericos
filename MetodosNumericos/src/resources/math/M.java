@@ -18,8 +18,8 @@ import resources.math.funciones.Termino;
 public final class M {
 	
 	/**
-	 * Crea una funci�n al azar con par�metros aleatorios
-	 * @return	la funci�n aleatoria.
+	 * Crea una funcion al azar con parametros aleatorios
+	 * @return	la funcion aleatoria.
 	 */
 	public static Funcion funcionRandom(){
 		Random rand = new Random();
@@ -70,10 +70,10 @@ public final class M {
 	
 	/**
 	 * Calcula
-	 * @param	ft funci�n trigonom�trica
-	 * @param	bd �ngulo
-	 * @param	rad est� en radianes?
-	 * @param	deg est� en grados?
+	 * @param	ft funcion trigonometrica
+	 * @param	bd angulo
+	 * @param	rad esta en radianes?
+	 * @param	deg esta en grados?
 	 * @return	el resultado
 	 */
 	public static BigDecimal calculaTrig(FuncionTrig ft, BigDecimal bd,

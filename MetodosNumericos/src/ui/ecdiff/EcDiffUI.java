@@ -26,7 +26,7 @@ import resources.math.edos.EcuacionDiferencialOrden1;
 import resources.math.funciones.Funcion;
 
 import resources.Add;
-import resources.math.Interval;
+import resources.math.BigInterval;
 import ui.EditaPolinomioPanel;
 import ui.main.app.MetodosUI;
 
@@ -179,16 +179,16 @@ public class EcDiffUI extends JPanel implements ChangeListener, ActionListener,
 			lblEc.setText("<html>"+edo1.getSpecific()+"</html>");
 		} else if (btn.equals(btnFind[0])) {
 			Object o[] = getParams();
-			res = edo1.metodoEulerSimple((Interval)o[0], (BigDecimal)o[1], Integer.parseInt(o[2].toString()));
+			res = edo1.metodoEulerSimple((BigInterval)o[0], (BigDecimal)o[1], Integer.parseInt(o[2].toString()));
 		} else if(btn.equals(btnFind[1])){
 			Object o[] = getParams();
-			res = edo1.metodoEulerSimpleModificado((Interval)o[0], (BigDecimal)o[1], Integer.parseInt(o[2].toString()));
+			res = edo1.metodoEulerSimpleModificado((BigInterval)o[0], (BigDecimal)o[1], Integer.parseInt(o[2].toString()));
 		} else if(btn.equals(btnFind[2])){
 			Object o[] = getParams();
-			res = edo1.metodoSeriesTaylorOrden2((Interval)o[0], (BigDecimal)o[1], Integer.parseInt(o[2].toString()));
+			res = edo1.metodoSeriesTaylorOrden2((BigInterval)o[0], (BigDecimal)o[1], Integer.parseInt(o[2].toString()));
 		} else if(btn.equals(btnFind[3])){
 			Object o[] = getParams();
-			res = edo1.metodoRungeKutta((Interval)o[0], (BigDecimal)o[1], Integer.parseInt(o[2].toString()));
+			res = edo1.metodoRungeKutta((BigInterval)o[0], (BigDecimal)o[1], Integer.parseInt(o[2].toString()));
 		}
 		
 		int scale = MetodosUI.getResultScale();
@@ -202,7 +202,7 @@ public class EcDiffUI extends JPanel implements ChangeListener, ActionListener,
 	
 	private Object[] getParams(){
 		Object[] obj = new Object[3];
-		obj[0] = new Interval(new BigDecimal(txtX0.getText()), new BigDecimal(txtXn.getText()));
+		obj[0] = new BigInterval(new BigDecimal(txtX0.getText()), new BigDecimal(txtXn.getText()));
 		obj[1] = new BigDecimal(txtY0.getText());
 		obj[2] = Integer.parseInt(spnrN.getValue().toString());//(int)spnrIt.getValue();
 		return obj;

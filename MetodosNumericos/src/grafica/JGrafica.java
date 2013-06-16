@@ -22,18 +22,18 @@ import javax.swing.JPanel;
 
 import resources.O;
 import resources.math.Big;
-import resources.math.Interval;
+import resources.math.BigInterval;
 import resources.math.funciones.Funcion;
 
 /**
- * Cualquier instancia de esta clase dibujar� todas las funciones que le sean
+ * Cualquier instancia de esta clase dibujara todas las funciones que le sean
  * pasadas.
  * @author Jedabero
  * @since 0.4
  */
 public class JGrafica extends JPanel {
 	
-	/** Degenarated serialVersionUID for this child of JPanel */
+	/** Degenerated serialVersionUID for this child of JPanel */
 	private static final long serialVersionUID = -2267792839289943254L;
 	
 	private CoordenadasGraficasMIA cgMIA;	//Custom MouseInputAdapter
@@ -46,9 +46,9 @@ public class JGrafica extends JPanel {
 	
 	private BigDecimal step;//Step to separate the values of x
 	private int numeroPuntos = 201;	//Number of max divisions
-	private Interval X;		//The x Interval
-	private Interval Y;		//The y Interval
-	private Interval integralX;//TODO The x interval of integration
+	private BigInterval X;		//The x Interval
+	private BigInterval Y;		//The y Interval
+	private BigInterval integralX;//TODO The x interval of integration
 	
 	//The ArrayList that contains the arrays of coordinates of the functions.
 	private ArrayList<BigDecimalPoint[]> alfCoords;
@@ -65,28 +65,21 @@ public class JGrafica extends JPanel {
 	private boolean mostrarAreaIntegral = false;
 	
 	/**
-	 * @return regresa si las divisiones principales est�n dibujadas
+	 * @return las divisiones principales estan dibujadas?
 	 */
 	public boolean isDivPrin(){return divPrin;}
 	/**
-	 * @return regresa si las divisiones secundarias est�n dibujadas
+	 * @return las divisiones secundarias estan dibujadas?
 	 */
 	public boolean isDivSec(){return divSec;}
 	/**
-	 * @return regresa si est� dibujado en un rango especifico
+	 * @return esta dibujado en un rango especifico?
 	 */
 	public boolean isYranged(){return rangeY;}
 	/**
-	 * @return regresa si las etiquetas de eje est�n dibujadas
+	 * @return las etiquetas de eje estan dibujadas?
 	 */
 	public boolean isEtiquetas(){return etiquetas;}
-	
-	/**
-	 * @return the rangeY
-	 */
-	public boolean isRangeY() {
-		return rangeY;
-	}
 	
 	/**
 	 * @return the mostrarAreaIntegral
@@ -105,7 +98,7 @@ public class JGrafica extends JPanel {
 	/**
 	 * @param integralX the integralX to set
 	 */
-	public void setIntegralX(Interval integralX) {
+	public void setIntegralX(BigInterval integralX) {
 		this.integralX = integralX;
 	}
 	
@@ -129,11 +122,11 @@ public class JGrafica extends JPanel {
 	/**
 	 * @return el intervalo X
 	 */
-	public Interval getXinterval(){return X;}
+	public BigInterval getXinterval(){return X;}
 	/**
 	 * @return el intervalo Y
 	 */
-	public Interval getYinterval(){return Y;}
+	public BigInterval getYinterval(){return Y;}
 	
 	/**
 	 * @return el paso
@@ -209,12 +202,12 @@ public class JGrafica extends JPanel {
 			maxY = Y.max();
 		}
 		
-		Y = new Interval(minY, maxY);
+		Y = new BigInterval(minY, maxY);
 	}
 	
 	/**
 	 * 
-	 * @param g el contexto gr�fico del componente en el que se dibuja
+	 * @param g el contexto grafico del componente en el que se dibuja
 	 */
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
@@ -419,7 +412,7 @@ public class JGrafica extends JPanel {
 	}
 	
 	/**
-	 * Actualiza las dimensiones de la gr�fica
+	 * Actualiza las dimensiones de la grafica
 	 */
 	public void updateCoordsDim(){
 		int w = this.getWidth();
@@ -443,14 +436,14 @@ public class JGrafica extends JPanel {
 	 * @param y 
 	 * 
 	 */
-	public void updateIntervals(Interval x, Interval y){
+	public void updateIntervals(BigInterval x, BigInterval y){
 		this.X = x;
 		this.Y = y;
 		updateGrafica();
 	}
 	
 	/**
-	 * M�todo que determina si las divisiones principales se dibujan o no.
+	 * Metodo que determina si las divisiones principales se dibujan o no.
 	 * @param pg
 	 */
 	public void dibujaDivPrin(boolean pg){
@@ -459,7 +452,7 @@ public class JGrafica extends JPanel {
 	}
 	
 	/**
-	 * M�todo que determina si las divisiones secundarias se dibujan o no.
+	 * Me�todo que determina si las divisiones secundarias se dibujan o no.
 	 * @param sg
 	 */
 	public void dibujaDivSec(boolean sg){
@@ -468,7 +461,7 @@ public class JGrafica extends JPanel {
 	}
 	
 	/**
-	 * M�todo que determina si las etiquetas de eje se dibujan o no.
+	 * Metodo que determina si las etiquetas de eje se dibujan o no.
 	 * @param et
 	 */
 	public void dibujaEtiquetas(boolean et){
@@ -477,7 +470,7 @@ public class JGrafica extends JPanel {
 	}
 	
 	/**
-	 * M�todo que actualiza las funciones o los colores respectivos.
+	 * Metodo que actualiza las funciones o los colores respectivos.
 	 * @param alf 
 	 * @param alc 
 	 */
@@ -487,16 +480,16 @@ public class JGrafica extends JPanel {
 	}
 	
 	/**
-	 * Crea una Gr�fica
+	 * Crea una Grafica
 	 * @param funcionList lista de funciones
-	 * @param dim Dimensi�n de la gr�fica
+	 * @param dim Dimension de la grafica
 	 * @param colorList lista de colores
 	 * @param xInterval Intervalo de los valores de x
 	 * @param yInterval Intervalo de los valores de y iniciales
 	 * 
 	 */
 	public JGrafica(ArrayList<Funcion> funcionList, ArrayList<Color> colorList,
-			Dimension dim, Interval xInterval, Interval yInterval){
+			Dimension dim, BigInterval xInterval, BigInterval yInterval){
 		setSize(dim);
 		this.funcionList = funcionList;
 		this.colorList = colorList;

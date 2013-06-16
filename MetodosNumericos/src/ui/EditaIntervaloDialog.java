@@ -17,7 +17,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import resources.Add;
-import resources.math.Interval;
+import resources.math.BigInterval;
 
 /**
  * @author <a href="https://twitter.com/Jedabero" target="_blank">Jedabero</a>
@@ -41,7 +41,7 @@ public class EditaIntervaloDialog extends JDialog{
 	private BigDecimal pasoOr;
 	private JLabel labelPaso;
 	private JTextField textPaso;
-	private Interval intervalOr;
+	private BigInterval intervalOr;
 	private JButton actualiza;
 	private JButton listo;
 	private ActionListener listoAL;
@@ -75,10 +75,10 @@ public class EditaIntervaloDialog extends JDialog{
 			textPaso = new JTextField(""+gf.getStep());
 		}
 		
-		minimoLabel = new JLabel(XorY+" mínimo:");
+		minimoLabel = new JLabel(XorY+" mï¿½nimo:");
 		minimoText = new JTextField(""+minimoOr);
 		
-		maximoLabel = new JLabel(XorY+" máximo:");
+		maximoLabel = new JLabel(XorY+" mï¿½ximo:");
 		maximoText = new JTextField(""+maximoOr);
 		
 		actualiza = new JButton("Actualiza");
@@ -129,7 +129,7 @@ public class EditaIntervaloDialog extends JDialog{
 	/**
 	 * @return regresa el intervalo
 	 */
-	public Interval getIntervalo(){
+	public BigInterval getIntervalo(){
 		return intervalOr;
 	}
 	
@@ -195,7 +195,7 @@ public class EditaIntervaloDialog extends JDialog{
 		}catch(Exception ex){
 			System.out.println(ex.toString()+" (EditaIntervaloDialog.java:161)");//REVISELINE
 			JOptionPane.showMessageDialog(getParent(),
-					"Valor de mínimo: "+ex.getMessage(),
+					"Valor de mï¿½nimo: "+ex.getMessage(),
 					"Error de input", JOptionPane.ERROR_MESSAGE);
 			min = gf.getXinterval().min();
 		}
@@ -206,14 +206,14 @@ public class EditaIntervaloDialog extends JDialog{
 		}catch(Exception ex){
 			System.out.println(ex.toString()+" (EditaIntervaloDialog.java:172)");//REVISELINE
 			JOptionPane.showMessageDialog(getParent(),
-					"Valor de máximo: "+ex.getMessage(),
+					"Valor de mï¿½ximo: "+ex.getMessage(),
 					"Error de input", JOptionPane.ERROR_MESSAGE);
 			max = gf.getXinterval().max();
 		}
 		minimoText.setText(""+min);
 		maximoText.setText(""+max);
 		
-		Interval nuevoIntervalo = new Interval(min, max);
+		BigInterval nuevoIntervalo = new BigInterval(min, max);
 		switch(XorY){
 		case 'X':
 			gf.updateIntervals(nuevoIntervalo, gf.getYinterval());

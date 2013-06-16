@@ -19,7 +19,7 @@ import javax.swing.SpinnerNumberModel;
 
 import resources.Add;
 import resources.O;
-import resources.math.Interval;
+import resources.math.BigInterval;
 import ui.main.app.MetodosUI;
 import resources.math.funciones.Funcion;
 
@@ -52,7 +52,7 @@ public class MetodosIntegracionPanel extends JPanel implements ActionListener,
 	private JSpinner spnrN;
 	
 	private Funcion funcion;
-	private Interval ab;
+	private BigInterval ab;
 	
 	/**
 	 * 
@@ -113,7 +113,7 @@ public class MetodosIntegracionPanel extends JPanel implements ActionListener,
 	/**
 	 * @return the ab
 	 */
-	public Interval getAb() {
+	public BigInterval getAb() {
 		String sA = txtA.getText();
 		String sB = txtB.getText();
 		if(sA.isEmpty()||sB.isEmpty()){
@@ -121,7 +121,7 @@ public class MetodosIntegracionPanel extends JPanel implements ActionListener,
 		}else{
 			BigDecimal A = new BigDecimal(sA);
 			BigDecimal B = new BigDecimal(sB);
-			ab = new Interval(A, B);
+			ab = new BigInterval(A, B);
 		}
 		return ab;
 	}
@@ -147,7 +147,7 @@ public class MetodosIntegracionPanel extends JPanel implements ActionListener,
 		String sB = txtB.getText();
 		BigDecimal A = new BigDecimal(sA);
 		BigDecimal B = new BigDecimal(sB);
-		ab = new Interval(A, B);
+		ab = new BigInterval(A, B);
 		
 		BigDecimal result;
 		switch (currMethod) {

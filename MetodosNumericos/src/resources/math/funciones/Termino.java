@@ -11,7 +11,7 @@ import resources.O;
 import resources.math.Big;
 import resources.math.Constantes.FuncionTrig;
 import resources.math.Constantes.Tipo;
-import resources.math.Interval;
+import resources.math.BigInterval;
 import resources.math.M;
 
 /**
@@ -803,10 +803,10 @@ public class Termino {
 	 * @return un intervalo cuyo m�nimo corresponde al valor de la funci�n en ab.min
 	 * y cuyo m�ximo corresponde al valor de la funci�n en ab.m�x
 	 */
-	public Interval valoresExtremos(Interval ab){
+	public BigInterval valoresExtremos(BigInterval ab){
 		BigDecimal fa = valorImagen(ab.min());
 		BigDecimal fb = valorImagen(ab.max());
-		Interval fafb = new Interval(fa, fb);
+		BigInterval fafb = new BigInterval(fa, fb);
 		return fafb;
 	}
 	
