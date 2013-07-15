@@ -20,7 +20,6 @@ import java.util.ListIterator;
 
 import javax.swing.JPanel;
 
-import resources.O;
 import resources.math.Big;
 import resources.math.BigInterval;
 import resources.math.funciones.Funcion;
@@ -51,7 +50,7 @@ public class JGrafica extends JPanel {
 	private BigInterval integralX;//TODO The x interval of integration
 	
 	//The ArrayList that contains the arrays of coordinates of the functions.
-	private ArrayList<GrupoPuntosFuncion> alfCoords;
+	private ArrayList<GraficaFuncion> alfCoords;
 	
 	private ArrayList<Funcion> funcionList;	//The list of functions
 	
@@ -145,11 +144,7 @@ public class JGrafica extends JPanel {
 	}
 	
 	private void calculos(){
-		alfCoords = new ArrayList<GrupoPuntosFuncion>();
-		
-		BigDecimal numP = new BigDecimal(Integer.toString(numeroPuntos-1));
-		step = X.length().divide(numP, 10, RoundingMode.HALF_UP).stripTrailingZeros();
-		O.pln("Paso: "+step);
+		alfCoords = new ArrayList<GraficaFuncion>();
 		
 		//Arrays to stores the max and min values of Y
 		BigDecimal[] maxy = new BigDecimal[funcionList.size()];
@@ -159,7 +154,7 @@ public class JGrafica extends JPanel {
 		for (lif = funcionList.listIterator(); lif.hasNext();) {
 			Funcion f = lif.next();//current function
 			int index = lif.previousIndex();
-			GrupoPuntosFuncion gpf = new GrupoPuntosFuncion(f, X, numeroPuntos-1);
+			GraficaFuncion gpf = new GraficaFuncion(f, X, numeroPuntos-1);
 			alfCoords.add(index, gpf);
 			
 			maxy[index] = gpf.getY().max();
@@ -210,7 +205,7 @@ public class JGrafica extends JPanel {
 		
 		//Draw the functions
 		g2d.setStroke(new BasicStroke(2));
-		ListIterator<GrupoPuntosFuncion> libdc;//Coordinates iterator
+		ListIterator<GraficaFuncion> libdc;//Coordinates iterator
 		for (libdc = alfCoords.listIterator(); libdc.hasNext();) {
 			BigPoint[] bdcArr = libdc.next().getPuntos();//current bdCoord array
 			int index = libdc.previousIndex();
@@ -251,6 +246,32 @@ public class JGrafica extends JPanel {
 		return aLpP;
 	}
 	
+	private Shape polylineShape(ArrayList<Point> alP){
+		Path2D p2d = new Path2D.Double();
+		ListIterator<Point> iterator;
+		boolean isPointFirst = true;
+		
+		for (iterator = alP.listIterator(); iterator.hasNext();) {
+			Point currentPoint = iterator.next();
+			
+			if(currentPoint==null){
+				//O.pln(iterator.previousIndex()+""+currentPoint);
+				isPointFirst = true;
+			}else{
+				//O.pln(iterator.previousIndex()+currentPoint.toString().substring(14));
+				if(isPointFirst){
+					p2d.moveTo(currentPoint.x, currentPoint.y);
+					isPointFirst = false;
+				}else{
+					p2d.lineTo(currentPoint.x, currentPoint.y);
+				}
+			}
+			
+		}
+		
+		return p2d;
+	}
+	
 	private ArrayList<Point> changeCoordToPointAreaIntegral(BigPoint[] bdcArr){
 		ArrayList<Point> aLpP = new ArrayList<Point>();
 		if(integralX==null){
@@ -280,32 +301,6 @@ public class JGrafica extends JPanel {
 			}
 		}
 		return aLpP;
-	}
-	
-	private Shape polylineShape(ArrayList<Point> alP){
-		Path2D p2d = new Path2D.Double();
-		ListIterator<Point> iterator;
-		boolean isPointFirst = true;
-		
-		for (iterator = alP.listIterator(); iterator.hasNext();) {
-			Point currentPoint = iterator.next();
-			
-			if(currentPoint==null){
-				//O.pln(iterator.previousIndex()+""+currentPoint);
-				isPointFirst = true;
-			}else{
-				//O.pln(iterator.previousIndex()+currentPoint.toString().substring(14));
-				if(isPointFirst){
-					p2d.moveTo(currentPoint.x, currentPoint.y);
-					isPointFirst = false;
-				}else{
-					p2d.lineTo(currentPoint.x, currentPoint.y);
-				}
-			}
-			
-		}
-		
-		return p2d;
 	}
 	
 	private Shape polylineShapeAreaIntegral(ArrayList<Point> alP){
