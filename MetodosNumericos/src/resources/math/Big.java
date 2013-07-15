@@ -8,10 +8,6 @@ import resources.O;
 
 
 /**
- * 
- */
-
-/**
  * @author <a href="https://twitter.com/Jedabero" target="_blank">Jedabero</a>
  *
  */
@@ -56,21 +52,23 @@ public final class Big {
 	public static final BigDecimal THREE = new BigDecimal(3);
 	
 	/**
-	 * Convierte el n�mero al entero m�s cercano, dependiendo si es un m�ximo o no.
-	 * @param	bd	n�mero a convertir.
-	 * @param	isMax	si es un m�ximo debe ser true, false para un m�nimo.
-	 * @return	El n�mero convertido en m�ximo
+	 * Convierte el n&uacute;mero al entero m&aacute;s cercano, dependiendo si
+	 * es un m&aacute;ximo o no.
+	 * @param	bd	n&uacute;mero a convertir.
+	 * @param	isMax	si es un m&aacute;ximo debe ser true, false para un
+	 * m&iacute;nimo.
+	 * @return	El n&uacute;mero convertido en m&aacute;ximo
 	 */
 	public static BigDecimal compareToInt(BigDecimal bd, boolean isMax){
 		int bdToInt = bd.intValue();	//Se convierte a entero.
-		//Se revierte a BigDecimal para comparaci�n.
+		//Se revierte a BigDecimal para comparaci&oacute;n.
 		BigDecimal intBD = BigDecimal.valueOf(bdToInt);
-		int cR = bd.compareTo(intBD);	//Se guarda el resultado de la comparaci�n.
+		int cR = bd.compareTo(intBD);	//Se guarda el resultado de la comparaci&oacute;n.
 		switch(cR){
 		case 0:	//Se deja igual.
 			break;
 		default://Para los otros casos (-1 y 1), se hace el cambio a entero
-				//dependiendo si es m�ximo o es m�nimo.
+				//dependiendo si es m&aacute;ximo o es m&aacute;nimo.
 			if(isMax){
 				bd = intBD.add(BigDecimal.ONE);
 			}else if(!isMax){
@@ -150,9 +148,9 @@ public final class Big {
 	}
 	
 	/**
-	 * Regresa el valor m�ximo de un array de BigDecimal
+	 * Regresa el valor m&aacute;ximo de un array de BigDecimal
 	 * @param	a el array a evaluar
-	 * @return	el valor m�ximo dentro de {@code a}.
+	 * @return	el valor m&aacute;ximo dentro de {@code a}.
 	 */
 	public static BigDecimal max(BigDecimal a[]){
 		BigDecimal max = a[0];
@@ -163,9 +161,9 @@ public final class Big {
 	}
 	
 	/**
-	 * Regresa el valor m�nimo de un array de BigDecimal
+	 * Regresa el valor m&iacute;nimo de un array de BigDecimal
 	 * @param	a el array a evaluar
-	 * @return	el valor m�nimo dentro de {@code a}.
+	 * @return	el valor m&iacute;nimo dentro de {@code a}.
 	 */
 	public static BigDecimal min(BigDecimal a[]){
 		BigDecimal min = a[0];
@@ -176,9 +174,9 @@ public final class Big {
 	}
 	
 	/**
-	 * Calcula el seno trigonom�trico del �ngulo
+	 * Calcula el seno trigonom&eacute;trico del &aacute;ngulo
 	 * @see		Math2#sin(double)
-	 * @param	a el �ngulo en radianes
+	 * @param	a el &aacute;ngulo en radianes
 	 * @return	el seno de {@code a}
 	 */
 	public static BigDecimal sin(BigDecimal a) {
@@ -189,9 +187,9 @@ public final class Big {
 	}
 	
 	/**
-	 * Calcula el coseno trigonom�trico del �ngulo
+	 * Calcula el coseno trigonom&eacute;trico del &aacute;ngulo
 	 * @see		Math2#cos(double)
-	 * @param	a el �ngulo en radianes
+	 * @param	a el &aacute;ngulo en radianes
 	 * @return	el coseno de {@code a}
 	 */
 	public static BigDecimal cos(BigDecimal a) {
@@ -202,9 +200,9 @@ public final class Big {
 	}
 	
 	/**
-	 * Calcula la tangente trigonom�trico del �ngulo
+	 * Calcula la tangente trigonom&eacute;trico del &aacute;ngulo
 	 * @see		Math2#tan(double)
-	 * @param	a el �ngulo en radianes
+	 * @param	a el &aacute;ngulo en radianes
 	 * @return	la tangente de {@code a}
 	 */
 	public static BigDecimal tan(BigDecimal a) {
@@ -215,8 +213,8 @@ public final class Big {
 	}
 	
 	/**
-	 * Calcula la secante trigonom�trica del �ngulo
-	 * @param	a el �ngulo en radianes
+	 * Calcula la secante trigonom&eacute;trica del &aacute;ngulo
+	 * @param	a el &aacute;ngulo en radianes
 	 * @return	la secante de {@code a}
 	 */
 	public static BigDecimal sec(BigDecimal a) {
@@ -230,8 +228,8 @@ public final class Big {
 	}
 	
 	/**
-	 * Calcula la cosecante trigonom�trica del �ngulo
-	 * @param	a el �ngulo en radianes
+	 * Calcula la cosecante trigonom&eacute;trica del &aacute;ngulo
+	 * @param	a el &aacute;ngulo en radianes
 	 * @return	la cosecante de {@code a}
 	 */
 	public static BigDecimal csc(BigDecimal a) {
@@ -244,8 +242,8 @@ public final class Big {
 	}
 	
 	/**
-	 * Calcula la cotangente trigonom�trico del �ngulo
-	 * @param	a el �ngulo en radianes
+	 * Calcula la cotangente trigonom&eacute;trico del &aacute;ngulo
+	 * @param	a el &aacute;ngulo en radianes
 	 * @return	la cotangente de {@code a}
 	 */
 	public static BigDecimal cot(BigDecimal a) {
@@ -258,9 +256,9 @@ public final class Big {
 	}
 	
 	/**
-	 * Calcula el seno trigonom�trico del �ngulo
+	 * Calcula el seno trigonom&eacute;trico del &aacute;ngulo
 	 * @see		Math2#sin(double)
-	 * @param	a el �ngulo en radianes
+	 * @param	a el &aacute;ngulo en radianes
 	 * @return	el seno de {@code a}
 	 */
 	public static BigDecimal asin(BigDecimal a) {
@@ -270,9 +268,9 @@ public final class Big {
 	}
 	
 	/**
-	 * Calcula el coseno trigonom�trico del �ngulo
+	 * Calcula el coseno trigonom&eacute;trico del &aacute;ngulo
 	 * @see		Math2#cos(double)
-	 * @param	a el �ngulo en radianes
+	 * @param	a el &aacute;ngulo en radianes
 	 * @return	el coseno de {@code a}
 	 */
 	public static BigDecimal acos(BigDecimal a) {
@@ -282,9 +280,9 @@ public final class Big {
 	}
 	
 	/**
-	 * Calcula la tangente trigonom�trico del �ngulo
+	 * Calcula la tangente trigonom&eacute;trico del &aacute;ngulo
 	 * @see		Math2#tan(double)
-	 * @param	a el �ngulo en radianes
+	 * @param	a el &aacute;ngulo en radianes
 	 * @return	la tangente de {@code a}
 	 */
 	public static BigDecimal atan(BigDecimal a) {
@@ -294,8 +292,8 @@ public final class Big {
 	}
 	
 	/**
-	 * Calcula la secante trigonom�trica del �ngulo
-	 * @param	a el �ngulo en radianes
+	 * Calcula la secante trigonom&eacute;trica del &aacute;ngulo
+	 * @param	a el &aacute;ngulo en radianes
 	 * @return	la secante de {@code a}
 	 */
 	public static BigDecimal asec(BigDecimal a) {//TODO asec
@@ -310,8 +308,8 @@ public final class Big {
 	}
 	
 	/**
-	 * Calcula la cosecante trigonom�trica del �ngulo
-	 * @param	a el �ngulo en radianes
+	 * Calcula la cosecante trigonom&eacute;trica del &aacute;ngulo
+	 * @param	a el &aacute;ngulo en radianes
 	 * @return	la cosecante de {@code a}
 	 */
 	public static BigDecimal acsc(BigDecimal a) {//TODO acsc
@@ -325,8 +323,8 @@ public final class Big {
 	}
 	
 	/**
-	 * Calcula la cotangente trigonom�trico del �ngulo
-	 * @param	a el �ngulo en radianes
+	 * Calcula la cotangente trigonom&eacute;trico del &aacute;ngulo
+	 * @param	a el &aacute;ngulo en radianes
 	 * @return	la cotangente de {@code a}
 	 */
 	public static BigDecimal acot(BigDecimal a) {//TODO acot
@@ -341,8 +339,8 @@ public final class Big {
 	
 	/**
 	 * @see		Math2#toRadians(double)
-	 * @param	a el �ngulo en grados
-	 * @return	el �ngulo {@code a} en radianes 
+	 * @param	a el &aacute;ngulo en grados
+	 * @return	el &aacute;ngulo {@code a} en radianes 
 	 */
 	public static BigDecimal toRadians(BigDecimal a){
 		return BigDecimal.valueOf(Math.toRadians(a.doubleValue()));
@@ -350,15 +348,15 @@ public final class Big {
 	
 	/**
 	 * @see		Math2#toDegrees(double)
-	 * @param	a el �ngulo en radianes
-	 * @return	el �ngulo {@code a} en grados 
+	 * @param	a el &aacute;ngulo en radianes
+	 * @return	el &aacute;ngulo {@code a} en grados 
 	 */
 	public static BigDecimal toDegrees(BigDecimal a){
 		return BigDecimal.valueOf(Math.toDegrees(a.doubleValue()));
 	}
 	
 	/**
-	 * Potenciaci�n la base elevada al exp.
+	 * Potenciaci&oacute;n la base elevada al exp.
 	 * @param base la base
 	 * @param exp el exponente
 	 * @return base<sup>exp</sup>
@@ -380,7 +378,7 @@ public final class Big {
 	/**
 	 * Regresa el logaritmo de n en base base 
 	 * @param base la base
-	 * @param x el n�mero
+	 * @param x el n&uacute;mero
 	 * @return regresa log<sub>b</sub>x
 	 */
 	public static BigDecimal logB(BigDecimal x, BigDecimal base){
@@ -430,18 +428,18 @@ public final class Big {
 	}
 	
 	/**
-	 * Regresa la ra�z cuadrada positiva de a
-	 * @param a el n�mero
-	 * @return la ra�z cuadrada positiva de a
+	 * Regresa la ra&iacute;z cuadrada positiva de a
+	 * @param a el n&uacute;mero
+	 * @return la ra&iacute;z cuadrada positiva de a
 	 * @throws Exception 
 	 */
 	public static BigDecimal sqrt(double a) throws Exception{
 		if(Double.isInfinite(a)){
-			throw new Exception("N�mero infinito");
+			throw new Exception("n&uacute;mero infinito");
 		}else if(Double.isNaN(a)){
-			throw new Exception("N�mero indeterminado");
+			throw new Exception("n&uacute;mero indeterminado");
 		}else if(a<0){
-			throw new Exception("N�mero negativo");
+			throw new Exception("n&uacute;mero negativo");
 		}else{
 			BigDecimal sqrt = new BigDecimal(Double.toString(Math.sqrt(a)));
 			return (sqrt.stripTrailingZeros());
@@ -579,10 +577,10 @@ public final class Big {
 	}
 	
 	/**
-	 * Regresa el factorial del n�mero n
-	 * @param n el n�mero
+	 * Regresa el factorial del n&uacute;mero n
+	 * @param n el n&uacute;mero
 	 * @return n! el factorial de n en BigDecimal
-	 * @throws Exception si n est� fuera del rango 0 < n < 1676
+	 * @throws Exception si n est&aacute; fuera del rango 0 < n < 1676
 	 */
 	public static BigDecimal factorial(int n) throws Exception{
 		BigDecimal a = BigDecimal.ONE;

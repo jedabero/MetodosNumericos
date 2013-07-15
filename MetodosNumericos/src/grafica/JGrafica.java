@@ -434,7 +434,7 @@ public class JGrafica extends JPanel {
 	}
 	
 	/**
-	 * Metodo que determina si las divisiones principales se dibujan o no.
+	 * M&eacute;todo que determina si las divisiones principales se dibujan o no.
 	 * @param pg
 	 */
 	public void dibujaDivPrin(boolean pg){
@@ -443,7 +443,7 @@ public class JGrafica extends JPanel {
 	}
 	
 	/**
-	 * Me�todo que determina si las divisiones secundarias se dibujan o no.
+	 * M&eacute;todo que determina si las divisiones secundarias se dibujan o no.
 	 * @param sg
 	 */
 	public void dibujaDivSec(boolean sg){
@@ -452,7 +452,7 @@ public class JGrafica extends JPanel {
 	}
 	
 	/**
-	 * Metodo que determina si las etiquetas de eje se dibujan o no.
+	 * M&eacute;todo que determina si las etiquetas de eje se dibujan o no.
 	 * @param et
 	 */
 	public void dibujaEtiquetas(boolean et){
@@ -461,7 +461,7 @@ public class JGrafica extends JPanel {
 	}
 	
 	/**
-	 * Metodo que actualiza las funciones o los colores respectivos.
+	 * M&eacute;todo que actualiza las funciones o los colores respectivos.
 	 * @param alf 
 	 * @param alc 
 	 */

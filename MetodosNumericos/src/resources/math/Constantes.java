@@ -18,28 +18,28 @@ public interface Constantes {
 	 *
 	 */
 	public enum Tipo{
-		/** Constante para determinar x como término interno. */
+		/** Constante para determinar x como termino interno. */
 		MONO,
-		/** Constante para determinar la función como una constante. */
+		/** Constante para determinar la funcion como una constante. */
 		CONSTANTE,
-		/** Constante para determinar la función como Polinómica. */
+		/** Constante para determinar la funcion como Polinomica. */
 		POLINOMICA,
-		/** Constante para determinar la función como Trigonométrica. */
+		/** Constante para determinar la funcion como Trigonometrica. */
 		TRIGONOMETRICA,
-		/** Constante para determinar la función como Exponencial. */
+		/** Constante para determinar la funcion como Exponencial. */
 		EXPONENCIAL,
-		/** Constante para determinar la función como Logarítmica. */
+		/** Constante para determinar la funcion como Logaritmica. */
 		LOGARITMICA,
-		/** Constante para determinar la función como Racional. */
+		/** Constante para determinar la funcion como Racional. */
 		RACIONAL,
-		/** Constante para determinar la función como compuesta por otra. */
+		/** Constante para determinar la funcion como compuesta por otra. */
 		COMPUESTA,
 		/** */
 		
 	}
 	
 	/**
-	 * Grupo de funciones trigonométricas.
+	 * Grupo de funciones trigonometricas.
 	 * @author Jedabero
 	 *
 	 */

@@ -41,16 +41,16 @@ public class MetodosUI extends JFrame implements ActionListener {
 	private static int resultScale = 5;
 	
 	private static final String actions[] = {
-		"Raíces de Polinomios",	"Solución de Sistemas de Ecuaciones Lineales",
-		"Aproximación Polinomial", "Integración Numérica",
+		"Raices de Polinomios",	"Solucion de Sistemas de Ecuaciones Lineales",
+		"Aproximacion Polinomial", "Integracion Numerica",
 		"Ecuaciones diferenciales", "Salir", "Salir"};
 	private static final String ttt[] = new String[]{
-		"Grafica y obtén las raíces de polinomios. (Alt + A, R)",
+		"Grafica y obten las raices de polinomios. (Alt + A, R)",
 		"Soluciona sistemas Ax = B. (Alt + A, S)",
-		"Obtén un polinomio que aproxima los puntos una tabla tabulada. (Alt + A, A)",
-		"Métodos de integración numérica. (Alt + A, I)",
-		"Resolución de ecuaciones diferenciales ordinarias de primer orden. (Alt + A, I)",
-		"Terminar la aplicación. (Alt + A, L)","Terminar la aplicación. (Alt + A, L)"};
+		"Obten un polinomio que aproxima los puntos una tabla tabulada. (Alt + A, A)",
+		"Metodos de integracion numerica. (Alt + A, I)",
+		"Resolucion de ecuaciones diferenciales ordinarias de primer orden. (Alt + A, I)",
+		"Terminar la aplicacion. (Alt + A, L)","Terminar la aplicacion. (Alt + A, L)"};
 	private static final String iconsURL[] = {
 		"/ui/img/Pol.png", "/ui/img/SEL.png", "/ui/img/AproxF.png",
 		"/ui/img/Integration.png", "/ui/img/ecdiff.png", "/ui/img/x.png"};
@@ -66,7 +66,7 @@ public class MetodosUI extends JFrame implements ActionListener {
 	 * 
 	 */
 	public MetodosUI(){
-		super("Métodos Numéricos");
+		super("Metodos Numericos");
 		setSize(950, 650);
 		setMinimumSize(new Dimension(950, 650));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -93,7 +93,7 @@ public class MetodosUI extends JFrame implements ActionListener {
 		lblInitalText = new JLabel("<html>" +
 				"<H1><center>Elija el tema que desea realizar</center></H1>" +
 				"<center>Puede hacerlo presionando alguno de los botones abajo</center>" +
-				"<center>También puede hacerlo en el menú de Acciones. (Alt + A)</center>" +
+				"<center>Tambien puede hacerlo en el menu de Acciones. (Alt + A)</center>" +
 				"</html>", JLabel.CENTER);
 		lblInitalText.setBorder(BorderFactory.createEtchedBorder());
 		lblInitalText.setMinimumSize(new Dimension(500,160));
@@ -139,15 +139,15 @@ public class MetodosUI extends JFrame implements ActionListener {
 		
 		Add.menu(mnbPrincipal, "Opciones", 'O', new int[]{0},
 				new String[]{"Cifras Decimales"},
-				new String[]{"Cambia el número de decimales de los resultados"},
+				new String[]{"Cambia el numero de decimales de los resultados"},
 				new ActionListener[]{this}, null, null, null);
 		
 		Add.menu(mnbPrincipal, "Ayuda", 'Y',
 				new int[]{0, 0},
 				new String[]{
-				"Información", "Contacto"},
+				"Informacion", "Contacto"},
 				new String[]{
-				"Información sobre esta aplicación", "Información de contacto"},
+				"Informacion sobre esta aplicacion", "Informacion de contacto"},
 				new ActionListener[]{this, this},
 				null,
 				new boolean[][]{},
@@ -207,7 +207,7 @@ public class MetodosUI extends JFrame implements ActionListener {
 			SpinnerNumberModel sModel = new SpinnerNumberModel(resultScale, 0, 30, 1);
 			JSpinner jspn = new JSpinner(sModel);
 			JOptionPane.showMessageDialog(this, jspn,
-					"Indique el número de decimales a mostrar.",
+					"Indique el numero de decimales a mostrar.",
 					JOptionPane.PLAIN_MESSAGE);
 			setResultScale(Integer.parseInt(jspn.getValue().toString()));
 		}else if(action.equals("Contacto")){
@@ -217,12 +217,12 @@ public class MetodosUI extends JFrame implements ActionListener {
 					"<br />Facebook: /JEDABERO" +
 					"<br />e-mail: jedabero@hotmail.com" +
 					"</html>Yes, I'm obsessed whi the pseudonym jedabero",
-					"Información de Contacto", JOptionPane.INFORMATION_MESSAGE);
-		}else if(action.equals("Información")){
+					"Informacion de Contacto", JOptionPane.INFORMATION_MESSAGE);
+		}else if(action.equals("Informacion")){
 			JOptionPane.showMessageDialog(this, "<html>"+
-					"Software dedicado al desarrollo de métodos numéricos." +
+					"Software dedicado al desarrollo de metodos numericos." +
 					"</html>",
-					"Información", JOptionPane.INFORMATION_MESSAGE);
+					"Informacion", JOptionPane.INFORMATION_MESSAGE);
 		}
 		
 	}
