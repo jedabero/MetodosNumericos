@@ -56,7 +56,7 @@ public class CoordenadasGraficasMIA extends MouseInputAdapter{
 	}
 	
 	public void mousePressed(MouseEvent me) {
-		O.pln("Pressed");
+		O.pln("Mouse pressed at (x="+me.getX()+", y="+me.getY()+").");
 		prevPoint = me.getPoint();
 	}
 
@@ -78,7 +78,7 @@ public class CoordenadasGraficasMIA extends MouseInputAdapter{
 	}
 
 	public void mouseReleased(MouseEvent me) {
-		O.pln("Released");
+		O.pln("Mouse released at (x="+me.getX()+", y="+me.getY()+").");
 	}
 	
 	public void mouseWheelMoved(MouseWheelEvent mwe) {

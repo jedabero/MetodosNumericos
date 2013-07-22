@@ -16,6 +16,8 @@ public class GraficaFuncion {
 	
 	private boolean isSeparatePoints;	//Determina si la grafica es punteada o no.
 	
+	
+	
 	/**
 	 * Crea una g&aacute;fica gu&iacute;ada por los puntos.
 	 * @param bp los puntos
@@ -36,7 +38,7 @@ public class GraficaFuncion {
 		
 		//BigPoint prevP = null;
 		for (BigPoint currP : puntos) {
-			//BigDecimal xa =
+			BigDecimal xa;
 			
 			
 			/*if(currP==null){
