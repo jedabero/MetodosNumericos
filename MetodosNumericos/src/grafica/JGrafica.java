@@ -154,7 +154,7 @@ public class JGrafica extends JPanel {
 		for (lif = funcionList.listIterator(); lif.hasNext();) {
 			Funcion f = lif.next();//current function
 			int index = lif.previousIndex();
-			GraficaFuncion gpf = new GraficaFuncion(f, X, numeroPuntos-1);
+			GraficaFuncion gpf = new GraficaFuncion(f, X, numeroPuntos-1, Y);
 			alfCoords.add(index, gpf);
 			
 			maxy[index] = gpf.getY().max();
