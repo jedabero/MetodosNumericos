@@ -50,7 +50,7 @@ public class JGrafica extends JPanel {
 	private BigInterval integralX;//TODO The x interval of integration
 	
 	//The ArrayList that contains the arrays of coordinates of the functions.
-	private ArrayList<GraficaFuncion> alfCoords;
+	private ArrayList<BigPoint[]> alfCoords;
 	
 	private ArrayList<Funcion> funcionList;	//The list of functions
 	
@@ -144,7 +144,7 @@ public class JGrafica extends JPanel {
 	}
 	
 	private void calculos(){
-		alfCoords = new ArrayList<GraficaFuncion>();
+		alfCoords = new ArrayList<BigPoint[]>();
 		
 		//Arrays to stores the max and min values of Y
 		BigDecimal[] maxy = new BigDecimal[funcionList.size()];
@@ -154,11 +154,17 @@ public class JGrafica extends JPanel {
 		for (lif = funcionList.listIterator(); lif.hasNext();) {
 			Funcion f = lif.next();//current function
 			int index = lif.previousIndex();
-			GraficaFuncion gpf = new GraficaFuncion(f, X, numeroPuntos-1, Y);
-			alfCoords.add(index, gpf);
+			BigDecimal px[] = X.conjuntoPuntos(numeroPuntos-1);
+			BigDecimal y[] = new BigDecimal[numeroPuntos];
+			BigPoint punto[] = new BigPoint[numeroPuntos];
+			for (int i = 0; i < numeroPuntos; i++) {
+				y[i] = f.valorImagen(px[i]);
+				punto[i] = new BigPoint(px[i], y[i]);
+			}
+			alfCoords.add(index, punto);
 			
-			maxy[index] = gpf.getY().max();
-			miny[index] = gpf.getY().min();
+			maxy[index] = Big.max(y);
+			miny[index] = Big.min(y);
 		}
 		BigDecimal maxY = Big.max(maxy);
 		BigDecimal minY = Big.min(miny);
@@ -205,9 +211,9 @@ public class JGrafica extends JPanel {
 		
 		//Draw the functions
 		g2d.setStroke(new BasicStroke(2));
-		ListIterator<GraficaFuncion> libdc;//Coordinates iterator
+		ListIterator<BigPoint[]> libdc;//Coordinates iterator
 		for (libdc = alfCoords.listIterator(); libdc.hasNext();) {
-			BigPoint[] bdcArr = libdc.next().getPuntos();//current bdCoord array
+			BigPoint[] bdcArr = libdc.next();//current bdCoord array
 			int index = libdc.previousIndex();
 			g2d.setColor(colorList.get(index));
 			ArrayList<Point> alp = changeCoordToPoint(bdcArr);
