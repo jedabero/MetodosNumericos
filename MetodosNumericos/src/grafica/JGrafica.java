@@ -227,19 +227,25 @@ public class JGrafica extends JPanel {
 		
 	}
 	
+	private Point bigPointToPoint(BigPoint cord) {
+		BigDecimal xnum = cord.x().subtract(X.min());
+		BigDecimal xdiv = xnum.divide(X.length(), 5, RoundingMode.HALF_UP);
+		int x = (int)(gDim.width*(xdiv.doubleValue()));
+		
+		BigDecimal ynum = cord.y().subtract(Y.min());
+		BigDecimal ydiv = ynum.divide(Y.length(), 5, RoundingMode.HALF_UP);
+		int y = (int)(gDim.height*(1-ydiv.doubleValue()));
+		
+		Point p = new Point(x,y);
+		return p;
+	}
+	
 	private ArrayList<Point> changeCoordToPoint(BigPoint[] bdcArr){
 		ArrayList<Point> aLpP = new ArrayList<Point>();
 		for(int i=0;i<bdcArr.length;i++){
 			BigPoint cord = bdcArr[i];
-			BigDecimal xnum = cord.x().subtract(X.min());
-			BigDecimal xdiv = xnum.divide(X.length(), 5, RoundingMode.HALF_UP);
-			int x = (int)(gDim.width*(xdiv.doubleValue()));
-			BigDecimal ynum = cord.y().subtract(Y.min());
-			BigDecimal ydiv = ynum.divide(Y.length(), 5, RoundingMode.HALF_UP);
-			int y = (int)(gDim.height*(1-ydiv.doubleValue()));
 			
-			
-			Point p = new Point(x,y);
+			Point p = bigPointToPoint(cord);
 			p.translate(gCoords.x, gCoords.y);
 			
 			boolean pOutOfScope = p.y<gCoords.y||p.y>gCoords.y+gDim.height;
@@ -287,14 +293,8 @@ public class JGrafica extends JPanel {
 		for(int i=0;i<bdcArr.length;i++){
 			BigPoint cord = bdcArr[i];
 			if((cord.x().compareTo(integralX.min())>=0)&&(cord.x().compareTo(integralX.max())<=0)){
-				BigDecimal xnum = cord.x().subtract(X.min());
-				BigDecimal xdiv = xnum.divide(X.length(), 5, RoundingMode.HALF_UP);
-				int x = (int)(gDim.width*(xdiv.doubleValue()));
-				BigDecimal ynum = cord.y().subtract(Y.min());
-				BigDecimal ydiv = ynum.divide(Y.length(), 5, RoundingMode.HALF_UP);
-				int y = (int)(gDim.height*(1-ydiv.doubleValue()));
 				
-				Point p = new Point(x,y);
+				Point p = bigPointToPoint(cord);
 				p.translate(gCoords.x, gCoords.y);
 				
 				if(p.y<gCoords.y){
