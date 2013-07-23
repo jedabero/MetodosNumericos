@@ -216,80 +216,10 @@ public class JGrafica extends JPanel {
 			BigPoint[] bdcArr = libdc.next();//current bdCoord array
 			int index = libdc.previousIndex();
 			g2d.setColor(colorList.get(index));
-			GraficaFuncion gf = new GraficaFuncion(bdcArr, false, X, Y);
-			g2d.draw(gf.getGraficaFuncion(gCoords, gDim));
-			if(mostrarAreaIntegral){
-				ArrayList<Point> alpai = changeCoordToPointAreaIntegral(bdcArr);
-				g2d.draw(polylineShapeAreaIntegral(alpai));
-			}
-			
+			GraficaFuncion gf = new GraficaFuncion(bdcArr, false, X, Y, integralX);
+			g2d.draw(gf.getGraficaFuncion(gCoords, gDim, xAxis, mostrarAreaIntegral));
 		}
 		
-	}
-	
-	private Point bigPointToPoint(BigPoint cord) {
-		BigDecimal xnum = cord.x().subtract(X.min());
-		BigDecimal xdiv = xnum.divide(X.length(), 5, RoundingMode.HALF_UP);
-		int x = (int)(gDim.width*(xdiv.doubleValue()));
-		
-		BigDecimal ynum = cord.y().subtract(Y.min());
-		BigDecimal ydiv = ynum.divide(Y.length(), 5, RoundingMode.HALF_UP);
-		int y = (int)(gDim.height*(1-ydiv.doubleValue()));
-		
-		Point p = new Point(x,y);
-		return p;
-	}
-	
-	private ArrayList<Point> changeCoordToPointAreaIntegral(BigPoint[] bdcArr){
-		ArrayList<Point> aLpP = new ArrayList<Point>();
-		if(integralX==null){
-			integralX = X;
-		}
-		
-		for(int i=0;i<bdcArr.length;i++){
-			BigPoint cord = bdcArr[i];
-			if((cord.x().compareTo(integralX.min())>=0)&&(cord.x().compareTo(integralX.max())<=0)){
-				
-				Point p = bigPointToPoint(cord);
-				p.translate(gCoords.x, gCoords.y);
-				
-				if(p.y<gCoords.y){
-					p.y = gCoords.y;
-				}else if(p.y>gCoords.y+gDim.height){
-					p.y = gCoords.y+gDim.height;
-				}
-				
-				aLpP.add(p);
-			}
-		}
-		return aLpP;
-	}
-	
-	private Shape polylineShapeAreaIntegral(ArrayList<Point> alP){
-		Path2D p2d = new Path2D.Double();
-		ListIterator<Point> iterator;
-		boolean isPointFirst = true;
-		Point prevPoint = null;
-		for (iterator = alP.listIterator(); iterator.hasNext();) {
-			Point currentPoint = iterator.next();
-			
-			if(currentPoint==null){
-				isPointFirst = true;
-			}else{
-				if(isPointFirst){
-					p2d.moveTo(currentPoint.x, currentPoint.y);
-					isPointFirst = false;
-				}else{
-					p2d.lineTo(prevPoint.x, xAxis);
-					p2d.lineTo(currentPoint.x, xAxis);
-					p2d.lineTo(currentPoint.x, currentPoint.y);
-				}
-			}
-			
-			prevPoint = currentPoint;
-		}
-		
-		return p2d;
 	}
 	
 	private void dibujarEjesDivisionesYEtiquetas(Graphics2D g2D, boolean divP,
