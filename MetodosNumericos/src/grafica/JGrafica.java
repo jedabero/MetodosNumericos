@@ -216,8 +216,8 @@ public class JGrafica extends JPanel {
 			BigPoint[] bdcArr = libdc.next();//current bdCoord array
 			int index = libdc.previousIndex();
 			g2d.setColor(colorList.get(index));
-			ArrayList<Point> alp = changeCoordToPoint(bdcArr);
-			g2d.draw(polylineShape(alp));
+			GraficaFuncion gf = new GraficaFuncion(bdcArr, false, X, Y);
+			g2d.draw(gf.getGraficaFuncion(gCoords, gDim));
 			if(mostrarAreaIntegral){
 				ArrayList<Point> alpai = changeCoordToPointAreaIntegral(bdcArr);
 				g2d.draw(polylineShapeAreaIntegral(alpai));
@@ -238,50 +238,6 @@ public class JGrafica extends JPanel {
 		
 		Point p = new Point(x,y);
 		return p;
-	}
-	
-	private ArrayList<Point> changeCoordToPoint(BigPoint[] bdcArr){
-		ArrayList<Point> aLpP = new ArrayList<Point>();
-		for(int i=0;i<bdcArr.length;i++){
-			BigPoint cord = bdcArr[i];
-			
-			Point p = bigPointToPoint(cord);
-			p.translate(gCoords.x, gCoords.y);
-			
-			boolean pOutOfScope = p.y<gCoords.y||p.y>gCoords.y+gDim.height;
-			if(pOutOfScope){
-				p = null;
-			}
-			
-			aLpP.add(p);
-		}
-		return aLpP;
-	}
-	
-	private Shape polylineShape(ArrayList<Point> alP){
-		Path2D p2d = new Path2D.Double();
-		ListIterator<Point> iterator;
-		boolean isPointFirst = true;
-		
-		for (iterator = alP.listIterator(); iterator.hasNext();) {
-			Point currentPoint = iterator.next();
-			
-			if(currentPoint==null){
-				//O.pln(iterator.previousIndex()+""+currentPoint);
-				isPointFirst = true;
-			}else{
-				//O.pln(iterator.previousIndex()+currentPoint.toString().substring(14));
-				if(isPointFirst){
-					p2d.moveTo(currentPoint.x, currentPoint.y);
-					isPointFirst = false;
-				}else{
-					p2d.lineTo(currentPoint.x, currentPoint.y);
-				}
-			}
-			
-		}
-		
-		return p2d;
 	}
 	
 	private ArrayList<Point> changeCoordToPointAreaIntegral(BigPoint[] bdcArr){

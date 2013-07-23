@@ -5,6 +5,7 @@ import java.awt.Point;
 import java.awt.Shape;
 import java.awt.geom.Path2D;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 import resources.math.BigInterval;
 
@@ -38,21 +39,26 @@ public class GraficaFuncion {
 		
 		//BigPoint prevP = null;
 		for (BigPoint currP : puntos) {
-			BigDecimal xa;
+			BigDecimal xnum = currP.x().subtract(X.min());
+			BigDecimal xdiv = xnum.divide(X.length(), 5, RoundingMode.HALF_UP);
+			int x = (int)(dim.width*(xdiv.doubleValue()));
 			
+			BigDecimal ynum = currP.y().subtract(Y.min());
+			BigDecimal ydiv = ynum.divide(Y.length(), 5, RoundingMode.HALF_UP);
+			int y = (int)(dim.height*(1-ydiv.doubleValue()));
 			
-			/*if(currP==null){
-				//O.pln(iterator.previousIndex()+""+currentPoint);
+			Point p = new Point(x,y);
+			p.translate(coord.x, coord.y);
+			if((p.y<coord.y)||(p.y>coord.y+dim.height)){
 				isPointFirst = true;
-			}else{
-				//O.pln(iterator.previousIndex()+currentPoint.toString().substring(14));
-				if(isPointFirst){
-					p2d.moveTo(currP.x, currP.y);
+			} else {
+				if (isPointFirst) {
+					p2d.moveTo(p.x, p.y);
 					isPointFirst = false;
-				}else{
-					p2d.lineTo(currP.x, currP.y);
+				} else {
+					p2d.lineTo(p.x, p.y);
 				}
-			}*/
+			}
 		}
 		
 		return p2d;
