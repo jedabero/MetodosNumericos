@@ -3,6 +3,8 @@
  */
 package ui.raices;
 
+import grafica.JGrafica;
+
 import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -22,9 +24,8 @@ import javax.swing.JSeparator;
 import resources.Add;
 import resources.O;
 import resources.math.BigInterval;
-import ui.EditaPolinomioPanel;
 import resources.math.funciones.Funcion;
-import grafica.JGrafica;
+import ui.EditaPolinomioPanel;
 
 /**
  * @author Jedabero
@@ -138,7 +139,9 @@ public class RaicesUI extends JPanel  implements ActionListener {
 	private void grafic(ArrayList<Funcion> alf, ArrayList<Color> alc){
 		frmGrafica = new JFrame(""+funcion);
 		frmGrafica.setSize(800, 400);
-		JGrafica jg = new JGrafica(alf, alc, frmGrafica.getSize(),
+		ArrayList<Boolean> b = new ArrayList<Boolean>();
+		b.add(false);
+		JGrafica jg = new JGrafica(alf, alc, b, frmGrafica.getSize(),
 				new BigInterval(BigDecimal.ONE.negate(), BigDecimal.ONE),
 				new BigInterval(BigDecimal.ONE.negate(), BigDecimal.ONE));
 		jg.setBackground(Color.WHITE);

@@ -1,6 +1,5 @@
 package ui;
 
-import resources.math.funciones.Funcion;
 import grafica.JGrafica;
 
 import java.awt.Color;
@@ -34,6 +33,7 @@ import resources.LangResource;
 import resources.O;
 import resources.math.Constantes.FuncionTrig;
 import resources.math.Constantes.Tipo;
+import resources.math.funciones.Funcion;
 
 /**
  * Esta clase crea una ventana de dialogo en la que se mostrar�n los

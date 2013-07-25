@@ -22,11 +22,10 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import resources.math.edos.EcuacionDiferencialOrden1;
-import resources.math.funciones.Funcion;
-
 import resources.Add;
 import resources.math.BigInterval;
+import resources.math.edos.EcuacionDiferencialOrden1;
+import resources.math.funciones.Funcion;
 import ui.EditaPolinomioPanel;
 import ui.main.app.MetodosUI;
 

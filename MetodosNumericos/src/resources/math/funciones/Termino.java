@@ -9,9 +9,9 @@ import java.math.RoundingMode;
 import resources.CustomException;
 import resources.O;
 import resources.math.Big;
+import resources.math.BigInterval;
 import resources.math.Constantes.FuncionTrig;
 import resources.math.Constantes.Tipo;
-import resources.math.BigInterval;
 import resources.math.M;
 
 /**

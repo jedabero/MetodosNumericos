@@ -4,6 +4,8 @@
 
 package ui.main.app;
 
+import grafica.JGrafica;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -42,11 +44,10 @@ import resources.LangResource;
 import resources.O;
 import resources.math.BigInterval;
 import resources.math.M;
+import resources.math.funciones.Funcion;
 import ui.EditaDimensionesDialog;
 import ui.EditaFuncionDialog;
 import ui.EditaIntervaloDialog;
-import resources.math.funciones.Funcion;
-import grafica.JGrafica;
 
 /**
  * 
@@ -70,6 +71,7 @@ public class GraficadorUI{
 	private JPanel panelGrid;
 	
 	private ArrayList<Funcion> listaFunciones;
+	private ArrayList<Boolean> listaSeparate;
 	private JGrafica grafica;
 	private BigInterval xInterval;
 	private BigInterval yInterval;
@@ -108,7 +110,10 @@ public class GraficadorUI{
 				((int)(25.6*Math.random()))*10,
 				((int)(25.6*Math.random()))*10);
 		colores.add(fg);
-
+		
+		listaSeparate = new ArrayList<Boolean>();
+		listaSeparate.add(false);
+		
 		funcionJRB = new ArrayList<JCheckBox>();
 		JCheckBox jrb = new JCheckBox(f.getSpecific());
 		jrb.setForeground(fg);
@@ -117,8 +122,8 @@ public class GraficadorUI{
 		
 		
 		yInterval = new BigInterval(BigDecimal.ONE.negate(), BigDecimal.ONE);
-		grafica = new JGrafica(listaFunciones, colores, new Dimension(500, 500),
-				xInterval, yInterval);
+		grafica = new JGrafica(listaFunciones, colores, listaSeparate,
+				new Dimension(500, 500), xInterval, yInterval);
 		
 		panelGrid = new JPanel(new GridBagLayout());
 		
@@ -351,7 +356,7 @@ public class GraficadorUI{
 				AbstractButton ab = (AbstractButton) e.getSource();
 				String strObj = ab.getText();
 				
-				JGrafica jg = new JGrafica(listaFunciones, colores,
+				JGrafica jg = new JGrafica(listaFunciones, colores, listaSeparate,
 						grafica.getgDim(), grafica.getXinterval(), grafica.getYinterval());
 				
 				if(strObj.equals(l.s("mArchSave2"))){

@@ -68,7 +68,6 @@ public class GraficaFuncion {
 				}
 			}
 			
-			
 			if((p.y<coord.y)||(p.y>coord.y+dim.height)){
 				isPointFirst = true;
 			} else {
@@ -80,7 +79,12 @@ public class GraficaFuncion {
 						p2d.lineTo(prevP.x, xAxis);
 						p2d.lineTo(intP.x, xAxis);
 					}
-					p2d.lineTo(p.x, p.y);
+					if(isSeparatePoints){
+						p2d.lineTo(prevP.x+1, prevP.y+1);
+						p2d.moveTo(p.x, p.y);
+					}else{
+						p2d.lineTo(p.x, p.y);
+					}
 				}
 			}
 			prevP = p;

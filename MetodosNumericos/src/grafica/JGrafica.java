@@ -10,8 +10,6 @@ import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
-import java.awt.Shape;
-import java.awt.geom.Path2D;
 import java.awt.image.BufferedImage;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -53,6 +51,9 @@ public class JGrafica extends JPanel {
 	private ArrayList<BigPoint[]> alfCoords;
 	
 	private ArrayList<Funcion> funcionList;	//The list of functions
+	private ArrayList<Boolean> areSeparate;	//List of flags that determine if
+											//the functions should be drawn as
+											//separate points
 	
 	private ArrayList<Color> colorList;	//The list of colours
 	
@@ -216,7 +217,7 @@ public class JGrafica extends JPanel {
 			BigPoint[] bdcArr = libdc.next();//current bdCoord array
 			int index = libdc.previousIndex();
 			g2d.setColor(colorList.get(index));
-			GraficaFuncion gf = new GraficaFuncion(bdcArr, false, X, Y, integralX);
+			GraficaFuncion gf = new GraficaFuncion(bdcArr, areSeparate.get(index), X, Y, integralX);
 			g2d.draw(gf.getGraficaFuncion(gCoords, gDim, xAxis, mostrarAreaIntegral));
 		}
 		
@@ -367,10 +368,12 @@ public class JGrafica extends JPanel {
 	 * 
 	 */
 	public JGrafica(ArrayList<Funcion> funcionList, ArrayList<Color> colorList,
-			Dimension dim, BigInterval xInterval, BigInterval yInterval){
+			ArrayList<Boolean> sep, Dimension dim, BigInterval xInterval, 
+			BigInterval yInterval){
 		setSize(dim);
 		this.funcionList = funcionList;
 		this.colorList = colorList;
+		this.areSeparate = sep;
 		this.X = xInterval;
 		this.Y = yInterval;
 		step = BigDecimal.valueOf(0.01);//TODO arreglos respecto al paso

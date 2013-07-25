@@ -20,8 +20,8 @@ import javax.swing.SpinnerNumberModel;
 import resources.Add;
 import resources.O;
 import resources.math.BigInterval;
-import ui.main.app.MetodosUI;
 import resources.math.funciones.Funcion;
+import ui.main.app.MetodosUI;
 
 /**
  * @author Jedabero

@@ -7,8 +7,8 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 import resources.math.Big;
-import resources.math.Constantes.Tipo;
 import resources.math.BigInterval;
+import resources.math.Constantes.Tipo;
 import resources.math.funciones.Funcion;
 import resources.math.funciones.Termino;
 
