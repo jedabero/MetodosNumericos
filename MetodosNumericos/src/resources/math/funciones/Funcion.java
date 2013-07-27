@@ -126,7 +126,7 @@ public class Funcion {
 	}
 	
 	/**
-	 * @param lt la lista de terminos que crea la funcio�n
+	 * @param lt la lista de terminos que crea la funci&oacute;n
 	 * 
 	 */
 	public Funcion(ArrayList<Termino> lt){
@@ -218,7 +218,7 @@ public class Funcion {
 			break;
 
 		default:
-			//TODO soportar sumas de t�rminos de tipos que no sean POLINOMIO
+			//TODO soportar sumas de t&eacute;rminos de tipos que no sean POLINOMIO
 			throw new CustomException("tipo de suma no soportado todavia");
 		}
 		tempF.initGenEsp();
@@ -353,7 +353,7 @@ public class Funcion {
 			for (int i = 0; i < numPuntos; i++) {
 				//divisor = Productoria(Xi - Xj)
 				BigDecimal divisor = Big.productoDiferencias(i, x);
-				//F(Xi) y cada divisor no dependen de X, por lo tanto su divisi�on
+				//F(Xi) y cada divisor no dependen de X, por lo tanto su division
 				//es una constante que luego sera multiplicada a cada polinomio
 				BigDecimal fxi_PIdxi = fx[i].divide(divisor, 10, RoundingMode.HALF_UP);
 				//(x-x0)(x-x1)...(x-xn)
@@ -498,7 +498,7 @@ public class Funcion {
 		//Se halla la distancia entre puntos
 		BigDecimal h = ab.length().divide(BigDecimal.valueOf(n), 15, RoundingMode.HALF_UP);
 		h = h.stripTrailingZeros();
-		//Luego se hallan los puntos entre a y b y los valores de la funci�n en estos
+		//Luego se hallan los puntos entre a y b y los valores de la funcion en estos
 		BigDecimal x[] = new BigDecimal[n-1];
 		BigDecimal fx[] = new BigDecimal[n-1];
 		for (int i = 0; i < x.length; i++) {
@@ -507,7 +507,7 @@ public class Funcion {
 		}
 		//Se suman cada uno
 		BigDecimal sumatfx = Big.suma(fx);
-		//Luego se multiplica la suma por 2 y se a�aden fa y fb 
+		//Luego se multiplica la suma por 2 y se anaden fa y fb 
 		sumatfx = sumatfx.multiply(BigDecimal.valueOf(2)).add(fab.min()).add(fab.max());
 		//El resultado se multiplica por h/2
 		BigDecimal res = h.divide(BigDecimal.valueOf(2)).multiply(sumatfx);
@@ -516,11 +516,11 @@ public class Funcion {
 	}
 	
 	/**
-	 * Calcula el valor de la integral de la funci�n desde a hasta b por el
-	 * m�todo Simpson simple 1/3.
-	 * @param ab intervalo de integraci�n
+	 * Calcula el valor de la integral de la funci&oacute;n desde a hasta b por el
+	 * m&eacute;todo Simpson simple 1/3.
+	 * @param ab intervalo de integraci&oacute;n
 	 * @param scale 
-	 * @return el valor de la integral de la funci�n desde a hasta b.
+	 * @return el valor de la integral de la funci&oacute;n desde a hasta b.
 	 */
 	public BigDecimal integracionSimpsonSimple1_3(BigInterval ab){
 		BigInterval fab = valoresExtremos(ab);//Se obtiene fa y fb
@@ -539,25 +539,25 @@ public class Funcion {
 	}
 	
 	/**
-	 * Calcula el valor de la integral de la funci�n desde a hasta b por el
-	 * m�todo Simpson simple 3/8.
-	 * @param ab intervalo de integraci�n
+	 * Calcula el valor de la integral de la funci&oacute;n desde a hasta b por el
+	 * m&eacute;todo Simpson simple 3/8.
+	 * @param ab intervalo de integraci&oacute;n
 	 * @param scale 
-	 * @return el valor de la integral de la funci�n desde a hasta b.
+	 * @return el valor de la integral de la funci&oacute;n desde a hasta b.
 	 */
 	public BigDecimal integracionSimpsonSimple3_8(BigInterval ab){
 		BigInterval fab = valoresExtremos(ab);//Se obtiene fa y fb
 		//Se halla la distancia entre puntos
 		BigDecimal h = ab.length().divide(BigDecimal.valueOf(3), 15, RoundingMode.HALF_UP);
 		h = h.stripTrailingZeros();
-		//Luego se hallan los puntos entre a y b y los valores de la funci�n en estos
+		//Luego se hallan los puntos entre a y b y los valores de la funcion en estos
 		BigDecimal x1 = ab.min().add(h);
 		BigDecimal x2 = ab.max().subtract(h);
 		BigDecimal fx1 = valorImagen(x1);
 		BigDecimal fx2 = valorImagen(x2);
 		//Se suman cada uno
 		BigDecimal sumatfx = fx1.add(fx2);
-		//Luego se multiplica la suma por 2 y se a�aden fa y fb 
+		//Luego se multiplica la suma por 2 y se anaden fa y fb 
 		sumatfx = sumatfx.multiply(BigDecimal.valueOf(3)).add(fab.min()).add(fab.max());
 		//El resultado se multiplica por h/2
 		BigDecimal res = h.multiply(BigDecimal.valueOf(0.375)).multiply(sumatfx);
@@ -565,12 +565,12 @@ public class Funcion {
 	}
 	
 	/**
-	 * Calcula el valor de la integral de la funci�n desde a hasta b por el
-	 * m�todo Simpson compuesto.
-	 * @param ab intervalo de integraci�n
+	 * Calcula el valor de la integral de la funci&oacute;n desde a hasta b por el
+	 * m&eacute;todo Simpson compuesto.
+	 * @param ab intervalo de integraci&oacute;n
 	 * @param n subintervals
 	 * @param scale 
-	 * @return el valor de la integral de la funci�n desde a hasta b.
+	 * @return el valor de la integral de la funci&oacute;n desde a hasta b.
 	 */
 	public BigDecimal integracionSimpsonCompuesto(BigInterval ab, int n){
 		n = (n%2==0)? n : n+1; //Se fuerza n como par
@@ -578,7 +578,7 @@ public class Funcion {
 		//Se halla la distancia entre puntos
 		BigDecimal h = ab.length().divide(BigDecimal.valueOf(n), 15, RoundingMode.HALF_UP);
 		h = h.stripTrailingZeros();
-		//Luego se hallan los puntos entre a y b y los valores de la funci�n en estos
+		//Luego se hallan los puntos entre a y b y los valores de la funcion en estos
 		BigDecimal x[] = new BigDecimal[n-1];
 		BigDecimal fx[] = new BigDecimal[n-1];
 		for (int i = 0; i < x.length; i++) {
@@ -590,9 +590,9 @@ public class Funcion {
 		BigDecimal sumapar = Big.sumaPosImpares(fx);//Se suman los pares
 		//Se multiplica sumaimp por 4
 		BigDecimal sumatfx = sumaimp.multiply(BigDecimal.valueOf(4));
-		//Se multiplica sumapar por 2 y se a�ade al acumulado
+		//Se multiplica sumapar por 2 y se anade al acumulado
 		sumatfx = sumatfx.add(sumapar.multiply(BigDecimal.valueOf(2)));
-		//Luego se a�aden fa y fb 
+		//Luego se anaden fa y fb 
 		sumatfx = sumatfx.add(fab.min()).add(fab.max());
 		//El resultado se multiplica por h/2
 		BigDecimal res = h.divide(BigDecimal.valueOf(3), 15, RoundingMode.HALF_UP);
@@ -621,10 +621,10 @@ public class Funcion {
 	
 	/**
 	 * @param tol tolerancia del error
-	 * @param maxIt m�ximo n�mero de iteraciones
+	 * @param maxIt m&aacute;ximo n&uacute;mero de iteraciones
 	 * @param x0 punto inicial
-	 * @return la ra�z m�s cercana a x0 y el error
-	 * @throws Exception 
+	 * @return la ra&iacute;z m&aacute;s cercana a x0 y el error
+	 * @throws Exception Si no llega a la convergencia
 	 */
 	public BigDecimal[] metodoPuntoFijo(BigDecimal tol, int maxIt, BigDecimal x0)
 			throws Exception{
@@ -634,7 +634,7 @@ public class Funcion {
 		Termino t0 = getTerminos().get(0);
 		BigDecimal err = null;
 		boolean fin = false;	//Switch
-		int k = 0;				//�ndice de la iteraci�n
+		int k = 0;				//Indice de la iteraci&oacute;n
 		BigDecimal xr = BigDecimal.ZERO;
 		while((!fin)&&(k<=maxIt)){
 			System.out.println("x0 = "+x0);
@@ -647,8 +647,8 @@ public class Funcion {
 			if (e.compareTo(tol)<1) {	//Error igual o por debajo de la tolerancia?
 				fin = true;
 			}
-			k++;	//Siguiente iteraci�n
-			//Asignaci�n de variables para siguiente iteraci�n
+			k++;	//Siguiente iteracion
+			//Asignacion de variables para siguiente iteracion
 			BigDecimal temp = x0;
 			x0 = xr;
 			xr = temp;
@@ -659,7 +659,7 @@ public class Funcion {
 			O.pln("x = "+x0);
 			return new BigDecimal[]{x0.stripTrailingZeros(), err.stripTrailingZeros()};
 		} else {
-			throw new Exception("No converge dentro del valor m�ximo de iteraci�n");
+			throw new Exception("No converge dentro del valor m&aacute;ximo de iteraci&oacute;n");
 		}
 		
 	}
@@ -679,17 +679,17 @@ public class Funcion {
 	
 	/**
 	 * @param tol tolerancia del error
-	 * @param maxIt m�ximo n�mero de iteraciones
+	 * @param maxIt m&aacute;ximo n&uacute;mero de iteraciones
 	 * @param ab intervalo a evaluar
-	 * @return la ra�z dentro del intervalo [a,b] y el error
-	 * @throws Exception
+	 * @return la ra&iacute;z dentro del intervalo [a,b] y el error
+	 * @throws Exception Si no existe la raiz dentro del intervalo o no llega a la convergencia.
 	 */
 	public BigDecimal[] metodoBiseccion(BigDecimal tol, int maxIt, BigInterval ab)
 			throws Exception {
 		if (rootExistentialityCriterion(ab)) {
 			BigDecimal err = null;
 			boolean fin = false;	//Switch
-			int k = 0;				//�ndice de la iteraci�n
+			int k = 0;				//Indice de la iteraci&oacute;n
 			BigDecimal xa = BigDecimal.ZERO;
 			while((!fin)&&(k<=maxIt)){
 				BigDecimal xm = ab.centre(tol.scale()+3);	//valor medio
@@ -717,20 +717,20 @@ public class Funcion {
 				O.pln("x = "+xa);
 				return new BigDecimal[]{xa.stripTrailingZeros(), err.stripTrailingZeros()};
 			} else {
-				throw new Exception("No converge dentro del valor m�ximo de iteraci�n");
+				throw new Exception("No converge dentro del valor m&aacute;ximo de iteraci&oacute;n");
 			}
 			
 		} else {
-			throw new Exception("No existe la ra�z dentro del intervalo.");
+			throw new Exception("No existe la ra&iacute;z dentro del intervalo.");
 		}
 	}
 	
 	/**
 	 * @param tol tolerancia del error
-	 * @param maxIt maximo numero de iteraciones
+	 * @param maxIt m&aacute;ximo numero de iteraciones
 	 * @param x0 punto inicial
-	 * @return la raiz mas cercana a x0 y el error
-	 * @throws Exception
+	 * @return la ra&iacute;z m&aacute;s cercana a x0 y el error
+	 * @throws Exception Si no llega a la convergencia
 	 */
 	public BigDecimal[] metodoNewtonRaphson(BigDecimal tol, int maxIt,
 			BigDecimal x0) throws Exception {
@@ -757,23 +757,23 @@ public class Funcion {
 			O.pln("x = "+x0);
 			return new BigDecimal[]{x0.stripTrailingZeros(), err.stripTrailingZeros()};
 		} else {
-			throw new Exception("No converge dentro del valor maximo de iteracipn");
+			throw new Exception("No converge dentro del valor m&aacuteximo de iteraci&oacute;n");
 		}
 	}
 	
 	/**
 	 * @param tol tolerancia del error
-	 * @param maxIt m�ximo n�mero de iteraciones
+	 * @param maxIt m&aacute;ximo n&uacute;mero de iteraciones
 	 * @param x0 punto inicial
 	 * @param x1 punto secundario
-	 * @return la ra�z m�s cercana a x0 y x1 y el error
-	 * @throws Exception
+	 * @return la ra&iacute;z m&aacute;s cercana a x0 y x1 y el error
+	 * @throws Exception Si no llega a la convergencia
 	 */
 	public BigDecimal[] metodoSecante(BigDecimal tol, int maxIt, BigDecimal x0,
 			BigDecimal x1) throws Exception {
 		BigDecimal err = null;
 		boolean fin = false;	//Switch
-		int k = 0;				//�ndice de la iteraci�n
+		int k = 0;				//indice de la iteraci&oacute;n
 		while((!fin)&&(k<=maxIt)){
 			BigDecimal fx0 = valorImagen(x0);
 			BigDecimal fx1 = valorImagen(x1);
@@ -796,15 +796,15 @@ public class Funcion {
 			O.pln("x = "+x0);
 			return new BigDecimal[]{x0.stripTrailingZeros(), err.stripTrailingZeros()};
 		} else {
-			throw new Exception("No converge dentro del valor m�ximo de iteraci�n");
+			throw new Exception("No converge dentro del valor m&aacute;ximo de iteraci&oacute;n");
 		}
 	}
 	
 	/**
 	 * @param tol tolerancia del error
-	 * @param maxIt m�ximo n�mero de iteraciones
+	 * @param maxIt m&aacute;ximo n&uacute;mero de iteraciones
 	 * @param ab intervalo a evaluar
-	 * @return la ra�z dentro del intervalo [a,b] y el error
+	 * @return la ra&iacute;z dentro del intervalo [a,b] y el error
 	 * @throws Exception
 	 */
 	public BigDecimal[] metodoRegulaFalsi(BigDecimal tol, int maxIt, BigInterval ab)
@@ -812,7 +812,7 @@ public class Funcion {
 		if (rootExistentialityCriterion(ab)) {
 			BigDecimal err = null;
 			boolean fin = false;	//Switch
-			int k = 0;				//�ndice de la iteraci�n
+			int k = 0;				//Indice de la iteraci&oacute;n
 			BigDecimal xa = BigDecimal.ZERO;
 			while((!fin)&&(k<=maxIt)){
 				BigDecimal fa = valorImagen(ab.min());
@@ -840,11 +840,11 @@ public class Funcion {
 				O.pln("x = "+xa);
 				return new BigDecimal[]{xa.stripTrailingZeros(), err.stripTrailingZeros()};
 			} else {
-				throw new Exception("No converge dentro del valor m�ximo de iteraci�n");
+				throw new Exception("No converge dentro del valor m&aacute;ximo de iteraci&oacute;n");
 			}
 			
 		} else {
-			throw new Exception("No existe la ra�z dentro del intervalo.");
+			throw new Exception("No existe la ra&iacute;z dentro del intervalo.");
 		}
 		
 	}

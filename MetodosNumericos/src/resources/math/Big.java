@@ -135,7 +135,7 @@ public final class Big {
 	/**
 	 * @param i
 	 * @param v
-	 * @return Pro(xi - xj)
+	 * @return &prod;(xi - xj)
 	 */
 	public static BigDecimal productoDiferencias(int i, BigDecimal v[]) {
 		BigDecimal prod = BigDecimal.ONE;
@@ -587,7 +587,7 @@ public final class Big {
 		if(n<0){
 			throw new Exception("No hay factorial para enteros negativos");
 		}else{
-			for(int i=1;i<n+1;i++) a = a.multiply(new BigDecimal(""+i));
+			for(int i = 1; i <= n; a = a.multiply(new BigDecimal(""+i)), i++);
 		}
 		
 		return a;

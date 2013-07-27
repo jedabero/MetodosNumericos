@@ -15,25 +15,25 @@ import resources.math.Constantes.Tipo;
 import resources.math.M;
 
 /**
- * La clase {@code Termino} define lo que es un t�rmino en una funci�n.
- * Cada t�rmino tiene los siguientes componentes:
+ * La clase {@code Termino} define lo que es un t&eacute;rmino en una funci&oacute;n.
+ * Cada t&eacute;rmino tiene los siguientes componentes:
  * <dl>
- * <dt>Coeficiente de t�rmino {@code A}
- * <dd>La constante que multiplica la funci�n espec�fica del t�rmino.
- * <dt>Una funci�n {@code F(x)}
- * <dd>Depender� del tipo de funci�n; sea un {@code monomio} de grado {@code n},
- * una funci�n {@code trigonom�trica}, {@code logar�tmica}, {@code exponencial},
+ * <dt>Coeficiente de t&eacute;rmino {@code A}
+ * <dd>La constante que multiplica la funci&oacute;n espec&iacute;fica del t&eacute;rmino.
+ * <dt>Una funci&oacute;n {@code F(x)}
+ * <dd>Depender&aacute; del tipo de funci&oacute;n; sea un {@code monomio} de grado {@code n},
+ * una funci&oacute;n {@code trigonom&eacute;trica}, {@code logar&iacute;tmica}, {@code exponencial},
  * etc.
  * <dt>Coeficiente de variable {@code B}
  * <dd>Una constante que multiplica la variable {@code x}.
- * <dt>Representaci�n general y espec�fica del t�rmino
+ * <dt>Representaci&oacute;n general y espec&iacute;fica del t&eacute;rmino
  * <dd>General: {@code A*F(B*x)}<br>
- * Espec�fica: {@code 3*sin(2x)}
+ * Espec&iacute;fica: {@code 3*sin(2x)}
  * </dl>
  * <p>
- * Es usada en la clase {@link Funcion} para definir cada un de los t�rminos.
+ * Es usada en la clase {@link Funcion} para definir cada un de los t&eacute;rminos.
  * <p>
- * Creada como redise�o de la clase {@link FuncionBase} antes usada para definir
+ * Creada como redise&ntilde;o de la clase {@link FuncionBase} antes usada para definir
  * funciones.
  * 
  * @author <a href="https://twitter.com/Jedabero" target="_blank">Jedabero</a>
@@ -42,11 +42,11 @@ import resources.math.M;
 public class Termino {
 	
 	/**
-	 * T�rmino que representa el cero (0)
+	 * T&eacute;rmino que representa el cero (0)
 	 */
 	public static Termino ZERO = Termino.constante(BigDecimal.ZERO);
 	/**
-	 * T�rmino que representa el uno (1)
+	 * T&eacute;rmino que representa el uno (1)
 	 */
 	public static Termino ONE = Termino.constante(BigDecimal.ONE);
 	
@@ -73,7 +73,7 @@ public class Termino {
 	private String specific;
 
 	/**
-	 * Regresa el valor del coeficiente del t�rmino.
+	 * Regresa el valor del coeficiente del t&eacute;rmino.
 	 * @return coeficiente A
 	 */
 	public BigDecimal getA() {
@@ -81,7 +81,7 @@ public class Termino {
 	}
 
 	/**
-	 * Modifica el valor del coeficiente del t�rmino.
+	 * Modifica el valor del coeficiente del t&eacute;rmino.
 	 * @param	a el nuevo valor del coeficiente.
 	 */
 	public void setA(BigDecimal a) {
@@ -105,32 +105,32 @@ public class Termino {
 	}
 	
 	/**
-	 * Regresa el tipo de funci�n de este t�rmino.
-	 * @return el tipo de funci�n
+	 * Regresa el tipo de funci&oacute;n de este t&eacute;rmino.
+	 * @return el tipo de funci&oacute;n
 	 */
 	public Tipo getTipoFuncion() {
 		return tipoFuncion;
 	}
 
 	/**
-	 * Modifica el actual tipo de funci�n.
-	 * @param	tipoFuncion el nuevo tipo de funci�n.
+	 * Modifica el actual tipo de funci&oacute;n.
+	 * @param	tipoFuncion el nuevo tipo de funci&oacute;n.
 	 */
 	public void setTipoFuncion(Tipo tipoFuncion) {
 		this.tipoFuncion = tipoFuncion;
 	}
 	
 	/**
-	 * Regresa el tipo de funci�n de este t�rmino.
-	 * @return el tipo de funci�n
+	 * Regresa el tipo de funci&oacute;n de este t&eacute;rmino.
+	 * @return el tipo de funci&oacute;n
 	 */
 	public FuncionTrig getFunTrig() {
 		return funTrig;
 	}
 
 	/**
-	 * Modifica el actual tipo de funci�n.
-	 * @param	ft el nuevo tipo de funci�n.
+	 * Modifica el actual tipo de funci&oacute;n.
+	 * @param	ft el nuevo tipo de funci&oacute;n.
 	 */
 	public void setFunTrig(FuncionTrig ft) {
 		this.funTrig = ft;
@@ -167,7 +167,7 @@ public class Termino {
 	}
 	
 	/**
-	 * Regresa el grado de  la funci�n polin�mica.
+	 * Regresa el grado de  la funci&oacute;n polin&oacute;mica.
 	 * @return the grado
 	 */
 	public int getGrado() {
@@ -175,7 +175,7 @@ public class Termino {
 	}
 
 	/**
-	 * Modifica el grado de la funci�n polin�mica
+	 * Modifica el grado de la funci&oacute;n polin&oacute;mica
 	 * @param	grado el nuevo grado 
 	 */
 	public void setGrado(int grado) {
@@ -218,7 +218,7 @@ public class Termino {
 	}
 
 	/**
-	 * Eval�a y regresa el valor del t�rmino.
+	 * Eval&uacute;a y regresa el valor del t&eacute;rmino.
 	 * @param	x el valor de la variable independiente
 	 * @return el valor evaluado.
 	 */
@@ -247,22 +247,22 @@ public class Termino {
 	}
 
 	/**
-	 * Regresa la representaci�n general del t�rmino.
-	 * @return la representaci�n general
+	 * Regresa la representaci&oacute;n general del t&eacute;rmino.
+	 * @return la representaci&oacute;n general
 	 */
 	public String getGeneric() {
 		return generic;
 	}
 
 	/**
-	 * Regresa la representaci�n espec�fica del t�rmino.
-	 * @return la representaci�n espec�fica
+	 * Regresa la representaci&oacute;n espec&iacute;fica del t&eacute;rmino.
+	 * @return la representaci&oacute;n espec&iacute;fica
 	 */
 	public String getSpecific() {
 		return specific;
 	}
 	
-	/** Inicializa la representaci�n general del t�rmino. */
+	/** Inicializa la representaci&oacute;n general del t&eacute;rmino. */
 	private void initGenericString(){
 		String gS = "";
 		Funcion fi = getFuncInterna();
@@ -303,7 +303,7 @@ public class Termino {
 		this.generic = gS;
 	}
 	
-	/** Inicializa la representaci�n espec�fica del t�rmino. */
+	/** Inicializa la representaci&oacute;n espec&iacute;fica del t&eacute;rmino. */
 	private void initSpecificString(){
 		String sS = "";
 		BigDecimal a = getA();
@@ -407,7 +407,7 @@ public class Termino {
 		this.specific = sS;
 	}
 	
-	/** Inicializa la representaci�n espec�fica y general del t�rmino. */
+	/** Inicializa la representaci&oacute;n espec&iacute;fica y general del t&eacute;rmino. */
 	public void initGenEsp(){
 		initGenericString();
 		initSpecificString();
@@ -450,7 +450,7 @@ public class Termino {
 	}
 	
 	/**
-	 * Crea un t�rmino con unos par�metros predefinidos: f(x) = x
+	 * Crea un t&eacute;rmino con unos par&aacute;metros predefinidos: f(x) = x
 	 */
 	public Termino(){
 		A = BigDecimal.ONE;
@@ -463,14 +463,14 @@ public class Termino {
 	}
 	
 	/**
-	 * Crea un t�rmino con todos los par�metros.
-	 * @param	a el coeficiente del t�rmino
+	 * Crea un t&eacute;rmino con todos los par&aacute;metros.
+	 * @param	a el coeficiente del t&eacute;rmino
 	 * @param	b el coeficiente de la variable
-	 * @param	f el tipo de funci�n
-	 * @param	g el grado del t�rmino
-	 * @param	ft el tipo de funci�n trigonom�trica
-	 * @param	interna func�on interna (f(g(x)) 
-	 * @param 	mult t�rmino que multiplica este t�rmino 
+	 * @param	f el tipo de funci&oacute;n
+	 * @param	g el grado del t&eacute;rmino
+	 * @param	ft el tipo de funci&oacute;n trigonom&eacute;trica
+	 * @param	interna funci&oacute;n interna (f(g(x)) 
+	 * @param 	mult t&eacute;rmino que multiplica este t&eacute;rmino 
 	 * @throws CustomException 
 	 */
 	public Termino(BigDecimal a, BigDecimal b, Tipo f, int g,
@@ -534,7 +534,7 @@ public class Termino {
 	}
 	
 	/**
-	 * Crea un termino constante cuya imagen siempre ser� el valor de coef.
+	 * Crea un termino constante cuya imagen siempre ser&aacute; el valor de coef.
 	 * @param coef
 	 * @return un termino constante
 	 */
@@ -550,9 +550,9 @@ public class Termino {
 	/**
 	 * Crea un termino de tipo monomio
 	 * @param grado	el grado del monomio
-	 * @param coef	el coeficiente del t�rmino
+	 * @param coef	el coeficiente del t&eacute;rmino
 	 * @param interna 
-	 * @return un termino de tipo polin�mico de grado {@code grado}
+	 * @return un termino de tipo polin&oacute;mico de grado {@code grado}
 	 */
 	public static Termino monomio(int grado, BigDecimal coef, Funcion interna){
 		try{
@@ -576,11 +576,11 @@ public class Termino {
 	}
 	
 	/**
-	 * @param ft	el tipo de funci�n trigonom�trica
-	 * @param coefA	el coeficiente del t�rmino
-	 * @param coefB	el coeficiente que acompa�a a x
+	 * @param ft	el tipo de funci&oacute;n trigonom&eacute;trica
+	 * @param coefA	el coeficiente del t&eacute;rmino
+	 * @param coefB	el coeficiente que acompa&ntilde;a a x
 	 * @param interna 
-	 * @return un termino de tipo trigonom�trico tipo {@code ft}
+	 * @return un termino de tipo trigonom&eacute;trico tipo {@code ft}
 	 */
 	public static Termino trigonometrico(FuncionTrig ft, BigDecimal coefA,
 			BigDecimal coefB, Funcion interna){
@@ -600,8 +600,8 @@ public class Termino {
 	}
 	
 	/**
-	 * @param coefA el coeficiente del t�rmino
-	 * @param coefB el coeficiente que acompa�a a x
+	 * @param coefA el coeficiente del t&eacute;rmino
+	 * @param coefB el coeficiente que acompa&ntilde;a a x
 	 * @param interna 
 	 * @return un termino de tipo exponencial
 	 */
@@ -623,11 +623,11 @@ public class Termino {
 	}
 	
 	/**
-	 * Crea un t�rmino de tipo logar�tmico con los par�metros dados.
-	 * @param coefA el coeficiente del t�rmino
-	 * @param coefB el coeficiente que acompa�a a x
+	 * Crea un t&eacute;rmino de tipo logar&iacute;tmico con los par&aacute;metros dados.
+	 * @param coefA el coeficiente del t&eacute;rmino
+	 * @param coefB el coeficiente que acompa&ntilde;a a x
 	 * @param interna 
-	 * @return un termino de tipo logar�tmico
+	 * @return un termino de tipo logar&iacute;tmico
 	 */
 	public static Termino logaritmo(BigDecimal coefA, BigDecimal coefB,
 			Funcion interna){
@@ -641,14 +641,14 @@ public class Termino {
 			}
 		}catch(CustomException et){
 			String etm = et.getMessage();
-			O.pln("Error al crear funci�n logar�tmica: "+etm);
+			O.pln("Error al crear funci&oacute;n logar&iacute;tmica: "+etm);
 			return null;
 		}
 	}
 	
 	/**
 	 * @param t
-	 * @return un t�rmino
+	 * @return un t&eacute;rmino
 	 * @throws CustomException si el termino t es diferente a este termino.
 	 */
 	public Termino suma(Termino t) throws CustomException {
@@ -717,7 +717,7 @@ public class Termino {
 	 */
 	public Termino multiplica(Termino m){
 		Termino t = copia();
-		//TODO MULTIPLICACION DE T�RMINOS!
+		//TODO MULTIPLICACION DE T&eacute;rminoS!
 		return t;
 	}
 	
@@ -736,12 +736,12 @@ public class Termino {
 	}
 	
 	/**
-	 * Actualiza todos los par�metros de la funci�n.
+	 * Actualiza todos los par&aacute;metros de la funci&oacute;n.
 	 * @param a Constante A
 	 * @param b Constante B
-	 * @param tf Tipo de la funci�n
+	 * @param tf Tipo de la funci&oacute;n
 	 * @param g grado del polinomio, si es del tipo
-	 * @param ft tipos de la funci�n trigonom�trica, si es del tipo
+	 * @param ft tipos de la funci&oacute;n trigonom&eacute;trica, si es del tipo
 	 */
 	private void actualiza(BigDecimal a, BigDecimal b, Tipo tf, int g,
 			FuncionTrig ft){
@@ -763,7 +763,7 @@ public class Termino {
 	}
 	
 	/**
-	 * Actualiza el par�metro de un t�rmino constante.
+	 * Actualiza el par&aacute;metro de un t&eacute;rmino constante.
 	 * @param a Coeficiente A
 	 */
 	public void actualiza(BigDecimal a){
@@ -771,19 +771,19 @@ public class Termino {
 	}
 	
 	/**
-	 * Actualiza los par�metros del t�rmino polin�mico
+	 * Actualiza los par&aacute;metros del t&eacute;rmino polin&oacute;mico
 	 * @param a Coeficiente A
-	 * @param g Grado de la funci�n
+	 * @param g Grado de la funci&oacute;n
 	 */
 	public void actualizaPol(BigDecimal a, int g){
 		actualiza(a, getB(), getTipoFuncion(), g, getFunTrig());
 	}
 	
 	/**
-	 * Actualiza los par�metros del t�rmino trigonom�trico
+	 * Actualiza los par&aacute;metros del t&eacute;rmino trigonom&eacute;trico
 	 * @param a coeficiente A
 	 * @param b constante B
-	 * @param ft tipo de la funci�n trigonom�trica
+	 * @param ft tipo de la funci&oacute;n trigonom&eacute;trica
 	 */
 	public void actualizaTrig(BigDecimal a, BigDecimal b, FuncionTrig ft){
 		actualiza(a, b, getTipoFuncion(), getGrado(), ft);
@@ -800,8 +800,8 @@ public class Termino {
 
 	/**
 	 * @param ab
-	 * @return un intervalo cuyo m�nimo corresponde al valor de la funci�n en ab.min
-	 * y cuyo m�ximo corresponde al valor de la funci�n en ab.m�x
+	 * @return un intervalo cuyo m&iacute;nimo corresponde al valor de la funci&oacute;n en ab.min
+	 * y cuyo m&aacute;ximo corresponde al valor de la funci&oacute;n en ab.m&aacute;x
 	 */
 	public BigInterval valoresExtremos(BigInterval ab){
 		BigDecimal fa = valorImagen(ab.min());
@@ -811,7 +811,7 @@ public class Termino {
 	}
 	
 	/**
-	 * TODO derivada Trigonom�tricas, Logar�tmica, Racional y otras
+	 * TODO derivada Trigonom&eacute;tricas, Logar&iacute;tmica, Racional y otras
 	 * @return la derivada de este termino
 	 */
 	public Termino derivada(){
@@ -863,8 +863,8 @@ public class Termino {
 		}
 	}
 	
-	/** TODO integral Trigonom�tricas, Logar�tmica, Racional y otras
-	 * @return la integral indefinida de este t�rmino
+	/** TODO integral Trigonom&eacute;tricas, Logar&iacute;tmica, Racional y otras
+	 * @return la integral indefinida de este t&eacute;rmino
 	 */
 	public Termino integralIndef(){
 		switch (getTipoFuncion()) {

@@ -58,7 +58,7 @@ public class AproxFunUI extends JPanel implements ActionListener, ChangeListener
 
 	private void initComponents() {
 		//Table settings
-		JLabel lblNumPuntos = new JLabel("N�mero de puntos:");
+		JLabel lblNumPuntos = new JLabel("Número de puntos:");
 		
 		SpinnerNumberModel snmNumPun = new SpinnerNumberModel(2, 2, 25, 1);
 		spnrNumPuntos = new JSpinner(snmNumPun);

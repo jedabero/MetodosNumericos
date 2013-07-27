@@ -75,16 +75,17 @@ public class GraficaFuncion {
 					p2d.moveTo(p.x, p.y);
 					isPointFirst = false;
 				} else {
+					
 					if(withIntegral&&pointInsideOfIntegral){
 						p2d.lineTo(prevP.x, xAxis);
 						p2d.lineTo(intP.x, xAxis);
 					}
+					
 					if(isSeparatePoints){
 						p2d.lineTo(prevP.x+1, prevP.y+1);
-						p2d.moveTo(p.x, p.y);
-					}else{
-						p2d.lineTo(p.x, p.y);
 					}
+					
+					p2d.lineTo(p.x, p.y);
 				}
 			}
 			prevP = p;

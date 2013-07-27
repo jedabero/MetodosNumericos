@@ -22,38 +22,38 @@ public class CustomException extends Exception {
 	}
 	
 	/**
-	 * Crea una excepción para cuando el grado es menor que 0.
-	 * @return una excepción para cuando el grado es menor que 0
+	 * Crea una excepci&oacute;n para cuando el grado es menor que 0.
+	 * @return una excepci&oacute;n para cuando el grado es menor que 0
 	 */
 	public static CustomException gradoMenorQue1(){
 		return new CustomException("Grado no puede ser menor que 1");
 	}
 	
 	/**
-	 * Crea una excepción para cuando el coeficiente es 0.
+	 * Crea una excepci&oacute;n para cuando el coeficiente es 0.
 	 * @param m mensaje adicional
-	 * @return una excepción para cuando el coeficiente es 0
+	 * @return una excepci&oacute;n para cuando el coeficiente es 0
 	 */
 	public static CustomException coeficienteIgual0(String m){
 		return new CustomException("Coeficiente no puede ser cero (0): "+m);
 	}
 	
 	/**
-	 * Crea una excepción para cuando el tipo de función es incorrecto.
+	 * Crea una excepci&oacute;n para cuando el tipo de funci&oacute;n es incorrecto.
 	 * Esto es porque para esos tipos se necesitan datos diferentes.
-	 * @return una excepción para cuando el tipo de función es incorrecto
+	 * @return una excepci&oacute;n para cuando el tipo de funci&oacute;n es incorrecto
 	 */
 	public static CustomException tipoIncorrecto(){
-		return new CustomException("Tipo de función incorrecto; no hay " +
+		return new CustomException("Tipo de funci&oacute;n incorrecto; no hay " +
 				"suficientes datos.");
 	}
 	
 	/**
-	 * @return una excepción cuando haya una contradicción de longitud de array
+	 * @return una excepci&oacute;n cuando haya una contradicci&oacute;n de longitud de array
 	 */
 	public static CustomException arrayIncompleto(){
 		return new CustomException("Al array le faltan datos para completar la" +
-				"costruccion de la Función correctamente.");
+				"costruccion de la Funci&oacute;n correctamente.");
 	}
 	
 }
