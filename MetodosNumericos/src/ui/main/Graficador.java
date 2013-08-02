@@ -16,7 +16,7 @@ import ui.main.app.GraficadorUI;
  */
 public class Graficador {
 	
-	
+	public static ResourceBundle lang;
 
 	/**
 	 * @param args
@@ -43,11 +43,11 @@ public class Graficador {
 			if(code==langNames[i]) code = arrLocale[i];
 		}
 		
-		ResourceBundle currRB = (code!=null) ?
+		lang = (code!=null) ?
 				ResourceBundle.getBundle("lang/lang", (Locale)code) : rb;
 		
 		@SuppressWarnings("unused")
-		GraficadorUI gui = new GraficadorUI(currRB);
+		GraficadorUI gui = new GraficadorUI();
 	}
 	
 	

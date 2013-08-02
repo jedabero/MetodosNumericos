@@ -40,7 +40,6 @@ import javax.swing.JToolBar;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import resources.Add;
-import resources.LangResource;
 import resources.O;
 import resources.math.BigInterval;
 import resources.math.M;
@@ -48,6 +47,7 @@ import resources.math.funciones.Funcion;
 import ui.EditaDimensionesDialog;
 import ui.EditaFuncionDialog;
 import ui.EditaIntervaloDialog;
+import ui.main.Graficador;
 
 /**
  * 
@@ -83,16 +83,16 @@ public class GraficadorUI{
 	
 	private JMenuBar barraMenu;
 	
-	LangResource l;
+	private ResourceBundle l;
 	
 	/**
 	 * @param rs El resource bundle que provee de lenguaje al programa
 	 * 
 	 */
-	public GraficadorUI(ResourceBundle rs){
-		l = new LangResource(rs);
+	public GraficadorUI(){
+		l = Graficador.lang;
 		
-		mainWindow = new JFrame(l.s("t")+" "+ver);
+		mainWindow = new JFrame(l.getString("t")+" "+ver);
 		mainWindow.setSize(WIDTH, HEIGHT);
 		mainWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
@@ -127,76 +127,76 @@ public class GraficadorUI{
 		
 		panelGrid = new JPanel(new GridBagLayout());
 		
-		toolBarOpciones = new JToolBar(l.s("tToolBar"));
+		toolBarOpciones = new JToolBar(l.getString("tToolBar"));
 		mainWindow.getContentPane().add(toolBarOpciones, BorderLayout.NORTH);
 		toolBarOpciones.add(jrb);
 		
 		Add.componente(panelGrid, grafica, 0, 0, 1, 1, 1.0, 1.0,
-				GridBagConstraints.BOTH, l.s("g"));
+				GridBagConstraints.BOTH, l.getString("g"));
 		
 		barraMenu = new JMenuBar();
 		
 		//Archivo
-		JMenu menuArchivo = new JMenu(l.s("mArch"));
+		JMenu menuArchivo = new JMenu(l.getString("mArch"));
 		menuArchivo.setMnemonic('A');
-		Add.menuItem(menuArchivo, l.s("mArchNew"), l.s("mArchNewTTT"),
+		Add.menuItem(menuArchivo, l.getString("mArchNew"), l.getString("mArchNewTTT"),
 				null, 'N');
-		Add.menuItem(menuArchivo, l.s("mArchOpen"), l.s("mArchOpenTTT"),
+		Add.menuItem(menuArchivo, l.getString("mArchOpen"), l.getString("mArchOpenTTT"),
 				null, 'A');
-		String[] guardarSubItems = {l.s("mArchSave1"), l.s("mArchSave2"),
-				l.s("mArchSave3"), l.s("mArchSave4")};
-		Add.subMenu(menuArchivo, l.s("mArchSave"), l.s("mArchSaveTTT"),
+		String[] guardarSubItems = {l.getString("mArchSave1"), l.getString("mArchSave2"),
+				l.getString("mArchSave3"), l.getString("mArchSave4")};
+		Add.subMenu(menuArchivo, l.getString("mArchSave"), l.getString("mArchSaveTTT"),
 				guardarAL, 'G', guardarSubItems, null,
 				new char[guardarSubItems.length]);
-		Add.menuItem(menuArchivo, l.s("mArchExit"), l.s("mArchExitTTT"),
+		Add.menuItem(menuArchivo, l.getString("mArchExit"), l.getString("mArchExitTTT"),
 				salirAL, 'S');
 		barraMenu.add(menuArchivo);
 		
 		//Editar
-		JMenu menuEditar = new JMenu(l.s("mEdit"));
+		JMenu menuEditar = new JMenu(l.getString("mEdit"));
 		menuEditar.setMnemonic('E');
-		Add.menuItem(menuEditar, l.s("mEditAdd"), l.s("mEditAddTTT"),
+		Add.menuItem(menuEditar, l.getString("mEditAdd"), l.getString("mEditAddTTT"),
 				anadirFuncionAL, 'A');
-		Add.menuItem(menuEditar, l.s("mEditEdit"), l.s("mEditEditTTT"),
+		Add.menuItem(menuEditar, l.getString("mEditEdit"), l.getString("mEditEditTTT"),
 				editarFuncionAL, 'E');
-		Add.menuItem(menuEditar, l.s("mEditRem"), l.s("mEditRemTTT"),
+		Add.menuItem(menuEditar, l.getString("mEditRem"), l.getString("mEditRemTTT"),
 				quitarFuncionAL, 'Q');
 		menuEditar.addSeparator();
-		Add.menuItem(menuEditar, l.s("mEditCol"), l.s("mEditColTTT"),
+		Add.menuItem(menuEditar, l.getString("mEditCol"), l.getString("mEditColTTT"),
 				cambiaColorAL, 'C');
 		barraMenu.add(menuEditar);
 		
 		//Grafica
-		JMenu menuGrafica = new JMenu(l.s("mGraf"));
+		JMenu menuGrafica = new JMenu(l.getString("mGraf"));
 		menuGrafica.setMnemonic('G');
-		Add.menuItem(menuGrafica, l.s("mGrafInt"), l.s("mGrafIntTTT"),
+		Add.menuItem(menuGrafica, l.getString("mGrafInt"), l.getString("mGrafIntTTT"),
 				graficaAL, 'X');
 		String[] intervaloSubItems =
-			{l.s("mGrafRange1"), l.s("mGrafRange2"), l.s("mGrafRange3")};
+			{l.getString("mGrafRange1"), l.getString("mGrafRange2"), l.getString("mGrafRange3")};
 		char[] interItemsTypes = {'R','R', 'R'};
 		boolean[] interItemsStates = {true, false, false};
-		Add.subMenu(menuGrafica, l.s("mGrafRange"), l.s("mGrafRangeTTT"),
+		Add.subMenu(menuGrafica, l.getString("mGrafRange"), l.getString("mGrafRangeTTT"),
 				graficaAL, 'I',
 				intervaloSubItems, interItemsStates, interItemsTypes);
-		String[] gridSubItems = {l.s("mGrafDiv1"), l.s("mGrafDiv2")};
+		String[] gridSubItems = {l.getString("mGrafDiv1"), l.getString("mGrafDiv2")};
 		char[] gridItemsTypes = {'C', 'C'};
 		boolean[] gridItemsStates = {grafica.isDivPrin(), grafica.isDivSec()};
-		Add.subMenu(menuGrafica, l.s("mGrafDiv"), l.s("mGrafDivTTT"),
+		Add.subMenu(menuGrafica, l.getString("mGrafDiv"), l.getString("mGrafDivTTT"),
 				graficaAL, 'D', gridSubItems, gridItemsStates, gridItemsTypes);
-		String[] etiqSubItems = {l.s("mGrafEje1"), l.s("mGrafEje2")};
+		String[] etiqSubItems = {l.getString("mGrafEje1"), l.getString("mGrafEje2")};
 		char[] etiqItemsTypes = {'R', 'R'};
 		boolean[] etiqItemsStates = {grafica.isEtiquetas(), !grafica.isEtiquetas()};
-		Add.subMenu(menuGrafica, l.s("mGrafEje"), l.s("mGrafEjeTTT"),
+		Add.subMenu(menuGrafica, l.getString("mGrafEje"), l.getString("mGrafEjeTTT"),
 				graficaAL, 'E', etiqSubItems, etiqItemsStates, etiqItemsTypes);
 		barraMenu.add(menuGrafica);
 		
 		//Ayuda
-		JMenu menuAyuda = new JMenu(l.s("mHelp"));
+		JMenu menuAyuda = new JMenu(l.getString("mHelp"));
 		menuAyuda.setMnemonic('y');
-		Add.menuItem(menuAyuda, l.s("mHelpCont"), l.s("mHelpContTTT"),
+		Add.menuItem(menuAyuda, l.getString("mHelpCont"), l.getString("mHelpContTTT"),
 				menuAyudaAL, 'C');
 		menuAyuda.addSeparator();
-		Add.menuItem(menuAyuda, l.s("mHelpAbout"), l.s("mHelpAboutTTT"),
+		Add.menuItem(menuAyuda, l.getString("mHelpAbout"), l.getString("mHelpAboutTTT"),
 				menuAyudaAL, 'A');
 		barraMenu.add(menuAyuda);
 		
@@ -250,8 +250,8 @@ public class GraficadorUI{
 									EditaFuncionDialog.ANADIR, l);
 				}else{
 					JOptionPane.showMessageDialog(toolBarOpciones,
-							l.s("addMDialog1")+"\n"+l.s("addMDialog2"),
-							l.s("MDialogTitle")+listaFunciones.size(),
+							l.getString("addMDialog1")+"\n"+l.getString("addMDialog2"),
+							l.getString("MDialogTitle")+listaFunciones.size(),
 							JOptionPane.WARNING_MESSAGE);
 				}
 			}
@@ -276,7 +276,7 @@ public class GraficadorUI{
 				}
 				if(!selected){
 					JOptionPane.showMessageDialog(mainWindow,
-							l.s("editMDialog"), l.s("editMDialogTitle"),
+							l.getString("editMDialog"), l.getString("editMDialogTitle"),
 							JOptionPane.INFORMATION_MESSAGE);
 				}
 			}
@@ -294,8 +294,8 @@ public class GraficadorUI{
 							i.remove();	
 						}else{
 							JOptionPane.showMessageDialog(toolBarOpciones,
-									l.s("remMDialog1")+"\n"+l.s("remMDialog2"),
-									l.s("MDialogTitle")+listaFunciones.size(),
+									l.getString("remMDialog1")+"\n"+l.getString("remMDialog2"),
+									l.getString("MDialogTitle")+listaFunciones.size(),
 									JOptionPane.WARNING_MESSAGE);
 						}
 					}
@@ -315,35 +315,35 @@ public class GraficadorUI{
 				String strObj = ab.getText();
 				BigInterval Yinterv = grafica.getYinterval();
 				Yinterv.hashCode();//TODO Yinterv
-				if(strObj.equals(l.s("mGrafRange1"))){
+				if(strObj.equals(l.getString("mGrafRange1"))){
 					//TODO RANGE THING
-				}else if(strObj.equals(l.s("mGrafRange2"))){
+				}else if(strObj.equals(l.getString("mGrafRange2"))){
 					//TODO RANGE THING
-				}else if(strObj.equals(l.s("mGrafRange3"))){
+				}else if(strObj.equals(l.getString("mGrafRange3"))){
 					//TODO RANGE CUSTOM THING
 					EditaIntervaloDialog eiyd = new EditaIntervaloDialog(
 							mainWindow, grafica, 'Y');
 					eiyd.getIntervalo();//TODO uh?
-				}else if(strObj.equals(l.s("mGrafDiv1"))){
+				}else if(strObj.equals(l.getString("mGrafDiv1"))){
 					if(ab.isSelected()){
 						grafica.dibujaDivPrin(true);
 					}else{
 						grafica.dibujaDivPrin(false);
 					}
-				}else if(strObj.equals(l.s("mGrafDiv2"))){
+				}else if(strObj.equals(l.getString("mGrafDiv2"))){
 					if(ab.isSelected()){
 						grafica.dibujaDivSec(true);
 					}else{
 						grafica.dibujaDivSec(false);
 					}
-				}else if(strObj.equals(l.s("mGrafInt"))){
+				}else if(strObj.equals(l.getString("mGrafInt"))){
 					EditaIntervaloDialog eixd = new EditaIntervaloDialog(
 							mainWindow, grafica, 'X');
 					O.pln(eixd.getWarningString());
 					//TODO GRAFIC INTEGER LIMITS THING
-				}else if(strObj.equals(l.s("mGrafEje1"))){
+				}else if(strObj.equals(l.getString("mGrafEje1"))){
 					grafica.dibujaEtiquetas(true);
-				}else if(strObj.equals(l.s("mGrafEje2"))){
+				}else if(strObj.equals(l.getString("mGrafEje2"))){
 					grafica.dibujaEtiquetas(false);
 				}
 				
@@ -359,11 +359,11 @@ public class GraficadorUI{
 				JGrafica jg = new JGrafica(listaFunciones, colores, listaSeparate,
 						grafica.getgDim(), grafica.getXinterval(), grafica.getYinterval());
 				
-				if(strObj.equals(l.s("mArchSave2"))){
+				if(strObj.equals(l.getString("mArchSave2"))){
 					jg.setSize(500, 500);
-				}else if(strObj.equals(l.s("mArchSave3"))){
+				}else if(strObj.equals(l.getString("mArchSave3"))){
 					jg.setSize(1000, 1000);
-				}else if(strObj.equals(l.s("mArchSave4"))){
+				}else if(strObj.equals(l.getString("mArchSave4"))){
 					EditaDimensionesDialog edd = new EditaDimensionesDialog(
 							mainWindow, grafica);
 					jg.setSize(edd.getDimension());
@@ -420,7 +420,7 @@ public class GraficadorUI{
 				}
 				if(!selected){
 					JOptionPane.showMessageDialog(mainWindow,
-							l.s("editMDialog"), l.s("editMDialogTitle"),
+							l.getString("editMDialog"), l.getString("editMDialogTitle"),
 							JOptionPane.INFORMATION_MESSAGE);
 				}
 			}
@@ -437,15 +437,15 @@ public class GraficadorUI{
 			//TODO Help menu not finished
 			public void actionPerformed(ActionEvent e) {
 				JMenuItem item = (JMenuItem) e.getSource();
-				if(item.getText().equals(l.s("mHelpCont"))){
+				if(item.getText().equals(l.getString("mHelpCont"))){
 					JOptionPane.showMessageDialog(mainWindow,
-							l.s("mHelpCont"),
-							l.s("mHelpCont"),
+							l.getString("mHelpCont"),
+							l.getString("mHelpCont"),
 							JOptionPane.INFORMATION_MESSAGE);
-				}else if(item.getText().equals(l.s("mHelpAbout"))){
+				}else if(item.getText().equals(l.getString("mHelpAbout"))){
 					JOptionPane.showMessageDialog(mainWindow,
-							l.s("mHelpAbout1")+ver+"\n"+l.s("mHelpAbout2"),
-							l.s("mHelpAbout"), JOptionPane.INFORMATION_MESSAGE);
+							l.getString("mHelpAbout1")+ver+"\n"+l.getString("mHelpAbout2"),
+							l.getString("mHelpAbout"), JOptionPane.INFORMATION_MESSAGE);
 				}
 			}
 		};

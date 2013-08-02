@@ -29,15 +29,15 @@ import javax.swing.JToolBar;
 import javax.swing.SwingConstants;
 
 import resources.Add;
-import resources.LangResource;
 import resources.O;
 import resources.math.Constantes.FuncionTrig;
 import resources.math.Constantes.Tipo;
 import resources.math.funciones.Funcion;
+import ui.main.Graficador;
 
 /**
- * Esta clase crea una ventana de dialogo en la que se mostrar�n los
- * par�metros de la funci�n a crear o editar.
+ * Esta clase crea una ventana de dialogo en la que se mostrar&aacute;n los
+ * par&aacute;metros de la funci&oacute; a crear o editar.
  * @author <a href="https://twitter.com/Jedabero" target="_blank">Jedabero</a>
  *
  */
@@ -98,19 +98,19 @@ public final class EditaFuncionDialog extends JDialog{
 	
 	private Tipo tipoFunOr;
 	
-	private LangResource l;
+	private ResourceBundle l;
 	
 	/**
 	 * @param ventana	Parent
 	 * @param jpJCB		toolbar
-	 * @param grafica			gr�fica
-	 * @param posicion	posici�n de la funci�n
-	 * @param tempF		Funci�n actual
+	 * @param grafica			gr&aacute;fica
+	 * @param posicion	posici&oacute;n de la funci&oacute;n
+	 * @param tempF		Funci&oacute;n actual
 	 * @param listaFunciones		lista de funciones
 	 * @param alJRB		lista de check boxes
 	 * @param alColor	lista de colores
 	 * @param iL		item listener
-	 * @param ACCION	acci�n correspondiente
+	 * @param ACCION	acci&oacute;n correspondiente
 	 * @param rs 		lenguaje
 	 */
 	public EditaFuncionDialog(JFrame ventana,
@@ -125,7 +125,7 @@ public final class EditaFuncionDialog extends JDialog{
 			int ACCION,
 			ResourceBundle rs){
 		super(ventana, true);
-		l = new LangResource(rs);
+		l = Graficador.lang;
 		opciones	= jpJCB;
 		this.gf		= grafica;
 		index		= posicion;
@@ -136,10 +136,10 @@ public final class EditaFuncionDialog extends JDialog{
 		accion		= ACCION;
 		tempFuncion = tempF;
 		tipoFunOr = tempF.getTipoFuncion();
-		setTitle(l.s("editFTitle"));
-		actualiza.setText(l.s("updateBttn"));
-		listoBoton.setText(l.s("doneBttn"));
-		cerrarBoton.setText(l.s("cancelBttn"));
+		setTitle(l.getString("editFTitle"));
+		actualiza.setText(l.getString("updateBttn"));
+		listoBoton.setText(l.getString("doneBttn"));
+		cerrarBoton.setText(l.getString("cancelBttn"));
 		
 		c = new Color(((int)(25.6*Math.random()))*10,
 				((int)(25.6*Math.random()))*10,
@@ -147,7 +147,7 @@ public final class EditaFuncionDialog extends JDialog{
 		
 		initListeners();
 		
-		labelTipoFuncion = new JLabel(l.s("fTypeL"));
+		labelTipoFuncion = new JLabel(l.getString("fTypeL"));
 		dropTipoFuncion = new JComboBox<Tipo>();
 		for(Tipo f : Tipo.values()){
 			dropTipoFuncion.addItem(f);
@@ -160,7 +160,7 @@ public final class EditaFuncionDialog extends JDialog{
 		
 		switch(tempFuncion.getTipoFuncion()){
 		case POLINOMICA:
-			labelTerminos = new JLabel(l.s("polTermL"));
+			labelTerminos = new JLabel(l.getString("polTermL"));
 			textTerminos = new JTextField(""+tempF.getTerminos().get(tempF.getTerminos().size()-1).getGrado());
 			propiedades.add(labelTerminos);
 			propiedades.add(textTerminos);
@@ -169,7 +169,7 @@ public final class EditaFuncionDialog extends JDialog{
 		case EXPONENCIAL:
 		case LOGARITMICA:
 		default:
-			labelTerminos = new JLabel(l.s("defTermL"));
+			labelTerminos = new JLabel(l.getString("defTermL"));
 			textTerminos = new JTextField(""+tempFuncion.getTerminos().size()); 
 			propiedades.add(labelTerminos);
 			propiedades.add(textTerminos);
@@ -192,19 +192,19 @@ public final class EditaFuncionDialog extends JDialog{
 		Add.componente(panelGrid, labelTipoFuncion, 0, 0, 1, 1, 1.0, 1.0,
 				GridBagConstraints.HORIZONTAL, "");
 		Add.componente(panelGrid, dropTipoFuncion, 2, 0, 2, 1, 1.0, 1.0,
-				GridBagConstraints.HORIZONTAL, l.s("droplistTTT"));
+				GridBagConstraints.HORIZONTAL, l.getString("droplistTTT"));
 		Add.componente(panelGrid, propiedades, 0, 1, 4, 1, 1.0, 1.0,
-				GridBagConstraints.BOTH, l.s("pPanelTTT"));
+				GridBagConstraints.BOTH, l.getString("pPanelTTT"));
 		Add.componente(panelGrid, ecuacion, 0, 2, 4, 1, 1.0, 1.0,
-				GridBagConstraints.BOTH, l.s("ecPanelTTT"));
+				GridBagConstraints.BOTH, l.getString("ecPanelTTT"));
 		Add.componente(panelGrid, labelFuncion, 0, 3, 4, 1, 1.0, 1.0,
-				GridBagConstraints.BOTH, l.s("funcLabelTTT"));
+				GridBagConstraints.BOTH, l.getString("funcLabelTTT"));
 		Add.componente(panelGrid, labelEcuacion, 0, 4, 4, 1, 1.0, 1.0,
-				GridBagConstraints.BOTH, l.s("ecLabelTTT"));
+				GridBagConstraints.BOTH, l.getString("ecLabelTTT"));
 		Add.componente(panelGrid, listoBoton, 0, 5, 2, 1, 0.0, 0.0,
-				GridBagConstraints.BOTH, l.s("doneBttnTTT"));
+				GridBagConstraints.BOTH, l.getString("doneBttnTTT"));
 		Add.componente(panelGrid, cerrarBoton, 2, 5, 2, 1, 0.0, 0.0,
-				GridBagConstraints.BOTH, l.s("cancelBttnTTT"));
+				GridBagConstraints.BOTH, l.getString("cancelBttnTTT"));
 		
 		add(panelGrid);
 		
@@ -276,8 +276,8 @@ public final class EditaFuncionDialog extends JDialog{
 		}catch(Exception ex){;
 		O.pln(ex.toString()+" (EditaFuncionDialog.java:217)");//REVISELINE
 			JOptionPane.showMessageDialog(getParent(), 
-					l.s("errDialog1")+ex.getMessage(),
-					l.s("inputError"), JOptionPane.ERROR_MESSAGE);
+					l.getString("errDialog1")+ex.getMessage(),
+					l.getString("inputError"), JOptionPane.ERROR_MESSAGE);
 			terminos = tempFuncion.getTerminos().size();
 		}
 		
@@ -307,9 +307,9 @@ public final class EditaFuncionDialog extends JDialog{
 			}catch(NumberFormatException nfe){
 				O.pln(nfe.toString()+" (EditaFuncionDialog.java:250)");//REVISELINE
 				JOptionPane.showMessageDialog(getParent(),
-						l.s("errDialog2")+n+"= "+textA.get(n).getText()+
-						" : "+l.s("errDialog3")+": =1",
-						l.s("inputError"), JOptionPane.ERROR_MESSAGE);
+						l.getString("errDialog2")+n+"= "+textA.get(n).getText()+
+						" : "+l.getString("errDialog3")+": =1",
+						l.getString("inputError"), JOptionPane.ERROR_MESSAGE);
 				A[n] = BigDecimal.ONE;
 				textA.add(new JTextField(""+A[n]));
 			}
@@ -326,9 +326,9 @@ public final class EditaFuncionDialog extends JDialog{
 			}catch(NumberFormatException nfe){
 				O.pln(nfe.toString()+" (EditaFuncionDialog.java:311)");//REVISELINE
 				JOptionPane.showMessageDialog(getParent(),
-						l.s("errDialog2")+n+"= "+textB.get(n).getText()+
-						" : "+l.s("errDialog3")+": =1",
-						l.s("inputError"), JOptionPane.ERROR_MESSAGE);
+						l.getString("errDialog2")+n+"= "+textB.get(n).getText()+
+						" : "+l.getString("errDialog3")+": =1",
+						l.getString("inputError"), JOptionPane.ERROR_MESSAGE);
 				B[n] = BigDecimal.ONE;
 				textB.add(new JTextField(""+B[n]));
 			}
@@ -446,11 +446,11 @@ public final class EditaFuncionDialog extends JDialog{
 						
 						switch(tempF){
 						case POLINOMICA:
-							labelTerminos.setText(l.s("polTermL"));
+							labelTerminos.setText(l.getString("polTermL"));
 							//TODO ItemListener Pol-Type
 							break;
 						case TRIGONOMETRICA:
-							labelTerminos.setText(l.s("defTermL"));
+							labelTerminos.setText(l.getString("defTermL"));
 							//TODO ItemListener trig-Type
 							break;
 						case EXPONENCIAL:
