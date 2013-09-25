@@ -8,6 +8,7 @@ import java.awt.GridBagLayout;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 
+import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -51,8 +52,7 @@ public class EditaPolinomioPanel extends JPanel implements ChangeListener {
 		initComponents();
 		addComponents();
 		
-		setBorder(javax.swing.BorderFactory.createTitledBorder("Edición del "
-				+"polinomio"));
+		setBorder(BorderFactory.createTitledBorder("Edición del polinomio"));
 	}
 	
 	/**
@@ -64,7 +64,7 @@ public class EditaPolinomioPanel extends JPanel implements ChangeListener {
 		initComponents();
 		addComponents();
 		
-		setBorder(javax.swing.BorderFactory.createTitledBorder(title));
+		setBorder(BorderFactory.createTitledBorder(title));
 	}
 	
 	private void initComponents() {
@@ -123,7 +123,8 @@ public class EditaPolinomioPanel extends JPanel implements ChangeListener {
 	public Funcion getPol() {
 		coefs = new BigDecimal[grado+1];
 		CoeficientePanel coefPanel;
-		for (int i = 0; i <= grado; i++) {
+		boolean noErrors = true;
+		for (int i = 0; i <= grado && noErrors; i++) {
 			coefPanel = listCoefs.get(i);
 			String text = coefPanel.getTexto();
 			BigDecimal tempBD = null;
@@ -131,16 +132,20 @@ public class EditaPolinomioPanel extends JPanel implements ChangeListener {
 				tempBD = new BigDecimal(text);
 			} catch (Exception e) {
 				JOptionPane.showMessageDialog(pnlCoefs,
-						"<html>Coeficiente A<sub>"+i+"</sub>: "+(text.isEmpty()?"vac�o":text)+"</html>",
+						"<html>Coeficiente A<sub>"+i+"</sub>: "+(text.isEmpty()?"vacio":text)+"</html>",
 						"Error", JOptionPane.WARNING_MESSAGE);
+				noErrors = false;
 			}
 			coefs[i] = tempBD;
 		}
-		
-		try {
-			O.pln(java.util.Arrays.toString(coefs));
-			fnc = Funcion.polinomio(grado, coefs);
-		} catch (CustomException e) {}
+		if(noErrors){
+			try {
+				O.pln(java.util.Arrays.toString(coefs));
+				fnc = Funcion.polinomio(grado, coefs);
+			} catch (CustomException e) {}
+		}else {
+			fnc = null;
+		}
 		
 		return fnc;
 	}

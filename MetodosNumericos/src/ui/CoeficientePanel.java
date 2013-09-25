@@ -40,4 +40,14 @@ public class CoeficientePanel extends JPanel {
 	public String getTexto() {
 		return texto.getText();
 	}
+	
+	/**
+	 * Regresa el texto contenido en el JLabel.
+	 * Este puede entontrarse en formato <code>html</code>
+	 * @return el texto en el JLabel
+	 */
+	public String getLabelText() {
+		return label.getText();
+	}
+	
 }

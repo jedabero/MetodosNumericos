@@ -69,10 +69,10 @@ public class RaicesUI extends JPanel  implements ActionListener {
 		
 		JSeparator sprtr2 = new JSeparator(JSeparator.HORIZONTAL);
 		
-		//M�todos
+		//Metodos
 		mpnlMetodos = new MetodosRaicesPanel();
 		
-		//0 - Tama�o Polinomio
+		//0 - Tamano Polinomio
 		Add.componente(this, btnCreaPol, 			3, 0, 2, 1, 1.0, 1.0,
 				GridBagConstraints.BOTH, "");
 		Add.componente(this, fpnlFuncion, 			0, 1, 5, 2, 1.0, 1.0,
@@ -90,7 +90,7 @@ public class RaicesUI extends JPanel  implements ActionListener {
 		//6 - Separator
 		Add.componente(this, sprtr2, 				0, 6, 5, 1, 1.0, 1.0,
 				GridBagConstraints.HORIZONTAL, "");
-		//7 - M�todosPanel
+		//7 - MetodosPanel
 		Add.componente(this, mpnlMetodos, 			0, 7, 5, 1, 1.0, 1.0,
 				GridBagConstraints.BOTH, "");
 		
@@ -110,7 +110,7 @@ public class RaicesUI extends JPanel  implements ActionListener {
 			if(funcion!=null){
 				lblEq.setText("<html>"+funcion.getSpecific()+"</html>");
 				mpnlMetodos.setFuncion(funcion);
-				JOptionPane.showMessageDialog(this, "Funci�n creada");//TODO funci�n creada
+				JOptionPane.showMessageDialog(this, "Funci�n creada");//TODO funcion creada
 			} else {
 				JOptionPane.showMessageDialog(this, "No se pudo crear la funci�n");
 			}
