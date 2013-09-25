@@ -53,7 +53,7 @@ public class EditaPolinomioPanel extends JPanel implements ChangeListener {
 		initComponents();
 		addComponents();
 		
-		setBorder(javax.swing.BorderFactory.createTitledBorder("Edici�n del "
+		setBorder(javax.swing.BorderFactory.createTitledBorder("Edición del "
 				+"polinomio"));
 	}
 	
@@ -112,7 +112,7 @@ public class EditaPolinomioPanel extends JPanel implements ChangeListener {
 		for (int i = 0; i < lblListCoefs.size(); i++) {
 			int xL = (2*i)%4 + ((i%2==0)? 0 : 2);
 			int xT = (2*i +1)%4 + ((i%2==0)? 0 : 2);
-			int y = (i/2);
+			int y = (i/4);
 			
 			Add.componente(pnlCoefs, lblListCoefs.get(i),
 					xL, y, 1, 1, 0.25, 1.0,
@@ -127,7 +127,7 @@ public class EditaPolinomioPanel extends JPanel implements ChangeListener {
 	}
 	
 	/**
-	 * @return la funci�n
+	 * @return la funci&oacute;n
 	 */
 	public Funcion getPol() {
 		coefs = new BigDecimal[grado+1];

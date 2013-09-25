@@ -423,7 +423,7 @@ public class GraficadorUI{
 							l.getString("editMDialog"), l.getString("editMDialogTitle"),
 							JOptionPane.INFORMATION_MESSAGE);
 				}
-			}
+			} 
 		};
 		
 		salirAL = new ActionListener(){
