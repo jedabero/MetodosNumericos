@@ -29,8 +29,15 @@ public class CoeficientePanel extends JPanel {
 				GridBagConstraints.BOTH, "");
 		
 		texto = new JTextField();
-		Add.componente(this, texto, 0, 1, 3, 1, 1.0, 1.0,
+		Add.componente(this, texto, 1, 0, 3, 1, 1.0, 1.0,
 				GridBagConstraints.BOTH, "");
 	}
-
+	
+	/**
+	 * Regresa el texto contenido en el JTextField.
+	 * @return el texto
+	 */
+	public String getTexto() {
+		return texto.getText();
+	}
 }
