@@ -108,7 +108,7 @@ public class NumIntUI extends JPanel implements ActionListener{
 		JButton btn = (JButton) e.getSource();
 		switch (btn.getText().charAt(0)) {
 		case 'C'://TODO "Crear Polinomio":
-			funcion = fpnl.getPol();
+			funcion = fpnl.getFuncion();
 			lblEq.setText("<html>"+funcion.getSpecific()+"</html>");
 			mpnl.setFuncion(funcion);
 			JOptionPane.showMessageDialog(null, "Funci�n creada");//TODO funci�n creada

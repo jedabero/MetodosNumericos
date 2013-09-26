@@ -3,17 +3,31 @@
  */
 package ui;
 
-import javax.swing.SpinnerNumberModel;
+import java.awt.GridBagLayout;
+
+import javax.swing.JPanel;
+import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import resources.math.funciones.Funcion;
+
 /**
- * @author jedabero
+ * @author Jedabero
  *
  */
 public interface EditaFuncion extends ChangeListener {
 	
-	public int numComponentes = 0;
+	public JPanel pnlCoefs = new JPanel(new GridBagLayout());
 	
-	//public SpinnerNumberModel snmNumComp = new ;
+	public void init();
+	
+	public void addComponents();
+	
+	public void layoutCoefsPanel();
+	
+	public Funcion getFuncion();
+	
+	@Override
+	public void stateChanged(ChangeEvent e);
 	
 }

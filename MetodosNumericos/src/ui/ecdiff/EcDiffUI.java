@@ -172,8 +172,8 @@ public class EcDiffUI extends JPanel implements ChangeListener, ActionListener,
 		BigDecimal res = null;
 		
 		if (btn.equals(btnCreaEc)) {
-			Funcion Px = eppPx.getPol();
-			Funcion Qx = eppQx.getPol();
+			Funcion Px = eppPx.getFuncion();
+			Funcion Qx = eppQx.getFuncion();
 			edo1 = new EcuacionDiferencialOrden1(Px, Qx);
 			lblEc.setText("<html>"+edo1.getSpecific()+"</html>");
 		} else if (btn.equals(btnFind[0])) {

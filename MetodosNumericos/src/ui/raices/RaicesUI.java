@@ -65,7 +65,7 @@ public class RaicesUI extends JPanel  implements ActionListener {
 		//Mostrar Polinomio
 		lblEq = new JLabel("", JLabel.CENTER);
 		lblEq.setBorder(BorderFactory.createEtchedBorder());
-		JButton btnVerGrafica = new JButton("Ver gr�fica");
+		JButton btnVerGrafica = new JButton("Ver grafica");
 		
 		JSeparator sprtr2 = new JSeparator(JSeparator.HORIZONTAL);
 		
@@ -106,16 +106,16 @@ public class RaicesUI extends JPanel  implements ActionListener {
 		JButton btn = (JButton) e.getSource();
 		switch (btn.getText().charAt(0)) {
 		case 'C'://TODO "Crear Polinomio":
-			funcion = fpnlFuncion.getPol();
+			funcion = fpnlFuncion.getFuncion();
 			if(funcion!=null){
 				lblEq.setText("<html>"+funcion.getSpecific()+"</html>");
 				mpnlMetodos.setFuncion(funcion);
-				JOptionPane.showMessageDialog(this, "Funci�n creada");//TODO funcion creada
+				JOptionPane.showMessageDialog(this, "Funcion creada");//TODO funcion creada
 			} else {
-				JOptionPane.showMessageDialog(this, "No se pudo crear la funci�n");
+				JOptionPane.showMessageDialog(this, "No se pudo crear la funcion");
 			}
 			break;
-		case 'V'://TODO "Ver gr�fica":
+		case 'V'://TODO "Ver grafica":
 			if(funcion!=null){
 				ArrayList<Color> alc = new ArrayList<Color>(1);
 				alc.add(Color.BLUE);
@@ -126,7 +126,7 @@ public class RaicesUI extends JPanel  implements ActionListener {
 				}
 				grafic(alf, alc);
 			}else{
-				JOptionPane.showMessageDialog(null, "Crea la funci�n primero.");
+				JOptionPane.showMessageDialog(null, "Crea la funcion primero.");
 			}
 			break;
 		default:

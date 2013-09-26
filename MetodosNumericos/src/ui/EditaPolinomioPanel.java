@@ -15,7 +15,6 @@ import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 
 import resources.Add;
 import resources.CustomException;
@@ -26,7 +25,7 @@ import resources.math.funciones.Funcion;
  * @author Jedabero
  *
  */
-public class EditaPolinomioPanel extends JPanel implements ChangeListener {
+public class EditaPolinomioPanel extends JPanel implements EditaFuncion {
 
 	/**
 	 * 
@@ -38,7 +37,6 @@ public class EditaPolinomioPanel extends JPanel implements ChangeListener {
 	private SpinnerNumberModel snmGradoPol;
 	private JSpinner spnrGradoPol;
 	
-	private JPanel pnlCoefs;
 	private ArrayList<CoeficientePanel> listCoefs;
 	
 	private Funcion fnc;
@@ -49,7 +47,7 @@ public class EditaPolinomioPanel extends JPanel implements ChangeListener {
 	public EditaPolinomioPanel() {
 		super(new GridBagLayout());
 		
-		initComponents();
+		init();
 		addComponents();
 		
 		setBorder(BorderFactory.createTitledBorder("Edición del polinomio"));
@@ -61,20 +59,20 @@ public class EditaPolinomioPanel extends JPanel implements ChangeListener {
 	public EditaPolinomioPanel(String title) {
 		super(new GridBagLayout());
 		
-		initComponents();
+		init();
 		addComponents();
 		
 		setBorder(BorderFactory.createTitledBorder(title));
 	}
 	
-	private void initComponents() {
+	@Override
+	public void init() {
 		grado = 3;
 		
 		snmGradoPol = new SpinnerNumberModel(grado, 1, 25, 1);
 		spnrGradoPol = new JSpinner(snmGradoPol);
 		spnrGradoPol.addChangeListener(this);
 		
-		pnlCoefs = new JPanel(new GridBagLayout());
 		listCoefs = new ArrayList<CoeficientePanel>(grado+1);
 		
 		for (int i = 0; i <= grado; i++) {
@@ -88,6 +86,7 @@ public class EditaPolinomioPanel extends JPanel implements ChangeListener {
 	/**
 	 * 
 	 */
+	@Override
 	public void addComponents(){
 		Add.componente(this, new JLabel("Grado del polinomio", JLabel.CENTER),
 				0, 0, 1, 1, 1.0, 1.0, GridBagConstraints.NONE, "");
@@ -101,7 +100,8 @@ public class EditaPolinomioPanel extends JPanel implements ChangeListener {
 		
 	}
 	
-	private void layoutCoefsPanel(){
+	@Override
+	public void layoutCoefsPanel(){
 		pnlCoefs.removeAll();
 		pnlCoefs.revalidate();
 		for (int i = 0; i < listCoefs.size(); i++) {
@@ -120,7 +120,8 @@ public class EditaPolinomioPanel extends JPanel implements ChangeListener {
 	/**
 	 * @return la funci&oacute;n
 	 */
-	public Funcion getPol() {
+	@Override
+	public Funcion getFuncion() {
 		coefs = new BigDecimal[grado+1];
 		CoeficientePanel coefPanel;
 		boolean noErrors = true;
