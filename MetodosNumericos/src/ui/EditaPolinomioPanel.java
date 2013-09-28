@@ -21,6 +21,9 @@ import resources.CustomException;
 import resources.O;
 import resources.math.funciones.Funcion;
 
+import ui.editors.CoeficientePanel;
+import ui.editors.EditaFuncion;
+
 /**
  * @author Jedabero
  *
@@ -106,7 +109,7 @@ public class EditaPolinomioPanel extends JPanel implements EditaFuncion {
 		pnlCoefs.revalidate();
 		for (int i = 0; i < listCoefs.size(); i++) {
 			int x = i%4;
-			int y = (i/4);
+			int y = 2*(i/4);
 			
 			Add.componente(pnlCoefs, listCoefs.get(i),
 					x, y, 1, 1, 1.0, 1.0,

@@ -1,7 +1,7 @@
 /**
  * 
  */
-package ui;
+package ui.editors;
 
 import java.awt.GridBagLayout;
 
