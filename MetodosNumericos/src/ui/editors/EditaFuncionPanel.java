@@ -47,12 +47,7 @@ public class EditaFuncionPanel extends JPanel implements EditaFuncion {
 	 * 
 	 */
 	public EditaFuncionPanel() {
-		super(new GridBagLayout());
-		
-		init();
-		addComponents();
-		
-		setBorder(BorderFactory.createTitledBorder("Edición de la Función"));
+		this("Edición de la Función");
 	}
 	
 	/**
