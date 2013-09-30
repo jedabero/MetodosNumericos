@@ -20,7 +20,6 @@ import resources.Add;
 import resources.CustomException;
 import resources.O;
 import resources.math.funciones.Funcion;
-
 import ui.editors.CoeficientePanel;
 import ui.editors.EditaFuncion;
 
