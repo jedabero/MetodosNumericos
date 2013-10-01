@@ -115,6 +115,7 @@ public class FuncTrigPanel extends JPanel implements Editors {
 				2, 1, 2, 1, 1.0, 1.0, GridBagConstraints.BOTH, "Coeficiente B");
 	}
 	
+	@Override
 	public Termino getTermino() {
 		String textA = cpA.getTexto();
 		try {

@@ -6,19 +6,14 @@ package ui.editors;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.math.BigDecimal;
 
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JSpinner;
-import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 
 import resources.Add;
-import resources.math.Constantes.FuncionTrig;
 import resources.math.Constantes.Tipo;
 import resources.math.funciones.Termino;
 
@@ -26,23 +21,19 @@ import resources.math.funciones.Termino;
  * @author jedabero
  *
  */
-public class EditaTerminoPanel extends JPanel implements ItemListener, ChangeListener {
+public class EditaTerminoPanel extends JPanel implements Editors {
 
 	private Tipo tipo;
 	private JComboBox<Tipo> listaTipos;
-	private FuncionTrig tipoTrig;
-	private JComboBox<FuncionTrig> listaTipoTrig;
 	
 	private int index;
-	
-	private int grado;
-	private SpinnerNumberModel snmGrado;
-	private JSpinner spnrGrado;
 	
 	private CoeficientePanel cpA;
 	private BigDecimal coefA;
 	private CoeficientePanel cpB;
 	private BigDecimal coefB;
+	
+	private JPanel termPanel = new JPanel(new GridBagLayout());
 	
 	private Termino termino;
 	
@@ -69,67 +60,77 @@ public class EditaTerminoPanel extends JPanel implements ItemListener, ChangeLis
 	 * 
 	 */
 	public EditaTerminoPanel(int index, Tipo tipo) {
+		this(index, tipo, BigDecimal.ZERO, BigDecimal.ZERO);
+	}
+
+	public EditaTerminoPanel(int index, Tipo tipo, BigDecimal a, BigDecimal b) {
 		super(new GridBagLayout());
 		this.index = index;
 		this.tipo = tipo;
+		this.coefA = a;
+		this.coefB = b;
 		init();
+		addComponents();
+	}
+	
+	@Override
+	public void init() {
+		initLista();
+		
 	}
 
-	private void init() {
-		cpA = new CoeficientePanel("<html>A"+(index>=0?("<sub>"+index+"</sub>"):"")+"= </html>");
-		initLista();
-		switch (tipo) {
-		case POLINOMICA:
-			snmGrado = new SpinnerNumberModel(grado, 1, 25, 1);
-			spnrGrado = new JSpinner(snmGrado);
-			spnrGrado.addChangeListener(this);
-			Add.componente(this, new JLabel("Grado ",JLabel.CENTER),
-					0, 0, 1, 1, 1.0, 1.0, GridBagConstraints.NONE, "");
-			
-			break;
-
-		case TRIGONOMETRICA:
-			cpB = new CoeficientePanel("<html>B"+(index>=0?("<sub>"+index+"</sub>"):"")+"= </html>");
-			initListaTrig();
-			break;
-		
-		default:
-			cpB = new CoeficientePanel("<html>B"+(index>=0?("<sub>"+index+"</sub>"):"")+"= </html>");
-			break;
-		}
+	@Override
+	public void addComponents() {
+		Add.componente(this, new JLabel("Tipo:",JLabel.CENTER), 0, 0, 1, 1, 1.0, 1.0,
+				GridBagConstraints.BOTH, "");
+		Add.componente(this, listaTipos, 1, 0, 2, 1, 1.0, 1.0,
+				GridBagConstraints.BOTH, "");
+		Add.componente(this, termPanel, 0, 1, 3, 1, 1.0, 1.0,
+				GridBagConstraints.BOTH, "");
 	}
 	
 	private void initLista() {
+		listaTipos = new JComboBox<Tipo>();
 		listaTipos.addItem(Tipo.CONSTANTE);
 		listaTipos.addItem(Tipo.POLINOMICA);
 		listaTipos.addItem(Tipo.TRIGONOMETRICA);
 		listaTipos.addItem(Tipo.EXPONENCIAL);
 		listaTipos.addItem(Tipo.LOGARITMICA);
 		listaTipos.setSelectedItem(tipo);
+		listaTipos.addItemListener(this);
 	}
 	
-	private void initListaTrig() {
-		listaTipoTrig.addItem(FuncionTrig.SIN);
-		listaTipoTrig.addItem(FuncionTrig.COS);
-		listaTipoTrig.addItem(FuncionTrig.TAN);
-		listaTipoTrig.addItem(FuncionTrig.SEC);
-		listaTipoTrig.addItem(FuncionTrig.CSC);
-		listaTipoTrig.addItem(FuncionTrig.COT);
-		listaTipoTrig.setSelectedItem(tipoTrig);
+	@Override
+	public Termino getTermino() {
+		// TODO Auto-generated method stub
+		return termino;
 	}
-
-	
 	
 	@Override
 	public void itemStateChanged(ItemEvent e) {
-		// TODO Auto-generated method stub
-		
+		if(e.getStateChange()== ItemEvent.SELECTED) {
+			tipo = (Tipo) e.getItem();
+			System.out.println(tipo);
+			
+		}
 	}
 
 	@Override
 	public void stateChanged(ChangeEvent e) {
-		// TODO Auto-generated method stub
 		
+	}
+	
+	/**
+	 * @param args
+	 */
+	public static void main(String args[]){
+		javax.swing.JFrame jf = new javax.swing.JFrame("Tests");
+		jf.setSize(200,100);
+		jf.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
+		
+		EditaTerminoPanel etp = new EditaTerminoPanel();
+		jf.add(etp);
+		jf.setVisible(true);
 	}
 	
 }

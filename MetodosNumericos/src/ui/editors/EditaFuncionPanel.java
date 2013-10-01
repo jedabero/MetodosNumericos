@@ -5,7 +5,6 @@ package ui.editors;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
@@ -35,13 +34,8 @@ public class EditaFuncionPanel extends JPanel implements EditaFuncion {
 	protected JSpinner spnrNumTerminos;
 	
 	protected ArrayList<CoeficientePanel> listCoefsA;
-	protected ArrayList<CoeficientePanel> listCoefsB;
 	
 	protected Funcion fnc;
-	protected BigDecimal[] coefsA;
-	protected BigDecimal[] coefsB;
-	
-	protected boolean hasBcoef = false;
 	
 	/**
 	 * 
@@ -74,19 +68,12 @@ public class EditaFuncionPanel extends JPanel implements EditaFuncion {
 		spnrNumTerminos.addChangeListener(this);
 		
 		listCoefsA = new ArrayList<CoeficientePanel>(numTerminos);
-		listCoefsB = hasBcoef? new ArrayList<CoeficientePanel>(numTerminos):null;
 		
 		for (int i = 0; i < numTerminos; i++) {
 			CoeficientePanel tempcp = new CoeficientePanel("<html>A<sub>"+i+"</sub>= </html>");
 			listCoefsA.add(tempcp);
-			if (hasBcoef) {
-				CoeficientePanel tempcpb = new CoeficientePanel("<html>B<sub>"+i+"</sub>= </html>");
-				listCoefsB.add(tempcpb);	
-			}
 		}
 		
-		coefsA = new BigDecimal[numTerminos];
-		coefsB = hasBcoef? new BigDecimal[numTerminos]:null;
 	}
 
 	/* (non-Javadoc)
@@ -115,18 +102,11 @@ public class EditaFuncionPanel extends JPanel implements EditaFuncion {
 		pnlCoefs.revalidate();
 		for (int i = 0; i < listCoefsA.size(); i++) {
 			int x = i%4;
-			int y1 = 2*(i/4);
+			int y1 = i/4;
 			
 			Add.componente(pnlCoefs, listCoefsA.get(i),
 					x, y1, 1, 1, 1.0, 1.0,
 					GridBagConstraints.BOTH, "");
-			
-			if (hasBcoef) {
-				int y2 = (i/4) + 1;
-				Add.componente(pnlCoefs, listCoefsB.get(i),
-						x, y2, 1, 1, 1.0, 1.0,
-						GridBagConstraints.BOTH, "");	
-			}
 			
 		}
 

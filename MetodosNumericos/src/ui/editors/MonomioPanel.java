@@ -103,6 +103,7 @@ public class MonomioPanel extends JPanel implements Editors {
 				0, 1, 3, 1, 1.0, 1.0, GridBagConstraints.BOTH, "Coeficiente A");
 	}
 	
+	@Override
 	public Termino getTermino() {
 		String textA = cpA.getTexto();
 		try {
