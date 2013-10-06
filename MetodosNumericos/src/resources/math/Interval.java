@@ -5,35 +5,33 @@ package resources.math;
 
 /**
  * @author jedabero
- *
+ * 
  */
 public class Interval {
-	
+
 	private int max;
 	private int min;
-	
-	public Interval(int min, int max){
+
+	public Interval(int min, int max) {
 		this.max = max;
 		this.min = min;
 	}
-	
-	public int length(){
+
+	public int length() {
 		int l = getMax() - getMin();
 		return l;
 	}
-	
-	public int centre(){
-		int c = (max+min)/2;
+
+	public int centre() {
+		int c = (max + min) / 2;
 		return c;
 	}
-	
-	public double realCentre(){
-		double c = (max+min)/2.0;
+
+	public double realCentre() {
+		double c = (max + min) / 2.0;
 		return c;
 	}
-	
-	
-	
+
 	public int getMax() {
 		return max;
 	}
@@ -49,9 +47,9 @@ public class Interval {
 	public void setMin(int min) {
 		this.min = min;
 	}
-	
-	public String toString(){
-		return "("+min+", "+max+")";
+
+	public String toString() {
+		return "(" + min + ", " + max + ")";
 	}
-	
+
 }

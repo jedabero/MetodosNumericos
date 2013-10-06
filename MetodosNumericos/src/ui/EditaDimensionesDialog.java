@@ -19,18 +19,17 @@ import javax.swing.JTextField;
 
 import resources.Add;
 
-
 /**
  * @author <a href="https://twitter.com/Jedabero" target="_blank">Jedabero</a>
- *
+ * 
  */
 public class EditaDimensionesDialog extends JDialog {
-	
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 3935940317582610581L;
-	
+
 	private JLabel anchoLabel;
 	private JTextField anchoText;
 	private JLabel altoLabel;
@@ -40,38 +39,38 @@ public class EditaDimensionesDialog extends JDialog {
 	private JDesktopPane thejdp;
 	private JGrafica jlg;
 	private Dimension dim = new Dimension();
-	
+
 	/**
 	 * @param mainWindow
 	 * @param grafica
 	 */
-	public EditaDimensionesDialog(JFrame mainWindow, JGrafica grafica){
+	public EditaDimensionesDialog(JFrame mainWindow, JGrafica grafica) {
 		super(mainWindow, "Edita Dimensiones", true);
 		jlg = grafica;
 		anchoLabel = new JLabel("Ancho: ");
-		anchoText = new JTextField(""+jlg.getWidth());
+		anchoText = new JTextField("" + jlg.getWidth());
 		altoLabel = new JLabel("Alto: ");
-		altoText = new JTextField(""+jlg.getHeight());
-		listoAL = new ActionListener(){
+		altoText = new JTextField("" + jlg.getHeight());
+		listoAL = new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int ancho;
-				try{
+				try {
 					ancho = Integer.parseInt(anchoText.getText());
-				}catch(Exception ex){
+				} catch (Exception ex) {
 					ancho = jlg.getWidth();
-					anchoText.setText(""+ancho);
+					anchoText.setText("" + ancho);
 				}
-				
+
 				int alto;
-				try{
+				try {
 					alto = Integer.parseInt(altoText.getText());
-				}catch(Exception ex){
+				} catch (Exception ex) {
 					alto = jlg.getHeight();
-					altoText.setText(""+alto);
+					altoText.setText("" + alto);
 				}
-				
+
 				dim.setSize(ancho, alto);
-				
+
 				dispose();
 			}
 		};
@@ -86,14 +85,16 @@ public class EditaDimensionesDialog extends JDialog {
 		thejdp.setBackground(new Color(238, 238, 238));
 		add(thejdp);
 		setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
-		setSize(280+5,200);
+		setSize(280 + 5, 200);
 		setLocationRelativeTo(mainWindow);
 		setVisible(true);
 	}
 
 	/**
-	 * @return Regresa la dimensión propuesta por el usuario.
+	 * @return Regresa la dimensiï¿½n propuesta por el usuario.
 	 */
-	public Dimension getDimension() {return dim;}
-	
+	public Dimension getDimension() {
+		return dim;
+	}
+
 }

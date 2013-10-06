@@ -29,101 +29,100 @@ import ui.EditaPolinomioPanel;
 
 /**
  * @author Jedabero
- *
+ * 
  */
-public class NumIntUI extends JPanel implements ActionListener{
+public class NumIntUI extends JPanel implements ActionListener {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1094301241514865205L;
-	
+
 	private JFrame frmGrafica;
 	private EditaPolinomioPanel fpnl;
 	private JLabel lblEq;
 	private MetodosIntegracionPanel mpnl;
 	private Funcion funcion;
-	
+
 	/**
 	 * 
 	 */
-	public NumIntUI(){
+	public NumIntUI() {
 		super(new GridBagLayout());
-		
+
 		initComponents();
-		
+
 		setName("NumIntUI");
 	}
-	
-	
+
 	private void initComponents() {
-		//Ingresar Polinomio
+		// Ingresar Polinomio
 		fpnl = new EditaPolinomioPanel();
 		JButton btnCreaPol = new JButton("Crear Polinomio");
-		
+
 		JSeparator sprtr1 = new JSeparator(JSeparator.HORIZONTAL);
-		
+
 		lblEq = new JLabel("", JLabel.CENTER);
 		lblEq.setBorder(BorderFactory.createEtchedBorder());
 		JButton btnVerGrafica = new JButton("Ver gr�fica");
-		
+
 		JSeparator sprtr2 = new JSeparator(JSeparator.HORIZONTAL);
-		
-		//M�todos
+
+		// M�todos
 		mpnl = new MetodosIntegracionPanel();
-		
-		//0 - Tama�o Polinomio
-		
-		Add.componente(this, btnCreaPol, 			3, 0, 2, 1, 1.0, 1.0,
+
+		// 0 - Tama�o Polinomio
+
+		Add.componente(this, btnCreaPol, 3, 0, 2, 1, 1.0, 1.0,
 				GridBagConstraints.BOTH, "");
-		Add.componente(this, fpnl, 			0, 1, 5, 2, 1.0, 1.0,
+		Add.componente(this, fpnl, 0, 1, 5, 2, 1.0, 1.0,
 				GridBagConstraints.BOTH, "Edita los coeficientes de la funci�n");
-		//3 - Separator
-		Add.componente(this, sprtr1, 				0, 3, 5, 1, 1.0, 1.0,
+		// 3 - Separator
+		Add.componente(this, sprtr1, 0, 3, 5, 1, 1.0, 1.0,
 				GridBagConstraints.HORIZONTAL, "");
-		
-		//4 - Mostrar Polinomio
-		Add.componente(this, lblEq, 				0, 4, 4, 2, 1.0, 1.0,
+
+		// 4 - Mostrar Polinomio
+		Add.componente(this, lblEq, 0, 4, 4, 2, 1.0, 1.0,
 				GridBagConstraints.BOTH, "Funci�n");
-		Add.componente(this, btnVerGrafica, 		4, 4, 1, 2, 1.0, 1.0,
-				GridBagConstraints.BOTH, "Vea la gr�fica de est� funci�n en " +
-						"una nueva ventana");
-		//6 - Separator
-		Add.componente(this, sprtr2, 				0, 6, 5, 1, 1.0, 1.0,
+		Add.componente(this, btnVerGrafica, 4, 4, 1, 2, 1.0, 1.0,
+				GridBagConstraints.BOTH, "Vea la gr�fica de est� funci�n en "
+						+ "una nueva ventana");
+		// 6 - Separator
+		Add.componente(this, sprtr2, 0, 6, 5, 1, 1.0, 1.0,
 				GridBagConstraints.HORIZONTAL, "");
-		//7 - M�todosPanel
-		Add.componente(this, mpnl, 			0, 7, 5, 1, 1.0, 1.0,
+		// 7 - M�todosPanel
+		Add.componente(this, mpnl, 0, 7, 5, 1, 1.0, 1.0,
 				GridBagConstraints.BOTH, "");
-		
-		
-		
-		//Add ActionListeners
+
+		// Add ActionListeners
 		btnCreaPol.addActionListener(this);
 		btnVerGrafica.addActionListener(this);
-		
+
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		JButton btn = (JButton) e.getSource();
 		switch (btn.getText().charAt(0)) {
-		case 'C'://TODO "Crear Polinomio":
+		case 'C':// TODO "Crear Polinomio":
 			funcion = fpnl.getFuncion();
-			lblEq.setText("<html>"+funcion.getSpecific()+"</html>");
+			lblEq.setText("<html>" + funcion.getSpecific() + "</html>");
 			mpnl.setFuncion(funcion);
-			JOptionPane.showMessageDialog(null, "Funci�n creada");//TODO funci�n creada
+			JOptionPane.showMessageDialog(null, "Funci�n creada");// TODO
+																	// funci�n
+																	// creada
 			break;
-		case 'V'://TODO "Ver gr�fica":
-			if(funcion!=null){
+		case 'V':// TODO "Ver gr�fica":
+			if (funcion != null) {
 				ArrayList<Color> alc = new ArrayList<Color>(1);
 				alc.add(Color.BLUE);
 				ArrayList<Funcion> alf = new ArrayList<Funcion>(1);
 				alf.add(funcion);
-				if(frmGrafica!=null){
+				if (frmGrafica != null) {
 					frmGrafica.dispose();
 				}
 				grafic(alf, alc);
-			}else{
+			} else {
 				JOptionPane.showMessageDialog(null, "Crea la funci�n primero.");
 			}
 			break;
@@ -133,9 +132,9 @@ public class NumIntUI extends JPanel implements ActionListener{
 		}
 
 	}
-	
-	private void grafic(ArrayList<Funcion> alf, ArrayList<Color> alc){
-		frmGrafica = new JFrame(""+funcion);
+
+	private void grafic(ArrayList<Funcion> alf, ArrayList<Color> alc) {
+		frmGrafica = new JFrame("" + funcion);
 		frmGrafica.setSize(800, 600);
 		ArrayList<Boolean> b = new ArrayList<Boolean>();
 		b.add(false);
@@ -146,7 +145,7 @@ public class NumIntUI extends JPanel implements ActionListener{
 		jg.setMostrarAreaIntegral(true);
 		jg.setRangeY(false);
 		BigInterval ab = mpnl.getAb();
-		if(ab != null){
+		if (ab != null) {
 			jg.setIntegralX(ab);
 		}
 		frmGrafica.add(jg);

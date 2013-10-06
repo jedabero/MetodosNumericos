@@ -14,20 +14,20 @@ import resources.math.funciones.Termino;
 
 /**
  * @author Jedabero
- *
+ * 
  */
 public class EcuacionDiferencialOrden1 {
-	
+
 	private Funcion Px;
 	private Funcion Qx;
-	
+
 	private Funcion dPx;
 	private Funcion dQx;
 
 	private String generic;
 	private String specific;
 	private String toString;
-	
+
 	/**
 	 * @return the P(x)
 	 */
@@ -57,14 +57,16 @@ public class EcuacionDiferencialOrden1 {
 	}
 
 	/**
-	 * @param px the function P(x) to set
+	 * @param px
+	 *            the function P(x) to set
 	 */
 	public void setPx(Funcion px) {
 		Px = px;
 	}
 
 	/**
-	 * @param qx the function Q(x) to set
+	 * @param qx
+	 *            the function Q(x) to set
 	 */
 	public void setQx(Funcion qx) {
 		Qx = qx;
@@ -75,12 +77,11 @@ public class EcuacionDiferencialOrden1 {
 		String gS = init;
 		String sS = init;
 		toString = init;
-		
 
 		gS += Qx.getGeneric();
 		sS += Qx.getSpecific();
 		toString += Qx;
-		
+
 		switch (Px.getTerminos().size()) {
 		case 0:
 			break;
@@ -88,63 +89,63 @@ public class EcuacionDiferencialOrden1 {
 			Termino t0 = Px.getTerminos().get(0);
 			boolean Aeq1 = (t0.getA().compareTo(BigDecimal.ONE) == 0);
 			boolean TeqK = (t0.getTipoFuncion() == Tipo.CONSTANTE);
-			if(!(Aeq1&&TeqK)){
-				gS += " + "+Px.getGeneric()+"y";
-				sS += " + "+Px.getSpecific()+"y";
-				toString += " + "+Px+"y";
-			}else{
+			if (!(Aeq1 && TeqK)) {
+				gS += " + " + Px.getGeneric() + "y";
+				sS += " + " + Px.getSpecific() + "y";
+				toString += " + " + Px + "y";
+			} else {
 				gS += " + y";
 				sS += " + y";
 				toString += " + y";
 			}
 			break;
 		default:
-			gS += " + ("+Px.getGeneric()+")y";
-			sS += " + ("+Px.getSpecific()+")y";
-			toString += " + ("+Px+")y";
+			gS += " + (" + Px.getGeneric() + ")y";
+			sS += " + (" + Px.getSpecific() + ")y";
+			toString += " + (" + Px + ")y";
 			break;
 		}
-		
+
 		generic = gS;
 		specific = sS;
 	}
-	
+
 	@Override
-	public String toString(){
+	public String toString() {
 		return toString;
 	}
-	
+
 	/**
 	 * @param px
 	 * @param qx
 	 */
 	public EcuacionDiferencialOrden1(Funcion px, Funcion qx) {
-		
+
 		Px = px;
 		Qx = qx;
-		
+
 		dPx = Px.derivada();
 		dQx = Qx.derivada();
-		
+
 		initStrings();
 	}
-	
+
 	/**
 	 * @param x
 	 * @param y
 	 * @return el valor de dy/dx
 	 */
-	public BigDecimal valor(BigDecimal x, BigDecimal y){
+	public BigDecimal valor(BigDecimal x, BigDecimal y) {
 		BigDecimal res = y.multiply(Px.valorImagen(x)).add(Qx.valorImagen(x));
 		return res;
 	}
-	
+
 	/**
 	 * @param x
 	 * @param y
 	 * @return el valor de d<sup>2</sup>y/dx<sup>2</sup>
 	 */
-	public BigDecimal valorDerivada(BigDecimal x, BigDecimal y){
+	public BigDecimal valorDerivada(BigDecimal x, BigDecimal y) {
 		BigDecimal PxVal = Px.valorImagen(x);
 		BigDecimal PxDY = PxVal.multiply(valor(x, y));
 		BigDecimal dPxVal = dPx.valorImagen(x);
@@ -153,7 +154,7 @@ public class EcuacionDiferencialOrden1 {
 		BigDecimal acum = dPxY.add(dQxVal).add(PxDY);
 		return acum;
 	}
-	
+
 	/**
 	 * @param X
 	 * @param y0
@@ -164,50 +165,53 @@ public class EcuacionDiferencialOrden1 {
 		BigDecimal h = X.step(n);
 		BigDecimal xn[] = X.conjuntoPuntos(n);
 		BigDecimal yn = y0;
-		
+
 		for (int i = 0; i < n; i++) {
 			BigDecimal dyn = valor(xn[i], yn);
 			BigDecimal hdy = h.multiply(dyn);
 			yn = yn.add(hdy).stripTrailingZeros();
 		}
-		
+
 		return yn;
 	}
-	
+
 	/**
 	 * @param X
 	 * @param y0
 	 * @param n
 	 * @return el valor de y(X.max()) por el metodo de Euler Simple Modificado
 	 */
-	public BigDecimal metodoEulerSimpleModificado(BigInterval X, BigDecimal y0, int n) {
+	public BigDecimal metodoEulerSimpleModificado(BigInterval X, BigDecimal y0,
+			int n) {
 		BigDecimal h = X.step(n);
 		BigDecimal xn[] = X.conjuntoPuntos(n);
 		BigDecimal yn = y0;
-		
+
 		for (int i = 0; i < n; i++) {
 			BigDecimal k1 = valor(xn[i], yn);
 			BigDecimal xnh = xn[i].add(h);
-			BigDecimal un = yn.add(h.multiply(k1)); 
+			BigDecimal un = yn.add(h.multiply(k1));
 			BigDecimal k2 = valor(xnh, un);
-			yn = yn.add(h.divide(Big.TWO).multiply(k1.add(k2))).stripTrailingZeros();
+			yn = yn.add(h.divide(Big.TWO).multiply(k1.add(k2)))
+					.stripTrailingZeros();
 		}
-		
+
 		return yn;
 	}
-	
+
 	/**
 	 * @param X
 	 * @param y0
 	 * @param n
 	 * @return el valor de y(X.max()) por el metodo con las Serie de Taylor
-	 * hasta el tercer termino.
+	 *         hasta el tercer termino.
 	 */
-	public BigDecimal metodoSeriesTaylorOrden2(BigInterval X, BigDecimal y0, int n) {
+	public BigDecimal metodoSeriesTaylorOrden2(BigInterval X, BigDecimal y0,
+			int n) {
 		BigDecimal h = X.step(n);
 		BigDecimal xn[] = X.conjuntoPuntos(n);
 		BigDecimal yn = y0;
-		
+
 		for (int i = 0; i < n; i++) {
 			BigDecimal dyn = valor(xn[i], yn);
 			BigDecimal hdy = h.multiply(dyn);
@@ -216,10 +220,10 @@ public class EcuacionDiferencialOrden1 {
 			BigDecimal t = h2_2.multiply(ddyn);
 			yn = yn.add(hdy).add(t).stripTrailingZeros();
 		}
-		
+
 		return yn;
 	}
-	
+
 	/**
 	 * @param X
 	 * @param y0
@@ -229,20 +233,21 @@ public class EcuacionDiferencialOrden1 {
 	public BigDecimal metodoRungeKutta(BigInterval X, BigDecimal y0, int n) {
 		BigDecimal h = X.step(n);
 		BigDecimal h_2 = h.divide(Big.TWO);
-		BigDecimal h_6 = h.divide(BigDecimal.valueOf(6), 15, RoundingMode.HALF_UP);
+		BigDecimal h_6 = h.divide(BigDecimal.valueOf(6), 15,
+				RoundingMode.HALF_UP);
 		BigDecimal xn[] = X.conjuntoPuntos(n);
 		BigDecimal yn = y0;
-		
+
 		for (int i = 0; i < n; i++) {
 			BigDecimal k1 = valor(xn[i], yn);
 			BigDecimal k2 = valor(xn[i].add(h_2), yn.add(k1.multiply(h_2)));
 			BigDecimal k3 = valor(xn[i].add(h_2), yn.add(k2.multiply(h_2)));
-			BigDecimal k4 = valor(xn[i+1], yn.add(k3.multiply(h)));
+			BigDecimal k4 = valor(xn[i + 1], yn.add(k3.multiply(h)));
 			BigDecimal k = k1.add(k2.add(k3).multiply(Big.TWO)).add(k4);
 			yn = yn.add(h_6.multiply(k)).stripTrailingZeros();
 		}
-		
+
 		return yn;
 	}
-	
+
 }

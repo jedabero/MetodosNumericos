@@ -6,18 +6,17 @@ package resources.math;
 /**
  * @version %I%
  * @author <a href="https://twitter.com/Jedabero" target="_blank">Jedabero</a>
- *
+ * 
  */
 public interface Constantes {
-	
-	
-	
+
 	/**
 	 * Grupo de funciones
+	 * 
 	 * @author Jedabero
-	 *
+	 * 
 	 */
-	public enum Tipo{
+	public enum Tipo {
 		/** Constante para determinar x como termino interno. */
 		MONO,
 		/** Constante para determinar la funcion como una constante. */
@@ -35,28 +34,29 @@ public interface Constantes {
 		/** Constante para determinar la funcion como compuesta por otra. */
 		COMPUESTA,
 		/** */
-		
+
 	}
-	
+
 	/**
 	 * Grupo de funciones trigonometricas.
+	 * 
 	 * @author Jedabero
-	 *
+	 * 
 	 */
-	public enum FuncionTrig{
+	public enum FuncionTrig {
 		/** Constante para determinar Seno. */
 		SIN,
 		/** Constante para determinar Coseno. */
 		COS,
 		/** Constante para determinar Tangente. */
 		TAN,
-		/**  Constante para determinar Secante. */
+		/** Constante para determinar Secante. */
 		SEC,
 		/** Constante para determinar Cosecante. */
 		CSC,
 		/** Constante para determinar Cotangente. */
-		COT ;
-		
+		COT;
+
 	}
-	
+
 }

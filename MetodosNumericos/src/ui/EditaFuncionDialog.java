@@ -38,11 +38,12 @@ import ui.main.Graficador;
 /**
  * Esta clase crea una ventana de dialogo en la que se mostrar&aacute;n los
  * par&aacute;metros de la funci&oacute; a crear o editar.
+ * 
  * @author <a href="https://twitter.com/Jedabero" target="_blank">Jedabero</a>
- *
+ * 
  */
-public final class EditaFuncionDialog extends JDialog{
-	
+public final class EditaFuncionDialog extends JDialog {
+
 	/**
 	 * 
 	 */
@@ -55,7 +56,7 @@ public final class EditaFuncionDialog extends JDialog{
 	 * 
 	 */
 	public static final int EDITAR = 1;
-	
+
 	private JToolBar opciones;
 	private JGrafica gf;
 	private int index;
@@ -67,27 +68,27 @@ public final class EditaFuncionDialog extends JDialog{
 	private ArrayList<Color> arrListColor;
 	private ItemListener itemL;
 	private Color c;
-	
+
 	private JPanel ecuacion = new JPanel();
 	private JPanel propiedades = new JPanel();
 	private JPanel panelGrid = new JPanel(new GridBagLayout());
-	
+
 	private JLabel labelTipoFuncion;
 	private JComboBox<Tipo> dropTipoFuncion;
 	private ItemListener selecTipoIL;
-	
+
 	private JLabel labelTerminos;
 	private JTextField textTerminos;
 	private JButton actualiza = new JButton();
 	private ActionListener actualizaAL;
-	
+
 	private JLabel labelA[];
 	private ArrayList<JTextField> textA;
 	private JLabel labelB[];
 	private ArrayList<JTextField> textB;
 	private JComboBox<FuncionTrig> dropTipoFuncTrig;
 	private ArrayList<JComboBox<FuncionTrig>> arrListDropFuncTrig;
-	
+
 	private JLabel labelFuncion;
 	private JLabel labelEcuacion;
 	private JButton listoBoton = new JButton();
@@ -95,73 +96,80 @@ public final class EditaFuncionDialog extends JDialog{
 
 	private JButton cerrarBoton = new JButton();
 	private ActionListener cerrarAL;
-	
+
 	private Tipo tipoFunOr;
-	
+
 	private ResourceBundle l;
-	
+
 	/**
-	 * @param ventana	Parent
-	 * @param jpJCB		toolbar
-	 * @param grafica			gr&aacute;fica
-	 * @param posicion	posici&oacute;n de la funci&oacute;n
-	 * @param tempF		Funci&oacute;n actual
-	 * @param listaFunciones		lista de funciones
-	 * @param alJRB		lista de check boxes
-	 * @param alColor	lista de colores
-	 * @param iL		item listener
-	 * @param ACCION	acci&oacute;n correspondiente
-	 * @param rs 		lenguaje
+	 * @param ventana
+	 *            Parent
+	 * @param jpJCB
+	 *            toolbar
+	 * @param grafica
+	 *            gr&aacute;fica
+	 * @param posicion
+	 *            posici&oacute;n de la funci&oacute;n
+	 * @param tempF
+	 *            Funci&oacute;n actual
+	 * @param listaFunciones
+	 *            lista de funciones
+	 * @param alJRB
+	 *            lista de check boxes
+	 * @param alColor
+	 *            lista de colores
+	 * @param iL
+	 *            item listener
+	 * @param ACCION
+	 *            acci&oacute;n correspondiente
+	 * @param rs
+	 *            lenguaje
 	 */
-	public EditaFuncionDialog(JFrame ventana,
-			JToolBar	jpJCB,
-			JGrafica	 grafica,
-			int	posicion,
-			Funcion		tempF, 
-			ArrayList<Funcion>	listaFunciones,
-			ArrayList<JCheckBox>	alJRB,
-			ArrayList<Color>	alColor,
-			ItemListener	iL,
-			int ACCION,
-			ResourceBundle rs){
+	public EditaFuncionDialog(JFrame ventana, JToolBar jpJCB, JGrafica grafica,
+			int posicion, Funcion tempF, ArrayList<Funcion> listaFunciones,
+			ArrayList<JCheckBox> alJRB, ArrayList<Color> alColor,
+			ItemListener iL, int ACCION, ResourceBundle rs) {
 		super(ventana, true);
 		l = Graficador.lang;
-		opciones	= jpJCB;
-		this.gf		= grafica;
-		index		= posicion;
-		arrListFB	= listaFunciones;
-		arrListJRB	= alJRB;
-		arrListColor= alColor;
-		itemL 		= iL;
-		accion		= ACCION;
+		opciones = jpJCB;
+		this.gf = grafica;
+		index = posicion;
+		arrListFB = listaFunciones;
+		arrListJRB = alJRB;
+		arrListColor = alColor;
+		itemL = iL;
+		accion = ACCION;
 		tempFuncion = tempF;
 		tipoFunOr = tempF.getTipoFuncion();
 		setTitle(l.getString("editFTitle"));
 		actualiza.setText(l.getString("updateBttn"));
 		listoBoton.setText(l.getString("doneBttn"));
 		cerrarBoton.setText(l.getString("cancelBttn"));
-		
-		c = new Color(((int)(25.6*Math.random()))*10,
-				((int)(25.6*Math.random()))*10,
-				((int)(25.6*Math.random()))*10);
-		
+
+		c = new Color(((int) (25.6 * Math.random())) * 10,
+				((int) (25.6 * Math.random())) * 10,
+				((int) (25.6 * Math.random())) * 10);
+
 		initListeners();
-		
+
 		labelTipoFuncion = new JLabel(l.getString("fTypeL"));
 		dropTipoFuncion = new JComboBox<Tipo>();
-		for(Tipo f : Tipo.values()){
+		for (Tipo f : Tipo.values()) {
 			dropTipoFuncion.addItem(f);
 		}
 		dropTipoFuncion.setSelectedItem(tipoFunOr);
 		dropTipoFuncion.addItemListener(selecTipoIL);
-		
+
 		dropTipoFuncTrig = new JComboBox<FuncionTrig>();
-		for(FuncionTrig ft : FuncionTrig.values()) dropTipoFuncTrig.addItem(ft);
-		
-		switch(tempFuncion.getTipoFuncion()){
+		for (FuncionTrig ft : FuncionTrig.values())
+			dropTipoFuncTrig.addItem(ft);
+
+		switch (tempFuncion.getTipoFuncion()) {
 		case POLINOMICA:
 			labelTerminos = new JLabel(l.getString("polTermL"));
-			textTerminos = new JTextField(""+tempF.getTerminos().get(tempF.getTerminos().size()-1).getGrado());
+			textTerminos = new JTextField(""
+					+ tempF.getTerminos().get(tempF.getTerminos().size() - 1)
+							.getGrado());
 			propiedades.add(labelTerminos);
 			propiedades.add(textTerminos);
 			break;
@@ -170,25 +178,25 @@ public final class EditaFuncionDialog extends JDialog{
 		case LOGARITMICA:
 		default:
 			labelTerminos = new JLabel(l.getString("defTermL"));
-			textTerminos = new JTextField(""+tempFuncion.getTerminos().size()); 
+			textTerminos = new JTextField("" + tempFuncion.getTerminos().size());
 			propiedades.add(labelTerminos);
 			propiedades.add(textTerminos);
 			break;
 		case RACIONAL:
-			//TODO RACIONAL
+			// TODO RACIONAL
 			break;
 		}
-		
+
 		textTerminos.addActionListener(actualizaAL);
 		actualiza.addActionListener(actualizaAL);
 		propiedades.add(actualiza);
-		
+
 		setPanelEcuacion();
 		labelFuncion = new JLabel(tempFuncion.getSpecific());
 		labelEcuacion = new JLabel(tempFuncion.getGeneric());
 		listoBoton.addActionListener(listoAL);
 		cerrarBoton.addActionListener(cerrarAL);
-		
+
 		Add.componente(panelGrid, labelTipoFuncion, 0, 0, 1, 1, 1.0, 1.0,
 				GridBagConstraints.HORIZONTAL, "");
 		Add.componente(panelGrid, dropTipoFuncion, 2, 0, 2, 1, 1.0, 1.0,
@@ -205,16 +213,16 @@ public final class EditaFuncionDialog extends JDialog{
 				GridBagConstraints.BOTH, l.getString("doneBttnTTT"));
 		Add.componente(panelGrid, cerrarBoton, 2, 5, 2, 1, 0.0, 0.0,
 				GridBagConstraints.BOTH, l.getString("cancelBttnTTT"));
-		
+
 		add(panelGrid);
-		
+
 		setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
 		setSize(300, 500);
 		setLocationRelativeTo(ventana);
 		((JComponent) getContentPane()).setOpaque(true);
 		setVisible(true);
-	} 
-	
+	}
+
 	private void setPanelEcuacion() {
 		ecuacion.removeAll();
 		labelA = new JLabel[tempFuncion.getTerminos().size()];
@@ -223,34 +231,39 @@ public final class EditaFuncionDialog extends JDialog{
 		textB = new ArrayList<JTextField>();
 		arrListDropFuncTrig = new ArrayList<JComboBox<FuncionTrig>>();
 		int l = labelA.length;
-		int y = l%2==0 ? l/2 : l/2 + 1;
-		if(l==3) y=3;
-		switch(tempFuncion.getTipoFuncion()){
+		int y = l % 2 == 0 ? l / 2 : l / 2 + 1;
+		if (l == 3)
+			y = 3;
+		switch (tempFuncion.getTipoFuncion()) {
 		case POLINOMICA:
-			if(l==3) y=3; ecuacion.setLayout(new GridLayout(y,4));
-			for(int n = 0;n<tempFuncion.getTerminos().size();n++){
-				labelA[n] = new JLabel("<html>A<sub>"+n+"</sub> :\t");
+			if (l == 3)
+				y = 3;
+			ecuacion.setLayout(new GridLayout(y, 4));
+			for (int n = 0; n < tempFuncion.getTerminos().size(); n++) {
+				labelA[n] = new JLabel("<html>A<sub>" + n + "</sub> :\t");
 				labelA[n].setHorizontalAlignment(SwingConstants.RIGHT);
-				textA.add(n, new JTextField(""));//TODO CONSTANTS
+				textA.add(n, new JTextField(""));// TODO CONSTANTS
 				ecuacion.add(labelA[n]);
 				ecuacion.add(textA.get(n));
 			}
 			break;
 		case TRIGONOMETRICA:
-			ecuacion.setLayout(new GridLayout(y*3,4));
-			for(int n = 0;n<tempFuncion.getTerminos().size();n++){
-				labelA[n] = new JLabel("<html>A<sub>"+n+"</sub> :\t");
-				labelB[n] = new JLabel("<html>B<sub>"+n+"</sub> :\t");
+			ecuacion.setLayout(new GridLayout(y * 3, 4));
+			for (int n = 0; n < tempFuncion.getTerminos().size(); n++) {
+				labelA[n] = new JLabel("<html>A<sub>" + n + "</sub> :\t");
+				labelB[n] = new JLabel("<html>B<sub>" + n + "</sub> :\t");
 				labelA[n].setHorizontalAlignment(SwingConstants.RIGHT);
 				labelB[n].setHorizontalAlignment(SwingConstants.RIGHT);
-				textA.add(n, new JTextField(""));//TODO CONSTANTS
-				textB.add(n, new JTextField(""));//TODO CONSTANTS
+				textA.add(n, new JTextField(""));// TODO CONSTANTS
+				textB.add(n, new JTextField(""));// TODO CONSTANTS
 				JComboBox<FuncionTrig> jcb = dropTipoFuncTrig;
 				jcb.addItemListener(selecTipoIL);
-				jcb.setSelectedItem(tempFuncion);//TODO TIPOS trig
+				jcb.setSelectedItem(tempFuncion);// TODO TIPOS trig
 				arrListDropFuncTrig.add(n, jcb);
-				ecuacion.add(labelA[n]); ecuacion.add(textA.get(n));
-				ecuacion.add(labelB[n]); ecuacion.add(textB.get(n));
+				ecuacion.add(labelA[n]);
+				ecuacion.add(textA.get(n));
+				ecuacion.add(labelB[n]);
+				ecuacion.add(textB.get(n));
 				ecuacion.add(arrListDropFuncTrig.get(n));
 			}
 			break;
@@ -259,29 +272,31 @@ public final class EditaFuncionDialog extends JDialog{
 		default:
 			break;
 		case RACIONAL:
-			//TODO RACIONAL
+			// TODO RACIONAL
 			break;
 		}
 	}
-	
+
 	/**
 	 * 
 	 */
-	private void metodoProceso(){
-		
+	private void metodoProceso() {
+
 		int terminos = 0;
-		try{
+		try {
 			terminos = Integer.parseInt(textTerminos.getText());
-			if(terminos<0) terminos = 0;
-		}catch(Exception ex){;
-		O.pln(ex.toString()+" (EditaFuncionDialog.java:217)");//REVISELINE
-			JOptionPane.showMessageDialog(getParent(), 
-					l.getString("errDialog1")+ex.getMessage(),
+			if (terminos < 0)
+				terminos = 0;
+		} catch (Exception ex) {
+			;
+			O.pln(ex.toString() + " (EditaFuncionDialog.java:217)");// REVISELINE
+			JOptionPane.showMessageDialog(getParent(),
+					l.getString("errDialog1") + ex.getMessage(),
 					l.getString("inputError"), JOptionPane.ERROR_MESSAGE);
 			terminos = tempFuncion.getTerminos().size();
 		}
-		
-		switch(tempFuncion.getTipoFuncion()){
+
+		switch (tempFuncion.getTipoFuncion()) {
 		case POLINOMICA:
 			break;
 		case TRIGONOMETRICA:
@@ -290,51 +305,55 @@ public final class EditaFuncionDialog extends JDialog{
 		default:
 			break;
 		case RACIONAL:
-			//TODO RACIONAL
+			// TODO RACIONAL
 			break;
 		}
-		
-		textTerminos.setText(""+terminos);
-		
+
+		textTerminos.setText("" + terminos);
+
 		BigDecimal A[] = new BigDecimal[tempFuncion.getTerminos().size()];
-		for(int n=0;n<A.length;n++){
-			try{
+		for (int n = 0; n < A.length; n++) {
+			try {
 				A[n] = new BigDecimal(textA.get(n).getText());
-			}catch(IndexOutOfBoundsException ioobe){
-				O.pln(ioobe.toString()+" (EditaFuncionDialog.java:250)");//REVISELINE
+			} catch (IndexOutOfBoundsException ioobe) {
+				O.pln(ioobe.toString() + " (EditaFuncionDialog.java:250)");// REVISELINE
 				A[n] = BigDecimal.ONE;
-				textA.add(new JTextField(""+A[n]));
-			}catch(NumberFormatException nfe){
-				O.pln(nfe.toString()+" (EditaFuncionDialog.java:250)");//REVISELINE
-				JOptionPane.showMessageDialog(getParent(),
-						l.getString("errDialog2")+n+"= "+textA.get(n).getText()+
-						" : "+l.getString("errDialog3")+": =1",
+				textA.add(new JTextField("" + A[n]));
+			} catch (NumberFormatException nfe) {
+				O.pln(nfe.toString() + " (EditaFuncionDialog.java:250)");// REVISELINE
+				JOptionPane.showMessageDialog(
+						getParent(),
+						l.getString("errDialog2") + n + "= "
+								+ textA.get(n).getText() + " : "
+								+ l.getString("errDialog3") + ": =1",
 						l.getString("inputError"), JOptionPane.ERROR_MESSAGE);
 				A[n] = BigDecimal.ONE;
-				textA.add(new JTextField(""+A[n]));
+				textA.add(new JTextField("" + A[n]));
 			}
 		}
-		
+
 		BigDecimal B[] = new BigDecimal[tempFuncion.getTerminos().size()];
-		for(int n=0;n<B.length;n++){
-			try{
+		for (int n = 0; n < B.length; n++) {
+			try {
 				B[n] = new BigDecimal(textB.get(n).getText());
-			}catch(IndexOutOfBoundsException ioobe){
-				O.pln(ioobe.toString()+" (EditaFuncionDialog.java:311)");//REVISELINE
+			} catch (IndexOutOfBoundsException ioobe) {
+				O.pln(ioobe.toString() + " (EditaFuncionDialog.java:311)");// REVISELINE
 				B[n] = BigDecimal.ONE;
-				textB.add(new JTextField(""+B[n]));
-			}catch(NumberFormatException nfe){
-				O.pln(nfe.toString()+" (EditaFuncionDialog.java:311)");//REVISELINE
-				JOptionPane.showMessageDialog(getParent(),
-						l.getString("errDialog2")+n+"= "+textB.get(n).getText()+
-						" : "+l.getString("errDialog3")+": =1",
+				textB.add(new JTextField("" + B[n]));
+			} catch (NumberFormatException nfe) {
+				O.pln(nfe.toString() + " (EditaFuncionDialog.java:311)");// REVISELINE
+				JOptionPane.showMessageDialog(
+						getParent(),
+						l.getString("errDialog2") + n + "= "
+								+ textB.get(n).getText() + " : "
+								+ l.getString("errDialog3") + ": =1",
 						l.getString("inputError"), JOptionPane.ERROR_MESSAGE);
 				B[n] = BigDecimal.ONE;
-				textB.add(new JTextField(""+B[n]));
+				textB.add(new JTextField("" + B[n]));
 			}
 		}
-		
-		switch(tempFuncion.getTipoFuncion()){
+
+		switch (tempFuncion.getTipoFuncion()) {
 		case POLINOMICA:
 			break;
 		case TRIGONOMETRICA:
@@ -350,10 +369,10 @@ public final class EditaFuncionDialog extends JDialog{
 		labelEcuacion.setText(tempFuncion.getSpecific());
 		setPanelEcuacion();
 	}
-	
-	private void initListeners(){
-		
-		actualizaAL = new ActionListener(){
+
+	private void initListeners() {
+
+		actualizaAL = new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 				setEnabled(false);
@@ -363,11 +382,11 @@ public final class EditaFuncionDialog extends JDialog{
 				O.pln("end of actualizaAL");
 			}
 		};
-		
-		listoAL = new ActionListener(){
+
+		listoAL = new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				actualizaAL.actionPerformed(e);
-				switch(accion){
+				switch (accion) {
 				case ANADIR:
 					arrListFB.add(index, tempFuncion);
 					arrListColor.add(index, c);
@@ -393,33 +412,33 @@ public final class EditaFuncionDialog extends JDialog{
 				default:
 					break;
 				}
-				
+
 				gf.actualizaLista(arrListFB, arrListColor);
 				gf.repaint();
-				
+
 				dispose();
 			}
 		};
-		
-		cerrarAL = new ActionListener(){
+
+		cerrarAL = new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				switch(accion){
+				switch (accion) {
 				case ANADIR:
 					break;
 				case EDITAR:
-					switch(tempFuncion.getTipoFuncion()){
-					case POLINOMICA://TODO you still have no idea do you?
+					switch (tempFuncion.getTipoFuncion()) {
+					case POLINOMICA:// TODO you still have no idea do you?
 						break;
 					case TRIGONOMETRICA:
 					case EXPONENCIAL:
 					case LOGARITMICA:
 					default:
-						//TODO RACIONAL + DEFAULT
+						// TODO RACIONAL + DEFAULT
 						break;
 					case RACIONAL:
 						break;
 					}
-					
+
 					arrListFB.set(index, tempFuncion);
 					jrb = arrListJRB.get(index);
 					jrb.setForeground(arrListColor.get(index));
@@ -436,45 +455,44 @@ public final class EditaFuncionDialog extends JDialog{
 				dispose();
 			}
 		};
-		
-		selecTipoIL = new ItemListener(){
+
+		selecTipoIL = new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
-				if(e.getSource().equals(dropTipoFuncion)){
+				if (e.getSource().equals(dropTipoFuncion)) {
 					System.out.println("droporpdor");
-					Tipo tempF = (Tipo)e.getItem();
-					if(e.getStateChange() == ItemEvent.SELECTED){
-						
-						switch(tempF){
+					Tipo tempF = (Tipo) e.getItem();
+					if (e.getStateChange() == ItemEvent.SELECTED) {
+
+						switch (tempF) {
 						case POLINOMICA:
 							labelTerminos.setText(l.getString("polTermL"));
-							//TODO ItemListener Pol-Type
+							// TODO ItemListener Pol-Type
 							break;
 						case TRIGONOMETRICA:
 							labelTerminos.setText(l.getString("defTermL"));
-							//TODO ItemListener trig-Type
+							// TODO ItemListener trig-Type
 							break;
 						case EXPONENCIAL:
 						case LOGARITMICA:
 						default:
-							//TODO RACIONAL + DEFAULT
+							// TODO RACIONAL + DEFAULT
 							break;
 						case RACIONAL:
 							break;
 						}
 						metodoProceso();
-						
+
 					}
-				}else if(e.getSource().equals(dropTipoFuncTrig)){
+				} else if (e.getSource().equals(dropTipoFuncTrig)) {
 					System.out.println("dfbdfjugsdfgdjfgfxdfgjdxfgch");
 				}
-				
-			
-				if(e.getStateChange() == ItemEvent.DESELECTED){
-					O.pln("Deseleccionado: "+e.getItem());
+
+				if (e.getStateChange() == ItemEvent.DESELECTED) {
+					O.pln("Deseleccionado: " + e.getItem());
 				}
-				
+
 			}
 		};
 	}
-	
+
 }
